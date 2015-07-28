@@ -1,0 +1,92 @@
+<script type="text/javascript">
+jQuery(function(){
+	$("form#reply_form input[name='sign_submit']").bind("click",function(){
+		
+		if($.trim($("form#reply_form textarea[name='content']").val())=='')
+		{
+			$.showErr("回复内容不能为空");
+		}
+		else
+		{
+			$("form#reply_form input[name='sign_submit']").attr("disabled",true);
+			$("form#reply_form input[name='sign_submit']").removeClass("submit_bg");
+			$("form#reply_form input[name='sign_submit']").addClass("submit_bg_forbid");
+			var query = $("form#reply_form ").serialize();
+			
+			$.ajax({
+				url: APP_ROOT+"/store.php?ctl=review&act=reply",
+				type: "POST",
+				data:query,
+				dataType: "json",
+				success: function(result){
+					if(result.status==0)
+					{
+						$.showErr(result.message);
+					}
+					else if(result.status==2){
+						ajax_login();
+					}
+					else
+					{
+						$("#sign_list").hide();
+						$("#sign_list").html(result.message);
+						$("#sign_list").slideDown();	
+						$("form#reply_form textarea[name='content']").val("");
+						if($("form#reply_form input[name='verify']").length > 0){
+							$("form#reply_form input[name='verify']").val("");
+							$("form#reply_form .verify_row img").attr("src",APP_ROOT+"/verify.php?rand="+ Math.random());
+						}			
+					}
+					$("form#reply_form input[name='sign_submit']").removeClass("submit_bg_forbid");
+					$("form#reply_form input[name='sign_submit']").addClass("submit_bg");
+					$("form#reply_form input[name='sign_submit']").attr("disabled",false);
+				}
+			});
+
+		}
+	});
+});	
+</script>
+
+<form name="reply_form" id="reply_form">
+<div class="blank"></div>
+<div class="reply_title">
+	<span class="hy">回应</span>
+	<div class="input_tip">
+	</div>
+
+</div>
+<div class="wb clearfix p15 bdc" style="border-top:none">
+	<div class="blank"></div>
+	<div class="reply_hd">
+		{function name="show_avatar" uid=$user_info.id  type="small" }
+	</div>
+	
+	<div class="sign_box">
+		<div class="sign_box_content">
+			{function name="show_topic_form" text_name="content" width="662px" height="80px" is_img="0" is_topic="0" is_event="0" id="main_topic_form_textarea" show_btn="0" show_tag="0"}
+			<div class="blank"></div>
+			{if app_conf("VERIFY_IMAGE") eq 1}
+			<p class="commit">
+			<div class="verify_row">								
+			<input type="text" value="" class="f-input" name="verify" />	
+			<img src="{$APP_ROOT}/verify.php?rand={function name="rand"}" onclick="this.src='{$APP_ROOT}/verify.php?rand='+ Math.random();" title="看不清楚？换一张" />			
+			</div>	
+			</p>
+			<div class="blank"></div>
+			{/if}
+			<div class="pub_ext">
+				<div class="fr">
+					<input type="hidden" value="{$review_item.id}"  name='dp_id' />
+					<input type="button" value="提交回应" class="submit_bg" name="sign_submit" />	
+					{if $is_admin}
+					<input type="checkbox" name="syn_reply" value="1" checked="checked" /> 同时回应相关的提问，并发信息通知会员 
+					{/if}
+				</div>			
+			</div>
+	
+		</div>
+	</div>
+	<div class="blank"></div>
+</div>
+</form>

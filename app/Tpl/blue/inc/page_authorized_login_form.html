@@ -1,0 +1,181 @@
+<!--登录表单-->
+<div method="post" action="{url x="index" r="authorized#dologin"}" name="page_login_form" id="page_login_form">
+	<div class="field username pl30">
+		<div class="f_l pr ml5">
+			<div class="u_icon"><i class="iconfont">&#xe623;</i></div>
+			<input type="text" value="" class="f-input ui-textbox" holder="{$LANG.USER_TITLE_UNIT_NAME}" id="login-email-address" name="email" size="30" tabindex="1">
+		</div>
+		<div class="blank0"></div>
+	</div>
+	<div class="blank10"></div>
+	<div class="field password pl30">
+		<div class="f_l pr ml5">
+			<div class="u_icon"><i class="iconfont">&#xe625;</i></div>
+			<input type="password" value="" class="f-input ui-textbox" holder="{$LANG.USER_TITLE_USER_PWD}" id="login-password" name="user_pwd" size="30" tabindex="2">
+		</div>
+		<div class="blank0"></div>
+	</div>	
+	<div class="blank10"></div>
+	<div class="act clearfix" style="margin:0px;padding:0">
+		<input type="hidden" name="ajax" value="1">
+		<input type="submit" class="login-submit-btn unit_btn" id="user-login-submit" name="commit" value="">
+	</div>
+	<div class="field clearfix">
+		<div class=" w280">	
+			<a href="{url x="index" r="authorized#getpassword"}" class="f_white">{$LANG.FORGET_PASSWORD}</a>
+		</div>
+	</div>
+
+</div>
+<!--登录表单-->	
+<script type="text/javascript">
+var is_lock_user_login = false;	
+var remenber_i=1;	
+$(document).ready(function(){
+	$(".ui-select").click(function(){
+		if(remenber_i == 0){
+			remenber_i = 1;
+			$(this).removeClass("ui-selected");
+			$("#autologin").attr("checked","");
+		}
+		else{
+			remenber_i = 0;
+			$(this).addClass("ui-selected");
+			$("#autologin").attr("checked","checked");
+		}
+	});
+	
+	$(".user_login_bar .holder_tip").unbind("click").click(function(){
+		$(this).hide();
+		$(this).parent().find(".f-input").focus();
+	});
+	
+	$(".user_login_bar .f-input").unbind("focus").focus(function(){
+		$(this).addClass("input_focus");
+		$(this).parent().find(".holder_tip").hide();
+		$(this).parent().addClass("focus_box");
+	});
+	$(".user_login_bar .f-input").unbind("blur").blur(function(){
+		if($(this).val()==""){
+			$(this).parent().find(".holder_tip").show();
+		}
+		$(this).parent().removeClass("focus_box");
+		$(this).removeClass("input_focus");
+	});
+
+	$("#user-login-submit").click(function(){
+		checkUserLogin();
+	});	
+	
+	$("#page_login_form input,#page_login_form select").keydown(function(e){ 
+		var curKey = e.which; 
+		if(curKey == 13){
+			checkUserLogin();
+		} 
+	});
+	
+});
+
+function checkUserLogin(){
+	if(is_lock_user_login){
+		return false;
+	}
+	is_lock_user_login = true;
+	if($.trim($("#login-email-address").val()).length == 0)
+	{
+		$.showErr("{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_EMAIL}{$LANG.OR}{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_NAME}",function(){
+			is_lock_user_login = false;
+			$("#login-email-address").focus();
+		});					
+		return false;
+	}
+
+	if(!$.minLength($("#login-password").val(),4,false))
+	{
+		$.showErr("{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_PWD}",function(){
+			is_lock_user_login = false;
+			$("#login-password").focus();
+		});					
+		return false;
+	}
+	
+	var ajaxurl = $("div[name='page_login_form']").attr("action");
+	var query = new Object();
+	query.email = $("div[name='page_login_form'] #login-email-address").val() ;
+	query.user_pwd = FW_Password($("div[name='page_login_form'] #login-password").val());
+	query.ajax = 1;
+	
+	if($("#autologin").attr("checked")=="checked" || $("#autologin").attr("checked")==true){
+		query.auto_login =  1;
+	}
+	
+	if($("#Jverify").length > 0)
+		query.verify =  $("#Jverify").val();
+
+	$.ajax({ 
+		url: ajaxurl,
+		dataType: "json",
+		data:query,
+		type: "POST",
+		success: function(ajaxobj){
+			if(ajaxobj.status==0)
+			{
+				if($("#Jverify_img").length > 0)
+					$("#Jverify_img").attr("src",'{$APP_ROOT}/verify.php?w=89&h=44&rand='+ Math.random());
+				$.showErr(ajaxobj.info,function(){
+					is_lock_user_login = false;
+				});								
+			}
+			else
+			{
+				var integrate = $("<span id='integrate'>"+ajaxobj.data+"</span>");
+				$("body").append(integrate);
+				update_page_user_tip();
+				$("#integrate").remove();				
+				
+				if (ajaxobj.status == 1) {
+					$.showSuccess(ajaxobj.info, function(){
+						is_lock_user_login = false;
+						if (ajaxobj.jump != '') 
+							location.href = ajaxobj.jump;
+						else 
+							location.reload();
+					});
+				}	
+				else{
+					$.showCfm(ajaxobj.info,function(){
+						location.href = ajaxobj.jump1;
+					},function(){
+							if (ajaxobj.jump1 != '') 
+								location.href = ajaxobj.jump;
+							else 
+								location.reload();
+					});
+				}				
+			}
+		},
+		error:function(ajaxobj)
+		{
+			is_lock_user_login = false;
+		}
+	});	
+}
+
+function update_page_user_tip()
+{
+var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=update_user_tip";
+$.ajax({ 
+url: ajaxurl,
+type: "POST",
+success: function(ajaxobj){
+	$("#user_head_tip").html(ajaxobj);
+},
+error:function(ajaxobj)
+{
+//				if(ajaxobj.responseText!='')
+//				alert(ajaxobj.responseText);
+}
+});	
+}
+
+</script>

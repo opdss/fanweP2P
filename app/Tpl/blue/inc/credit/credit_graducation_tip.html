@@ -1,0 +1,36 @@
+<div class="dot"></div>
+<div class="blank"></div>
+<div class="credit_upload">
+    <div class="field">
+        <label>12位在线验证码：</label>
+        <span><input type="text" name="validcode" size="30" class="f-input ui-textbox" id="validCode"></span>
+    </div>
+	<div class="blank"></div>
+    <div class="field">
+        <label><span class="f_red b">*</span>最高学历：</label>
+        <span>
+            <select name="graduation" id="settings-graduation" class="f_l  ui-select w120 select-w120">
+				<option value="" {if $user_info.graduation eq ''}selected="selected"{/if}>={$LANG.SELECT_PLEASE}=</option>
+				<option value="{$LANG.GRADUATION_1}" {if $user_info.graduation eq $LANG.GRADUATION_1}selected="selected"{/if}>{$LANG.GRADUATION_1}</option>
+				<option value="{$LANG.GRADUATION_2}" {if $user_info.graduation eq $LANG.GRADUATION_2}selected="selected"{/if}>{$LANG.GRADUATION_2}</option>
+				<option value="{$LANG.GRADUATION_3}" {if $user_info.graduation eq $LANG.GRADUATION_3}selected="selected"{/if}>{$LANG.GRADUATION_3}</option>
+				<option value="{$LANG.GRADUATION_4}" {if $user_info.graduation eq $LANG.GRADUATION_4}selected="selected"{/if}>{$LANG.GRADUATION_4}</option>
+			</select>
+        </span>
+    </div>
+	<div class="blank"></div>
+    <div class="field">
+        <label><span class="f_red b">*</span>毕业院校：</label>
+       <input type="text" value="{$user_info.university}" class="f-input ui-textbox" id="settings-university" name="university" size="30">
+    </div>
+	<div class="blank"></div>
+    <div class="field">
+        <label><span class="f_red b">*</span>入学年份：</label>
+		<select name="graduatedyear" id="settings-graduatedyear" class="f_l ui-select w80 select-w80" height="300">
+		<?php $y = date("Y"); for($i=$y;$i>=$y-100;$i--): ?>
+			<option value="<?php echo $i;?>" <?php if($i == intval($this->_var['user_info']['graduatedyear'])):?>selected="selected"<?php endif; ?>><?php echo $i;?></option>
+		<?php endfor; ?>
+		</select>
+    </div>           
+</div>
+<div class="blank"></div>

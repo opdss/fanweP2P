@@ -1,0 +1,63 @@
+{if $lend_list}
+<div class="demo" style="width:531px;height:20px">
+    <div class="f_l b f_dgray" style="width:150px;text-align:right">
+        图片说明：
+    </div>
+    <div class="f_l f_dgray" style="width:120px;text-align:center">
+        <img src="{$TMPL}/images/wait.png">= 正在进行中
+    </div>
+    <div class="f_l f_dgray" style="width:120px;text-align:center">
+        <img src="{$TMPL}/images/check_ok.png">= 成功
+    </div>
+    <div class="f_l f_dgray" style="width:120px;text-align:center">
+        <img src="{$TMPL}/images/check_error.png">= 流标
+    </div>
+</div>
+<div class="i_deal_list clearfix pr15 pl15">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr  border="0" style="background-color:#00bef0; color:#fff; height:34px;">
+                <th style="width:35%">投标标题</th>
+                <th style="width:10%">年利率</th>
+                <th style="width:15%">投标金额</th>
+                <th style="width:10%">借款期限</th>
+                <th style="width:10%">状态</th>
+                <th style="width:20%">投标时间</th>
+            </tr>
+            {foreach from=$lend_list item="lend" key=key name="lend"}
+            
+            <tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+                <td style="text-align:left;text-indent:1em;">
+                    <a href="{url x="index" r="deal" p="id=$lend.deal_id"}">{$lend.name}</a>
+                </td>
+                <td>
+                    {function name="round" v=$lend.rate f="2"}%
+                </td>
+                <td>
+                    {function name="format_price" v=$lend.money}
+                </td>
+                <td>
+                    {$lend.repay_time}{if $lend.repay_time_type eq 0}天{else}个月{/if}
+                </td>
+                <td>
+                    {if $lend.deal_status eq 2 || $lend.deal_status eq 4 || $lend.deal_status eq 5}
+                    <img src="{$TMPL}/images/check_ok.png">
+                    {elseif  $lend.deal_status eq 3}
+                    <img src="{$TMPL}/images/check_error.png">
+                    {else}
+                    <img src="{$TMPL}/images/wait.png">
+                    {/if}
+                </td>
+                <td>
+                    {function name="to_date" v=$lend.create_time f="Y-m-d"}
+                    {function name="to_date" v=$lend.create_time f="H:i"}
+                </td>
+            </tr>
+			{/foreach}
+        </tbody>
+    </table>
+</div>
+<div class="pages" style="margin-bottom:0;">{$pages}</div>
+{else}
+<div class="tc p15">暂无记录</div>
+{/if}

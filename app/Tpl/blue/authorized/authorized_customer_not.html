@@ -1,0 +1,24 @@
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index" r="authorized#customer"}">待审核客户名单</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix ">
+	<div class="blank"></div>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+			<tr>
+				<th>编号</th>
+				<th>{$LANG.USER_TITLE_USER_NAME}</th>
+				<th>{$LANG.REGISTER_TIME}</th>
+			</tr>
+			{foreach from=$list item=invite key=key name="invites"}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.invites.last}style="border-bottom:0"{/if}>
+				<td>{$invite.id}</td>
+				<td>{$invite.user_name}</td>
+				<td>{function name="to_date" value=$invite.create_time}</td>
+			</tr>
+			{/foreach}
+	</table>
+	
+	<div class="blank"></div>
+	<div class="pages">{$pages}</div>
+	<div class="blank"></div>
+</div><!--end uc-table-->

@@ -1,0 +1,24 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/article_list.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--文字详情-->
+<div class="article_show">
+	<h2>{$data.title}</h2>
+	<!--
+	<p class="jieshao">我看版面太单调，加些元素，后台没有这些，后期看看是否采用
+		<span>2014-11-11</span>
+		<span>浏览(10000)</span>
+    </p>
+	-->
+	<p class="show_detail"> 
+	    {$data.content}
+	</p>
+</div>
+{include file="./inc/footer.html"}
+
+
+
+
+

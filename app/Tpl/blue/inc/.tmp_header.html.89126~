@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{if $page_title}{$page_title} - {/if}{if $show_site_titile eq 1}{function name='app_conf' value='SHOP_SEO_TITLE'} - {/if}{$site_info.SHOP_TITLE}</title>
+<link rel="icon" href="favicon.ico" type="/image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico" type="/image/x-icon" />
+<meta name="keywords" content="{if $page_keyword}{$page_keyword}{/if}{$site_info.SHOP_KEYWORD}" />
+<meta name="description" content="{if $page_description}{$page_description}{/if}{$site_info.SHOP_DESCRIPTION}" />
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/style.css";
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/weebox.css";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.bgiframe.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.weebox.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/jquery.pngfix.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/lazyload.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/des.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/script.js";
+$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/script.js";
+if(app_conf("APP_MSG_SENDER_OPEN")==1)
+{
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/msg_sender.js";
+$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/msg_sender.js";
+}
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/main.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+
+<script type="text/javascript">
+var APP_ROOT = '{$APP_ROOT}';;
+var LOADER_IMG = '{$TMPL}/images/lazy_loading.gif';
+var ERROR_IMG = '{$TMPL}/images/image_err.gif';
+var TMPL = '{$TMPL}';
+var send_span = {function name="app_conf" v="SEND_SPAN"}000;
+{if app_conf("APP_MSG_SENDER_OPEN") eq 1 && $DEAL_MSG_COUNT > 0}
+var to_send_msg = true;
+{else}
+var to_send_msg = false;
+{/if}
+var __LOGIN_KEY = "{insert name="get_login_key"}";
+</script>
+<script type="text/javascript" src="{$APP_ROOT}/public/runtime/app/lang.js"></script>
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs" c="$cpagejs"}"></script>
+
+<!--[if lt IE 10]>
+<script type="text/javascript" src="{$TMPL}/js/PIE.js"></script>
+<![endif]-->
+<script language="javascript">
+$(function() {
+    if (window.PIE) {
+        $('.rounded').each(function() {
+            PIE.attach(this);
+        });
+    }
+});
+</script>
+<!--[if IE 6]>
+	<script src="{$TMPL}/js/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>
+	DD_belatedPNG.fix('#uc_cate .c_hds , .safety_step ul li , .conf_refund , .uc_r_bl_box .field .passed.yes'); 
+	</script>
+<![endif]-->
+</head>
+
+<body>
+{if $vote}
+<a id="vote" href="{url x="index" r="vote"}" target="_blank"></a>
+{/if}
+<div class="header" id="header">
+	<div class="constr">
+		<div class="wrap clearfix" style="overflow:visible;">
+			<div class="f_l">
+				<span>客服电话：{function name="app_conf" v="SHOP_TEL"}</span>
+				<div class="sharemk">
+					<a  href="" target="_blank" title="新浪微博"; class="share xinlan"></a>
+					<a  href="" target="_blank" title="腾讯微博"; class="share tenxun"></a>
+				</div>
+			</div>
+			<div class="f_r lh30">
+				{if app_conf("APPLE_DOWLOAD_URL") || app_conf("ANDROID_DOWLOAD_URL")}
+				<div class="app_down" id="J_APP_DOWN">
+					下载客户端
+					{if app_conf("APPLE_DOWLOAD_URL")}
+					<a href="javascript:void(0);" title="苹果端"><img src="{$TMPL}/images/ios.jpg" /></a>
+					{/if}
+					{if app_conf("ANDROID_DOWLOAD_URL")}
+					<a href="javascript:void(0);" title="安卓端"><img src="{$TMPL}/images/and.jpg" /></a>
+					{/if}
+					<div class="grcode_box ps hide">
+						<img src="{function name="gen_qrcode" v=$MOBILE_DOWN_PATH s=8}"  />
+					</div>
+				</div>
+				{/if}
+				<span id="user_head_tip" class="pr">
+				{insert name="load_user_tip"}
+				<span class="li"><a href="{url x="index" r="helpcenter"}">帮助</a></span>
+				</span>
+			</div>		
+		</div><!--end wrap-->
+		
+	</div>
+    <!--{if $MODULE_NAME <> 'manageagency'}-->
+	<div class="main_bars">
+		<div class="main_bar wrap">	
+			<div class="logo mr15">
+				<a class="link f_l" href="{$APP_ROOT}/">
+					<?php
+						$this->_var['logo_image'] = app_conf("SHOP_LOGO");
+					?>
+					{function name="load_page_png" v=$logo_image}
+				</a>
+			</div>	
+			<ul class="main_nav">
+				{foreach from=$nav_list item=nav_item}
+					<li class="n_{$nav_item.id} {if $nav_item.current eq 1}current{/if} mr5" rel='{$nav_item.id}'>
+						<a href="{$nav_item.url}"  target="{if $nav_item.blank eq 1}_blank{/if}">{$nav_item.name}</a>
+					</li>
+				{/foreach}
+			</ul>
+		</div>
+	</div>
+	<!--{/if}-->
+</div>
+<!--{if $MODULE_NAME == 'index'}-->
+<div id="main_adv_box" class="main_adv_box f_l">
+	<div id="main_adv_img" class="main_adv_img">
+		<span rel="1"><adv adv_id="首页广告位1" /></span>
+		<span rel="2"><adv adv_id="首页广告位2" /></span>
+		<span rel="3"><adv adv_id="首页广告位3" /></span>
+		<span rel="4"><adv adv_id="首页广告位4" /></span>	
+		<span rel="5"><adv adv_id="首页广告位5" /></span>					
+	</div>
+	<div id="main_adv_ctl" class="main_adv_ctl">
+		<ul>
+			<li rel="1">1</li>
+			<li rel="2">2</li>
+			<li rel="3">3</li>
+			<li rel="4">4</li>
+			<li rel="5">5</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="{$TMPL}/js/index_adv.js"></script>
+</div>	
+<p class="touy"></p>
+<!--{/if}-->
+<div class="wrap">

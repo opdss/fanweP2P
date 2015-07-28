@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>电子合同-参数说明</title>
+<style type="text/css">
+	.item{ border:1px solid #ddd; margin-bottom:5px;}
+	.item .tit{ font-weight:bolder; padding:6px;}
+	.item .code{ padding: 3px 6px 6px 6px; background:#f9f9f9; border-top:1px solid #ddd; border-bottom:1px solid #ddd }
+	.item .desc{ padding: 3px 6px 6px 6px; }
+</style>
+</head>
+<body style="padding:8px;margin:0">
+	<div style="font-size:14px">
+		<div class="item">
+			<div class="tit">{$transfer.load_id}}</div>
+			<div class="desc">
+			借款编号
+			</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$SITE_TITLE}</div>
+			<div class="desc">网站名</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$CURRENCY_UNIT}</div>
+			<div class="desc">货币符号</div>
+		</div>
+		<div class="item">
+			<div class="tit">{function name="number_format" v=$transfer.load_money f=2}</div>
+			<div class="desc">格式化数字{function name="number_format" v="参数" f="保留多少小数点"}</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.load_money_format}</div>
+			<div class="desc">借款本金数额</div>
+		</div>
+		
+		<div class="item">
+			<div class="tit">{$transfer.user.user_name}</div>
+			<div class="desc">甲方（转让人）名称</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.user.real_name}</div>
+			<div class="desc">甲方（转让人）姓名</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.user.idno}</div>
+			<div class="desc">甲方（转让人）身份证</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.tuser.user_name}</div>
+			<div class="desc">乙方（受让人）名称</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.tuser.real_name}</div>
+			<div class="desc">乙方（受让人）姓名</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.tuser.idno}</div>
+			<div class="desc">乙方（受让人）身份证</div>
+		</div>
+		
+		<div class="item">
+			<div class="tit">{$SITE_URL}</div>
+			<div class="desc">网站地址</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.load_money_format} </div>
+			<div class="desc">借款本金数额</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.rate}</div>
+			<div class="desc">借款年利率(%)</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.repay_time}</div>
+			<div class="desc">原借款期限</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.repay_start_time_format}</div>
+			<div class="desc">原借款开始时间</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.final_repay_time_format}</div>
+			<div class="desc">原借款结束时间</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.month_repay_money_format}</div>
+			<div class="desc">月偿还本息数额</div>
+		</div>
+		<div class="item">
+			<div class="tit">{function name="to_date" v=$transfer.repay_start_time f="d"}</div>
+			<div class="desc">每月还款日</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.all_must_repay_money_format}</div>
+			<div class="desc">标的债权价值</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.transfer_amount_format}    </div>
+			<div class="desc">转让价款</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$transfer.transfer_fee_format}</div>
+			<div class="desc">转让管理费</div>
+		</div>
+		<div class="item">
+			<div class="tit"> {$transfer.transfer_time_format}</div>
+			<div class="desc">转让日期</div>
+		</div>
+		<div class="item">
+			<div class="tit"> {$transfer.how_much_month}</div>
+			<div class="desc">剩余还款分期月数</div>
+		</div>
+		<div class="item">
+			<div class="tit"> {$transfer.near_repay_time_format}</div>
+			<div class="desc">剩余还款分期开始时间</div>
+		</div>
+		<div class="item">
+			<div class="tit"> {$transfer.final_repay_time_format}</div>
+			<div class="desc">剩余还款分期结束时间</div>
+		</div>
+		<div class="item">
+			<div class="tit">{$deal.tattachment}</div>
+			<div class="desc">转让合同附件</div>
+		</div>
+	</div>
+</body>
+</html>

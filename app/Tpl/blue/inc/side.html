@@ -1,0 +1,16 @@
+<div class="bddf clearfix">
+	<div class="gray_title clearfix">
+		<div class="tc b">推荐的标</div>
+	</div>
+	<div class="side-deal clearfix">
+		{if $rec_deal_list}
+		<ul class="pr10 pl10">
+			{foreach from=$rec_deal_list item="item"}
+			<li><a href="{$item.url}">{$item.sub_name}</a></li>
+			{/foreach}
+		</ul>
+		{else}
+		<div class="tc pb5">暂无记录</div>
+		{/if}
+	</div>
+</div>

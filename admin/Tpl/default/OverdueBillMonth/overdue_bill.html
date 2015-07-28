@@ -1,0 +1,158 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<script type="text/javascript">
+	function preview(id)
+	{
+		window.open("__ROOT__/index.php?ctl=deal&id="+id+"&preview=1");
+	}
+	
+	function repay_log(id){
+		window.location.href = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=repay_log&id="+id;
+	}
+	function op_status(id){
+		var url = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=op_status&id="+id;
+		$.weeboxs.open(url,{contentType:'ajax',showButton:false,title:"账单操作",width:600});
+	}
+	
+	function repay_plan(id,l_key)
+	{
+		var query=new Object();
+		query.deal_id = id;
+		query.l_key = l_key;
+		query.obj = "#J_view_repay_plan";
+		query.p = 1;
+		$.ajax({
+			url:ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=repay_plan_a", 
+			data:query,
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				if(result.status==1){
+					$.weeboxs.open('<div id="J_view_repay_plan">'+result.info+'</div>',{contentType:'text',showButton:false,title:"还款详情",width:600});
+				}
+				else{
+					alert(result.info);
+				}
+			},
+			error:function(){
+				alert("请求数据失败");
+			}
+		});
+	}
+	
+	function getLoanItem(obj,deal_id,l_key,p){
+		var query=new Object();
+		query.deal_id = deal_id;
+		query.l_key = l_key;
+		query.obj = obj;
+		query.p = p;
+		$.ajax({
+			url:ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=repay_plan_a", 
+			data:query,
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				if(result.status==1){
+					$(obj).html(result.info);
+				}
+				else{
+					alert(result.info);
+				}
+			},
+			error:function(){
+				alert("请求数据失败");
+			}
+		});
+	}
+</script>
+<php>
+	function repay_plan($id,$deal){
+		return '<a href="javascript:repay_plan('.$deal['deal_id'].','.$deal['l_key'].');">还款详情</a>&nbsp;';
+	}
+	
+	function op_status($id,$deal){
+		if($deal['has_repay'] == 0)
+		return '<a href="javascript:op_status('.$id.');">坏账操作</a>&nbsp;';
+	}
+	function is_has_send($type)
+	{
+		if($type==1)
+			return "已发送";
+		else
+			return "<span style='color:red'>未发送</span>";
+	}
+	function preview($id,$deal){
+		return '<a href="javascript:preview('.$deal['deal_id'].');">'.msubstr($deal['name']).'</a>';
+	}	
+	
+</php>
+<style type="text/css">
+	#J_view_repay_plan th{ color:#fff; padding:5px 0}
+</style>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get" id="ThreeGetForm">	
+		{%DEAL_NAME}：<input type="text" class="textbox" name="name" value="{:trim($_REQUEST['name'])}" />
+		贷款人：
+		<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" size="10" />
+		{%CATE_TREE}：
+		<select name="cate_id">
+			<option value="0" <if condition="intval($_REQUEST['cate_id']) eq 0">selected="selected"</if>>{%NO_SELECT_CATE}</option>
+			<foreach name="cate_tree" item="cate_item">
+				<option value="{$cate_item.id}" <if condition="intval($_REQUEST['cate_id']) eq $cate_item['id']">selected="selected"</if>>{$cate_item.title_show}</option>
+			</foreach>
+		</select>
+		
+		账单状态
+		<select name="deal_status">
+			<option value="0" <if condition="intval($_REQUEST['deal_status']) eq 0">selected="selected"</if>>所有的</option>
+			<option value="1" <if condition="intval($_REQUEST['deal_status']) eq 1">selected="selected"</if>>正常的</option>
+			<option value="2" <if condition="intval($_REQUEST['deal_status']) eq 2">selected="selected"</if>>坏账的</option>
+		</select>
+		
+		时间从：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d', false, false, 'btn_begin_time');"  />
+		<input type="button" class="button" id="btn_begin_time" value="{%SELECT_TIME}" onclick="return showCalendar('begin_time', '%Y-%m-%d', false, false, 'btn_begin_time');" />	
+		到现在
+		
+		<input type="hidden" value="OverdueBillMonth" name="m" />
+		<input type="hidden" value="overdue_bill" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,name|preview=$deal:{%DEAL_NAME}
+		,l_key_index:第几期
+		,user_id|get_user_name:借款人
+		,mobile:手机号码
+		,repay_money|format_price:还款金额
+		,manage_money|format_price:管理费
+		,impose_money|format_price:逾期罚息
+		,manage_impose_money|format_price:逾期管理费
+		,repay_time|to_date='Y-m-d':还款日
+		,cate_id|get_deal_cate_name:{%DEAL_CATE}
+		,has_repay_status:还款状态
+		,site_bad_status:账单状态" 
+	actionlist="id|repay_plan=$deal,repay_log:操作明细,id|op_status=$deal"
+	actionwidth="200px" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

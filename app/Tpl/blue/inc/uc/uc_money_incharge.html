@@ -1,0 +1,283 @@
+<div class="tabbox">
+	<div class="tab cur">
+		<a href="{url x="index" r="uc_money#incharge"}">{$LANG.UC_MONEY_INCHARGE}</a>
+	</div>
+	<div class="tab">
+		<a href="{url x="index" r="uc_money#incharge_log"}">{$LANG.UC_MONEY_INCHARGE_LOG}</a>
+	</div>
+</div>
+<div class="u_incharge uc_box bdd bt0 pt10">
+	<div class="prompt">
+		<p><i></i>即时充值所产生的转账费用，以100元为上限，按转账金额0.5%，由第三方平台收取。</p>
+		<p><i></i>请注意您的银行卡充值限制，以免造成不便。</p>
+		<p><i></i>如果充值金额没有及时到账，请和客服联系。</p>
+	</div>
+	<div class="blank1"></div>
+	
+	<form name="incharge_form" id="incharge_form" action="{url x="index" r="uc_money#incharge_done"}" method="post" />			
+		<div class="sect cf">			
+			<div class="clearfix uc-table">
+				{if $below_payment || app_conf("OPEN_IPS") gt 0}
+				<div class="way clearfix">
+					<div  class=" f_l w80">充值方式：</div>
+					<div class="f_l" style="*padding-top:8px">
+						<label class=" ui-radiobox" rel="common_check_ol_bl_pay" onclick="SelectPayType(0);" >
+							<input type="radio" checked="checked" name="check_ol_bl_pay" />线上支付
+						</label>
+						{if $below_payment}
+						<label class=" ui-radiobox" rel="common_check_ol_bl_pay" onclick="SelectPayType(1);" >
+							<input type="radio" name="check_ol_bl_pay" />线下支付
+						</label>
+						{/if}
+						{if app_conf("OPEN_IPS") gt 0}
+						<label class=" ui-radiobox" rel="common_check_ol_bl_pay" onclick="SelectPayType(2);" >
+							<input type="radio" name="check_ol_bl_pay" />第三方托管
+						</label>
+						{/if}
+					</div>
+				</div>
+				{/if}		
+				
+				<div class="m_number clearfix">				        	        	
+		        	<div class=" f_l w80">充值{$LANG.PRICE_AMOUNT}：</div>
+					<input type="text" class="f-input ui-textbox f_l w100 " id="money" name="money" /> &nbsp;元
+				</div>
+				<div class="m_number clearfix">
+					<div class=" f_l w80">充值费用：</div>
+					<span class="f_l info_t  " id="Fee_t" >0.00</span><span class="f_l yuan_t">元</span>
+			    </div>
+				<div class="m_number clearfix ">
+						<div class=" f_l w80">实付金额：</div>
+						<span class="f_l info_t  " id="Actual_Money_t">0.00</span><span class="f_l yuan_t">元</span>
+				</div>
+				
+				<div class="m_number" id="J_belows_pay"  style=" display:none; overflow:hidden; height:36px;padding-left:15px;">				        	        	
+		        	<div class=" f_l w80">上传凭证：</div>
+					
+					<div style="display: table-caption; margin-left: 14px; width: 300px;" id="xxxx">	
+					
+					<link rel="stylesheet" href="{$APP_ROOT}/admin/public/kindeditor/themes/default/default.css" />
+					<script type='text/javascript'  src='{$APP_ROOT}/admin/public/kindeditor/kindeditor.js'></script>
+					<script type="text/javascript" src="{$APP_ROOT}/admin/public/kindeditor/lang/zh_CN.js"></script>
+					<script type="text/javascript">
+						var VAR_MODULE = "m";
+						var VAR_ACTION = "a";
+						var ROOT = '{$APP_ROOT}/file.php';
+						var ROOT_PATH = '{$APP_ROOT}';
+						var MAX_FILE_SIZE = "<?php echo (app_conf("MAX_IMAGE_SIZE")/1000000)."MB"; ?>";
+					</script>
+						{function name="show_ke_image" v="pingzheng"}
+					</div>	
+				</div>
+				
+				
+				<div class="J_online">
+					<div  id="J_online_pay" class="clearfix" >		
+						<div class="f_l  w80">充值接口：</div>		
+						<div class="f_l pt10" style="width:800px">							
+						{foreach from=$payment_list item=payment_item}									
+							{$payment_item.display_code}	
+							<div class="blank"></div>										
+						{/foreach}
+						</div>		
+					</div>
+					{if $below_payment}
+					
+					<div  id="J_below_pay" class="clearfix" style="display:none;">
+						
+						{$below_payment.display_code}	
+						<div class="blank"></div>		
+					</div>
+					{/if}
+					{if app_conf("OPEN_IPS") gt 0 }
+					<div id="J_ips_pay" class="clearfix" style="text-align: left; display:none;">
+						<div class="f_l  w80">充值接口：</div>		
+						<div class="f_l bankbox  pt10" style="width:800px">		
+						loading...
+						</div>
+					</div>
+					{/if}
+					<div class="pay_btn">
+						<input type="submit" id="incharge_done" value="确定{$LANG.DO_INCHARGE}" class="sub_btn">
+					</div>
+				</div>
+			</div>	
+				
+		</div><!--end sect-->
+	</form>		
+</div>
+<script type="text/javascript">
+	var payType = 0;
+	var ips_submit_lock = true;
+	{if $below_payment || app_conf("OPEN_IPS") gt 0}
+	function SelectPayType(i){
+		payType = 0;
+		$("#Fee_t").parent().show();
+		switch(i){
+			case 0:
+				$("#J_online_pay").show();
+				$("#J_below_pay").hide();
+				$("#J_ips_pay").hide();
+				$("#J_belows_pay").hide();
+				break;
+			case 1:
+				payType = 2;
+				$("#J_online_pay").hide();
+				$("#J_below_pay").show();
+				$("#J_ips_pay").hide();
+				$("#J_belows_pay").show();
+				break;
+			case 2:
+				$("#Fee_t").parent().hide();
+				$("input[name='payment']").attr("checked","");
+				payType = 1;
+				$("#J_online_pay").hide();
+				$("#J_below_pay").hide();
+				$("#J_ips_pay").show();
+				$("#J_belows_pay").hide();
+				$("#Fee_t").attr("fee_type",0);
+				$("#Fee_t").attr("fee_amount",0);
+				ajaxGetBankList();
+				break;
+		}
+	}
+	{/if}
+	$(document).ready(function(){
+		$("#money").keyup(function(){
+			calculate_money();
+		});
+		
+		$("#incharge_done").click(function(){
+			if(!($("input[name='money']").val()!='' && !isNaN($("input[name='money']").val())&&$("input[name='money']").val()>0))			
+			{
+				$.showErr("{$LANG.PLEASE_INPUT_CORRECT_INCHARGE}",function(){
+					$("input[name='money']").focus();
+				});
+				return false;
+			}
+			else
+			{
+				switch(payType){
+					case 0:
+						if($("#J_online_pay input[name='payment']:checked").length == 0){
+							$.showErr("{$LANG.PLEASE_SELECT_PAYMENT}");
+							return false;
+						}
+						break;
+					case 1:
+						{if strtolower(getCollName())=="yeepay"}
+							window.location.href = APP_ROOT+"/index.php?ctl=collocation&act=DoDpTrade&user_type=0&user_id={$user_info.id}"+"&pTrdAmt="+$("input[name='money']").val();
+							return false;
+						{/if}
+						if($("#J_ips_pay input[name='payment']:checked").length == 0){
+							$.showErr("{$LANG.PLEASE_SELECT_PAYMENT}");
+							return false;
+						}
+						break;
+					case 2:
+						if($("#J_below_pay input[name='payment']:checked").length == 0){
+							$.showErr("{$LANG.PLEASE_SELECT_PAYMENT}");
+							return false;
+						}
+						break;
+				}
+				
+			}
+			
+			if(payType == 2 && $.trim($("input[name='memo']").val())==""){
+				$.showErr("请输入流水号",function(){
+					$("input[name='memo']").focus();
+				});
+				return false;
+			}
+			
+			if(payType==1){
+				if(ips_submit_lock){
+					$.showErr("请等待第三方托管支付接口加载完成。");
+					return false;
+				}
+				window.location.href = APP_ROOT+"/index.php?ctl=collocation&act=DoDpTrade&user_type=0&user_id={$user_info.id}&pTrdBnkCode="+$("input[name='payment']:checked").val()+"&pTrdAmt="+$("input[name='money']").val()+$("input[name='money_incharge_files']").val();
+				return false;
+			}
+			return true;
+		});
+		
+		$("input[name='payment']").live("click",function(){
+			if(payType!=1){
+				$.ajax({
+					url:'{url x="index" r="ajax#payment_fee"}',
+					data:"&id="+$(this).val(),
+					type:"post",
+					dataType:"json",
+					cache:true,
+					success:function(result){
+						$("#Fee_t").attr("fee_type",result.fee_type);
+						$("#Fee_t").attr("fee_amount",result.fee_amount);
+						calculate_money();
+					}
+				});
+			}
+			else{
+				calculate_money();
+			}
+		});
+	});
+	
+	function calculate_money(){
+		if(!$("input[name='payment']:checked").val())
+		{
+			return false;
+		}
+		var money=0;
+		if($("input[name='money']").val()!='' && !isNaN($("input[name='money']").val())&&$("input[name='money']").val()>0){
+			money = parseFloat($("#money").val());
+		}
+		var fee_type = $("#Fee_t").attr("fee_type");
+		var fee_amount = parseFloat($("#Fee_t").attr("fee_amount"));
+		var Fee_t= 0;
+		if(fee_type==0){
+			Fee_t = fee_amount;
+		}
+		else{
+			Fee_t = money*fee_amount;
+		}
+		
+       $("#Fee_t").html(Fee_t);
+		
+		
+		var num=money+Fee_t;
+		$("#Actual_Money_t").html(formatNum(num));
+		
+	}
+	
+	{if app_conf("OPEN_IPS") gt 0 }
+	function ajaxGetBankList(){
+		calculate_money();
+		if($.trim($("#J_ips_pay .bankbox").html())=="loading..."){
+			$.ajax({
+				url:APP_ROOT + "/index.php?ctl=collocation&act=GetBankList",
+				dataType:"json",
+				success:function(result){
+					if(result.pErrCode=="0000")
+					{
+						var html="";
+						$.each(result.BankList,function(i,data){
+							html += '<label class="f_l ui-radiobox payment_ips " rel="common_payment" style="background:none"><input type="radio" name="payment" value="'+data.id+'">&nbsp;'+data.name+ " : " +data.sub_name+'</label>';
+						});
+						$("#J_ips_pay .bankbox").html(html);
+						ips_submit_lock = false;
+						init_ui_radiobox();
+					}
+					else{
+						$.showErr(result.pErrMsg);
+					}
+				},
+				error:function(){
+					$.showErr("请求数据失败");
+				}
+			});
+		}
+	}
+	{/if}
+	
+</script>

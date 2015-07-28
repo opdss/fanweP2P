@@ -1,0 +1,47 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/login.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+
+<div class="login">
+    <div id="mb_register">
+		<input class="logininput mainborder" id="real_name" name="real_name" type="text" placeholder="输入真实姓名">
+		<input class="logininput mainborder" id="idno" name="idno" type="text" placeholder="输入身份证号码">
+		<div style=" line-height:20px; font-size:13px; padding:5px 0;">(请输入正确信息以免影响资金托管账户申请等功能..)</div>
+		<div class="blank"></div> 
+		<input class="ui-button_login Headerbackground_dark" type="submit" name="commit" id="idno_submit" value="确定">
+    </div>
+</div>
+<script type="text/javascript">
+$("#idno_submit").click(function(){
+	var ajaxurl = '{wap_url a="index" r="register_idno"}';
+	var query = new Object();
+	query.real_name = $.trim($("#real_name").val());
+	query.idno = $.trim($("#idno").val());
+	query.post_type = "json";
+	$.ajax({
+		url:ajaxurl,
+		data:query,
+		type:"Post",
+		dataType:"json",
+		success:function(data){
+			if(data.status==1)
+			{
+			alert(data.show_err);
+			window.location.href = '{wap_url a="index" r="uc_center"}';
+			
+			}alert(data.show_err);
+		}
+	});
+});
+
+</script>
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

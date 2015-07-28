@@ -1,0 +1,43 @@
+ <tagLib name="html" />
+ <table  class="form conf_tab" cellpadding=0 cellspacing=0 rel="3"> 
+ <tbody>
+  
+  	 <tr> 
+	   <th style="background:#6E7D87">借款编号</th> 
+	   <th style="background:#6E7D87">会员</th> 
+	   <th style="background:#6E7D87">还款金额</th> 
+	   <th style="background:#6E7D87">逾期罚息</th> 
+	   <th style="background:#6E7D87">预期收益</th> 
+	   <th style="background:#6E7D87">状态</th> 
+	   <th style="background:#6E7D87">还款人</th> 
+     </tr> 
+     <foreach name="load_user" item="item">
+     <tr> 
+      <td>{$item.id}</td> 
+      <td>{$item.user_name}</td> 
+      <td>{$item.month_repay_money_format}</td> 
+      <td>{$item.impose_money_format}</td> 
+       <td>{$item.interest_money}</td> 
+      <td>
+   		{$item.status_format}
+	</td> 
+	<td>
+   		{$item.site_repay_format}
+	</td> 
+  </tr> 
+  </foreach>
+  <tr>
+		<td colspan="7">
+			当前 {$page}/{$page_all} 页 , {$rs_count} 条记录
+			<if condition="$page gt 1">
+			<a href="javascript:void(0);" onclick="getLoanItem('{$obj}','{$deal_id}','{$l_key}',1);">第一页  </a>
+			</if>
+			<if condition="$page_prev gt 0"><a href="javascript:void(0);" onclick="getLoanItem('{$obj}','{$deal_id}','{$l_key}','{$page_prev}');">上一页 </a></if>
+			<if condition="$page_next elt $page_all"><a href="javascript:void(0);" onclick="getLoanItem('{$obj}','{$deal_id}','{$l_key}','{$page_next}');">下一页  </a></if>
+			<if condition="$page_next elt $page_all"><a href="javascript:void(0);" onclick="getLoanItem('{$obj}','{$deal_id}','{$l_key}','{$page_all}');">末一页  </a></if>
+		</td>
+	</tr>
+	
+     
+ </tbody>
+</table>

@@ -1,0 +1,81 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<script type="text/javascript">
+function export_csv_site_money()
+{
+	var inputs = $(".search_row").find("input");
+	var selects = $(".search_row").find("select");
+	var param = '';
+	for(i=0;i<inputs.length;i++)
+	{
+		if(inputs[i].name!='m'&&inputs[i].name!='a')
+		param += "&"+inputs[i].name+"="+$(inputs[i]).val();
+	}
+	for(i=0;i<selects.length;i++)
+	{
+		param += "&"+selects[i].name+"="+$(selects[i]).val();
+	}
+	var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_csv_site_money";
+	location.href = url+param;
+}
+</script>
+<php>
+	
+</php>
+<style type="text/css">
+	#J_view_repay_plan th{ color:#fff; padding:5px 0}
+</style>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get" id="ThreeGetForm">	
+		贷款人：
+		<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" size="10" />
+		
+		类型：
+		<select name="status">
+			<option value="0" <if condition="intval($_REQUEST['status']) eq 0">selected="selected"</if>>所有状态</option>
+			<foreach name="type_name" item="item">
+				<option value="{$key}" <if condition="intval($_REQUEST['status']) eq $key">selected="selected"</if> >{$item}</option>
+			</foreach>
+		</select>
+		
+		操作时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d', false, false, 'begin_time');" size="10" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" size="10" />
+		
+		
+		<input type="hidden" value="Deal" name="m" />
+		<input type="hidden" value="site_money" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		<input type="button" class="button" value="{%EXPORT}" onclick="export_csv_site_money();" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,type_format:类型
+		,user_id|get_user_name_real:关联用户
+		,money:操作金额
+		,memo:操作备注
+		,create_time|to_date:操作时间"
+	/> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />
+

@@ -1,0 +1,23 @@
+{include file="inc/header.html"} 
+<div class="blank"></div>
+
+	<div class="inc wb">
+		<div class="inc_top">{$page_title}</div>
+		<div class="inc_main pd10">
+				<div class="flink">
+							{foreach from=$p_link_data item=link_group}			
+								<h2>{$link_group.name}</h2>
+								{foreach from=$link_group.links item=link}
+									<a href="http://{$link.url}" target="_blank" title="{if $link.description}{$link.description}{else}{$link.name}{/if}">{if $link.img neq ''}<img src='{$link.img}' alt="{if $link.description}{$link.description}{else}{$link.name}{/if}" />{else}{$link.name}{/if}</a>
+								{/foreach}
+								<div class="clear"></div>
+							{/foreach}
+				</div>
+				<div class="blank"></div>
+
+		</div><!--end inc_main-->		
+		<div class="inc_foot"></div>
+	</div>
+
+
+{include file="inc/footer.html"}

@@ -1,0 +1,10 @@
+<div class="blank"></div>
+<div class="inc">
+	<div class="inc_top">签到({$count})</div>
+	<div class="inc_main user_sign">
+		{foreach from=$list item=item}
+		{function name="show_avatar" v=$item.user_id t="small"}
+		{/foreach}
+		<div class="blank"></div>
+	</div>
+</div>

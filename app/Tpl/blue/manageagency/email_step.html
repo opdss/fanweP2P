@@ -1,0 +1,244 @@
+<div style="margin-bottom:20px;">
+	<div class="safety_step">
+        <div class="bgline"></div>
+        <div class="fourStep steps">
+            <ul class="fn-clear">
+           		<li class="{if $step eq 1}one{else}no{/if}">填写新邮箱</li> 
+                <li class="{if $step eq 2}three{else}no{/if}">验证新邮箱</li> 
+                <li class="{if $step eq 3}four{else}no{/if}">成功</li>
+            </ul>
+        </div>
+    </div>
+	<div class="blank10"></div>
+	{if $step eq 1}
+	<div class="lh22 f14" style="margin-bottom:40px;padding-left:52px;">
+		{if $email neq ''}
+		<div class="blank10"></div>
+		<div class="field email">
+			<label for="settings-old-email"><span class="red">*</span>原邮箱</label>
+			<input type="text" value="" class="f-input ui-textbox" name="old-email" id="settings-old-email">
+		</div>
+		{/if}
+		<div class="blank10"></div>
+		<div class="field email">
+			<label for="settings-email">新邮箱</label>
+			<input type="text" value="" class="f-input ui-textbox" name="new-email" id="settings-email">
+			{if $email neq ''}<span class="hint">不输入新邮箱即为原邮箱绑定认证</span>{/if}
+		</div>
+		<div class="blank10"></div>
+		<div class="field verify pr">
+			<label >邮箱验证码</label>
+			<input type="text" value="" class="f-input ui-textbox ipttxt"  name="emsms_code" id="emsms_code" >
+			<input type="button" value="获取验证码" class="sendsms_button f_l btn_disable " id="get_emregsms_code" class="ml5 f_l"  />
+			<span class="hint"> 输入收到的邮箱验证码</span>
+		</div>
+		<div class="blank20"></div>
+		<div style="padding-left:190px;_padding-left:180px;">
+			<input type="button" class="sub_btn" id="settings-email-submit" name="commit" value="绑定邮箱">
+		</div>
+	</div>
+	{/if}
+	
+</div>
+
+<script type="text/javascript">
+
+var regsiter_vy_time = null;  	//定义时间
+var is_lock_send_vy = false;	//解除锁定
+var left_rg_time = 0;			//开始时间
+function left_time_to_send_regvy(){
+	clearTimeout(regsiter_vy_time);
+	if(left_rg_time > 0){
+		regsiter_vy_time = setTimeout(left_time_to_send_regvy,1000);
+		$("#get_emregsms_code").val("获取验证码"+left_rg_time);
+		$("#get_emregsms_code").addClass("btn_disable");
+		left_rg_time -- ;
+	}
+	else{
+		is_lock_send_vy = false;
+		$("#get_emregsms_code").removeClass("btn_disable");
+		$("#get_emregsms_code").val("重新获取验证码");
+		
+		left_rg_time = 0;
+	}
+}
+	
+$("#get_emregsms_code").click(function(){
+	if(is_lock_send_vy || $(this).hasClass(".btn_disable")){
+		return false;
+	}
+	is_lock_send_vy = true;
+	var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=get_unit_email_verifys";
+	var query = new Object();
+	if($("#settings-email").val()=="")
+		query.user_email =  $("#settings-old-email").val();
+	else
+		query.user_email =  $("#settings-email").val();
+		
+	$.ajax({ 
+		url: ajaxurl,
+		data:query,
+		type: "POST",
+		dataType: "json",
+		success: function(result){
+			if(result.status==1)
+			{
+				left_rg_time = 60;
+				left_time_to_send_regvy();
+				$.showSuccess(result.info,function(){
+					to_send_msg = true;
+				});
+			}
+			else
+			{	
+				$.showErr(result.info,function(){is_lock_send_vy = false;});
+				
+				//formError($("#settings-old-email"),result.info);
+				return false;
+			}
+		}
+	});	
+}); //发送邮箱验证码
+
+$("#settings-old-email").bind("blur",function(){
+	var obj = $(this);
+	
+	if(!$.checkEmail(obj.val()))
+	{
+		$("#get_emregsms_code").addClass("btn_disable");
+		return false;
+	}	
+	var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=check_field";
+	var query = new Object();
+	query.field_name = "email";
+	query.field_data = $.trim(obj.val());
+	$.ajax({ 
+		url: ajaxurl,
+		data:query,
+		type: "POST",
+		dataType: "json",
+		success: function(data){
+			if(data.status==1)
+			{
+				$("#get_emregsms_code").removeClass("btn_disable");
+				return false;
+			}
+			else
+			{
+				formError($("#signup-email-address"),data.info);
+				return false;
+			}
+		}
+	});	
+});
+
+$("#settings-email").bind("blur",function(){
+	var obj = $(this);
+	
+	if($.trim(obj.val()).length == 0)
+	{
+		if(!$.checkEmail($("#settings-old-email").val())){
+			$("#get_emregsms_code").addClass("btn_disable");
+		}
+		else{
+			$("#get_emregsms_code").removeClass("btn_disable");
+		}
+		return false;
+	}
+	
+	if(!$.checkEmail(obj.val()))
+	{
+		$("#get_emregsms_code").addClass("btn_disable");
+		return false;
+	}	
+	var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=check_field";
+	var query = new Object();
+	query.field_name = "email";
+	query.field_data = $.trim(obj.val());
+	$.ajax({ 
+		url: ajaxurl,
+		data:query,
+		type: "POST",
+		dataType: "json",
+		success: function(data){
+			if(data.status==1)
+			{
+				$("#get_emregsms_code").removeClass("btn_disable");
+				return false;
+			}
+			else
+			{
+				formError($("#signup-email-address"),data.info);
+				return false;
+			}
+		}
+	});	
+});
+	
+
+
+$("#settings-email-submit").unbind('click');
+$("#settings-email-submit").bind("click",function(){
+	{if $manageagency_info.email neq ''}
+		if($.trim($("#settings-old-email").val()).length == 0 )
+		{
+			$.showErr("请输入原邮箱",function(){
+				$("#settings-old-email").focus();
+			});
+			
+			return false;
+		}
+		if(!$.checkEmail($("#settings-old-email").val()))
+		{		
+			$.showErr("原邮箱格式错误",function(){
+				$("#settings-old-email").focus();	
+			});
+			return false;
+		}
+	{/if}
+	{if $manageagency_info.email neq ''}
+	if($.trim($("#settings-email").val()).length > 0 )
+	{
+	{/if}
+		if(!$.checkEmail($("#settings-email").val()))
+		{		
+			$.showErr("新邮箱格式错误",function(){
+				$("#settings-email").focus();	
+			});
+			return false;
+		}
+	{if $manageagency_info.email neq ''}
+	}
+	{/if}
+	
+	
+	var query = new Object();
+	query.is_ajax = 1;
+	query.oemail =  $.trim($("#settings-old-email").val());
+	query.email = $.trim($("#settings-email").val());
+	query.code = $("#emsms_code").val();
+	var smeail = query.oemail;
+	if(query.email!=""){
+		smeail = query.email;
+	}
+	$.ajax({
+		url:'{url x="index" r="manageagency#saveemail"}',
+		data:query,
+		type:"post",
+		dataType:"json",
+		
+		success:function(ajaxobj){
+			
+			$.showSuccess(ajaxobj.info);
+			if(ajaxobj.status)
+			{
+				window.location.reload();
+			}
+		}
+		,error:function(){
+			$.showErr("请求数据失败!");
+		}
+	});
+});
+</script>
+

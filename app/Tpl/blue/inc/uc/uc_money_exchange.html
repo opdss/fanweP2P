@@ -1,0 +1,49 @@
+<?php
+$this->_var['exjs'][] = $this->_var['TMPL_REAL']."/js/exchange.js";
+$this->_var['cexjs'][] = $this->_var['TMPL_REAL']."/js/exchange.js";
+?>
+<script type="text/javascript">
+var exchange_json_data = {$exchange_json_data};
+</script>
+<script type="text/javascript" src="{function name="parse_script" v="$exjs" c="$cexjs"}"></script>
+
+<div class="inc wb">
+	<div class="inc_main">		
+		<div id="dashboard" class="dashboard">
+			<ul>
+				<li {if $ACTION_NAME eq 'index'}class="current"{/if}><a href="{url x="index" r="uc_money#index"}">{$LANG.UC_LOGS}</a></li>
+				<li {if $ACTION_NAME eq 'incharge'}class="current"{/if}><a href="{url x="index" r="uc_money#incharge"}">{$LANG.UC_MONEY_INCHARGE}</a></li>
+				<li {if $ACTION_NAME eq 'incharge_log'}class="current"{/if}><a href="{url x="index" r="uc_money#incharge_log"}">{$LANG.UC_MONEY_INCHARGE_LOG}</a></li>
+				<li {if $ACTION_NAME eq 'carry'}class="current"{/if}><a href="{url x="index" value="uc_money#carry"}">{$LANG.UC_CARRY}</a></li>
+				{if $allow_exchange}
+				<li {if $ACTION_NAME eq 'exchange'}class="current"{/if}><a href="{url x="index" value="uc_money#exchange"}">{$LANG.UC_EXCHANGE}</a></li>
+				{/if}
+			</ul>
+		</div>
+	
+		
+		<div class="pd10" style="width:600px;">
+			兑换数量：&nbsp;&nbsp;
+			<input type="text" class="f-input" name="amountdesc" id="amountdesc" size="4"  />
+			&nbsp;&nbsp;
+			<select name="key" id="key">
+				{foreach from=$exchange_data key=key item=exchange_desc}
+				<option value="{$key}" rel="{$exchange_desc.title}">{$exchange_desc.title}({$exchange_desc.ratiodesc} {$exchange_desc.title}:{$exchange_desc.ratiosrc} {$exchange_desc.srctitle})</option>
+				{/foreach}
+			</select>
+			&nbsp;&nbsp;
+			所需
+			&nbsp;&nbsp;
+			<input type="text" class="f-input" name="amountsrc" id="amountsrc"   size="4"  onfocus="this.blur();" />
+			&nbsp;&nbsp;
+			<span id="titlesrc"></span>
+			<div class="blank"></div>
+			登录密码：&nbsp;&nbsp;
+			<input type="password" name="user_pwd" id="user_pwd" class="f-input" />
+			<div class="blank"></div>
+			<input type="button" id="doexchange" value="兑换" class="sub_btn" />
+		</div><!--end exchange_box-->
+		
+	</div>
+	<div class="inc_foot"></div>
+</div>

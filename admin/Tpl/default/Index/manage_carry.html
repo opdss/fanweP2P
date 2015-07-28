@@ -1,0 +1,74 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<script type="text/javascript">
+//完全删除
+ function addmanage(){
+	 location.href = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=add_manage_carry";
+	 
+}
+ function delmanage(id){
+	 if(!id)
+		{	
+			idBox = $(".key:checked");
+			if(idBox.length == 0)
+			{
+				alert(LANG['DELETE_EMPTY_WARNING']);
+				return;
+			}
+			idArray = new Array();
+			$.each( idBox, function(i, n){
+				idArray.push($(n).val());
+			});
+			id = idArray.join(",");
+		}
+
+	 	
+		if(confirm(LANG['CONFIRM_DELETE']))
+		$.ajax({ 
+				url: ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=de_manage_carry&id="+id, 
+				data: "ajax=1",
+				dataType: "json",
+				success: function(obj){
+					$("#info").html(obj.info);
+					if(obj.status==1)
+					location.href=location.href;
+				}
+		});
+ }
+</script>
+<div class="main">
+<div class="main_title">管理员提款明细</div>
+
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		
+		<input type="hidden" value="Index" name="m" />
+		<input type="hidden" value="manage_carry" name="a" />
+		<input type="hidden" value="{$user_info.id}" name="id" />
+		
+		<input type="button" class="button" value="新增" onclick="addmanage();" />
+		<input type="button" class="button" value="删除" onclick="delmanage();" />
+	</form>
+</div>
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="m_carry" 
+	checkbox="true" 
+	action="true" 
+	datasource="manage_carry_list" 
+	show="id:{%ID}|50px,admin_id:管理员编号,admin_name:管理员姓名,money|format_price:提现金额,memo:提款备注,create_time|to_date:创建时间" 
+	actionlist="delmanage:{%FOREVERDEL}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

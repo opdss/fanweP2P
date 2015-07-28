@@ -1,0 +1,39 @@
+{include file="inc/header.html"} 
+<div class="blank"></div>
+
+	<div class="inc wb">
+		<div class="user_inc_top">{$page_title}</div>
+		<div class="inc_main pd10 clearfix">
+				<div class="msg_box">
+						<h2>{$LANG.REGISTER_MAIL_SEND_SUCCESS}</h2>
+						
+						<div class="notice">
+							<h2 class="notice-title">{$LANG.NEXT_TO_VERIFY}</h2>
+							<div>
+								<p>
+									<?PHP echo sprintf($GLOBALS['lang']['SENT_VERIFY_MAIL_FOR_VERIFY'],"<span class='red'>".$this->_var['user_email']."</span>");?>																
+								</p>
+							</div>
+							
+							{if $gocheck_url neq ''}
+							<a target="_blank" href="{$gocheck_url}" class="gomailcheck">{$LANG.GO_ACTIVE_NOW}</a>
+							{/if}
+							<div class="help-tip">
+								<h3 class="help-title">{$LANG.NOT_RECIEVE_EMAIL}</h3>
+								<ul class="help-list">
+									<li>{$LANG.MAIL_IS_CONSIDER_AS_TRASH}</li>
+									<li>
+										<?PHP echo sprintf($GLOBALS['lang']['NO_RECIEVE_EMAIL_TIP'],$this->_var['user_email'],app_conf("REPLY_ADDRESS"));?>
+										
+									</li>
+
+								</ul>
+							</div>
+						</div>
+				</div>		
+		</div><!--end inc_main-->		
+		<div class="inc_foot"></div>
+	</div>
+
+
+{include file="inc/footer.html"}

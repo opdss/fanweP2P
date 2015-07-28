@@ -1,0 +1,159 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/deals.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--已发布贷款列表-->
+
+<div>
+	<div class="blank15"></div>
+	<div class="choose">
+		<table>
+			<tr>
+				<th {if $data.status eq 0}class="y"{/if}><a href="{wap_url a="index" r="uc_borrowed" p="status=0"}">全部</a></th>
+				<th {if $data.status eq 1}class="y"{/if}><a href="{wap_url a="index" r="uc_borrowed" p="status=1"}">进行中</a></th>
+				<th {if $data.status eq 2}class="y"{/if}><a href="{wap_url a="index" r="uc_borrowed" p="status=2"}">还款中</a></th>
+				<th {if $data.status eq 3}class="y"{/if}><a href="{wap_url a="index" r="uc_borrowed" p="status=3"}">已还清</a></th>
+				<th {if $data.status eq 4}class="y"{/if}><a href="{wap_url a="index" r="uc_borrowed" p="status=4"}">满标</a></th>
+				<th {if $data.status eq 5}class="y"{/if}><a href="{wap_url a="index" r="uc_borrowed" p="status=5"}">流标</a></th>
+			</tr>
+		</table>
+	</div>
+	<div class="blank15"></div>
+
+	<ul class="detail_list">
+		{foreach from=$data.item item="deal"}
+		  {if $deal.deal_status neq 4}
+		    <li>
+			{if $deal.deal_status eq 1}
+			<div class="h clearfix b_3b95d3">
+				<span class="Status">进行中</span>
+				<div class="bor clearfix">
+					<span class="name f_l">{$deal.name}</span>
+				</div>
+			</div>
+			{/if}
+			{if $deal.deal_status eq 2}
+			<div class="h clearfix b_ff6f6f">
+				<span class="Status">满标</span>
+				<div class="bor clearfix">
+					<span class="name f_l">{$deal.name}</span>
+				</div>
+			</div>
+			{/if}	
+			{if $deal.deal_status eq 3}
+			<div class="h clearfix b_b0b0b0">
+				<span class="Status">流标</span>
+				<div class="bor clearfix">
+					<span class="name f_l">{$deal.name}</span>
+				</div>
+			</div>
+			{/if}
+			{if $deal.deal_status eq 5}
+			<div class="h clearfix b_a4ce1c">
+				<span class="Status">已还清</span>
+				<div class="bor clearfix">
+					<span class="name ">{$deal.name}</span>
+					<a href="#" class="f_r">查看电子协议</a>
+				</div>
+			</div>
+			{/if}
+			{if $deal.deal_status eq 0}
+			<div class="h clearfix b_3b95d3">
+				<span class="Status">待审核</span>
+				<div class="bor clearfix">
+					<span class="name ">{$deal.name}</span>
+				</div>
+			</div>
+			{/if}		
+			<div class="bor_1">
+				<div class="middle clearfix">
+					<table>
+						<tr>
+							<td>
+								<span class="name">金额</span>
+								<span>{$deal.borrow_amount_format}</span>
+							</td>
+							<td>
+								<span class="name">年利率</span>
+								<span class="c_ff8800">{$deal.rate}%</span>
+							</td>
+							<td>
+								<span class="name">期限</span>
+								<span>{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</span>
+							</td>
+							<td>
+								<div class="content_list">
+						            <div class="content_pic">
+						                <h1>{$deal.progress_point}</h1>
+						                <div class="content_pic_1" style="height:{$deal.progress_point}%;">
+						                <span></span>
+						                </div>
+						            </div>
+	                             </div>
+						 </td>
+						</tr>
+					</table>
+				</div>
+				<div class="bottom clearfix">
+					<span class="time">发布日期 &nbsp; {function name="to_date" v="$deal.create_time" f="Y-m-d"}</span>
+					<div class="f_r">
+						<a href="{wap_url a="index" r="deal_mobile" p="id=$deal.id"}" class="but_c c_aad421 bor_aad421">标的详情</a>
+					{if $deal.deal_status eq 5}
+					<a href="{wap_url a="index" r="uc_refund_detail" p="id=$deal.id"}" class="but_c bor_3b95d3 c_3b95d3">还款详情</a>
+					{/if}
+					</div>
+					
+			   </div>
+			</div>
+		</li>
+		{else}
+		<li>
+			<div class="h clearfix b_ff8800">
+				<span class="Status">还款中</span>
+				<div class="bor clearfix">
+					<span class="name f_l">{$deal.name}</span>
+					<a href="#" class="f_r">查看电子协议</a>
+				</div>
+			</div>
+			<div class="bor_1">
+				<div class="middle clearfix">
+				      <ul class="list">
+				      	<li><span class="name">借款金额</span>{$deal.borrow_amount_format}</li>
+						<li><span class="name">年利率</span><span class="c_ff8800">{$deal.rate}%</span></li>
+						<li><span class="name">已还本息</span>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.repay_money f=2}</li>
+						<li><span class="name">罚息</span>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.impose_money f=2}</li>
+						<li><span class="name">本期还款</span>
+						{if (int)$deal.end_repay_time eq (int)$deal.next_repay_time}
+	                	{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.true_last_month_repay_money f=2}
+						{else}
+						{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.true_month_repay_money f=2}
+						{/if}
+						</li>
+						<li><span class="name">期限</span>{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}月{/if}</li>
+				      </ul>
+				</div>
+				<div class="bottom clearfix">
+					<span class="time">{if (int)$deal.end_repay_time eq (int)$deal.next_repay_time}还款日{else}下一还款日{/if} &nbsp; {$deal.next_repay_time_format}</span>
+					<a href="{wap_url a="index" r="uc_inrepay_refund" p="id=$deal.id"}" class="but_c c_aad421 bor_aad421">提前还款</a>
+					<a href="{wap_url a="index" r="uc_quick_refund" p="id=$deal.id"}" class="but_c bor_3b95d3 c_3b95d3">还款详情</a>
+					
+			   </div>
+			</div>
+		</li>	
+		{/if}
+		{/foreach}
+		
+		
+	</ul>
+	<div class="blank15"></div>
+</div>
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

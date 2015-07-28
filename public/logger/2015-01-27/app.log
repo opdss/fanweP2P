@@ -1,0 +1,26 @@
+02:56:04	UPDATE  `p2p`.`fanwe_admin` SET  `login_ip` =  '27.151.60.191' WHERE  `fanwe_admin`.`id` =3 LIMIT 1 ;
+
+02:56:16	UPDATE  `fanwe_admin` SET  `login_ip` =  '27.151.60.191' WHERE  `fanwe_admin`.`id` =3 LIMIT 1 ;
+
+03:02:33	truncate table 'fanwe_log'
+
+03:02:59	drop table 'fanwe_log'
+
+03:03:23	select * from 'fanwe_log'
+
+03:03:43	select * from `fanwe_log`
+
+03:05:12	delete from `fanwe_log` where `fanwe_log` .`id` = 5 limit 1
+
+03:05:38	delete from `fanwe_log` where `fanwe_log` .`id` = 10160 limit 1
+
+03:06:03	delete from `fanwe_log` where `fanwe_log` .`id` = 10159 limit 1
+
+03:06:08	delete from `fanwe_log` where `fanwe_log` .`id` = 10158 limit 1
+
+03:06:12	delete from `fanwe_log` where `fanwe_log` .`id` = 10157 limit 1
+
+03:06:24	delete from `fanwe_log` where `fanwe_log` .`id` = 10156 limit 1
+
+03:06:38	select   * from `fanwe_log`
+

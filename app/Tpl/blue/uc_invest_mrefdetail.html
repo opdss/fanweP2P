@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" /> 
+<meta http-equiv="Cache-control" content="no-cache" />
+<title>{if $page_title}{$page_title} - {/if}{if $show_site_titile eq 1}{function name='app_conf' value='SHOP_SEO_TITLE'} - {/if}{$site_info.SHOP_TITLE}</title>
+<meta name="keywords" content="{if $page_keyword}{$page_keyword}{/if}{$site_info.SHOP_KEYWORD}" />
+<meta name="description" content="{if $page_description}{$page_description}{/if}{$site_info.SHOP_DESCRIPTION}" />
+<?php
+$this->_var['uc_deal_mobile'][] = $this->_var['TMPL_REAL']."/css/uc_deal_mobile.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$uc_deal_mobile"}" />
+</head>
+<body>
+
+<div class="main">
+	
+	
+		
+	<div class="content">
+		<div class="mtitle">
+		  &nbsp;<b>还款详情</b>
+		</div>
+		{foreach from=$user_load_ids item="user_load" name="user_load" key=key}
+		<div style="height:15px; overflow:hidden; clear:both;"></div>
+		<div class="box-hd">
+			<span>{$deal.name} 第<?php echo $this->_var['key'] + 1; ?>次投标的回款记录!</span>
+		</div>
+		<div class="jklb">
+		<ul>
+			<li>
+				<span class="label">借款金额</span>
+				<span class="dbox">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$user_load.money f=2}</span>
+			</li>
+		
+		
+			<li>
+				<span class="label">年利率</span>
+				<span class="dbox">{function name="number_format" v=$deal.rate f=2}%</span>
+			</li>
+			
+    	    
+			<li>
+			 <span class="label">期限</span>
+		     <span class="dbox">{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</span>
+        	</li>
+			
+
+			<li>
+				<span class="label">已还本息</span>
+				<span class="dbox">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$repay_money f=2}</span>
+			</li>
+			
+
+			<li>
+				<span class="label">管理费</span>
+				<span class="dbox">￥{function name="number_format" v=$manage_fee f=2}</span>
+			</li>
+			
+			{if $impose_money neq 0}
+			<li>
+				<span class="label">逾期/违约</span>
+				<span class="dbox">
+					￥{function name="number_format" v=$impose_money f=2}
+				</span>
+			</li>
+			{/if}
+			
+			<li><span class="label">还款方式</span>
+				<span class="dbox">
+					{function name="loantypename" v="$deal.loantype"}
+				</span>
+			</li>
+		</ul>
+		</div>
+		
+				
+		<div style="height:15px; overflow:hidden; clear:both;"></div>
+		
+		
+		<div class="box-hd">
+			<span>回款记录</span>
+		</div>
+	
+		<div class="jkjl">
+		<ul>
+		<?php $idx=0;?>
+		{foreach from=$loan_list item=loan key=key name="loans"}
+			<li>
+				<span class="abc">
+					还款日:{if $deal.loantype eq 0 || $deal.loantype eq 1 || $smarty.foreach.loans.last}
+                	{function name="to_date" v=$loan.repay_time f="Y-m-d"}
+					{/if}
+				</span>
+			</li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					实际还款日
+				</span>
+				<span class="dbox">{function name="to_date" v=$loan.true_repay_time f="Y-m-d"}</span>
+			</li>
+			
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					已还金额
+				</span>
+				<span class="dbox">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$loan.repay_money f=2}</span>
+			</li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					借款管理费
+				</span>
+				<span class="dbox">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$loan.manage_money f=2}</span>
+			</li>
+			
+		    <li>
+		    	<span class=" label f_gray">
+		    		<i class="dot"></i>
+		    		逾期/违约费
+		    	</span>
+		    	<span class="f_red dbox">{function name="app_conf" v="CURRENCY_UNIT"}{if $loan.impose_money neq 0}{function name="number_format" v=$loan.impose_money f=2}{else}0.00{/if}</span>
+		    </li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					状态
+				</span>
+				<span class="f_green dbox">
+				{if $loan.status eq 0}
+					提前还款
+					{elseif $loan.status eq 1}
+					准时还款
+					{elseif $loan.status eq 2}
+					逾期还款
+					{elseif $loan.status eq 3}
+					严重逾期
+					{/if}
+				</span>
+			</li>
+			
+		{/foreach}
+		</ul>
+		
+		<ul>
+				
+			<li class="di">
+				<span>
+				{if $inrepay_info}
+					因在<span class="f_red">
+					
+					{function name="to_date" v=$inrepay_info.true_repay_time f="Y-m-d"}</span>提前还款<span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$inrepay_info.repay_money f=2}</span>，故计算方式改变。
+						<div class="blank1"></div>
+						{/if}
+						管理费：<span class="f_red">￥{function name="number_format" v=$manage_fee f=2}</span>
+						<div class="blank1"></div>
+						{if $impose_money neq 0}
+						逾期/违约：<span class="f_red">￥{function name="number_format" v=$impose_money f=2}</span>
+						{/if}
+						<div class="blank1"></div>
+						本息还款：<span class="f_red">￥{function name="number_format" v=$repay_money f=2}</span>
+						</span>
+				</span>
+			</li>
+		</ul>
+		
+		{/foreach}
+		</div>
+		<div style="height:15px; overflow:hidden; clear:both;"></div>
+	</div>
+	<div style="clear: both;"></div>
+	
+	
+	
+	
+</div>
+
+</body>
+</html>

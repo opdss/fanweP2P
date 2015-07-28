@@ -1,0 +1,83 @@
+.login_block .left_block{ width:580px;}
+.login_block .right_block{
+	width: 338px;
+border: 1px solid #ccc;
+padding: 12px 14px;
+position: relative;
+padding-bottom: 90px;}
+.login_block .right_block h3{ font-size: 20px;
+color: #000;
+margin-bottom: 10px; font-weight:100;}
+
+.reg_bottom {
+bottom: 0px;
+background: #f2f2f2;
+position: absolute;
+width: 342px;
+border-top: 1px solid #ccc;
+margin-left: -14px;
+padding: 12px;
+font-size: 14px;
+}
+.reg_bottom h1 {
+font-size: 18px;
+margin-bottom: 3px;
+font-weight:100;
+}
+.reg_bottom a {
+color: #F30;
+}
+.login_submit {
+color: #fff;
+width: 336px;
+height: 42px;
+font-size: 15px;
+background: #ED2200;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+border: 0px;
+margin-top: 14px;
+}
+.right_block .inp {
+width: 290px;
+height: 42px;
+border: 1px solid #ccc;
+padding-left: 42px;
+position: relative;
+margin-bottom:14px;
+}
+.right_block .inp .ico {
+position: absolute;
+top: 0px;
+left: 0px;
+width: 42px;
+height: 42px;
+background: url(../images/debit/r-ico-bg.png) no-repeat;
+}
+.right_block .inp .Prompt {
+line-height: 42px;
+color: #a9a9a9;
+display: block;
+position: absolute;
+top: 0px;
+left: 42px;
+}
+.right_block .inp input {
+border: none;
+width: 100%;
+height: 42px;
+line-height: 42px;
+outline: medium none;
+}
+.right_block .user_password .ico {
+background-position: 0px -368px;
+}
+.right_block .user_name .ico {
+background-position: 0px 0px;
+}
+
+
+
+
+

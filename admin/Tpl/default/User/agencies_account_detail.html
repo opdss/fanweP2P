@@ -1,0 +1,105 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<script type="text/javascript">
+
+</script>
+<div class="main">
+<div class="main_title">
+		{$user_info.user_name} 
+		{%USER_ACCOUNT_DETAIL}
+		
+</div>
+<div class="blank5"></div>
+<div class="main_title">
+	<div class="sub_nav">
+		<input class="button conf_btn <if condition="$t eq money">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=agencies_account_detail&id={$user_id}&t=money'" value="资金日志">
+		<input class="button conf_btn <if condition="$t eq freeze">currentbtn</if>" type="button" onclick="location.href='__APP__?m=User&a=agencies_account_detail&id={$user_id}&t=freeze'" value="冻结资金">
+	</div>
+</div>
+
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%KEYWORD}：<input type="text" class="textbox" name="log_info" value="{:trim($_REQUEST['log_info'])}" />		
+		
+		{%LOG_TIME}：
+		<input type="text" class="textbox" name="log_begin_time" id="log_begin_time" value="{:trim($_REQUEST['log_begin_time'])}" onfocus="return showCalendar('log_begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_log_begin_time');" />
+		<input type="button" class="button" id="btn_log_begin_time" value="{%SELECT_TIME}" onclick="return showCalendar('log_begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_log_begin_time');" />	
+		-
+		<input type="text" class="textbox" name="log_end_time" id="log_end_time" value="{:trim($_REQUEST['log_end_time'])}" onfocus="return showCalendar('log_end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_log_end_time');" />
+		<input type="button" class="button" id="btn_log_end_time" value="{%SELECT_TIME}" onclick="return showCalendar('log_end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_log_end_time');" />	
+		
+		<input type="hidden" value="User" name="m" />
+		<input type="hidden" value="agencies_account_detail" name="a" />
+		<input type="hidden" value="{$user_info.id}" name="id" />
+		<input type="hidden" value="{$t}" name="t" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+<if condition="$t eq money">
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="log" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,money|format_price:操作金额
+		,account_money|format_price:结余
+		,memo:操作备注
+		,create_time_ymd:操作时间"
+		/> 
+<elseif condition="$t eq point"/>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="log" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,point:操作积分
+		,account_point:结余
+		,memo:操作备注
+		,create_time_ymd:操作时间
+		"  
+/> 
+
+<elseif condition="$t eq freeze"/>
+	<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="log" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,lock_money:操作金额
+		,account_lock_money:冻结资金
+		,memo:操作备注
+		,create_time_ymd:操作时间
+		"
+		/> 
+	 
+<elseif condition="$t eq quota"/>
+
+	<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="log" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,quota:额度
+		,log_info:操作类型
+		,log_time|to_date:操作时间"  
+		
+		/> 
+	 
+</if>
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

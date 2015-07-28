@@ -1,0 +1,629 @@
+{include file="debit/debit_header.html"}
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/debit_register.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<div class="blank20"></div>
+<!--开始-->
+  <div class="order_sure wrap">
+      <div class="border0" style="height:575px;">
+          <div class="p-lr20">
+              <div class="register_nav_list">
+                  <ul>
+                      <li class="y">手机注册</li><!--图上就只有手机注册，若有两个以上注册方式，选项卡就当选项卡-->
+                      <li>邮箱注册</li>
+                  </ul>
+                  <div class="border_0"></div><!--选项卡下面的边-->
+              </div>
+              <div class="blank30"></div>
+              <div class="r-content clearfix">
+              	<form action="{url x="debit" r="debit_user#doregister"}" method="post" id="signup-user-form">
+                <input type="hidden" id="REGISTER_TYPE" name="REGISTER_TYPE" value="1"/>
+                  <div class="f_l clearfix">
+                       <label class="tr clearfix" >
+                          <span class="name">用户名：</span>
+                          <div class="inp user_name">
+                              <span class="ico"></span>
+                              <input type="text" value="{$reg_name}" class="f-input ui-textbox" holder="请输入注册账号" id="signup-username" name="user_name" size="30">
+							  <span class="f-input-tip Error"></span>
+                          </div>
+                      </label>
+                     	
+                          <label class="tr clearfix" id="m1">
+                              <span class="name">手机号码：</span>
+                              <div class="inp user_phone">
+                                  <span class="ico"></span>
+                                  <input type="text" value="" holder="输入手机号码" class="f-input ui-textbox" id="settings-mobile" name="mobile" size="30">
+                                  <span class="f-input-tip Error"></span> 
+                              </div>
+                           </label>
+                         
+                          	  <label class="tr clearfix" id="m2">
+                                  <span class="name">手机验证码：</span>
+                                  <div class="inp user_phone_Verification" style=" width:144px; float:left;">
+                                      <span class="ico"></span>
+                                       <input type="text" value="" class="f-input ui-textbox" holder="请输入验证码" name="sms_code" >
+                                  </div>
+                                  <input type="button" value="获取验证码" class="sendsms_button f_r" id="get_regsms_code" class="ml5 f_l"  />
+                                  <span class="f-input-tip Error"></span>                                   
+                               </label>
+                          
+                      
+                     
+                      		<label class="tr clearfix" id="e1">
+                              <span class="name">{$LANG.USER_TITLE_EMAIL}：</span>
+                              <div class="inp user_phone">
+                                  <span class="ico"></span>
+                                  <input type="text" value="" class="f-input ui-textbox" holder="输入常用的邮箱" id="signup-email-address" name="email" size="30">
+                                  <span class="f-input-tip Error"></span> 
+                              </div>
+                           </label>
+						 
+                          	  <label class="tr clearfix" id="e2">
+                                  <span class="name">邮箱验证码：</span>
+                                  <div class="inp user_phone_Verification" style=" width:144px; float:left;">
+                                      <span class="ico"></span>
+                                       <input type="text" value="" class="f-input ui-textbox"  holder="请输入验证码" name="emsms_code" >
+                                  </div>
+                                  <input type="button" value="获取验证码" class="sendsms_button f_r " id="get_emregsms_code" class="ml5 f_l"  />
+                                  <span class="f-input-tip Error"></span>                                   
+                               </label>
+                        
+
+                       <label class="tr clearfix" >
+                          <span class="name">密码：</span>
+                          <div class="inp user_password">
+                              <span class="ico"></span>
+                              <input type="password" class="f-input ui-textbox" holder="输入密码" id="signup-password" size="30">
+                              <input type="hidden" id="signup-password-ipt" name="user_pwd">
+                              <span class="f-input-tip Error"></span> 
+                          </div>
+                       </label>
+                       <label class="tr clearfix" >
+                          <span class="name">确认密码：</span>
+                          <div class="inp user_password-confirm">
+                              <span class="ico"></span>
+                              <input type="password" class="f-input ui-textbox" holder="再次输入密码" id="signup-password-confirm"size="30">
+							  <input type="hidden" id="signup-password-confirm-ipt" name="user_pwd_confirm">
+							  <span class="f-input-tip Error"></span>
+                          </div>
+                       </label>
+                       {if app_conf("VERIFY_IMAGE") eq 1 && app_conf("USER_VERIFY") gte 3}
+                       <label class="tr clearfix" id="m3">
+                            <span class="name">请输入验证码：</span>
+                            <div class="inp user_phone_Verification" style=" width:144px; float:left;">
+                                <span class="ico"></span>
+                                <input type="text" value="" class="f-input ui-textbox f_l" name="verify" holder="请输入验证码" onfocus="$('#signup-user-email-form #JverifyImg').attr('src','{$APP_ROOT}/verify.php?w=89&h=44&rand='+ Math.random());"  />	
+                              <span class="f-input-tip Error"></span>
+                            </div>
+                            <img class="f_r" src="{$APP_ROOT}/verify.php?w=89&h=44&rand={function name="rand"}" id="JverifyImg" onclick="this.src='{$APP_ROOT}/verify.php?w=89&h=44&rand='+ Math.random();" title="看不清楚？换一张" />			
+                            <span class="f-input-tip Error"></span>                                   
+                         </label>
+
+                       {/if}
+                       
+                       <div class="Provision clearfix">
+                       	  <input type="checkbox" name="agreement" id="J_agreement" value="1" style=" float:left; margin-top:2px; margin-right:10px;"/>
+                          同意 <a  class="c_3479c7" href="{url x="debit" r="debit_article" p="is_ajax=1"}" id="agreement" class="f_blue" >《领白条用户注册协议》</a>
+                       </div>
+                       <div class="submit_block">
+                       	  <input type="submit" class="submit" id="signup-mobile-submit" name="commit" value="{$LANG.REGISTER}">		
+                      </div>
+                  </div>
+                  </form>
+                  <div class="f_r" style=" padding-right:250px;">
+                      <p style=" color:#000; font-size:14px; line-height:25px;">已有领白条账号:</p>
+                      <a class="c_3479c7" href="{url x="debit" r="debit_user#login"}">立即登录>></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+	
+<!--结束-->
+<script type="text/javascript">
+
+var regsiter_vy_time = null;  	//定义时间
+var is_lock_send_vy = false;	//解除锁定
+var left_rg_time = 0;			//开始时间
+
+function left_time_to_send_regvy(){
+	clearTimeout(regsiter_vy_time);
+	if(left_rg_time > 0){
+		regsiter_vy_time = setTimeout(left_time_to_send_regvy,1000);
+		$("#get_regsms_code").val(left_rg_time+"秒后重新获取验证码");
+		$("#get_regsms_code").addClass("btn_disable");
+		left_rg_time -- ;
+	}
+	else{
+		is_lock_send_vy = false;
+		$("#get_regsms_code").removeClass("btn_disable");
+		$("#get_regsms_code").val("重新获取验证码");
+		
+		left_rg_time = 0;
+	}
+}
+
+var regsiter_vy_times = null;  	//定义时间
+var is_lock_send_vys = false;	//解除锁定
+var left_rg_times = 0;			//开始时间
+function left_time_to_send_regvys(){
+	clearTimeout(regsiter_vy_times);
+	if(left_rg_times > 0){
+		regsiter_vy_times = setTimeout(left_time_to_send_regvys,1000);
+		$("#get_emregsms_code").val(left_rg_times+"秒后重新获取验证码");
+		$("#get_emregsms_code").addClass("btn_disable");
+		left_rg_times -- ;
+	}
+	else{
+		is_lock_send_vys = false;
+		$("#get_emregsms_code").removeClass("btn_disable");
+		$("#get_emregsms_code").val("重新获取验证码");
+		left_rg_times = 0;
+	}
+}
+
+
+$(document).ready(function(){
+	show_v_box();
+	$(".register_nav_list li").click(function(){
+		$(".register_nav_list li").removeClass("y");
+		$(this).addClass("y");
+		show_v_box();
+	});
+	
+	$("#get_regsms_code").click(function(){
+			if(is_lock_send_vy || $(this).hasClass(".btn_disable")){
+				return false;
+			}
+			is_lock_send_vy = true;
+			if(!$.maxLength($("#settings-mobile").val(),11,true))
+			{
+				is_lock_send_vy = false;
+				formError($("#settings-mobile"),"长度不能超过11位");
+				return false;
+			}
+			
+			if($.trim($("#settings-mobile").val()).length == 0)
+			{			
+				is_lock_send_vy = false;
+				formError($("#settings-mobile"),"{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.USER_TITLE_MOBILE}");
+				return false;
+			}	
+			
+			if(!$.checkMobilePhone($("#settings-mobile").val()))
+			{
+				is_lock_send_vy = false;
+				formError($("#settings-mobile"),"{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_MOBILE}");	
+				return false;
+			}	
+			var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=get_register_verify_code";
+			
+			
+			var query = new Object();
+			query.user_mobile =  $.trim($("#settings-mobile").val());
+			$.ajax({ 
+				url: ajaxurl,
+				data:query,
+				type: "POST",
+				dataType: "json",
+				success: function(result){
+					if(result.status==1)
+					{
+						left_rg_time = 60;
+						left_time_to_send_regvy();
+						$.showSuccess(result.info,function(){
+							to_send_msg = true;
+						});
+					}
+					else
+					{	
+						is_lock_send_vy = false;
+						formError($("#settings-mobile"),result.info);
+						return false;
+					}
+				},error:function(){
+					is_lock_send_vy = false;
+				}
+			});	
+		}); //发送手机验证码
+		
+		
+		$("#get_emregsms_code").click(function(){
+			if(is_lock_send_vys || $(this).hasClass(".btn_disable")){
+				return false;
+			}
+			is_lock_send_vys = true;
+			if($.trim($("#signup-email-address").val()).length == 0)
+			{	
+				is_lock_send_vys = false;
+				formError($("#signup-email-address"),"{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.USER_TITLE_EMAIL}");			
+				return false;
+			}
+			if(!$.checkEmail($("#signup-email-address").val()))
+			{
+				is_lock_send_vys = false;
+				formError($("#signup-email-address"),"{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_EMAIL}");
+				return false;
+			}	
+			var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=get_email_verify";
+			var query = new Object();
+			query.user_email =  $("#signup-email-address").val();
+			$.ajax({ 
+				url: ajaxurl,
+				data:query,
+				type: "POST",
+				dataType: "json",
+				success: function(result){
+					if(result.status==1)
+					{
+						left_rg_times = 60;
+						left_time_to_send_regvys();
+						$.showSuccess(result.info,function(){
+							to_send_msg = true;
+						});
+					}
+					else
+					{	
+						is_lock_send_vys = false;
+						formError($("#signup-email-address"),result.info);
+						return false;
+					}
+				}
+			});	
+		}); //发送邮箱验证码
+		
+	$("#signup-email-address").bind("blur",function(){
+		var obj = $(this);
+		if($.trim(obj.val()).length == 0)
+		{
+			formError(obj,"{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.USER_TITLE_EMAIL}");			
+			return false;
+		}
+		if(!$.checkEmail(obj.val()))
+		{
+			formError(obj,"{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_EMAIL}");
+			return false;
+		}	
+		var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=check_field";
+		var query = new Object();
+		query.field_name = "email";
+		query.field_data = $.trim(obj.val());
+		$.ajax({ 
+			url: ajaxurl,
+			data:query,
+			type: "POST",
+			dataType: "json",
+			success: function(data){
+				if(data.status==1)
+				{
+					formSuccess($("#signup-email-address"),"{$LANG.CAN_USED}");
+					$("#get_emregsms_code").removeClass("btn_disable");
+					return false;
+				}
+				else
+				{
+					formError($("#signup-email-address"),data.info);
+					return false;
+				}
+			}
+		});	
+	});
+
+	//邮箱验证
+
+	$("#settings-mobile").bind("blur",function(){
+		var obj = $(this);
+		$("#get_regsms_code").addClass("btn_disable");
+		if(!$.checkMobilePhone(obj.val()))
+		{
+			formError(obj,"{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_MOBILE}");	
+			return false;
+		}	
+		if($.trim(obj.val()).length == 0)
+		{				
+			formError(obj,"{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.USER_TITLE_MOBILE}");
+			return false;
+		}
+		var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=check_field";
+		var query = new Object();
+		query.field_name = "mobile";
+		query.field_data = $.trim(obj.val());
+		$.ajax({ 
+			url: ajaxurl,
+			data:query,
+			type: "POST",
+			dataType: "json",
+			success: function(data){
+				if(data.status==1)
+				{
+					if(query.field_data!='')
+					formSuccess(obj,"{$LANG.CAN_USED}");
+					else
+					formSuccess(obj,"");
+					
+					$("#get_regsms_code").removeClass("btn_disable");
+					return false;
+				}
+				else
+				{					
+					formError(obj,data.info);
+					return false;
+				}
+			}
+		});	
+	}); 
+
+	//手机验证
+	
+
+	$("#signup-mobile-submit").click(function(){
+		var name;
+		name=$.trim($("#signup-user-form #signup-password").val())
+		var reg=/^[a-zA-z0-9]{6,}$/;  
+		var regs=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
+		if(reg.test(name)){	
+			if(regs.test(name)){	
+				formSuccess($("#signup-user-form #signup-password"),"{$LANG.CAN_USED}");
+			}
+			else{
+				formError($("#signup-user-form #signup-password"),"安全等级低，请用数字+字母");
+				return false;
+			}
+		}
+		else{
+			formError($("#signup-user-form #signup-password"),"长度在6~16之间，只能包含字符、数字和下划线。");
+			return false;
+		}
+		if(!$.minLength($("#signup-user-form #signup-password").val(),6,false))
+		{
+			formError($("#signup-user-form #signup-password"),"{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_PWD}");	
+			return false;
+		}
+		var objform = $(this).parent().parent();
+		return checkRegsiter(objform);
+	});//单击提交
+	
+	
+	$("#signup-user-form input,#signup-user-form select").keydown(function(e){ 
+		var objform = $(this).parent().parent();
+		var curKey = e.which; 
+		if(curKey == 13){
+			return checkRegsiter(objform);
+		}; 
+	});
+	
+	
+
+	
+	
+	$("#signup-user-form #signup-username").bind("blur",function(){
+		var obj = $(this);
+		if(!$.minLength(obj.val(),3,true))
+		{
+			formError(obj,"{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_NAME}");		
+			return false;
+		}
+		
+		if(!$.maxLength(obj.val(),16,true))
+		{
+			formError(obj,"{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_NAME}");			
+			return false;
+		}	
+		
+		var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=check_field";
+		var query = new Object();
+		query.field_name = "user_name";
+		query.field_data = $.trim(obj.val());
+		$.ajax({ 
+			url: ajaxurl,
+			data:query,
+			type: "POST",
+			dataType: "json",
+			success: function(data){
+				if(data.status==1)
+				{
+					formSuccess(obj,"{$LANG.CAN_USED}");
+					return false;
+				}
+				else
+				{
+					formError(obj,data.info);
+					return false;
+				}
+			}
+		});	
+	}); //用户名验证
+	
+	
+	$("#signup-user-form #signup-password").bind("blur",function(){
+		var obj = $(this);
+		var name;
+		name=$.trim(obj.val())
+		var reg=/^[a-zA-z0-9]{6,}$/;  
+		var regs=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
+		if(reg.test(name)){	
+			if(regs.test(name)){	
+				formSuccess(obj,"{$LANG.CAN_USED}");
+			}
+			else{
+				formError(obj,"安全等级低，请用数字+字母");
+				return false;
+			}
+		}
+		else{
+			formError(obj,"长度在6~16之间，只能包含字符、数字和下划线。");
+			return false;
+		}
+		if(!$.minLength(obj.val(),6,false))
+		{
+			formError(obj,"{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_PWD}");	
+			return false;
+		}
+		obj.parent().find("#signup-password-ipt").val(obj.val());
+		formSuccess(obj,"{$LANG.CAN_USED}");
+	}); //密码验证
+
+	$("#signup-user-form #signup-password-confirm").bind("blur",function(){
+		var obj = $(this);
+		if(obj.val()!==""){
+			if(obj.val() != obj.parent().parent().parent().find("#signup-password").val())
+			{
+				formError(obj,"{$LANG.USER_PWD_CONFIRM_ERROR}");			
+				return false;
+			}
+		}
+		else{
+			formError(obj,"请输入确认密码");
+			return false;
+		}
+		obj.parent().find("#signup-password-confirm-ipt").val(obj.val());
+		formSuccess(obj,"{$LANG.VERIFY_SUCCESS}");
+	}); //确认密码验证
+	
+	checkReferer();
+	$("#settings-referer").bind("blur",function(){
+		return checkReferer();
+	});
+});
+
+function  checkReferer(){
+	var val = $.trim($("#settings-referer").val());
+	if(val==""){
+		formSuccess($("#settings-referer"),"");
+		return;
+	}
+	
+	var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=check_user";
+		var query = new Object();
+		query.val = val;
+		$.ajax({ 
+			url: ajaxurl,
+			data:query,
+			type: "POST",
+			dataType: "json",
+			success: function(data){
+				if(data.status==1)
+				{
+					formSuccess($("#settings-referer"),"此推荐人信息正确");
+					return false;
+				}
+				else
+				{
+					formError($("#settings-referer"),"您填写的推荐人信息在本平台不存在，此次输入作为备注。");
+					return false;
+				}
+			}
+		});	
+}
+
+function checkRegsiter(obj){
+	
+	if(!$.minLength(obj.find("#signup-username").val(),3,true))
+	{
+		alert("xx")
+		obj.find("#signup-username").focus();
+		$.showErr("{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_NAME}");		
+		return false;
+	}
+	if(!$.maxLength(obj.find("#signup-username").val(),16,true))
+	{
+		obj.find("#signup-username").focus();
+		$.showErr("{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_NAME}");			
+		return false;
+	}
+	
+	if($("#REGISTER_TYPE").val()==1)
+	{
+		if(!$.checkMobilePhone($("#settings-mobile").val()))
+		{
+			$("#settings-mobile").focus();			
+			$.showErr("{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_MOBILE}");	
+			return false;
+		}	
+		if($.trim($("#settings-mobile").val()).length == 0)
+		{
+			$("#settings-mobile").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.USER_TITLE_MOBILE}");
+			return false;
+		}
+	}
+	
+	if($("#REGISTER_TYPE").val()==2){
+		if($.trim($("#signup-email-address").val()).length == 0 )
+		{
+			$("#signup-email-address").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.USER_TITLE_EMAIL}");
+			return false;
+		}
+		if(!$.checkEmail($("#signup-email-address").val()))
+		{
+			$("#signup-email-address").focus();			
+			$.showErr("{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_EMAIL}");
+			return false;
+		}
+
+	}
+	
+
+	if(!$.minLength(obj.find("#signup-password").val(),4,false))
+	{
+		obj.find("#signup-password").focus();
+		$.showErr("{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_PWD}");	
+		return false;
+	}
+	if(obj.find("#signup-password-confirm").val()!==""){
+		if(obj.find("#signup-password-confirm").val() != obj.find("#signup-password").val())
+		{
+			obj.find("#signup-password-confirm").focus();
+			$.showErr("{$LANG.USER_PWD_CONFIRM_ERROR}");			
+			return false;
+		}
+	}
+	else{
+		obj.find("#signup-password-confirm").focus();
+		$.showErr("请输入确认密码");			
+		return false;
+	}//密码
+
+	
+	if(obj.find("#J_agreement:checked").length == 0){
+		$.showErr("请先同意  注册协议 和 隐私条款");
+		return false;
+	}
+	
+	return true;
+}
+
+
+function show_v_box(){
+	if($(".register_nav_list li").attr("class")=="y")
+	{
+		$("#REGISTER_TYPE").val("1");
+		$("#m1").show();
+		$("#m2").show();
+		$("#e1").hide();
+		$("#e2").hide();
+	}
+	else
+	{
+		$("#REGISTER_TYPE").val("2");
+		$("#m1").hide();
+		$("#m2").hide();
+		$("#e1").show();
+		$("#e2").show();
+	}
+}
+
+
+$(function(){
+	$("#agreement").bind("click",function(){
+	 var agreement_url = $(this).attr("href");
+	 $.weeboxs.open(agreement_url+"&title="+encodeURI("领白条用户注册协议"), {boxid:'agreement',contentType:'ajax',showButton:false, showCancel:false, showOk:false,title:'领白条用户注册协议',width:650, height:450,type:'wee'});
+	 return false;
+ });
+});
+
+</script>
+<div class="blank20"></div>
+{include file="debit/debit_footer.html"}

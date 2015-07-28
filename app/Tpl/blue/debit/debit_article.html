@@ -1,0 +1,50 @@
+{if $ajax==0}
+{include file="debit/debit_header.html"} 
+{/if}
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/debit_help_center.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+{if $ajax==0}
+<div style=" background:#ff3f44; height:2px;"></div>
+{/if}
+<div class="help_center">
+
+	{if $ajax==0}
+    <div class="blank20"></div>
+	<div class=" wrap clearfix">
+		<ul class="nav_list">
+        	{if $article_list}
+        	{foreach from=$article_list  item=item}
+			<li class="nav_0 {if $item.id==$article.id}y{/if}" onclick='link_to(this)' alt="{$item.title}">{$item.title}<span></span>
+			</li>
+            {/foreach}
+            {else}
+            <li class="nav_0 y"  alt="{$item.title}">{$article.title}<span></span> 
+			</li>
+            {/if}
+		</ul>
+	</div>
+    {/if}
+	<div class="blank10"></div>
+	<div class=" {if $ajax==0}wrap{/if} clearfix">
+		<ul class="content_list">
+			<li class="content_0 " style=" display:block;">
+            	{$article.content}
+			</li>
+		</ul>
+	</div>
+	<div class="blank20"></div>
+	
+</div>
+<script language="javascript">
+$(function() {
+	$(".nav_0").click(function(){
+		location.href = '{url x="debit" r="debit_article#index"}&title='+encodeURI($(this).attr("alt"));
+	});
+});
+</script>
+
+{if $ajax==0}
+{include file="debit/debit_footer.html"}
+{/if}

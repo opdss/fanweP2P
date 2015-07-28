@@ -1,0 +1,65 @@
+<style>
+	.address label{ width:100px;padding-right:10px;}
+</style>
+<div class="address">
+	<form id='select_addr_form'>
+		<div class="blank5"></div>
+		{if $user_address}
+		<input type="button" class="true_btn" id="old_newaddress" value="选择地址"/>
+		<input type="button" class="reset_btn" id="add_newaddress" value="新增地址"/>
+		{else}
+		<input type="button" class="true_btn" id="add_newaddress" value="新增地址"/>
+		{/if}
+		<div class="blank5"></div>
+		{if $user_address}
+		<div class="old_addr_box ">
+				<div class="pt10 pl5">
+				{foreach from="$user_address" item="item" key=key}
+					<label class="ui-radiobox" rel="common_address_id">
+						<input  type="radio" value="{$item.id}" name="address_id" {if $item.is_default eq 1}checked="checked"{/if} >
+						{$item.name}&nbsp;&nbsp;&nbsp;{$item.address}
+					</label>
+					<div class="blank5"></div>
+				{/foreach}
+				</div>
+		</div>
+		{/if}
+		<div class="new_addr_box {if $user_address}hide{/if}">
+			<div class="field">
+				<label>姓名：</label>
+				<input class="f-input ui-textbox" name="user_name" id="user_name" value="{$user_info.real_name}"/>
+			</div>
+			<div class="blank5"></div>
+			<div class="field">
+				<label>电话：</label>
+				<input class="f-input ui-textbox" name="user_phone" id="user_phone" value="{$user_info.mobile}"/>
+			</div>
+			<div class="blank5"></div>
+			<div class="field">
+				<label>填写收货地址：</label>
+				<input class="f-input ui-textbox" name="user_address" id="user_address" style="width:230px"  value="{$user_info.address}" />
+			</div>
+		</div>
+		<div class="blank10"></div>
+		<div class="tc">
+			<input type="hidden" name="add_addr" id="add_addr" value="{if $user_address}0{else}1{/if}"/>
+			<input class="true_btn" id="address_btn" type="button" value="确认" />
+			<input class="reset_btn " id="quxiao" type="button" value="取消" />
+		</div>
+	</form>
+	<div style="clear: both; margin-bottom: 15px;"></div>
+</div>
+<script>
+
+$("#address_btn").click(function(){
+	
+	var ajaxurl = APP_ROOT+"/index.php?ctl=goods_information&act=doexchange";
+	var query = $("#J_score_goods_form").serialize();
+	query += "&"+$("#select_addr_form").serialize();
+	doExchange({$goods_id},{$number},query);
+	
+	return false;
+});
+
+</script>
+						

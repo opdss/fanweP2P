@@ -1,0 +1,73 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{%VIEW} <a href="{:u("Message/index")}" class="back_list">{%BACK_LIST}</a>
+{$vo.title}
+</div>
+<div class="blank5"></div>
+
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=4 class="topTd"></td>
+	</tr>
+	<if condition="$vo['rel_table'] eq 'seller'">
+	<tr>
+		<td class="item_title">{%MESSAGE_SUPPLIER_NAME}:</td>
+		<td colspan=3>{$vo.title}</td>
+	</tr>	
+	<tr>
+		<td class="item_title">{%MESSAGE_CONTACT}:</td>
+		<td colspan=3>{$vo.contact}</td>
+	</tr>	
+	<tr>
+		<td class="item_title">{%MESSAGE_CONTACT_NAME}:</td>
+		<td colspan=3>{$vo.contact_name}</td>
+	</tr>	
+	</if>
+	<tr>
+		<td class="item_title">{%MESSAGE_CONTENT}:</td>
+		<td colspan=3>{$vo.content|nl2br}</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%MESSAGE_CREATE_TIME}:</td>
+		<td class="item_input">{$vo.create_time|to_date}</td>
+		<td class="item_title">{%MESSAGE_UPDATE_TIME}:</td>
+		<td class="item_input">{$vo.update_time|to_date}</td>
+	</tr>		
+	<tr>
+		<td colspan=4 class="bottomTd"></td>
+	</tr>
+</table>
+<div class="blank5"></div>
+
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%ADMIN_REPLY}:</td>
+		<td class="item_input">
+			<html:editor id="editor" name="admin_reply" type="KINDEDITOR" content="{$vo.admin_reply}" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Message" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%EDIT}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+
+</div>
+<include file="Public:footer" />

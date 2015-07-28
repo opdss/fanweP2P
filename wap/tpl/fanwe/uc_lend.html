@@ -1,0 +1,54 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/deals.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_lend.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--投注记录列表-->
+<div class="invest">
+	{foreach from=$data.item item="deal"}
+	<div class="blok_10 mainborder">
+		{if $deal.deal_status gt 3}
+		<a href="{wap_url a="index" r="uc_refund_detail" p="id=$deal.deal_id"}">
+		{else}
+		<a href="{wap_url a="index" r="deal_mobile" p="id=$deal.deal_id"}">
+		{/if}
+		<div class="invest_tit {if $deal.deal_status eq 5}Headerbackground{else}gray{/if}">
+            <span class="State">
+                    
+					{$deal.deal_status_format}
+			</span>
+			<span class="verticalline"></span>
+            <span class="sub_name">{$deal.name}</span>
+        </div>
+		<div class="index_content">
+            <div class="content_list">
+                <span>{$deal.money_format}</span>
+                <span>金额</span>
+            </div>
+            <div class="content_list">
+                <span class="specialfont">{$deal.rate_foramt_w}</span>
+                <span>年利率</span>
+            </div>
+            <div class="content_list">
+                <span>{$deal.repay_time_format}</span>
+                <span>期限</span>
+            </div>
+            <div class="content_list">
+                <span>{$deal.create_time_format}</span>
+                <span>投标时间</span>
+            </div>
+        <div class="blank"></div>    
+        </div>
+		</a>
+	</div>
+	 {/foreach}       
+</div>
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

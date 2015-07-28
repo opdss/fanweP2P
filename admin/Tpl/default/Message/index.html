@@ -1,0 +1,76 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<php>
+	function get_pid($id){
+		if($id>0){
+			return "编号：".$id."，标题：".M("Message")->where("id=$id")->getField("title");
+		}
+	}
+	function rel_table($rel_type){
+		if($rel_type=="deal")
+			return "普通贷款";
+		else
+			return "债券转让";
+	}
+	function get_rel_deal($id,$message){
+		static $srel_deal = array();
+		$title = "";
+		if(!isset($srel_deal[$message['rel_table']][$id])){
+			if($message['rel_table'] == "deal"){
+				$srel_deal[$message['rel_table']][$id] = D("Deal")->where("id=".$id)->getField("name");
+			}
+			if($message['rel_table'] == "transfer"){
+				$srel_deal[$message['rel_table']][$id] = $GLOBALS['db']->getOne("SELECT d.name FROM ".DB_PREFIX."deal_load_transfer dlt LEFT join ".DB_PREFIX."deal d ON d.id=dlt.deal_id WHERE dlt.id=".$id);
+			}
+		}
+		
+		$title = $srel_deal[$message['rel_table']][$id];
+		
+		if($message['rel_table'] == "deal" && $title!="")
+		{
+			return  '<a href="'.url("index","deal#index",array("id"=>$id)).'" target="_blank">'.$title.'</a>';
+		}
+		elseif($message['rel_table'] == "transfer" && $title!=""){
+			return  '<a href="'.url("index","transfer#detail",array("id"=>$id)).'" target="_blank">'.$title.'</a>';
+		}
+	}
+</php>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		<input type="button" class="button" value="{%FOREVERDEL}" onclick="foreverdel();" />
+	
+		<input type="hidden" value="Message" name="m" />
+		<input type="hidden" value="index" name="a" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="message" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,rel_id|get_rel_deal=$message:贷款/债权
+	,rel_table|rel_table:类型
+	,title:{%TITLE}
+	,pid|get_pid:哪条留言的回复
+	,create_time|to_date:{%MESSAGE_CREATE_TIME}|140px
+	,update_time|to_date:管理费回复时间|150px
+	,user_id|get_user_name_real:{%USER_NAME}|120px
+	,is_effect|get_message_is_effect:{%MESSAGE_IS_EFFECT}|70px
+	" 
+	actionlist="edit:{%VIEW},foreverdel:{%FOREVERDEL}"
+	actionwidth="150px;" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

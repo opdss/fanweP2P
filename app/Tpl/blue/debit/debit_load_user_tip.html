@@ -1,0 +1,26 @@
+{if $user_info}
+	<span class="li li_no" id="J_account">
+		<span class="f14">您好，</span><a href="{url x="debit" r="debit_uc_center"}">{$user_info.user_name}</a>
+        <a href="{url x="debit" r="debit_user#loginout"}">退出</a>
+	</span>
+	<script type="text/javascript">
+	var acc_menu_hide = null;
+	var hide_menu = null;
+	jQuery(function(){
+		$("#J_account").hover(function(){
+			clearTimeout(acc_menu_hide);
+			$(this).addClass("li_hover");
+		},function(){
+			var obj = $(this);
+			hide_menu = function(){
+				obj.removeClass("li_hover");
+			}
+			acc_menu_hide = setTimeout(hide_menu,100);
+		});
+	});
+	</script>
+{else}
+	<span>游客</span>
+	<span class="li"><a href="{url x="debit" u="debit_user#login" }" class="f_yellow">立即{$LANG.LOGIN}</a></span>
+	<span class="li"><a href="{url x="debit" u="debit_user#register" }" class="f_blue">{$LANG.FREE_REGISTER}</a></span>
+{/if}

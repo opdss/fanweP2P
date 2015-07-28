@@ -1,0 +1,269 @@
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index" r="uc_msg#setting"}">{$page_title}</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	<div class="f_dgray b">我是借入者</div>
+	<div class="clearfix">
+		<form method="post" action="{url x="index" r="uc_msg#savesetting"}" name="save_bind_notice">
+            <table width="100%" border="0" cellspacing="1px" class="funds" style="margin:10px auto">
+                <tbody>
+	                <tr class="title f_dgray b">
+	                    <td width="34%"></td>
+	                    <td width="34%">电子邮件 </td>
+	                    <td width="33%"> 站内信</td>
+	                </tr>
+	                <tr>
+	                    <td class="pl10 pr10 b f_dgray tl">
+						有人对我的借款列表提问
+	                    </td>
+	                    <td>
+	                        <label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_asked" value="1" {if $msg_setting.sms_asked eq 1|| !$msg_setting}checked="checked"{/if} id="settingForm_mail_asked">
+							</label>
+	                    </td>
+	                    <td>
+	                         <label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_asked" value="1" {if $msg_setting.sms_asked eq 1}checked="checked"{/if} id="settingForm_sms_asked">
+							</label>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td class="pl10 pr10 b f_dgray tl">
+						有人向我的借款列表投标
+	                    </td>
+	                    <td>
+	                    	<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_bid" value="1" {if $msg_setting.mail_bid eq 1}checked="checked"{/if} id="settingForm_mail_bid">
+							</label>
+	                        
+	                    </td>
+	                    <td>
+	                    	<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_bid" value="1" {if $msg_setting.sms_bid eq 1}checked="checked"{/if} id="settingForm_sms_bid">
+							</label>
+	                        
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td class="pl10 pr10 b f_dgray tl">
+						我的借款列表流标
+	                    </td>
+	                    <td>
+	                    	<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_myfail" value="1" {if $msg_setting.mail_myfail eq 1 || !$msg_setting}checked="checked"{/if} id="settingForm_mail_myFail">
+							</label>
+	                        
+	                    </td>
+	                    <td>
+	                    	<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_myfail" value="1" {if $msg_setting.sms_myfail eq 1}checked="checked"{/if} id="settingForm_sms_myFail">
+							</label>
+	                        
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td class="pl10 pr10 b f_dgray tl">
+						 我的借款列表完成度超过50%
+	                    </td>   
+	                    <td>
+	                    	<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_half" value="1" {if $msg_setting.mail_half eq 1 || !$msg_setting}checked="checked"{/if} id="settingForm_mail_half">
+							</label>
+	                        
+	                    </td>
+	                    <td>
+	                    	<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_half" value="1" {if $msg_setting.sms_half eq 1}checked="checked"{/if} id="settingForm_sms_half">
+							</label>
+	                        
+	                    </td>
+	                </tr>
+	            </tbody>
+			</table>
+			<div class="blank20"></div>
+			<div class="f_dgray f14 b">我是借出者</div>
+			<table width="100%" align="center" border="0" cellspacing="1px" class="funds" style="margin:10px auto">
+				<tbody>
+					<tr class="title f_dgray b">
+						<td width="34%"></td>
+						<td width="34%">电子邮件</td>
+						<td width="33%">站内信</td>
+					</tr>
+					<tr>
+						<td class="pl10 pr10 b f_dgray tl">
+							我的投标成功
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_bidsuccess" value="1" {if $msg_setting.mail_bidsuccess eq 1|| !$msg_setting}checked="checked"{/if} id="settingForm_mail_bidSuccess">
+							</label>
+							
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_bidsuccess" value="1" {if $msg_setting.sms_bidsuccess eq 1}checked="checked"{/if} id="settingForm_sms_bidSuccess">
+							</label>
+							
+						</td>
+					</tr>
+					<tr>
+						<td class="pl10 pr10 b f_dgray tl">
+							我的投标流标
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_fail" value="1" {if $msg_setting.mail_fail eq 1}checked="checked"{/if} id="settingForm_mail_fail">
+							</label>
+							
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_fail" value="1" {if $msg_setting.sms_fail eq 1 || !$msg_setting}checked="checked"{/if} id="settingForm_fail">
+							</label>
+							
+						</td>
+					</tr>
+					<tr>
+						<td class="pl10 pr10 b f_dgray tl">
+							我收到一笔还款
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_bidrepaid" value="1" {if $msg_setting.mail_bidrepaid eq 1 || !$msg_setting}checked="checked"{/if} id="settingForm_mail_bidRepaid">
+							</label>
+							
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_bidrepaid" value="1" {if $msg_setting.sms_bidrepaid eq 1}checked="checked"{/if} id="settingForm_sms_bidRepaid">
+							</label>
+							
+						</td>
+					</tr>
+					<tr>
+						<td class="pl10 pr10 b f_dgray tl">
+							借入者回答了我对借款列表的提问
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_answer" value="1" {if $msg_setting.mail_answer eq 1}checked="checked"{/if} id="settingForm_mail_answer">
+							</label>
+							
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_answer" value="1" {if $msg_setting.sms_answer eq 1 || !$msg_setting}checked="checked"{/if} id="settingForm_sms_answer">
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td class="pl10 pr10 b f_dgray tl">
+							债权转让失败提醒
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_transferfail" value="1" {if $msg_setting.mail_transferfail eq 1}checked="checked"{/if} id="settingForm_mail_transferfail">
+							</label>
+							
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_transferfail" value="1" {if $msg_setting.sms_transferfail eq 1 || !$msg_setting}checked="checked"{/if} id="settingForm_sms_transferfail">
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td class="pl10 pr10 b f_dgray tl">
+							债权转让成功提醒
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_transfer" value="1" {if $msg_setting.mail_transfer eq 1}checked="checked"{/if} id="settingForm_mail_transfer">
+							</label>
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_transfer" value="1" {if $msg_setting.sms_transfer eq 1 || !$msg_setting}checked="checked"{/if} id="settingForm_sms_transfer">
+							</label>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="blank20"></div>
+			<div class="f_dgray f14 b">投资奖励</div>
+			<table width="100%" align="center" border="0" cellspacing="1px" class="funds" style="margin:10px auto">
+				<tbody>
+					<tr class="title f_dgray b">
+						<td width="34%"></td>
+						<td width="34%">电子邮件</td>
+						<td width="33%">站内信</td>
+					</tr>
+					<tr>
+						<td class="pl10 pr10 b f_dgray tl">
+							红包奖励
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_redenvelope" value="1" {if $msg_setting.mail_redenvelope eq 1|| !$msg_setting}checked="checked"{/if} id="settingForm_mail_redenvelope">
+							</label>
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_redenvelope" value="1" {if $msg_setting.sms_redenvelope eq 1}checked="checked"{/if} id="settingForm_sms_redenvelope">
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td class="pl10 pr10 b f_dgray tl">
+							收益率奖励
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_rate" value="1" {if $msg_setting.mail_rate eq 1}checked="checked"{/if} id="settingForm_mail_rate">
+							</label>
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_rate" value="1" {if $msg_setting.sms_rate eq 1 || !$msg_setting}checked="checked"{/if} id="settingForm_sms_rate">
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td class="pl10 pr10 b f_dgray tl">
+							积分奖励
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_integral" value="1" {if $msg_setting.mail_integral eq 1 || !$msg_setting}checked="checked"{/if} id="settingForm_mail_integral">
+							</label>
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_integral" value="1" {if $msg_setting.sms_integral eq 1}checked="checked"{/if} id="settingForm_sms_integral">
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td class="pl10 pr10 b f_dgray tl">
+							礼品奖励
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="mail_gift" value="1" {if $msg_setting.mail_gift eq 1}checked="checked"{/if} id="settingForm_mail_gift">
+							</label>
+						</td>
+						<td>
+							<label class="ui-checkbox mt5" rel="agreement" >
+								<input type="checkbox" name="sms_gift" value="1" {if $msg_setting.sms_gift eq 1 || !$msg_setting}checked="checked"{/if} id="settingForm_sms_gift">
+							</label>
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+			<div class="blank20"></div>
+			<div class="tc"><button class="sub_btn" type="submit">保存设置</button></div>
+		</form>
+    </div>
+</div>
+

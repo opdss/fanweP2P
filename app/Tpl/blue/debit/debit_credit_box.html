@@ -1,0 +1,330 @@
+<div class="inc_main">
+							<div  style=" background:#fefbf0; border:1px solid #f2eac6; width:90%; margin-left:57px; margin-bottom:51px;">
+								
+								<div class="blank20"></div>
+                                <!---->
+<div style="padding:5px;">
+	<form action="{url x="index" r="credit#credit_save"}" method="post" id="uploadCreditForm_{$credit.type}" name="uploadCreditForm_{$credit.type}">
+		<div id="item">
+	    	<div class="blank20"></div>
+	        <div >
+	            <div class="f16 b pt5 pb5 f_blue">
+				{$credit.type_name}
+	            </div>
+	            <div class="f_dgray" style="text-indent: 2em;">
+				{$credit.brief}   
+				</div>
+	        </div>
+	        <div class="blank10"></div>
+	        <div id="explain" class="p10 ">
+	            <p class="f_dgray b">
+	            	认证说明：
+	            </p>
+	            <div id="explain_item">
+                    <div style="padding-left:20px">
+                    	{$credit.description_format}
+						{if $credit.type eq 'credit_videoauth'}
+						<p>
+			               (视频认证文件已发送:&nbsp;<label class="ui-checkbox" rel="agreement"><input type="checkbox" name="usemail" id="usemail" value="1"></label> )
+			            </p>
+						{/if}
+                    </div>
+                </div>
+				{if $credit.role}
+				<div class="blank10"></div>
+				<p class="lh24">
+                    <span class="f_dgray b">认证条件：</span>
+                    <span class="f_red">{$credit.role}</span>
+                </p>
+				{else}
+				<div class="blank10"></div>
+				{/if}
+	            <p class="lh24">
+	                <span class="f_dgray b">审核时间：</span>
+	                <span class="f_red">3个工作日内</span>
+	            </p>
+	            <p class="lh24">
+	                <span class="f_dgray b">认证有效期：</span>
+	                <span class="f_red">{if $credit.expire gt 0}{$credit.expire}个月{else}永久{/if}</span>
+	            </p>
+				<div class="blank5"></div>
+				{if $credit.type eq 'credit_contact'}
+				{include file="inc/credit/credit_contact_tip.html"} 
+				{/if}
+				{if $credit.type eq 'credit_mobilereceipt'}
+				{include file="inc/credit/credit_mobilereceipt_tip.html"} 
+				{/if}
+				{if $credit.type eq 'credit_car'}
+				{include file="inc/credit/credit_car_tip.html"} 
+				{/if}
+				{if $credit.type eq 'credit_graducation'}
+				{include file="inc/credit/credit_graducation_tip.html"} 
+				{/if}
+				{if $credit.type eq 'credit_house'}
+				{include file="inc/credit/credit_house_tip.html"} 
+				{/if}
+				{if $credit.type eq 'credit_marriage'}
+				{include file="inc/credit/credit_marriage_tip.html"} 
+				{/if}
+				{if $credit.type eq 'credit_residence'}
+				{include file="inc/credit/credit_residence_tip.html"} 
+				{/if}
+				{if $credit.type eq 'credit_identificationscanning'}
+				{include file="inc/credit/credit_identificationscanning_tip.html"} 
+				{/if}
+	        </div>
+			{if $credit.file_count gt 0}
+			<div class="credit_upload">
+				<div class="field">
+					<label>
+					{if $credit.file_tip}
+					<span class="f_red b">*</span>{$credit.file_tip}：
+					{else}
+					&nbsp;
+					{/if}
+					</label>
+					<div class="f_l pl10" id="upload_file_box">
+		       			<div class="plupload_header_text ">每张图片最大限制为3MB，图片格式为JPG,GIF,PNG</div>
+						<div class="blank5"></div>
+						<?php
+						for($i=1;$i<=$this->_var['credit']['file_count'];$i++){
+						
+						 echo show_ke_image("file".$i);
+						 if($i%2 == 0){
+						 	echo '<div class="blank5"></div>';
+						 }
+						}
+						?>
+					</div>
+				</div>
+				</div>
+			{/if}
+	        <div class="blank20"></div>
+	        <div class="blank20"></div>
+	        <div style="text-align:left;margin-left:190px">
+				<input type="hidden" id="type" value="{$credit.type}" name="type"/>
+				<input type="hidden" id="is_ajax" value="{$is_ajax}" name="is_ajax"/>
+	            <input type="submit" value="提交审核" class="sub_btn"/>
+	        </div>
+			<div class="blank20"></div>
+	        <div class="blank20"></div>
+		</div>
+	</form>
+</div>
+{if $credit.type eq 'credit_credit'}
+{include file="inc/credit/credit_credit_tip.html"} 
+{/if}
+{if $credit.type eq 'credit_incomeduty'}
+{include file="inc/credit/credit_incomeduty_tip.html"} 
+{/if}
+<script type="text/javascript">
+	jQuery(function(){
+		$("#uploadCreditForm_{$credit.type}").unbind("submit");
+		$("#uploadCreditForm_{$credit.type}").bind("submit",function(){
+			{if $credit.type eq 'credit_videoauth'}
+			if($("#usemail:checked").length == 0){
+				$.showErr("请勾选'视频认证文件已发送'后提交。");
+				return false;
+			}
+			{/if}
+			
+			{if $credit.type eq 'credit_contact'}
+				if($.trim($("#settings-office").val()).length == 0){
+					$("#settings-office").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.OFFICE}");
+					
+					return false;
+				}
+				if($.trim($("#settings-jobtype").val()).length == 0){
+					$("#settings-jobtype").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.JOBTYPE}");
+					
+					return false;
+				}
+				if($("select[name='province_id']").val()== 0||$("select[name='city_id']").val() == 0)
+				{
+					$("select[name='province_id']").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.WORK_REGION}");
+					
+					return false;
+				}
+				if($.trim($("#settings-officetype").val()).length == 0){
+					$("#settings-officetype").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.OFFICETYPE}");
+					
+					return false;
+				}
+				if($.trim($("#settings-officedomain").val()).length == 0){
+					$("#settings-officedomain").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.OFFICEDOMAIN}");
+					
+					return false;
+				}
+				if($.trim($("#settings-officecale").val()).length == 0){
+					$("#settings-officecale").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.OFFICECALE}");
+					
+					return false;
+				}
+				if($.trim($("#settings-position").val()).length == 0){
+					$("#settings-position").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.POSITION}");
+					
+					return false;
+				}
+				if($.trim($("#settings-salary").val()).length == 0){
+					$("#settings-salary").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.SALARY}");
+					
+					return false;
+				}
+				if($.trim($("#settings-workyears").val()).length == 0){
+					$("#settings-workyears").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.WORKYEARS}");
+					
+					return false;
+				}
+				
+				if($.trim($("#settings-workphone").val()).length == 0){
+					$("#frphone").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.WORKPHONE}");
+					
+					return false;
+				}
+				if($.trim($("#settings-workemail").val()).length == 0){
+					$("#settings-workemail").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.WORKEMAIL}");
+					
+					return false;
+				}
+				if($.trim($("#settings-officeaddress").val()).length == 0){
+					$("#settings-officeaddress").focus();
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.OFFICEADDRESS}");
+					
+					return false;
+				}
+				
+				var query = $("#uploadCreditForm_{$credit.type}").serialize();
+				$.ajax({
+					url: '{url x="index" r="uc_account#savework" p="is_ajax=1"}',
+					data:query,
+					type:"post",
+					dataType:"json",
+					success:function(result){
+						if(result.status!=1){
+							$.showErr(result.info);
+							return false;
+						}
+						else{
+							
+							return submit_credit_form{$credit.id}();
+						}
+					}
+				});
+			{/if}
+			
+			{if $credit.type eq 'credit_car'}
+				if($.trim($("#carBrand").val())==""){
+					$.showErr("请输入汽车品牌。",function(){
+						$("#carBrand").focus();
+					});
+					return false;
+				}
+				if($.trim($("#carNumber").val())==""){
+					$.showErr("请输入车牌号码。",function(){
+						$("#carNumber").focus();
+					});
+					return false;
+				}
+			{/if}
+			{if $credit.type eq 'credit_graducation'}
+			if($.trim($("#validCode").val())=="" || $.trim($("#validCode").val()).length != 12 ){
+				$.showErr("请输入12位在线验证码。",function(){
+					$("#validCode").focus();
+				});
+				return false;
+			}
+			{/if}
+			{if $credit.type eq 'credit_residence'}
+			if($("select[name='province_id']").val()== 0||$("select[name='city_id']").val() == 0)
+			{
+				$("select[name='province_id']").focus();
+				$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value="目前所在省市"}");
+				
+				return false;
+			}
+			if($("#settings-address").val() == ""){
+				$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.ADDRESS}",function(){
+					$("#settings-address").focus();
+				});
+				return false;
+			}
+			if($("#settings-postcode").val() == ""){
+				$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value="居住地邮编"}",function(){
+					$("#settings-postcode").focus();
+				});
+				return false;
+			}
+			{/if}
+			
+			{if $credit.type eq 'credit_identificationscanning'}
+				if($.trim($("#settings-real_name").val())==""){
+					$.showErr("输入真实姓名。",function(){
+						$("#carBrand").focus();
+					});
+					return false;
+				}
+				if($.trim($("#settings-idno").val())==""){
+					$.showErr("身份证号。",function(){
+						$("#carNumber").focus();
+					});
+					return false;
+				}
+			{/if}
+			
+			
+			return submit_credit_form{$credit.id}();
+		});
+	});
+	
+	function submit_credit_form{$credit.id}(){
+		{if $credit.file_count gt 0}
+		var is_upload_file_{$credit.id} = false;
+		for(var i=1;i<={$credit.file_count};i++){
+			if($.trim($("#uploadCreditForm_{$credit.type} #upload_file_box #keimg_h_file"+i).val())!=""){
+				is_upload_file_{$credit.id} = true;
+			}
+		}
+		
+		if(!is_upload_file_{$credit.id}){
+			$.showErr("请完成文件上传后提交审核。");
+			return false;
+		}
+		{/if}
+		{if $is_ajax eq 1}
+			var query = $("#uploadCreditForm_{$credit.type}").serialize();
+			$.ajax({
+				url: '{url x="index" r="credit#credit_save"}',
+				data:query,
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					if(result.status!=1){
+						$.showErr(result.info);
+					}
+					else{
+						$.showSuccess(result.info,function(){
+							window.location.reload();
+						});
+					}
+				}
+			});
+			return false;
+		{else}
+		return true;
+		{/if}
+	}
+</script>
+<!---->
+	</div>
+</div>

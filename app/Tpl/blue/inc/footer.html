@@ -1,0 +1,119 @@
+</div>
+{if $MODULE_NAME != 'deals'&& $MODULE_NAME != 'transfer'}
+<div class="blank20"></div>
+{/if}
+
+<div id="ftw">
+	
+	<div id="ft">
+		{if $MODULE_NAME <> 'user' && $MODULE_NAME <> 'manageagency' && $MODULE_NAME <> 'authorized' && $MODULE_NAME <> 'agency_money'}
+		<div class="wrap">
+			{if $f_link_data}
+				<div class="blank15"></div>
+				{foreach from=$f_link_data item=link_group}		
+				    	<div class="link partner">
+					<h3>{$link_group.name}</h3>
+					<ul>
+					{foreach from=$link_group.links item=link}
+						<li><a href="http://{$link.url}" target="_blank" title="{if $link.description}{$link.description}{else}{$link.name}{/if}">{if $link.img neq ''}<img src='{$link.img}' alt="{if $link.description}{$link.description}{else}{$link.name}{/if}" />{else}{$link.name}{/if}</a></li>
+					{/foreach}
+					</ul>
+					</div>	
+					<div class="blank1"></div>	
+				{/foreach}
+				
+				{/if}
+		</div>
+		{/if}
+        	<div class="wrap">
+        		{if $MODULE_NAME <> 'user' && $MODULE_NAME <> 'manageagency' && $MODULE_NAME <> 'authorized' && $MODULE_NAME <> 'agency_money'}
+        		<div class="footer_line"></div>
+        		<div style="padding-bottom:50px;">
+	            <ul class="cf f_l f_box">
+	            	{foreach from=$deal_help item=help_cate name="help_cate"}
+					{if $smarty.foreach.help_cate.iteration <= app_conf('HELP_CATE_LIMIT')}
+					<li class="col hp{$smarty.foreach.help_cate.iteration}{if $smarty.foreach.help_cate.last} end{/if}">
+	                    <h3 class="f_l">{$help_cate.title}</h3>
+						<div class="blank0"></div>
+	                    <ul class="sub-list">
+							{foreach from=$help_cate.help_list item=help_item name="help_item"}
+							{if $smarty.foreach.help_item.iteration <= app_conf('HELP_ITEM_LIMIT')}
+							<li><a href="{$help_item.url}" {if $help_item.new eq 1}target="_blank"{/if}>{$help_item.title}</a></li>
+							{/if}
+							{/foreach}  
+							<li class="blank0"></li>           
+						</ul>
+						<div class="blank0"></div>
+	                </li> 
+					{/if}
+					{/foreach}
+					<li class="col">
+						 <h3 class="f_l">关注我们</h3>
+						 <div class="blank0"></div>
+						 <div class="get_limelight clearfix f_l" style=" height:30px;">
+						 	<a  href="" target="_blank" title="新浪微博" class="share weixin "></a>
+			               <a  href="javascript:void(0);" title="微信" class="share xinlan J_weixin_code"></a>
+						 </div>
+						 <div class="blank0"></div>
+						 <span class="weixin_ss f_l">
+						 	<!--
+						 	       <img src="{$TMPL}/images/weixin_ss.png">
+						    -->		   
+						</span>
+					</li>
+					<li class="col call_me f_r">
+						 <h3 class="f_l">联系我们</h3>
+						 <div class="blank0"></div>
+						 <ul class="sub-list">
+							<li>{function name="app_conf" v="COMPANY_ADDRESS"}</li>
+							<li>热线电话 : {function name="app_conf" v="SHOP_TEL"}</li>
+							<li>服务邮箱 : {function name="app_conf" v="REPLY_ADDRESS"}</a></li>
+							<li class="blank0"></li>
+						</ul>
+					</li>
+					<li class="blank0"></li>  
+	            </ul>
+				<div class="f_r customer">
+					{if $online_qq}
+					<span class="back_img f_r "><a href="http://wpa.qq.com/msgrd?v=3&uin={$online_qq.0.qq}&site=qq&menu=yes" class="f_blue">在线客服&nbsp;<i class="iconfont f24">&#xe61e;</i></a></span>
+					<div class="blank0"></div>
+					{/if}
+					<div class="telphone f_r">
+						<div class="f_r">
+							<span class="telep b">{function name="app_conf" v="SHOP_TEL"}</span>
+							<span class="time f12">{function name="app_conf" v="ONLINE_TIME"}</span>
+						</div>
+						<i class="iconfont f_r mt1" style="font-size:50px;line-height:50px;">&#xe620;</i>
+					</div>
+					
+				</div>
+
+				<div class="blank25"></div>
+				{/if}
+
+				<div class="blank0"></div>
+				</div>
+				<div class="footer_line"></div>
+				<div class="copyright">
+					{function name="app_conf" value="SHOP_FOOTER"} 
+					<div class="blank1"></div>
+					{function name="app_conf" value="ICP_LICENSE"}&nbsp;&nbsp;
+					{function name="app_conf" value="COUNT_CODE"}
+				</div>
+				<div class="blank"></div>
+			</div>
+			
+	</div>
+	{if $online_qq}
+	{include file="inc/kefu.html"}
+	{/if}
+	<div id="gotop"></div>
+	{if $MODULE_NAME neq 'guide'}
+<script type="text/javascript" defer="defer">
+	resetWindowBox();
+</script>
+{/if}
+</div>
+
+</body>
+</html>

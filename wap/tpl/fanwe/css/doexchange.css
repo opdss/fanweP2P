@@ -1,0 +1,43 @@
+.doexchange_block{ background: #fff; padding:10px 10px; padding-right: 30px; position: relative; color: #878787;}
+.doexchange_block .ico_right{ float: right; top:75px; right: 10px; position: absolute; color: #878787;}
+.doexchange_block ul li{ overflow: hidden; padding-left: 90px; line-height: 30px; color: #878787;}
+.doexchange_block ul li .name{ float: left; margin-left: -90px; display: block; width: 85px; text-align: right;}
+.y ul li{color: @main_color;}
+.y{ color: @main_color;}
+.y  .ico_right{color: @main_color;}
+.doexchange_block .add_address{ padding:5px 0;}
+.doexchange_block .add_address span{ padding: 0 5px;}
+.doexchange_block .add_address a{ color: #878787; display: block;}
+
+
+
+
+.editor_h{ color: #000; font-weight: 600; line-height: 30px; font-size: 14px; padding: 0 10px;}
+.editor_p{ color: #000;   font-size: 15px;  background: #fff;}
+.editor_p label{ display: block; overflow: hidden; padding: 10px 10px 10px  90px;  border-bottom: 1px solid #ededed; }
+.editor_p label span{ float: left; display: block; width: 90px; margin-left: -90px; text-align: right; font-weight: 600;font-size: 14px; line-height: 40px;}
+.editor_p label input{ border: 1px solid #d3d1cc; line-height: 40px; height: 40px; width: 90%; padding: 0 10px; border-radius: 5px;}
+.editor_p label:last-child{ border-bottom: 0px;}
+.Agreement_block .ico{ display: block; width: 20px; height: 20px; float: left; background: none; margin-top: 5px; border-radius: 5px; border:1px solid #d3d1cc;line-height: 20px; text-align: center; color: #fff; margin-right: 10px;}
+.Agreement_block .ico i{ display: none;}
+.Agreement_block  {line-height: 30px; color: #000; font-size: 14px; font-weight: 600; padding: 0 10px; padding-left: 60px;}
+.Agreement_block .y .ico{   background: #3b95d3; margin-top: 5px; border-radius: 5px; line-height: 20px; text-align: center; color: #fff; margin-right: 10px;border:1px solid #3b95d3;}
+.Agreement_block .y .ico i{ display: inline-block;} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

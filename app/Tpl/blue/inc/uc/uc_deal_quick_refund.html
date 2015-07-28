@@ -1,0 +1,211 @@
+
+<script type="text/javascript">
+function closeWeeboxs(){
+	$.weeboxs.close();
+}
+</script>
+<div class="tabbox">
+	<div class="tab"><a href="{url x="index"r="uc_deal#refund" p="status=0"}">还款列表</a></div>
+	<div class="tab"><a href="{url x="index"r="uc_deal#refund" p="status=1"}">已还清借款</a></div>
+	<div class="tab cur"><a href="###">还款详情</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix ">
+	<div class="bid_item clearfix">
+        <div class="bid_title">
+        	<span class="f_l">{$deal.name} 还款中!</span>
+            <span class="r_c"><a href="javascript:void(0);" onclick="openWeeboxFrame('{url x="index" r="uc_deal#contract" p="id=$deal.id"}','电子协议',1024,668);">查看电子协议</a></span>
+        </div>
+		<div class="blank0"></div>
+        <div class="bid_detail">
+            <div class="info">
+            	 借款金额：
+                <span class="f_red">{$deal.borrow_amount_format}</span>
+            </div>
+            <div class="info">
+            	年利率：
+                <span class="f_red">{function name="number_format" v=$deal.rate f=2}%</span>
+            </div>
+            <div class="info">
+            	期限：
+                <span class="f_red">{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</span>
+            </div>
+            <div class="info">
+            	已还本息：
+                <span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.repay_money f=2}</span>
+            </div>
+            <div class="info">
+            	待还本息：
+                <span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.need_remain_repay_money f=2}</span>
+            </div>
+			<div class="info">
+				<input type="button" class="true_btn select_btn" value="导出详情 " onclick="window.location.href='{url x="index" r="uc_deal#export_csv" p="id=$deal.id"}'" />
+			</div>
+        </div>
+    </div>
+	
+	<div class="t_name b p10 f16">
+                还款记录
+   	</div>
+	<div class="clearfix" >
+	
+		<table class="data_table" id="refundTab" cellspacing="1">
+            <tr>
+                <th width="6%">选择</th>
+                <th width="12%">还款日</th>
+                <th >已还总额</th>
+				<th width="12%">待还总额</th>
+                <th width="12%">待还本息</th>
+                <th width="12%">管理费</th>
+                <th width="12%">逾期/违约金</th>
+                <th width="10%">状态</th>
+				<th width="6%">明细</th>
+            </tr>
+			<?php $idx=0;?>
+			{foreach from=$loan_list item=loan key=key}
+          	<tr <?php if($idx==0 && $this->_var['loan']['has_repay'] != 1):?>class="highlight"<?php endif;?>>
+                <td>
+                	{if $loan.has_repay eq 1 || $loan.month_need_all_repay_money eq 0}
+						&nbsp;
+						{if $loan.month_need_all_repay_money eq 0}
+						<input type="checkbox" name="periodNumberNo" checked="checked" value="{$key}" style="display:none;" />
+						{/if}
+					{else}
+					<?php ++$idx;?>
+					<input type="checkbox" name="periodNumber" <?php if($idx==1):?>checked="checked" <?php endif;?> <?php if($idx>1 || $this->_var['loan']['status']==6 ):?>disabled="disabled"<?php endif;?> idx="<?php echo $idx;?>" value="{$loan.l_key}" onclick="getMustPaymoneyTotal();">
+					{/if}
+					<input type="hidden" class="unrepaidInput" id="{$deal_id}-{$loan.l_key}" value="{function name="round" v=$loan.month_need_all_repay_money f=2}">
+				</td>
+                <td>{$loan.repay_day_format}</td>
+                <td>{$loan.month_has_repay_money_all_format}</td>
+                <td style="color:red">{$loan.month_need_all_repay_money_format}</td>
+                <td>{$loan.month_repay_money_format}</td>
+                <td>{$loan.month_manage_money_format}</td>
+                <td style="color:red">{$loan.impose_all_money_format}</td>
+                <td class="f_green">
+                	{$loan.status_format}
+				</td>
+				 <td>
+                	<a href="javascript:viewLoanItem('.Text-{$key}',{$deal.id},{$loan.l_key});">查看</a>
+				</td>
+            </tr>
+			<tr class="hide Text-{$key}">
+				<td colspan="9">
+					<div class="p10">
+					loading...
+					</div>
+				</td>
+			</tr>
+			{/foreach}
+        </table>
+		
+		<table class="refundTab">
+	        <tr>
+	            <td colspan="8">
+	                <div class="f16 b tl" style="display: block;line-height: 50px;height: 50px;">
+	                    <span style="padding: 0 20px;width: 240px;display: block;float: left;">
+						总计还款：￥<span id="currCount">0.00</span>
+						</span>
+	                </div>
+	            </td>
+	        </tr>
+	    </table>
+		<br>
+		<div style="padding: 15px 0 15px 0;">
+			<span class="pl20 lh30 f_l" style="display:inline;height:30px;">支付密码：</span>
+			<input type="password" autocomplete="off" class="f-input ui-textbox w130 f_l mr10" name="paypassword" id="J_PAYPASSWORD" />
+			还未设置？<a href="{url x="index" r="uc_account#security"}" target="_blank" class='f_blue'>点这里</a>
+		</div>
+		<div class="blank10"></div>
+		<span style="padding: 15px 0 15px 90px;">
+            <input class="conf_refund" id="J_repay_borrow_money" type="button">
+        </span>
+		<span class="pt20">
+            <input type="hidden" name="avaliablePoint" value="{$user_info.money}" id="avaliablePoint">
+			{if $deal.ips_bill_no eq ''}
+            <span style="font-weight: bold;color: #565656;padding-left: 10px; ">我的可用余额:</span><span class="f_red">{function name="format_price" v=$user_info.money}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url x="index" r="uc_money#incharge"}" style="color:#f85c4e;">[ 我要充值 ]</a>
+            <span class="f_red pl10" style="display: none" id="payTip">还款中...</span>
+			{/if}
+        </span>
+	</div>
+</div>
+<script type="text/javascript">
+	var is_repay_lock = false;
+	jQuery(function(){
+		$("#refundTab tr").hover(function(){
+			if(!$(this).hasClass('highlight')){
+				$(this).addClass("cur");
+			}
+		},function(){
+			$(this).removeClass("cur");
+		});
+		getMustPaymoneyTotal();
+		
+		$("#J_repay_borrow_money").click(function(){
+			if($("#refundTab input[name='periodNumber']:checked").length == 0){
+				$.showErr("还款失败,请顺序还款!");
+				return false;
+			}
+			
+			if($("#J_PAYPASSWORD").val() == ""){
+				$.showErr("请输入支付密码!",function(){
+					$("#J_PAYPASSWORD").focus();
+				});
+				return false;
+			}
+			
+			
+			if(confirm("您确定要还款吗？")){
+				if(is_repay_lock){
+					$.showErr("正在处理中，请稍后!");
+					return false;
+				}
+				$("#payTip").show();
+				is_repay_lock = true;
+				var query = new Object();
+				query.ids = "";
+				{if $deal.loantype eq 2}
+				$("#refundTab input[name='periodNumberNo']:checked").each(function(){
+					query.ids += $(this).val()+",";
+				});
+				{/if}
+				$("#refundTab input[name='periodNumber']:checked").each(function(){
+					query.ids += $(this).val()+",";
+				});
+				query.ids = query.ids.substr(0,query.ids.length - 1);
+				query.paypassword = FW_Password($("#J_PAYPASSWORD").val());
+				$.ajax({
+					url:APP_ROOT + "/index.php?ctl=uc_deal&act=repay_borrow_money&id={$deal.id}",
+					data:query,
+					type:"post",
+					dataType:"json",
+					success:function(result){
+						is_repay_lock = false;
+						$("#payTip").hide();
+						if(result.status==1){
+							$.showSuccess(result.info,function(){
+								window.location.href = '{url x="index" r="uc_deal#refund"}';
+							});
+						}
+						else if(result.status==2){
+							window.location.href = result.jump;
+						}
+						else{
+							$.showErr(result.info);
+						}
+					}
+				});
+			}
+		});
+	});
+	
+	function getMustPaymoneyTotal(){
+		var mustPay = 0;
+		$("#refundTab input[name='periodNumber']:checked").each(function(){
+			mustPay += parseFloat($(this).parent().find(".unrepaidInput").val());
+		});
+		$("#currCount").html(foramtmoney(mustPay,2));
+	}
+	
+	
+</script>

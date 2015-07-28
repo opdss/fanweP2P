@@ -1,0 +1,82 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+<div class="main">
+<div class="main_title">
+	收货地址管理
+</div>
+
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="address_add();" /><!-- agencies_register -->
+	<input type="button" class="button" value="{%DEL}" onclick="address_del();" />
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="user" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,name:收货人姓名
+		,address:收货地址
+		,phone:收货电话
+		,is_default:是否默认"
+	actionlist="address_edit:{%EDIT}, address_del:{%DEL}"/> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<script type="text/javascript">
+function address_edit(address_id)
+{
+	location.href = ROOT + '?m=User&a=address_edit&address_id='+address_id;
+}
+function address_add()
+{
+	location.href = ROOT + '?m=User&a=address_add';
+}
+/*
+function address_del(address_id)
+{
+	location.href = ROOT + '?m=User&a=address_del&address_id='+address_id;
+}
+*/
+
+//完全删除
+function address_del(id)
+{
+	if(!id)
+	{
+		idBox = $(".key:checked");
+		if(idBox.length == 0)
+		{
+			alert(LANG['DELETE_EMPTY_WARNING']);
+			return;
+		}
+		idArray = new Array();
+		$.each( idBox, function(i, n){
+			idArray.push($(n).val());
+		});
+		id = idArray.join(",");
+	}
+	if(confirm(LANG['CONFIRM_DELETE']))
+	$.ajax({ 
+			url: ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=address_del&id="+id, 
+			data: "ajax=1",
+			dataType: "json",
+			success: function(obj){
+				$("#info").html(obj.info);
+				if(obj.status==1)
+				location.href=location.href;
+			}
+	});
+}
+</script>
+<include file="Public:footer" />

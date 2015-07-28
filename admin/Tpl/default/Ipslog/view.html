@@ -1,0 +1,162 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/user_edit.js' />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">{%EDIT} <a href="{:u("Ipslog/create")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%P_ARG_MER_CODE}:</td>
+		<td class="item_input">
+			{$ips_info.argMerCode}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MER_BILL_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pMerBillNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_USER_NAME}:</td>
+		<td class="item_input">
+			{$ips_info.user_name}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_USER_TYPE}:</td>
+		<td class="item_input">
+			{$ips_info.user_type}
+		</td>
+	<tr>
+		<td class="item_title">{%P_IDENT_TYPE}:</td>
+		<td class="item_input">
+			{$ips_info.pIdentType}
+		</td>
+	<tr>
+		<td class="item_title">{%P_IDENT_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pIdentNo}
+		</td>
+	<tr>
+		<td class="item_title">{%P_REAL_NAME}:</td>
+		<td class="item_input">
+			{$ips_info.pRealName}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MOBILE_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pMobileNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_EMAIL}:</td>
+		<td class="item_input">
+			{$ips_info.pEmail}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_SM_DATE}:</td>
+		<td class="item_input">
+			{$ips_info.pSmDate}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MEMO_1}:</td>
+		<td class="item_input">
+			{$ips_info.pMemo1}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MEMO_2}:</td>
+		<td class="item_input">
+			{$ips_info.pMemo2}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MEMO_3}:</td>
+		<td class="item_input">
+			{$ips_info.pMemo3}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_STATUS}:</td>
+		<td class="item_input">
+			{$ips_info.pStatus}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_BANK_NAME}:</td>
+		<td class="item_input">
+			{$ips_info.pBankName}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_BK_ACC_NAME}:</td>
+		<td class="item_input">
+			{$ips_info.pBkAccName}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_BK_ACC_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pBkAccNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_CARD_STATUS}:</td>
+		<td class="item_input">
+			{$ips_info.pCardStatus}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_PH_STATUS}:</td>
+		<td class="item_input">
+			{$ips_info.pPhStatus}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_IPS_ACCE_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pIpsAcctNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_IPS_ACCE_DATE}:</td>
+		<td class="item_input">
+			{$ips_info.pIpsAcctDate}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MER_CODE}:</td>
+		<td class="item_input">
+			{$ips_info.pMerCode}
+		</td>
+	</tr>
+</table>
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<a href="{:u("Ipslog/create")}" class="button">{%BACK_LIST}</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 	 
+</div>
+<include file="Public:footer" />

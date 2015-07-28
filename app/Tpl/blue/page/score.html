@@ -1,0 +1,74 @@
+{include file="inc/header.html"}
+
+<adv adv_id="我要理财列表页顶部广告" />
+	<div class="ur_here"><a href="{url x="index" r="index"}">首页</a> > <a href="{url x="index" r="score"}">积分商城</a></div>
+	<div class="content" class="clearfix">
+		<div class="filterbox">
+			<div class="bdd bddf clearfix" id="deallist" name="deallist">
+				<div class="propAttrs clearfix pr v" id="search_condition" >{$page_title}
+					<form action="{url x="index" r="score"}" method="post" id="searchByConditionForm">
+		                <div class="attr">
+							<div class="attrKey">所有类别：</div>             
+							<div class="attrValues">
+								<ul class="av-collapse" id="cates">
+									{foreach from="$cates_url" item="cate" key=key}
+		                            <li><a href="{$cate.url}"  {if $cate.id eq $cates} class="cur" {/if}>{$cate.name}</a></li>
+									{/foreach}
+		                        </ul>
+		                    </div>
+		                </div>
+		                <div class="attr">
+							<div class="attrKey">积分范围：</div>
+							<div class="attrValues">
+								<ul class="av-collapse" name=integral id="integral">
+									{foreach from="$integral_url" item="integrals" key=key}
+		                            <li><a href="{$integrals.url}"  {if $integral eq $key} class="cur" {/if}>{$integrals.name}</a></li>
+									{/foreach}
+		                        </ul>
+		                    </div>
+		                </div>
+		             </form>
+		        </div>
+			</div>
+			<div class="blank20"></div>
+		</div>
+		<div class="tabbox clearfix">
+			{foreach from="$sort_url" item="sorts" key=key}
+			<div class="tab {if $sort eq $key}cur{/if}" onclick="window.location.href='{$sorts.url}'">{$sorts.name}</div>
+			{/foreach}
+			
+		</div>
+		<div class="bdd bddf bt0 p15 clearfix">
+			{if $goods_list}
+			{foreach from="$goods_list" item="item" name=goods}
+			<div class="goods_item {if $smarty.foreach.goods.iteration mod 4 eq 0}mr0{/if}">
+				<a href="{url x="index" r="goods_information" p="id=$item.id"}">
+					<img src="{function name="get_spec_image" v="$item.img" w="265" h="195"}" width="265" height="195" border="0" />
+				</a>
+				<div class="blank0"></div>
+				<div class="tit pt10 ptb" >
+					<a href="{url x="index" r="goods_information" p="id=$item.id"}">{$item.name}</a>
+				</div>
+				<div class="desc">
+					<span class="f_l">所需积分：<span class="f_red">{$item.score}</span>&nbsp;分</span>
+					
+					<span class="rs f_r">
+						购买人数：
+						{if $item.invented_number gt 0}
+						{$item.invented_number}
+						{else}0{/if}人
+					</span>
+				</div>
+				<div class="tc">
+					<a class="true_btn f_white " href="{url x="index" r="goods_information" p="id=$item.id"}">查看详情</a>
+				</div>
+			</div>
+			{/foreach}
+			{else}
+			没有数据
+			{/if}
+		</div>
+		<div class="pages">{$pages}</div>
+	</div>
+</div>
+{include file="inc/footer.html"}

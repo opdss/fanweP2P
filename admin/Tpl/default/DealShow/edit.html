@@ -1,0 +1,89 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/school.js' />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">{$vo.title}{%EDIT} <a href="{:u("Article/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_NAME}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="deal_name" value="{$vo.deal_name}"/></td>
+	</tr>
+	<tr>
+		<td class="item_title">图标:</td>
+		<td class="item_input">
+			<html:imgUpload name = 'img' id='img' value='$vo.img' />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%BORROW_AMOUNT}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="amount" value="{$vo.amount}" />元
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">姓名:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="user_name" value="{$vo.user_name}" /> </td>
+	</tr>
+	<tr>
+		<td class="item_title">学校:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="school" id="settings-university" value="{$vo.school}"/></td>
+	</tr>
+    <tr>
+		<td class="item_title">{%CREATE_TIME}:</td>
+		<td class="item_input"><input type="text" class="textbox" name="create_time" value='{$vo.create_time|to_date="Y-m-d"}'  id="create_time" onfocus="return showCalendar('create_time', '%Y-%m-%d', false, false, 'create_time');" size="10"/></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%SORT}:</td>
+		<td class="item_input"><input type="text" class="textbox" name="sort" value="{$vo.sort}"/></td>
+	</tr>
+    <tr>
+		<td class="item_title">左侧显示:</td>
+		<td class="item_input">
+        	<label>不显示<input type="radio" name="show_left" value="0" <if condition="$vo.show_left == 0">checked="checked"</if> /></label>
+			<label>显示<input type="radio" name="show_left" value="1" <if condition="$vo.show_left == 1">checked="checked"</if> /></label>
+        [只显示排序最高的一条]</td>
+	</tr>
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="DealShow" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%EDIT}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+<div id="proSchool" class="provinceSchool">
+    <div class="title"><span>已选择:</span></div>
+    <div class="proSelect">
+        <select></select>
+        <span>选择您的所在学校</span>
+        <input type="text" />
+    </div>
+    <div class="schoolList">
+        <ul></ul>
+    </div>
+    <div class="button">
+        <span flag='0'>取消</span>
+    </div>
+</div> 	 
+</form>
+</div>
+<include file="Public:footer" />

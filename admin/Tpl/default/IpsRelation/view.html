@@ -1,0 +1,184 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/user_edit.js' />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">还款单明细 <a href="{:u("IpsRelation/repayment")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+    <tr>
+		<td class="item_title">{%ID}:</td>
+		<td class="item_input">
+			{$ips_info.mid}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_BID_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pBidNo}
+		</td>
+      </tr>
+	<tr>
+		<td class="item_title">{%DEAL_NAME}:</td>
+		<td class="item_input">
+			{$ips_info.deal_name}
+		</td>
+	</tr>
+     <tr>
+		<td class="item_title">{%USER_NAME}:</td>
+		<td class="item_input">
+			{$ips_info.user_name}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">还款本息:</td>
+		<td class="item_input">
+			{$ips_info.repay_money}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">罚息/违约金:</td>
+		<td class="item_input">
+			{$ips_info.impose_money}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%MANAGE_MONEY}:</td>
+		<td class="item_input">
+			{$ips_info.manage_money}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%MANGE_IMPOSE_MONEY}:</td>
+		<td class="item_input">
+			{$ips_info.manage_impose_money}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_REPAYMENT_DATE}:</td>
+		<td class="item_input">
+			{$ips_info.pRepaymentDate}
+		</td>
+     </tr>
+	<tr>
+		<td class="item_title">{%P_REPAY_TYPE}:</td>
+		<td class="item_input">
+			{$ips_info.pRepayType}
+		</td>
+    </tr>
+    <tr>
+		<td class="item_title">{%L_KEY}:</td>
+		<td class="item_input">
+			{$ips_info.ll_key}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%HAS_REPAY}:</td>
+		<td class="item_input">
+			{$ips_info.has_repay}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MER_BILL_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pMerBillNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%REPAY_TIME}:</td>
+		<td class="item_input">
+			{$ips_info.repay_time|to_date}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%TRUE_REPAY_TIME}:</td>
+		<td class="item_input">
+			{$ips_info.true_repay_time|to_date}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%REPAY_STATUS}:</td>
+		<td class="item_input">
+			{$ips_info.status}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%P_IPS_AUTH_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pIpsAuthNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_OUT_ACCT_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pOutAcctNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MESSAGE}:</td>
+		<td class="item_input">
+			{$ips_info.pMessage}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MEMO_1}:</td>
+		<td class="item_input">
+			{$ips_info.pMemo1}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MEMO_2}:</td>
+		<td class="item_input">
+			{$ips_info.pMemo2}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MEMO_3}:</td>
+		<td class="item_input">
+			{$ips_info.pMemo3}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_IPS_BILL_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pIpsBillNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_OUT_IPS_FEE}:</td>
+		<td class="item_input">
+			{$ips_info.pOutIpsFee}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_IPS_DATE}:</td>
+		<td class="item_input">
+			{$ips_info.pIpsDate}
+		</td>
+	</tr>
+   
+</table>
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<a href="{:u("IpsRelation/repayment")}" class="button">{%BACK_LIST}</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 	 
+</div>
+<include file="Public:footer" />

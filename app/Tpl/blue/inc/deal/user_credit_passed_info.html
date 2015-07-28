@@ -1,0 +1,77 @@
+<div class="box-t f_blue f18"><i class="iconfont">&#xe627;</i>&nbsp;审核记录</div>
+<div class="box-bd">
+    <table class="data_table bdr5" border="0" cellspacing="1" width="70%" style="margin:0 auto">
+        <tbody>
+            <tr>
+                <th width="40%" class="tc">
+                	审核项目
+                </th>
+                <th width="40%" class="tc">
+    				状态
+                </th>
+                <th width="20%" class="tc">
+    				通过时间
+                </th>
+            </tr>
+			{foreach from="$credit_file" item="credit"}
+    		{if $credit.passed eq 1 || ($credit.passed eq 0 && $credit.user_id gt 0)}
+            <tr>
+                <td class="tc pl5 pr5">
+    				{$credit.type_name}
+                </td>
+                <td class="tc pl5 pr5">
+    				{if $credit.passed eq 1}
+    					{if $credit.has_expire eq 1}
+    					已过期
+    					{else}
+    				 	<img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+    					{/if}
+    				{else}
+    				资料已上传，待审核
+    				{/if}
+                </td>
+                <td class="tc pl5 pr5">
+                	{if $credit.has_expire eq 0 && $credit.passed eq 1}
+    	            	{function name="to_date" v="$credit.passed_time" f="Y-m-d"}
+    				{/if}
+                </td>
+            </tr>
+            {/if}
+			{/foreach}
+    		{if $u_info.info_down}
+			<tr>
+	            <td class="tc pl5 pr5">
+					会员资料下载
+	            </td>
+	            <td class="tc pl5 pr5">
+					 <img src="{$TMPL}/images/answer_success.jpg" alt="有">
+	            </td>
+	            <td class="tc pl5 pr5">
+	            	<a href="{$u_info.info_down}">下载查看</a>
+	            </td>
+	        </tr>
+			{/if}
+			{if $deal.agency_id gt 0}
+			<tr>
+	            <td class="tc pl5 pr5">
+					<a href="{url x="index" r="agency" p="id=$deal.agency_id"}" class="f_blue">机构担保--{$deal.agency_info.name}</a>
+	            </td>
+	            <td class="tc pl5 pr5">
+					 <img src="{$TMPL}/images/answer_success.jpg" alt="有">
+	            </td>
+	            <td class="tc pl5 pr5">
+	            	&nbsp;
+	            </td>
+	        </tr>
+			{/if}
+        </tbody>
+    </table>
+    <div class="tc lh30">
+        <p>
+            <i style="margin-top:13px;"></i>将以客观、公正的原则，最大程度地核实借入者信息的真实性。但{function name="app_conf" v="SHOP_TITLE"} 不保证审核信息100%真实。
+        </p>
+        <p>
+            <i style="margin-top:13px;"></i>借入者若长期逾期，其个人信息将被公布
+        </p>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="rec_forum_topic">
+	<div class="rec_image_topic" id="rec_topic">
+		<div class="img_topic_tab">
+		{foreach from=$rec_topic_list.image item=topic key=key}
+		<div class="rec_image_topic_item" style="display:none;" rel="<?php echo intval($this->_var['key'])+1; ?>" >
+			<div>
+				<a href="{url x="shop" r="topic" p="id=$topic.id"}" title="{$topic.forum_title}" target="_blank">
+				<img src="{function name="get_spec_image" v=$topic.images.0.o_path w=340 h=185 g=1}" />
+				</a>
+			</div>
+			<div class="topic_title"><a href="{url x="shop" r="topic" p="id=$topic.id"}" title="{$topic.forum_title}" target="_blank">{function name="msubstr" v=$topic.forum_title b=0 e=20}</a></div>
+			<div class="topic_group_title"><a href="{url x="shop" r="group#forum" p="id=$topic.group_info.id"}" title="{$topic.group_info.name}" target="_blank">{$topic.group_info.name}</a></div>
+		</div>
+		{/foreach}
+		</div>
+		<div class="blank1"></div>
+		<div class="tr rec_img_count">
+		{foreach from=$rec_topic_list.image item=topic key=key}
+		<span class="img_ico" rel="<?php echo intval($this->_var['key'])+1; ?>"><?php echo intval($this->_var['key'])+1; ?></span>
+		{/foreach}
+		</div>
+		<div class="blank1"></div>
+	</div>
+	
+	<div class="rec_list_topic">
+		{foreach from=$rec_topic_list.list item=topic key=key}
+			<div class="rec_list_topic_item" {if $key mod 2 eq 1}style="margin-left:10px;"{/if}>
+				{if $key lt 2}
+				<div class="f_l">
+						<a href="{url x="shop" r="group#forum" p="id=$topic.group_info.id"}" title="{$topic.group_info.name}" target="_blank">
+						<img src="{function name="get_spec_image" v=$topic.group_info.icon w=80 h=80 g=1}" />
+						</a>
+					</div>
+					<div class="f_l" style="padding-left:10px;">
+						<div class="list_topic_title"><a href="{url x="shop" r="topic" p="id=$topic.id"}" title="{$topic.forum_title}" target="_blank">{function name="msubstr" v=$topic.forum_title b=0 e=10}</a></div>
+						<div class="list_topic_group_title"><a href="{url x="shop" r="group#forum" p="id=$topic.group_info.id"}" title="{$topic.group_info.name}" target="_blank">{function name="msubstr" v=$topic.group_info.name b=0 e=15}</a></div>
+						{function name="get_user_name" v=$topic.user_id}
+					</div>
+					
+				
+				{else}
+					<div class="f_l topic_user_icon">
+						{function name="show_avatar" v=$topic.user_id}
+					</div>
+					<div class="f_l topic_info_row">
+						<div class="rec_row_topic_title"><a href="{url x="shop" r="topic" p="id=$topic.id"}" title="{$topic.forum_title}" target="_blank">{function name="msubstr" v=$topic.forum_title b=0 e=16}</a></div>
+						<div class="rec_row_topic_group_title"><a href="{url x="shop" r="group#forum" p="id=$topic.group_info.id"}" title="{$topic.group_info.name}" target="_blank">{$topic.group_info.name}</a></div>
+					</div>
+				{/if}
+				<div class="blank5"></div>
+			</div>
+		{/foreach}
+	</div>
+</div>
+<div class="blank"></div>

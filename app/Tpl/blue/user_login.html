@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{if $page_title}{$page_title} - {/if}{if $show_site_titile eq 1}{function name='app_conf' value='SHOP_SEO_TITLE'} - {/if}{$site_info.SHOP_TITLE}</title>
+<link rel="icon" href="favicon.ico" type="/image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico" type="/image/x-icon" />
+<meta name="keywords" content="{if $page_keyword}{$page_keyword}{/if}{$site_info.SHOP_KEYWORD}" />
+<meta name="description" content="{if $page_description}{$page_description}{/if}{$site_info.SHOP_DESCRIPTION}" />
+{include file="inc/common/load_css_js.html"}
+</head>
+
+<body class="login_body">
+	<div class="head z100" id="header">
+		<div class="head_cont" style="background:#fff">
+			<div class="wrap constr clearfix">
+				<div class="logo f_l">
+					<a class="link" href="{$APP_ROOT}/" style=" float:left;">
+						<?php
+							$this->_var['logo_image'] = app_conf("SHOP_LOGO");
+						?>
+						{function name="load_page_png" v=$logo_image}
+					</a>
+				</div>
+				<!--{if $MODULE_NAME == 'user'}-->
+				<div class="f_yahei no-nav-text" >
+				<span>登录</span>|<a href="{url x="index" r="user#register"}">注册</a>
+				</div>
+				<!--{/if}-->
+			</div>
+		</div>
+	</div>
+
+<div class="wrap">
+
+<style type="text/css">
+	body{
+		background: #fff;
+	}
+	.no-nav-text {
+line-height: 40px;
+height: 40px;
+font-size: 14px;
+padding-left: 20px;
+margin-top: 17px;
+color: #7f7f7f;
+float: right;
+margin-left: 15px;
+border-left:none;
+}
+.no-nav-text span {
+color: #2b2b2b;
+padding-right: 13px;
+}
+.no-nav-text a {
+color: #7f7f7f;
+padding-left: 13px;
+}
+.head{
+	position: relative;
+z-index: 10;
+}
+#ftw{
+	position: relative;
+z-index: 10;
+}
+.user-lr-box .field .f-input{
+border: 1px solid #c5c5c5;
+border-radius: 2px;
+color: #595959;
+height: 22px;
+line-height: 22px;
+font-weight: bolder;
+font-size: 14px;
+font-family: "Microsoft YaHei";
+width: 343px;
+padding: 10px 5px;
+padding-left: 20px;
+}
+#Jverify {
+margin: 0;
+width: 143px;
+padding: 10px 5px;
+background: #fff;
+text-align: center;
+}
+.login-submit-btn{
+	width:368px;
+	position: relative;
+}
+.partners {
+position: absolute;
+bottom: -10px;
+width: 150px;
+height: 20px;
+line-height: 20px;
+left: 111px;
+background: #fff;
+}
+.user_login_bar .app_login_box{
+	width:368px;
+}
+
+/*底部样式*/
+#ftw{
+    background: #fff;
+}
+#ft .footer_line{
+    border-bottom: 1px solid #e5e6e7;
+}
+.ft_login{
+       padding-top: 20px;
+       padding-bottom: 40px;
+}
+.ft_article{
+    color: #888;
+ 
+}
+.ft_article span{
+    display: inline-block;
+    padding: 0 6px;
+    font-size: 14px;
+    color: #000;
+}
+.ft_login_shop{
+    margin-top: 10px;
+}
+.ft_login_kf{
+    color: #000;
+}
+.kfrx{
+    padding-right: 15px;
+}
+.zxkf{
+    display: inline-block;
+    width: 65px;
+    height: 22px;
+    line-height: 22px;
+    background: #32a5e7;
+   -moz-border-radius:2px;
+   -khtml-border-radius:2px;
+   -webkit-border-radius:2px;
+   border-radius:2px;
+   color: #fff;
+   text-align: center;
+   font-size: 12px;
+}
+</style>
+
+
+
+<div class="wrap" id="J_wrap">
+	<div class="user_login_bar bddf clearfix">
+		<div class="login_bar wrap">
+			<div class="login_l"></div>
+			<div class="inc f_r" style="width:380px;">
+				<div class="clearfix">
+					<div class="user-lr-box mt30" >
+						{insert name="load_login_form"}
+						<div class="blank20"></div>
+						<div class="app_login_box">
+						{insert name="get_app_login" v="0"}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+
+</script>
+{include file="inc/footer.html"}
+

@@ -1,0 +1,79 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<script type="text/javascript">
+function fund_export_csv()
+{
+	var inputs = $(".search_row").find("input");
+	var selects = $(".search_row").find("select");
+	var param = '';
+	for(i=0;i<inputs.length;i++)
+	{
+		if(inputs[i].name!='m'&&inputs[i].name!='a')
+		param += "&"+inputs[i].name+"="+$(inputs[i]).val();
+	}
+	for(i=0;i<selects.length;i++)
+	{
+		param += "&"+selects[i].name+"="+$(selects[i]).val();
+	}
+	var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=fund_export_csv";
+	location.href = url+param;
+}
+
+</script>
+<php>
+</php>
+<div class="main">
+	<div class="main_title">{:strim($_REQUEST['user_name'])}{:L(MODULE_NAME."_".ACTION_NAME)}</div>
+	<div class="blank5"></div>
+	<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%USER_NAME}：<input type="text" class="textbox"  name="user_names" value="{:strim($_REQUEST['user_names'])}" style="width:100px;" />
+		
+		<select name="cate" id="cate">
+			<option value="-1" <if condition="$cate==-1">selected="selected"</if>>请选择</option>
+			<foreach name="title_array" item="item" key="key">
+				<option value="{$key}" <if condition="$key eq $cate">selected="selected"</if>>{$item}</option>
+			</foreach>
+		</select>
+		
+		操作时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d', false, false, 'begin_time');" size="10" />
+
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" size="10" />
+		
+		
+		<input type="hidden" value="User" name="m" />
+		<input type="hidden" value="<php>echo ACTION_NAME;</php>" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		<input type="button" class="button" value="{%EXPORT}" onclick="fund_export_csv();" />
+	</form>
+</div>
+<div class="blank5"></div>
+
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="fund" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,user_id|get_user_name_real:会员名
+	,type_format:类型
+	,money:操作金额
+	,account_money:余额
+	,memo:备注
+	,create_time_ymd:操作时间
+	" 
+	actionwidth="100px"/> 
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

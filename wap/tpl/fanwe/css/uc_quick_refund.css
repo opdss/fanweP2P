@@ -1,0 +1,138 @@
+.uc_quick_refund .head{
+	background:#fdfde0;
+	border-bottom:1px solid @border_color;
+	padding-left:15px;
+}
+.uc_quick_refund .head h5{
+	color:@main_color;
+	font-size:18px;
+	line-height:50px;
+	border-bottom:@thin_color 1px solid;
+}
+.info_list li{
+	float:left;
+	white-space:nowrap;
+	font-size:16px;
+	color:@font_main;
+	padding-right:15px;
+	line-height:25px;
+	
+}
+.info_list{
+	padding:5px 0;
+}
+.uc_quick_refund .content{
+	padding:0 10px;
+}
+.uc_quick_refund .content h6{
+	font-size:16px;
+	color:@font_main;
+	line-height:40px;
+	padding-left:5px;
+	font-weight:600;
+}
+
+.record li{
+	border:1px solid 	@border_color;
+	border-radius:5px;
+	overflow:hidden;
+	background:@box_color;
+	margin-bottom:10px;
+}
+
+.record li .top{
+	background:#f4f2f3;
+	height:30px;
+	line-height:30px;
+	padding:0 5px;
+	color:@font_main;
+	font-size:16px;
+	border-bottom:2px solid @border_color;
+}
+
+.record li .detail{
+	
+	position:relative;
+	padding-left:40px;
+}
+.money_info{
+	border-left:1px solid @border_color;
+	margin:5px 0;
+	padding:0px 5px;
+	font-size:14px;
+	line-height:25px;
+	color:@font_main;
+}
+.check_but{
+	height:40px;
+	width:40px;
+	position:absolute;
+    top:0px;
+	left:0px;
+}
+
+.uc_quick_refund .detail_foot{
+	width:60%;
+	padding:8px 10px;
+}
+.uc_quick_refund .lookdetail{
+	margin-right:2%;
+	float:right;
+	border-radius:50px;
+}
+.uc_quick_refund .I_Investment{
+	float:right;
+	border-radius:50px;
+}
+.total{
+	padding:8px 0 8px 10px;
+}
+
+.total p{
+	font-size:18px;
+	line-height:20px;
+}
+.total span{
+	color:@font_main;
+	font-size:15px;
+	line-height:20px;
+}
+.pay_block{
+	background:@box_color;
+	border-bottom:1px solid @border_color;
+	border-top:1px solid @border_color;
+}
+.mt{
+	position:absolute;
+	right:-16px;
+	top:45px;
+}
+
+/*2015-03-*/
+.pay_block { padding:10px 0;}
+ table{ width:100%;}
+.pay_block td{ width:33%; text-align:center; font-size:16px; line-height:30px;}
+.pay_block .money td{color: #fc8600;font-family: arial,sans-serif;}
+.pay_block .name td{color: #878787;}
+
+.uc_quick_refund .head h5 a{color: #3b95d3; padding-right:15px;}
+
+.detail_content .list_bor{ border:1px solid #cbcbcb; border-radius:5px;margin:0 0 15px 0; overflow:hidden;}
+.detail_content .list_bor .h{padding:8px 0px; padding-left:78px; line-height:30px; color:#878787;   padding-right:8px; font-size:13px;}
+.detail_content .list_bor .h .Installments{ margin-left:-78px; float:left; font-size:15px;padding-left:8px;}
+.detail_content .list_bor .h .bor{ border-left:1px solid #cbcbcb; padding-left:8px;}
+.detail_content .list_bor .h .bor .Repayment_date{ display:block; width:50%;}
+.detail_content .list_bor .h .bor  .Actual_Repayment{ display:block; width:50%;}
+.detail_content .list_bor .p{ background:#fff; border-top:1px solid #cbcbcb; padding:14px; padding-left:78px; padding-right:8px; line-height:30px; font-size:13px; color:#878787; position:relative;}
+.detail_content .list_bor .bor{border-left:1px solid #cbcbcb; padding-left:8px;}
+
+.detail_content .list_bor .p .child{ width:50%; float:left;}
+
+.float_block .Detail_block h5 .close{ display: block; float: right; color:@main_color; position: absolute; top: 0px; right: 0px; padding: 0 10px;}
+
+
+
+
+
+
+

@@ -1,0 +1,138 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/deal.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--债权转让简单详情-->
+<div class="detail">
+<div class="mainblok mainborder">
+            <div class="detail_tit">
+                <h3>{$data.transfer.deal.name}</h3>
+            </div>
+            <div class="detail_list">
+                <ul>
+                
+              		<li>
+                        <label>转让者</label>
+                        <div class="list_con"><a href="{$transfer.user.url}">{$data.transfer.user.user_name}</a></div>
+                    </li>
+                    <li>
+                        <label>剩余期限</label>
+                        <div class="list_con">{$data.transfer.how_much_month}</b>个月</div>
+                    </li>
+                    <li>
+                        <label>总期限</label>
+                        <div class="list_con "><b class="f_red f14">{$data.transfer.repay_time}</b>个月</div>
+                    </li>
+                    <li>
+                        <label>下还款日</label>
+                        <div class="list_con">{$data.transfer.next_repay_time_format}</div>
+                    </li>
+                    <li>
+                        <label>转让金额</label>
+                        <div class="list_con">
+                      <em class="detail_Orange"> {$data.transfer.transfer_amount_format}</em></div>
+                    </li>
+                    <li>
+                        <label>剩余本金</label>
+                        <div class="list_con">{$data.transfer.left_benjin_format}</div>
+                    </li>
+                    <li>
+                        <label>剩余利息</label>
+                        <div class="list_con">{$data.transfer.left_lixi_format}</div>
+                    </li>
+                    <li>
+                        <label>受让收益</label>
+                        <div class="list_con"><em class="detail_Orange">{$data.transfer.transfer_income_format}</em>元</div>
+                    </li>
+                </ul>
+            </div>
+        </div><!--mainblok——end--> 
+<div class="blank15"></div>
+        <div class="mainblok mainborder">
+            <div class=""></div>
+            <div class="detail_list">
+            
+             {if $data.transfer.t_user_id gt 0}
+                <ul>
+                    <li>
+                        <label>承接人</label>
+                        <div class="list_con">{$data.transfer.tuser.user_name}</div>
+                    </li>
+                    <li>
+                        <label>承接时间</label>
+                        <div class="list_con">{$data.transfer.transfer_time_format}</div>
+                    </li>
+                </ul>
+                
+            {else}    
+               <!--  {if $user_info}{else} 请先登录或注册{/if} -->
+               <ul>
+                    <li>
+                        <label>可用余额</label>
+                        <div class="list_con">
+                        	<em class="detail_Orange">{function name="format_price" v="$data.user_money"}</em>元
+							<a href="" class="recharge">我要充值</a>
+						</div>
+						
+                    </li>
+                    <li>
+                        <label>支付密码</label>
+                        <div class="list_con">
+                        <input id="pay_password" class="pay_password ui_width" type="password" placeholder="输入密码">
+                        </div>
+
+                    </li>
+                </ul>
+			{/if}                
+            </div>
+        </div><!--mainblok——end--> 
+
+    </div>
+<div class="detail_foot">
+    <div class="lookdetail"><a href="{wap_url a="index" r="transfer_mobile" p="id=$data.deal_id"}">查看详情</a></div>
+    {if $data.transfer.t_user_id gt 0}
+    <div class="I_Investment disabled">已转让</div>
+      {else}
+     
+   	 	{if $data.transfer.tras_status eq 0}
+ 		  <div class="I_Investment disabled">已撤销转让</div>
+    	 {else}
+    	 
+    		 <input id="trans_id" type="hidden" value="{$data.transfer.id}"  />
+    	     <div class="I_Investment" id="pay_transfer">我要投资</div>
+    	 {/if}
+    {/if}
+    	
+    	 
+</div>
+
+{include file="./inc/footer.html"}
+
+
+<script type="text/javascript">
+$("#pay_transfer").click(function(){
+		var ajaxurl = '{wap_url a="index" r="transfer_dobid"}';
+		var query = new Object();
+		
+		query.id = $.trim($("#trans_id").val());
+		query.paypassword = $.trim($("#pay_password").val());
+		
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.show_err);
+				if(data.response_code == 1){
+					window.location.href = '{wap_url a="index" r="transfer"}';
+				}
+			}
+		});
+	});
+</script>	
+
+
+

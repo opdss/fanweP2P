@@ -1,0 +1,85 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+
+
+<script type="text/javascript">
+jQuery(function(){
+	$("input#end_time").datepicker({showAnim:'fadeIn'});
+	$("input#start_time").datepicker({showAnim:'fadeIn'});
+	$("form#search-form").submit(function(){
+		var val1 = $("input#end_time").val();
+		$("input[name='end_time']").val(val1);
+		var val2 = $("input#start_time").val();
+		$("input[name='start_time']").val(val2);
+	});
+});
+</script>
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index" r="uc_ips#fullscale_view" p="id=$id"}">{$page_title}</a></div>
+    <div class="tab "><a href="{url x="index"r="uc_ips#fullscale"}">返回列表</a></div>
+</div>
+
+<div class="uc_box bdd bt0 clearfix">
+	{if $list}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+		<tbody>
+			<tr border="0">
+	        	<th>明细订单号</th>
+				<th style="width:10%">交易金额</th>
+	            <th style="width:10%">投标人</th>
+	            <th style="width:10%">投标金额</th>
+	            <th style="width:15%">投标时间</th>
+	            <th style="width:12%">投标状态</th>
+	            <th style="width:15%">放款给招标人</th>
+			</tr>
+	
+			{foreach from="$list" item="item" key=key}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+				
+	            <td>
+					{$item.pIpsDetailBillNo}
+				</td>
+	            <td>
+					{$item.pTrdAmt}
+				</td>
+	            <td>
+					{$item.user_name}
+				</td>
+				<td>
+					{$item.money}
+				</td>
+	            <td>
+	            	{function name="to_date" v="$item.create_time" f="Y-m-d"}
+				</td>
+	            <td>
+					{if $item.is_auto == 0}手动{elseif $item.is_auto == 1}自动{/if}
+				</td>
+	            <td>
+					{if $item.is_has_loans == 0}否{elseif $item.is_has_loans == 1}是{/if}
+				</td>
+	            
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="pages">{$pages}</div>
+	{else}	
+	<div align="center" style="padding:20px 0">暂无记录</div>
+	{/if}
+	<div class="blank"></div>
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	

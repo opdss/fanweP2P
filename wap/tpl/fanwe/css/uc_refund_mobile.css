@@ -1,0 +1,27 @@
+.detail_list .header{
+	background:@main_color;
+	color:#fff;
+    border-radius:5px;
+}
+.detail_list span{
+	display:inline-block;
+	padding:0 5px;
+	line-height:20px;
+	margin-bottom:5px;
+}
+.detail_list{
+	padding:5px 5px 0px 5px;
+	border:#ddd 1px solid;
+	margin:15px 0;
+	background:#fff;
+	border-radius:5px;
+}
+dd:nth-child(1) .detail_list{
+	margin-top:0px;
+}
+.pay_block{
+	padding:2px 0;
+}
+.total p{
+	line-height:25px;
+}

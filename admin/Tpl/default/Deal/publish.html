@@ -1,0 +1,53 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<php>
+	function get_deal_edit($id,$deal)
+	{
+		return "<a href='".u("Deal/publish_edit",array("id"=>$id))."'>审核操作</a>";
+	}
+	
+	function publish_status($status){
+		if($status==1){
+			return "等待初审";
+		}
+		elseif($status==2){
+			return "初审通过";
+		}
+		elseif($status==3){
+			return "复审失败";
+		}
+	}
+</php>
+<div class="main">
+<div class="main_title">未审核贷款</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%FOREVERDEL}" onclick="foreverdel();" />
+</div>
+<div class="blank5"></div>
+
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,name|msubstr:{%DEAL_NAME}:edit
+		,user_id|get_user_name_real:借款人
+		,borrow_amount|format_price:贷款金额
+		,rate:利率(%)
+		,repay_time|get_time_type=$deal:期数
+		,type_id|get_loan_type_name:借款用途
+		,loantype|loantypename=0:还款方式
+		,create_time|to_date='Y-m-d':发布时间
+		,publish_wait|publish_status:审核状态
+		,id|get_deal_edit=$deal:审核操作" 
+	actionlist="foreverdel:{%FOREVERDEL}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

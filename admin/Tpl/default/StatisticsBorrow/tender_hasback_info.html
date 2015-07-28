@@ -1,0 +1,102 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">已回款明细</div>
+<div class="blank5"></div>
+<script type="text/javascript">	
+	function export_csv_hasback_info()
+	{
+		var inputs = $(".search_row").find("input");
+		var selects = $(".search_row").find("select");
+		var param = '';
+		for(i=0;i<inputs.length;i++)
+		{
+			if(inputs[i].name!='m'&&inputs[i].name!='a')
+			param += "&"+inputs[i].name+"="+$(inputs[i]).val();
+		}
+		for(i=0;i<selects.length;i++)
+		{
+			param += "&"+selects[i].name+"="+$(selects[i]).val();
+		}
+		var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_csv_hasback_info";
+		location.href = url+param;
+	}
+	
+</script>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		
+		收款人：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		贷款号：<input type="text" class="textbox" name="deal_sn" value="{:trim($_REQUEST['deal_sn'])}" style="width:100px;" />
+		借款标题：<input type="text" class="textbox" name="sub_name" value="{:trim($_REQUEST['sub_name'])}" style="width:100px;" />
+		借款类型: 
+		<select name="cate_id">
+			<option value="0" <if condition="intval($_REQUEST['cate_id']) eq 0">selected="selected"</if>>{%ALL}</option>
+			<foreach name="cate_list" item="cate_item">
+				<option value="{$cate_item.id}" <if condition="intval($_REQUEST['cate_id']) eq $cate_item['id']">selected="selected"</if>>{$cate_item.name}</option>
+			</foreach>
+		</select>
+		状态: 
+		<select name="status">
+				<option value="5" <if condition="intval($_REQUEST['status']) eq 5" >selected="selected"</if>>{%ALL}</option>
+				<option value="1" <if condition="intval($_REQUEST['status']) eq 1">selected="selected"</if>>提前收款</option>
+				<option value="2" <if condition="intval($_REQUEST['status']) eq 2">selected="selected"</if>>准时收款</option>
+				<option value="3" <if condition="intval($_REQUEST['status']) eq 3">selected="selected"</if>>逾期收款</option>
+				<option value="4" <if condition="intval($_REQUEST['status']) eq 4">selected="selected"</if>>严重逾期收款</option>
+		</select>
+		
+		<div class="blank5"></div>
+		应收时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" style="width:130px" />
+		<input type="button" class="button" id="btn_begin_time" value="{%SELECT_TIME}" onclick="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" />	
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" style="width:130px" />
+		<input type="button" class="button" id="btn_end_time" value="{%SELECT_TIME}" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" />	
+		
+		<input type="hidden" value="StatisticsBorrow" name="m" />
+		<input type="hidden" value="tender_hasback_info" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		<input type="button" class="button" value="{%EXPORT}" onclick="export_csv_hasback_info();" />
+    	
+	</form>
+</div>				
+<php>
+	function get_deal_url($name,$id){
+		return '<a href="'.__ROOT__.'/index.php?ctl=deal&id='.$id.'" target="_blank">'.$name.'</a>';
+	}
+</php>							
+<div class="blank5"></div>
+		
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	
+	datasource="list" 
+	show="收款人|get_user_name_real:收款人
+		,贷款号:贷款号
+		,借款标题|get_deal_url=$deal['deal_id']:借款标题
+		,借款类型:借款类型
+		,还款本息|format_price:还款本息
+		,投资者罚息收入|format_price:投资者罚息收入
+		,投资者付管理费|format_price:投资者付管理费
+		,借款者付管理费|format_price:借款者付管理费
+		,逾期天数:逾期天数
+		,应收时间:应收时间
+		,实收时间:实收时间
+		,投资者实收总额|format_price:投资者实收总额
+		,平台收入|format_price:平台收入
+		,状态:状态
+		"/>
+			
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+
+</div>
+
+<include file="Public:footer" />

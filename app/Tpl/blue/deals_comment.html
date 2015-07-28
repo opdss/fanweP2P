@@ -1,0 +1,114 @@
+{include file="inc/header.html"} 
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/datepicker.css" />
+<script type="text/javascript" src="{$TMPL}/js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/jquery.ui.datepicker.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("input[name='se_begin']").datepicker({showAnim:'fadeIn'});
+		$("input[name='se_end']").datepicker({showAnim:'fadeIn'});
+	});
+</script>
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default">
+			<div id="content" class="cf">
+			<div class="box" id="g_recent">
+				
+				<div class="box">
+					<div class="box-top"></div>
+					<div class="box-content">
+						<div class="head">
+						<form name="search" action="{url x="tuan" r="search"}" method="post">
+							<h2>{$page_title}</h2>
+							{$LANG.KEYWORD} <input type="text" class="f-input" style="width:100px;" name="se_name" value="{$se_name}" />
+							{$LANG.TIME} <input type="text" class="f-input" style="width:100px;" name="se_begin" value="{$se_begin}"  /> - <input type="text" class="f-input" style="width:100px;" name="se_end" value="{$se_end}" />
+							<input type="hidden" value="{$module}" name='se_module'>
+							<input type="hidden" value="<?php echo trim($_REQUEST['act']);?>" name='se_action'>
+							<input type="hidden" value="<?php echo intval($_REQUEST['id']);?>" name='se_id'>
+							<input type="submit" value="{$LANG.SEARCH}" class="formbutton">
+						</form>
+						</div>
+						<div class="sect">							
+							<ul>
+								{if $deals}
+								{foreach from=$deals item=deal}
+								<li>
+																		
+									<div class="picture">
+										<div class="p-box">
+										{if $deal.buy_status eq 2}
+											<div class="soldout"></div>										
+										{elseif $deal.time_status eq 1}
+											<div class="insale"></div>
+										{/if}
+										
+										<a target="_blank" title="{$deal.name}" href="{url x="tuan" r="message#deal" p="id=$deal.id"}" class="soldoutlink">{$deal.name}</a>
+										<a target="_blank" title="{$deal.name}" href="{url x="tuan" r="message#deal" p="id=$deal.id"}">
+											<img height="121" width="200" src="{$deal.icon}" alt="{$deal.name}">
+										</a>
+										</div>
+									</div>
+									<div class="info" style="width: 410px;">										
+										<div>
+											<h2><a href="{url x="tuan" r="message#deal" p="id=$deal.id"}">{$LANG.BEFORE_BUY}</a></h2>
+											<div class="blank1"></div>
+											<p>		
+												{if $deal.before_buy.list}									
+												{foreach from=$deal.before_buy.list item=message_item}												
+												{if $message_item.point gt 0}<span class="comment_{$message_item.point}"><?php echo $GLOBALS['lang']['COMMENT'.$this->_var['message_item']['point']];?></span>{/if}
+												<strong>{function name="get_user_name" value=$message_item.user_id} </strong>
+												<span style="font-size:12px; color:#999;">
+												<?php echo sprintf($GLOBALS['lang']['SUPPLIER_COMMENT_SAY'],pass_date($this->_var['message_item']['create_time']));?>：											
+												</span>
+												<span style="font-size:12px;"><a href="<?php echo url("tuan","message#deal",array("id"=>$this->_var['message_item']['rel_id'],"is_buy"=>$this->_var['message_item']['is_buy']))."#consult-entry-".$this->_var['message_item']['id'];?>" title="{$message_item.content}">{function name="msubstr" value=$message_item.content}</a></span>
+												<br />
+												{/foreach}
+												{else}
+												<a href="{url x="tuan" r="message#deal" p="id=$deal.id"}" style="font-size:12px;">{$LANG.ADD_FIRST_MESSAGE_BEFORE_BUY}</a>										
+												{/if}
+											</p>
+											<div class="clear"></div>
+											<h2><a href="{url x="tuan" r="message#deal" p="id=$deal.id&is_buy=1"}">{$LANG.AFTER_BUY}</a></h2>
+											<div class="blank1"></div>
+											<p>			
+												{if $deal.after_buy.list}									
+												{foreach from=$deal.after_buy.list item=message_item}												
+												{if $message_item.point gt 0}<span class="comment_{$message_item.point}"><?php echo $GLOBALS['lang']['COMMENT'.$this->_var['message_item']['point']];?></span>{/if}
+												<strong>{function name="get_user_name" value=$message_item.user_id} </strong>
+												<span style="font-size:12px; color:#999;">
+												<?php echo sprintf($GLOBALS['lang']['SUPPLIER_COMMENT_SAY'],pass_date($this->_var['message_item']['create_time']));?>：											
+												</span>
+												<span style="font-size:12px;"><a href="<?php echo url("tuan","message#deal",array("id"=>$this->_var['message_item']['rel_id'],"is_buy"=>$this->_var['message_item']['is_buy']))."#consult-entry-".$this->_var['message_item']['id'];?>" title="{$message_item.content}">{function name="msubstr" value=$message_item.content}</a></span>
+												<br />
+												{/foreach}
+												{else}
+												<a href="{url x="tuan" r="message#deal" p="id=$deal.id&is_buy=1"}" style="font-size:12px;">{$LANG.ADD_FIRST_MESSAGE_AFTER_BUY}</a>										
+												{/if}
+											</p>
+										</div>
+										
+									</div>
+									<div class="blank"></div>
+								</li>	
+							{/foreach}
+							{else}
+							{$LANG.NO_DEALS}
+							{/if}
+							<?php unset($this->_var['deal']);?>
+							</ul>
+							<div class="clear"></div>
+							
+							<div class="pages">{$pages}</div>
+							
+						</div>
+					</div>
+					<div class="box-bottom"></div>
+				</div>
+			</div></div>
+			{include file="inc/side.html"} 
+	</div>
+	<!-- bd end -->
+</div></div>
+
+{include file="inc/footer.html"}

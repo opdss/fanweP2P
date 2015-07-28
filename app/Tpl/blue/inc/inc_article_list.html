@@ -1,0 +1,20 @@
+{if $list}
+<div class="btds clearfix">
+	<ul class="article_list">
+	{foreach from=$list item=item}
+	<li class="pl10 pr10">
+		<span class="f_l">
+			<a href="{$item.url}" title="{$item.title}">{$item.title}</a>
+		</span>
+		<span class="f_r">
+			{function name="to_date" v=$item.update_time f="Y-m-d"}
+		</span>
+	</li>
+	{/foreach}
+	</ul>
+</div>
+{else}
+<div class="p20 tc">
+{$page_title}{$LANG.NO_ARTICLE}
+</div>
+{/if}

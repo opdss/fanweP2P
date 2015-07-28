@@ -1,0 +1,528 @@
+{include file="inc/header.html"} 
+	<div class="regstep">
+        <ol class="ui-step ui-step-3">
+            <li class="ui-step-start ui-step-done">
+                <div class="ui-step-line">-</div>
+                <div class="ui-step-icon">
+                    <i class="iconfont"></i>
+                    <i class="ui-step-number">1</i>
+                    <span class="ui-step-text">填写账户信息</span>
+                </div>
+            </li>
+            <li class="ui-step-active">
+                <div class="ui-step-line">-</div>
+                <div class="ui-step-icon">
+                    <i class="iconfont"></i>
+                    <i class="ui-step-number">2</i>
+                    <span class="ui-step-text">实名信息</span>
+                </div>
+            </li>
+            <li class="ui-step-end">
+                <div class="ui-step-line">-</div>
+                <div class="ui-step-icon">
+                    <i class="iconfont"></i>
+                    <i class="ui-step-number">3</i>
+                    <span class="ui-step-text">注册成功</span>
+                </div>
+            </li>
+        </ol>
+    </div>
+	
+	<div class="blank20"></div>
+	<div class="wrap">
+			<div class="bdd bddf">
+				<div class="user-lr-box f_l pt50 pl30 pb30" style="width:590px">
+					<form action="{url x="index" r="user#do_re_name_id"}" method="post" id="re_name_and_id">
+						
+						<div class="field username ">
+							<label for="real_name"><span class="f_red">*</span>{if $user_info.user_type eq 1}法人{/if}姓名</label>
+							<div class="f_l frbox pr">
+								<div class="u_icon">
+									<i class="iconfont">&#xe623;</i>
+								</div>
+								<input type="text" class="f-input ui-textbox" holder="输入真实姓名" id="real_name" name="real_name" size="30">
+								<span class="f-input-tip"></span> 
+								<span class="hint"></span> 
+							</div>
+							<div class="blank0"></div>
+						</div>
+						<div class="blank10"></div>
+						
+						<div class="field idno">
+							<label for="idno"><span class="f_red">*</span>身份证号</label>
+							<div class="f_l frbox pr">
+								<div class="u_icon">
+									<i class="iconfont">&#xe60a;</i>
+								</div>
+								<input type="text" class="f-input ui-textbox" holder="输入身份证" id="idno" name="idno" size="30" onkeyup="idcheck(this);">
+								<span class="f-input-tip"></span> 
+								<span class="hint"></span> 
+							</div>
+							<div class="blank0"></div>
+						</div>
+						<div class="blank10"></div>
+                        
+                        
+                        
+					
+                        
+                        
+                          
+                        
+                        
+                        
+                        
+                        
+                 <!--         <div class="field idno pr">
+							<label for="idno"><span class="f_red">*</span>手机号：</label>
+							<div class="f_l frbox pr">
+								<div class="u_icon">
+									<i class="iconfont">&#xe60a;</i>
+								</div>
+								{function name="hideMobile" v=$user_info.mobile}
+                                <input type="button" id="reveiveActiveCode" class="btn_blue f_white lh26 reveiveActiveCode" value="{$LANG.DO_SEND}{$LANG.MOBILE_VERIFY_CODE}" onclick="sendPhoneCode0(this,'#J_Vphone_0');">
+								<span class="f-input-tip"></span> 
+								<span class="hint"></span> 
+							</div>
+							<div class="blank0"></div>
+						</div>
+						<div class="blank10"></div>
+                        
+                        
+                          <div class="field idno pr">
+							<label for="idno"><span class="f_red">*</span>{$LANG.VERIFY_CODE}：</label>
+							<div class="f_l frbox pr">
+								<div class="u_icon">
+									<i class="iconfont">&#xe60a;</i>
+								</div>
+								 <input name="validateCode_0" id="validateCode_0" class="f-input ui-textbox">
+								<span class="f-input-tip"></span> 
+								<span class="hint"></span> 
+							</div>
+							<div class="blank0"></div>
+						</div>
+						<div class="blank10"></div>-->
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+						 
+						<!-- 法人 -->
+						{if $user_info.user_type eq 1}
+						<div class="field  pr">
+							<label for="idno"><span class="f_red">*</span>企业名称</label>
+							<div class="f_l frbox pr">
+								<div class="u_icon">
+									<i class="iconfont">&#xe633;</i>
+								</div>
+								<input type="text" class="f-input ui-textbox" holder="企业名称" id="enterpriseName" name="enterpriseName" size="30">
+								<span class="f-input-tip"></span> 
+								<span class="hint"></span> 
+							</div>
+							<div class="blank0"></div>
+						</div>
+						<div class="blank10"></div>
+						
+						<div class="field  pr">
+							<label for="idno"><span class="f_red">*</span>开户银行许可证</label>
+							<div class="f_l frbox pr">
+								<div class="u_icon">
+									<i class="iconfont">&#xe61a;</i>
+								</div>
+								<input type="text" class="f-input ui-textbox" holder="开户银行许可证" id="bankLicense" name="bankLicense" size="30">
+								<span class="f-input-tip"></span> 
+								<span class="hint"></span> 
+							</div>
+							<div class="blank0"></div>
+						</div>
+						<div class="blank10"></div>
+						
+						
+						<div class="field  pr">
+							<label for="idno"><span class="f_red">*</span>组织机构代码</label>
+							<div class="f_l frbox pr">
+								<div class="u_icon">
+									<i class="iconfont">&#xe60b;</i>
+								</div>
+								<input type="text" class="f-input ui-textbox" holder="组织机构代码" id="orgNo" name="orgNo" size="30">
+								<span class="f-input-tip"></span> 
+								<span class="hint"></span> 
+							</div>
+							<div class="blank0"></div>
+						</div>
+						<div class="blank10"></div>
+						
+						
+						
+						<div class="field  pr">
+							<label for="idno"><span class="f_red">*</span>营业执照编号</label>
+							<div class="f_l frbox pr">
+								<div class="u_icon">
+									<i class="iconfont">&#xe61a;</i>
+								</div>
+								<input type="text" class="f-input ui-textbox" holder="营业执照编号" id="businessLicense" name="businessLicense" size="30">
+								<span class="f-input-tip"></span> 
+								<span class="hint"></span> 
+							</div>
+							<div class="blank0"></div>
+						</div>
+						<div class="blank10"></div>
+						
+						
+						
+						<div class="field  pr">
+							<label for="idno"><span class="f_red">*</span>税务登记号</label>
+							<div class="f_l frbox pr">
+								<div class="u_icon">
+									<i class="iconfont">&#xe604;</i>
+								</div>
+								<input type="text" class="f-input ui-textbox" holder="税务登记号" id="taxNo" name="taxNo" size="30">
+								<span class="f-input-tip"></span> 
+								<span class="hint"></span> 
+							</div>
+							<div class="blank0"></div>
+						</div>
+						<div class="blank10"></div>
+						
+						
+						
+						{/if}
+						
+						<div class="field hide">
+							<label style="margin-top: -9px;"><span class="red">*</span>{$LANG.USER_SEX}</label>
+							<select name="sex"  class="ui-select">
+								<option value="-1" {if $user_info.sex eq -1}selected="selected"{/if}>{$LANG.USER_SEX_NULL}</option>
+								<option value="0" {if $user_info.sex eq 0}selected="selected"{/if}>{$LANG.USER_SEX_0}</option>
+								<option value="1" {if $user_info.sex eq 1}selected="selected"{/if}>{$LANG.USER_SEX_1}</option>
+							</select>
+						</div>
+						<div class="blank10"></div>
+					
+						<div class="field hide ">
+							<label style="margin-top: -9px;" for="settings-birthday"><span class="red">*</span>{$LANG.USER_BIRTHDAY}</label>
+							<div class="f_l">
+								<select name="byear" class="ui-select">
+									<option value="0">{$LANG.PLEASE_SELECT}</option>
+									<?php for($i = date("Y") - 100 ;$i<=date("Y"); $i++){ ?>
+									<option value="<?php echo $i; ?>" <?php if($i==$GLOBALS['user_info']['byear']){echo 'selected="selected"';} ?>><?php echo $i; ?></option>
+									<?php
+									}
+								?>
+								</select>
+								{$LANG.SUPPLIER_YEAR}
+								<select name="bmonth" class="ui-select">
+									<option value="0">{$LANG.PLEASE_SELECT}</option>
+									<?php for($i = 1 ;$i<=12; $i++){ ?>
+									<option value="<?php echo $i; ?>"  <?php if($i==$GLOBALS['user_info']['bmonth']){echo 'selected="selected"';} ?>><?php if($i<10):echo "0".$i;else: echo $i; endif; ?></option>
+									<?php
+									}
+								?>
+								</select>
+								{$LANG.SUPPLIER_MON}
+								<select name="bday" class="ui-select">
+									<option value="0">{$LANG.PLEASE_SELECT}</option>
+									<?php for($i = 1 ;$i<=31; $i++){ ?>
+									<option value="<?php echo $i; ?>" <?php if($i==$GLOBALS['user_info']['bday']){echo 'selected="selected"';} ?>><?php if($i<10):echo "0".$i;else: echo $i; endif; ?></option>
+									<?php
+									}
+								?>
+								</select>
+								{$LANG.SUPPLIER_DAY}
+							</div>
+						</div>
+						<div class="blank10"></div>
+							
+						
+						<div class="act">
+							<input  type="submit" class="btn_blue w180 f_white f18 b p10 bdr3 reg-submit-btn" id="commit" name="commit" value="验证">				
+						</div>
+						<div class="blank20"></div>
+					</form>
+				</div>
+				<div class="blank0"></div>
+			</div>	
+	</div>
+
+
+
+<script type="text/javascript">
+
+
+jQuery(function(){
+	
+	$("form#re_name_and_id").submit(function(){
+	
+		if($.trim($(".username #real_name").val()).length == 0)
+		{			
+			if(window.PIE) {
+				formError($(".username #real_name").parent(),"真实姓名不为空");
+			}else{
+				formError($(".username #real_name"),"真实姓名不为空");	
+			}
+			return false;
+		}	
+		
+		if($.trim($(".idno #idno").val()).length == 0)
+		{			console.log($(".idno #idno").val());
+		    if(window.PIE) {
+				formError($(".idno #idno").parent(),"身份证号不为空");
+			}else{
+				formError($(".idno #idno"),"身份证号不为空");
+			}
+			return false;
+		}
+	
+		//法人
+		if($.trim($("#user_type").val()) == 1)
+		{			
+			if($.trim($("#bankLicense").val()).length == 0)
+			{	if(window.PIE) {	
+					formError($("#bankLicense").parent(),"开户银行许可证不为空");
+				}else{
+					formError($("#bankLicense"),"开户银行许可证不为空");
+				}
+				return false;
+			}else
+			{	if(window.PIE) {
+					formSuccess($("#bankLicense").parent(),"验证正确");
+				}else{
+					formSuccess($("#bankLicense"),"验证正确");
+				}
+			}
+			
+			if($.trim($("#enterpriseName").val()).length == 0)
+			{
+				if(window.PIE) {			
+					formError($("#enterpriseName").parent(),"企业名称不为空");
+				}else{
+					formError($("#enterpriseName"),"企业名称不为空");
+				}
+				return false;
+			}
+			
+			if($.trim($("#orgNo").val()).length == 0)
+			{	
+				if(window.PIE) {			
+					formError($("#orgNo").parent(),"组织机构代码不为空");
+				}else{
+					formError($("#orgNo"),"组织机构代码不为空");
+				}
+				return false;
+			}
+			
+			if($.trim($("#businessLicense").val()).length == 0)
+			{	
+				if(window.PIE) {				
+					formError($("#businessLicense").parent(),"营业执照编号不为空");
+				}else{
+					formError($("#businessLicense"),"营业执照编号不为空");
+				}
+				return false;
+			}
+			
+			if($.trim($("#taxNo").val()).length == 0)
+			{		
+				if(window.PIE) {		
+					formError($("#taxNo").parent(),"税务登记号不为空");
+				}else{
+					formError($("#taxNo"),"税务登记号不为空");
+				}
+				return false;
+			}
+			
+			
+		}
+		
+		if(!idcheck($(".idno #idno")))
+		{		
+			if(window.PIE) {		
+				formError($(".idno #idno").parent(),"身份证格式错误");
+			}else{
+				formError($(".idno #idno"),"身份证格式错误");	
+			}
+			return false;
+		}	
+		else
+		{	
+			if(window.PIE) {
+				formSuccess($(".idno #idno").parent(),"验证正确");
+			}else{
+				formSuccess($(".idno #idno"),"验证正确");
+			}
+		}
+		
+		
+		return true;
+	});
+	
+	
+	$(".idno #idno").bind("blur",function(){
+		var obj = $(this);
+		if($.trim(obj.val()).length == 0)
+		{	
+			if(window.PIE) {		
+				formError(obj.parent(),"身份证号不为空");
+			}else{
+				formError(obj,"身份证号不为空");
+			}
+		}
+		
+		if(!idcheck(obj))
+		{	
+			if(window.PIE) {		
+				formError(obj.parent(),"身份证格式错误");
+			}else{
+				formError(obj,"身份证格式错误");
+			}
+		}	
+		else
+		{	
+			if(window.PIE) {
+				formSuccess(obj.parent(),"验证正确");
+			}else{
+				formSuccess(obj,"验证正确");
+			}
+		}
+	}); //身份证验证
+	
+	$(".username #real_name").bind("blur",function(){
+		var obj = $(this);
+		if($.trim(obj.val()).length == 0)
+		{	
+			if(window.PIE) {		
+				formError(obj.parent(),"真实姓名不为空");
+			}else{
+				formError(obj,"真实姓名不为空");
+			}
+			return false;
+		}
+		if(window.PIE) {	
+			formSuccess(obj.parent(),"验证正确");
+		}else{
+			formSuccess(obj,"验证正确");
+		}
+		return true;
+	}); //用户名验证
+	
+	
+	//法人
+	if($.trim($("#user_type").val()) == 1)
+	{	
+		$("#bankLicense").bind("blur",function(){
+			var obj = $(this);
+			if($.trim(obj.val()).length == 0)
+			{	
+				if(window.PIE) {		
+					formError(obj.parent(),"开户银行许可证不为空");
+				}else{
+					formError(obj,"开户银行许可证不为空");
+				}
+				return false;
+			}
+			if(window.PIE) {		
+				formSuccess(obj.parent(),"验证正确");
+			}else{
+				formSuccess(obj,"验证正确");
+			}
+			return true;
+		}); //用户名验证
+		
+		
+		$("#enterpriseName").bind("blur",function(){
+			var obj = $(this);
+			if($.trim(obj.val()).length == 0)
+			{	
+				if(window.PIE) {			
+					formError(obj.parent(),"企业名称不为空");
+				}else{
+					formError(obj,"企业名称不为空");
+				}
+				return false;
+			}
+			if(window.PIE) {
+				formSuccess(obj.parent(),"验证正确");
+			}else{
+				formSuccess(obj,"验证正确");
+			}
+			return true;
+		}); //用户名验证
+		
+		
+		$("#orgNo").bind("blur",function(){
+			var obj = $(this);
+			if($.trim(obj.val()).length == 0)
+			{	
+				if(window.PIE) {		
+					formError(obj.parent(),"组织机构代码不为空");
+				}else{
+					formError(obj,"组织机构代码不为空");
+				}
+				return false;
+			}	
+			if(window.PIE) {		
+				formSuccess(obj.parent(),"验证正确");
+			}else{
+				formSuccess(obj,"验证正确");
+			}
+			
+			return true;
+		}); //用户名验证
+		
+		
+		$("#businessLicense").bind("blur",function(){
+			var obj = $(this);
+			if($.trim(obj.val()).length == 0)
+			{		
+				if(window.PIE) {		
+					formError(obj.parent(),"营业执照编号");
+				}else{
+					formError(obj,"营业执照编号");
+				}	
+				
+				return false;
+			}	
+			if(window.PIE) {		
+				formSuccess(obj.parent(),"验证正确");
+			}else{
+				formSuccess(obj,"验证正确");
+			}	
+
+			
+			return true;
+		}); //用户名验证
+		
+		
+		$("#taxNo").bind("blur",function(){
+			var obj = $(this);
+			if($.trim(obj.val()).length == 0)
+			{	
+				if(window.PIE) {		
+					formError(obj.parent(),"税务登记号不为空");
+				}else{
+					formError(obj,"税务登记号不为空");
+				}			
+				
+				return false;
+			}	
+			if(window.PIE) {		
+				formSuccess(obj.parent(),"验证正确");
+			}else{
+				formSuccess(obj,"验证正确");
+			}
+			
+			return true;
+		}); //用户名验证
+		
+	}
+});
+</script>
+<div class="blank20"></div>
+{include file="inc/footer.html"}

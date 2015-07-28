@@ -1,0 +1,162 @@
+
+#wrapper{
+	position:absolute;
+	z-index:1;top:45px;
+	left:0;
+	width:100%;
+	overflow:hidden;
+}
+
+/* swipe */
+.swipe{
+	width:100%;
+	overflow:hidden;
+	position:relative;
+}
+.swipe ul{
+	-webkit-transition:left 800ms ease-in 0;
+	-moz-transition:left 800ms ease-in 0;
+	-o-transition:left 800ms ease-in 0;
+	-ms-transition:left 800ms ease-in 0;
+	transition:left 800ms ease-in 0;
+}
+.swipe #pagenavi{
+	position:absolute;
+	left:0;bottom:10px;
+	text-align:center;
+	width:100%;
+}
+.swipe #pagenavi a{
+	width:14px;
+	height:14px;
+	line-height:99em;
+    background:#fff;
+	-webkit-border-radius:50%;
+	-moz-border-radius:50%;
+	border-radius:50%;
+	margin:0 4px;
+	overflow:hidden;
+	cursor:pointer;
+	display:inline-block;
+	*display:inline;
+	*zoom:1;
+}
+.swipe #pagenavi a.active{
+	background:@main_color;
+	 }
+.swipe ul li img{
+	width: 100%;
+}
+
+.cate-menu{
+	width: 100%;
+}
+.category .cate-menu  li{
+	width: 25%;
+	vertical-align: top;
+	display: inline-block;
+	float: left;
+	height: 105px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.category .cate-menu  li a{
+	display: block;
+	text-align: center;
+	padding: 11px 0;
+}
+.category .cate-menu li:hover{
+	background: #f2f2f2;
+}
+.menu1-icon{
+display: inline-block;
+width:50px;
+height:50px;
+line-height: 3em;
+border-radius:50%;
+text-align: center;
+vertical-align: middle;
+}
+.category .cate-name {
+display: block;
+font-size:13px;
+color:@font_a;
+text-align: center;
+margin-top:10px;
+font-weight: bold;
+}
+.category .cate-menu  li:nth-child(1) .menu1-icon{
+background:#5f9be6;
+}
+.category .cate-menu  li:nth-child(2) .menu1-icon{
+background:#9669dc;
+}
+.category .cate-menu  li:nth-child(3) .menu1-icon{
+background:#e56e77;
+}
+.category .cate-menu  li:nth-child(4) .menu1-icon{
+background:#ffa54b;
+}
+
+
+
+.index_tit{
+	height: 35px;
+	width: 100%;
+	border: none;
+	font-size:15px;
+	color:#fff;
+}
+.index_tit .State{
+	 line-height: 35px;
+	 padding: 0 10px;
+}
+.index_tit .verticalline{
+	height: 11px;
+	display: inline-block;
+	border-right: 1px solid #bfbfbf;
+}
+.index_tit a{
+	color: @font_a;
+	padding: 0 10px;
+}
+
+
+
+.Statistics{
+	margin: 6px 0;
+	border-left-width:1px;
+	border-left-style: solid;
+	width: 33%;
+	float: left;
+	height: 88px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.Statistics span{
+	display: block;
+	text-align: center;
+	font-size: 14px;
+	line-height: 28px;
+}
+.Statistics span:nth-child(2){
+	font-size: 16px;
+}
+.blue{
+	color: #46b0ec;
+}
+.yellow{
+	color: #ffb22b;
+}
+.green{
+	color: #4cc782;
+}
+.sub_name {
+line-height: 30px;
+padding: 0 10px;
+}
+.gray {
+background: #b5b5b5;
+}

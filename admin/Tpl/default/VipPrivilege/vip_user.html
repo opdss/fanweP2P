@@ -1,0 +1,161 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<php>
+	
+	function f_to_date($date){
+		return to_date($date,"Y-m-d H:i");
+	}
+	
+	function get_vip_state($vip_state){
+		if($vip_state==1)
+		return "有效";
+		else
+		return "无效";
+	}
+	
+	function get_vip_id($vip_id)
+    {
+    	return M("VipType")->where(" id=".$vip_id)->getField("vip_grade");
+    }
+	function show_bothday($id,$user)
+	{
+		return $user['byear']."-".$user['bmonth']."-".$user['bday'];
+	}
+	
+	
+	function get_customer_service($id,$user){
+		$str = "";
+		if($user['customer_id']==0){
+			$str .= '<a href="javascript:add_customer_service('.$id.');">分配客服</a>&nbsp;';
+		}else{
+			$str .= '<a href="javascript:show_customer_service('.$id.');">查看/编辑客服</a>&nbsp;';
+		}
+		return $str;
+	}
+	
+</php>
+<script type="text/javascript">
+	
+	function add_customer_service(id)
+	{
+		//window.location.href=ROOT+'?m=VipPrivilege&a=add_sc_service&id='+id;
+		$.weeboxs.open(ROOT+'?m=VipPrivilege&a=add_sc_service&id='+id+"&status=<php>echo $_REQUEST['status'];</php>", {contentType:'ajax',showButton:false,title:"分配客服",width:600,height:245});
+	}
+	function show_customer_service(id)
+	{
+		//window.location.href=ROOT+'?m=VipPrivilege&a=sc_service&id='+id;
+		$.weeboxs.open(ROOT+'?m=VipPrivilege&a=sc_service&id='+id+"&status=<php>echo $_REQUEST['status'];</php>", {contentType:'ajax',showButton:false,title:"查看/编辑客服",width:600,height:305});
+	}
+	
+	function modify_vip_user(id){
+		$.weeboxs.open(ROOT+'?m=VipPrivilege&a=send_gift&id='+id+"&status=<php>echo $_REQUEST['status'];</php>", {contentType:'ajax',showButton:false,title:"生日礼品发放",width:600,height:400});
+	}
+	
+	function modify_sc_service(id){
+		location.href = ROOT + '?m=VipPrivilege&a=add_sc_service&id='+id;
+		//location.href = ROOT + '?m=VipPrivilege&a=edit&id='+id;
+	}
+	
+	function send(id)
+	{
+		if(!id)
+		{
+			idBox = $(".key:checked");
+			if(idBox.length == 0)
+			{
+				alert("请选择要发放的选项！");
+				return;
+			}
+			idArray = new Array();
+			$.each( idBox, function(i, n){
+				idArray.push($(n).val());
+			});
+			id = idArray.join(",");
+		}
+	//	if(confirm(LANG['CONFIRM_DELETE']))
+		$.ajax({ 
+				url: ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=send_gift_all&id="+id, 
+				data: "ajax=1",
+				dataType: "json",
+				success: function(obj){
+					$("#info").html(obj.info);
+					if(obj.status==1)
+					location.href=location.href;
+				}
+		});
+	}
+	
+</script>
+<div class="main">
+<div class="main_title">VIP会员表</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="发放" onclick="send();" />
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">
+		VIP等级：
+		<select name="vip_id">
+			<option value="-1" <if condition="intval($_REQUEST['vip_id']) eq -1 || intval($_REQUEST['vip_id']) eq '' ">selected="selected"</if>>{%ALL}</option>
+			<foreach name="vip_list" item="vip_item">
+				<option value="{$vip_item.id}" <if condition="$_REQUEST['vip_id'] eq $vip_item['id']">selected="selected"</if>>{$vip_item.vip_grade}</option>
+			</foreach>
+			</select>	
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		VIP状态：
+		<select name="vip_state" >
+			<option value="-1" <if condition="intval($_REQUEST['vip_state']) eq -1 || intval($_REQUEST['vip_state']) eq '' ">selected="selected"</if>>{%ALL}</option>
+			<option value="1" <if condition="intval($_REQUEST['vip_state']) eq 1">selected="selected"</if>>有效</option>
+			<option value="0" <if condition="intval($_REQUEST['vip_state']) eq 0 && isset($_REQUEST['vip_state']) ">selected="selected"</if>>无效</option>
+		</select>
+		所属客服：
+		<select name="cnames">
+			<option value="-3" <if condition="intval($_REQUEST['cnames']) eq -3 || intval($_REQUEST['cnames']) eq '' ">selected="selected"</if>>{%ALL}</option>
+			<option value="-2" <if condition="intval($_REQUEST['cnames']) eq -2">selected="selected"</if>>未分配</option>
+			<option value="-1" <if condition="intval($_REQUEST['cnames']) eq -1">selected="selected"</if>>已分配</option>
+			<foreach name="customer_cate" item="item">
+				<option value="{$item.id}" <if condition="intval($_REQUEST['cnames']) eq $item['id']">selected="selected"</if>>{$item.name}</option>
+			</foreach>
+		</select>
+		生日时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d', false, false, 'begin_time');" style="width:130px" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" style="width:130px" />
+		
+		<input type="hidden" name="user_type" value="<if condition="ACTION_NAME eq 'info'">0<else/>1</if>" />
+		<input type="hidden" value="VipPrivilege" name="m" />
+		<input type="hidden" value="vip_user" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="user" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,id|get_user_name_real:{%USER_NAME}
+	,vip_id|get_vip_id:VIP等级
+	,vip_state|get_is_effect=$user['id']:VIP状态
+	,money|format_price:{%USER_MONEY}
+	,id|show_bothday=$user:生日
+	" 
+	actionlist="modify_vip_user:查看/发放 ,id|get_customer_service=$user" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

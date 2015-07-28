@@ -1,0 +1,123 @@
+<div class="tabbox clearfix">
+	<div class="tab {if $mtype neq 'private'}cur{/if}"><a href="{url x="index" r="uc_msg#index"}">{$LANG.UC_NOTICE}</a></div>
+	<div class="tab {if $mtype eq 'private'}cur{/if}"><a href="{url x="index" r="uc_msg#index" p="mtype=private"}">{$LANG.UC_PRIVATE_MSG}</a></div>
+	{if $mtype neq 'private'}
+	<div class="f_r ">
+		<a href="{url x="index" r="uc_msg#setting"}">{$LANG.UC_MSG_SETTING_TIPS}</a>
+		|
+		<a href="{url x="index" r="uc_msg#deal"}">{$LANG.WRITE_PM}</a>
+	</div>
+	{/if}
+</div>
+<div class="uc_box bdd bt0">
+	<form name="pm_list">
+		<table style="width:100%" cellspacing="0" cellpadding="0" border="0" class="uc-table" >
+			{foreach from=$msg_list item=pm key=key}
+			<tr style="cursor:pointer;" class="pm_row {if $key mod 2 eq 0}pm_row_1{/if}" onclick="window.location.href='{url x="index" r="uc_msg#deal" p="id=$pm.group_key"}';">
+				<td width=50 class="pl10">
+					{if $pm.system_msg_id neq 0 or $pm.is_notice}<span class="pm_pic pm_pic_{$pm.is_notice}"></span>{/if}
+					{if $pm.system_msg_id eq 0 and $pm.is_notice eq 0}
+						{if $pm.to_user_id eq $user_info.id}
+						{function name="show_avatar" v=$pm.from_user_id t="small"}
+						{/if}
+						{if $pm.from_user_id eq $user_info.id}
+						{function name="show_avatar" v=$pm.to_user_id t="small"}
+						{/if}
+					{/if}{*头像*}
+				</td>
+				
+				<td class="tl w140 pl10 lh20 pt10 pb10">
+					<div>
+					{if $pm.type eq 0 and $pm.is_read eq 0}<i class="iconfont pm new_pm">&#xe630;</i>{/if}
+					{if $pm.system_msg_id neq 0 or $pm.is_notice}
+					{if $pm.is_notice eq 1}
+					系统通知
+					{elseif $pm.is_notice eq 2}
+					材料通过
+					{elseif $pm.is_notice eq 3}
+					材料驳回
+					{elseif $pm.is_notice eq 4}
+					信用额度更新
+					{elseif $pm.is_notice eq 5}
+					提现申请
+					{elseif $pm.is_notice eq 6}
+					提现成功
+					{elseif $pm.is_notice eq 7}
+					提现失败
+					{elseif $pm.is_notice eq 8}
+					还款成功
+					{elseif $pm.is_notice eq 9}
+					回款成功
+					{elseif $pm.is_notice eq 10}
+					借款流标
+					{elseif $pm.is_notice eq 11}
+					投标流标
+					{elseif $pm.is_notice eq 12}
+					三日内还款
+					{elseif $pm.is_notice eq 13}
+					标被留言
+					{elseif $pm.is_notice eq 14}
+					标留言被回复
+					{elseif $pm.is_notice eq 15}
+					借款投标过半
+					{elseif $pm.is_notice eq 16}
+					投标满标
+					{elseif $pm.is_notice eq 17}
+					债权转让
+					{elseif $pm.is_notice eq 19}
+					续约成功
+					{elseif $pm.is_notice eq 20}
+					续约失败
+					{else}
+					{$LANG.SYSTEM_PM}
+					{/if}
+					{/if}
+					{if $pm.system_msg_id eq 0 and $pm.is_notice eq 0}
+		
+						{if $pm.from_user_id eq $user_info.id}{$LANG.I}{else}{function name="get_user_name" v=$pm.from_user_id s="0"}{/if}
+						{$LANG.SAYTO}
+						{if $pm.to_user_id eq $user_info.id}{$LANG.I}{else}{function name="get_user_name" v=$pm.to_user_id s="0"}{/if}
+						{$LANG.SAY}
+				
+					{/if}
+					</div>
+					<div class="total">
+					{function name="sprintf" f=$LANG.TOTAL_PM v=$pm.total}
+					</div>
+					<div class="time">
+					{function name="pass_date" v=$pm.create_time}
+					</div>				
+				</td>
+				<td class="tl lh24 pr10">
+					<div class="clearfix tr">
+					{if $mtype eq 'private'}
+					<input type="checkbox" value="{$pm.group_key}" name="pm_key[]" />删除
+					{/if}
+					</div>
+					{if $pm.title}<div class="b">{$pm.title}</div>{/if}
+					<div class="f_dgray">
+					{if $pm.is_notice gt 1}尊敬的用户{function name="get_user_name" v=$pm.to_user_id s="0"}：{/if}<?php echo msubstr(strip_tags($this->_var['pm']['content']),0,200); ?>
+					</div>
+					{if $pm.system_msg_id eq 0 and $pm.type eq 0 and $pm.is_notice eq 0}
+					[{$LANG.VIEW_AND_REPLY}]
+					{else}
+					<div class="f_r">[展开]</div>	
+					{/if}
+				</td>
+			</tr>				
+			{/foreach}
+		
+		</table>
+	</form>
+	{if $mtype eq 'private'}
+		<div class="pt10 f_r" style="float:right">
+		{$LANG.SELECT_ALL}<input type="checkbox" name="checkall" /> 
+		</div>
+		<div class="f_r tr" style=" width: 100%;">
+		<input type="button" value="{$LANG.DELETE}" name="del_pm" class="remove_msg_btn" />
+		</div>	
+	{/if}			
+	<div class="pages">{$pages}</div>
+	<div class="blank20"></div>	
+</div>
+

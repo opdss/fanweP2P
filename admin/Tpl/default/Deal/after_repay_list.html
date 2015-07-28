@@ -1,0 +1,93 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+
+<script type="text/javascript">
+	function show_detail(id)
+	{
+		$.weeboxs.open(ROOT+'?m=Deal&a=show_detail&id='+id, {contentType:'ajax',showButton:false,title:LANG['COUNT_TOTAL_DEAL'],width:600,height:330});
+	}
+	function preview(id)
+	{
+		window.open("__ROOT__/index.php?ctl=deal&id="+id+"&preview=1");
+	}
+</script>
+<php>
+	function a_get_deal_type($type,$id)
+	{
+		$deal = M("Deal")->getById($id);
+		if($deal['is_coupon'])
+		return l("COUNT_TYPE_".$deal['deal_type']);
+		else
+		return l("NO_DEAL_COUPON_GEN");
+		
+	}
+	
+	function a_get_buy_status($buy_status,$deal_id)
+	{
+		if($buy_status==2){
+			return "<span style='color:red'>".l("DEAL_STATUS_".$buy_status)."</span>";
+		}
+		else{
+			return l("DEAL_STATUS_".$buy_status);
+		}
+	}
+	function get_buy_type_title($buy_type)
+	{
+		return l("DEAL_BUY_TYPE_".$buy_type);
+	}
+</php>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%DEAL_NAME}：<input type="text" class="textbox" name="name" value="{:trim($_REQUEST['name'])}" />
+		
+		{%CATE_TREE}：
+		<select name="cate_id">
+			<option value="0" <if condition="intval($_REQUEST['cate_id']) eq 0">selected="selected"</if>>{%NO_SELECT_CATE}</option>
+			<foreach name="cate_tree" item="cate_item">
+				<option value="{$cate_item.id}" <if condition="intval($_REQUEST['cate_id']) eq $cate_item['id']">selected="selected"</if>>{$cate_item.title_show}</option>
+			</foreach>
+		</select>
+		贷款人：
+		<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" size="10" />
+		
+		<input type="hidden" value="Deal" name="m" />
+		<input type="hidden" value="after_repay_list" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,name|msubstr:{%DEAL_NAME}:edit
+		,cate_id|get_deal_cate_name:{%DEAL_CATE}
+		,type_id|get_loan_type_name:{%TYPE_TREE}
+		,user_id|get_user_name:借款人
+		,deal_status|a_get_buy_status=$deal['id']:{%DEAL_STATUS}
+		,is_effect|get_is_effect=$deal['id']:{%IS_EFFECT}
+		,is_recommend|get_toogle_status=$deal['id']#is_recommend:{%IS_RECOMMEND}
+		,sort|get_sort=$deal['id']:{%SORT}" 
+	actionlist="edit:{%EDIT}, del:{%DEL},show_detail:投标列表, preview:{%PREVIEW}"
+	actionwidth="160px" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,8 @@
+.log_list{ margin-bottom:15px; color:#878787; font-size:15px; line-height:28px;}
+.log_list li{ background:#fff; border:1px solid #cbcbcb; border-radius:5px; overflow:hidden; margin:15px 10px 0 10px;}
+.log_list li dd{ width:50%; float:left;}
+.log_list li .y{ width:100%;}
+.log_list li dl{ padding:5px 0;}
+.log_list .name{ padding:0 10px 0 10px;}
+.Revocation_but{ display:block; border-radius:5px; overflow:hidden; background:#fff;  margin-right:10px; width:80px; text-align:center;}
+.results_block{ border-top:1px dotted #c6c6c6;  padding:7px 0; }

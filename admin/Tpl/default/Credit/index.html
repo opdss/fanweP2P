@@ -1,0 +1,53 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+</div>
+<div class="blank5"></div>
+<php>
+	function do_del($id,$type){
+		if($type['status']==0)
+			return '<a href="javascript:del('.$type['id'].');">'.L("DEL").'</a>';
+	}
+	function do_expire($expire){
+		if($expire > 0){
+			return $expire."个月";
+		}
+		else{
+			return "永久";
+		}
+	}
+	function get_c_status($status){
+		if($status == 1){
+			return "系统";
+		}
+		else{
+			return "普通";
+		}
+	}
+	function get_must_status($must){
+		if($must == 1){
+			return "是";
+		}
+		else{
+			return "否";
+		}
+	}
+</php>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="type" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,type_name:类型名称:edit,type:英文名称,point:信用积分,is_effect|get_is_effect=$type['id']:{%IS_EFFECT},file_count:上传框,sort|get_sort=$type['id']:{%SORT},expire|do_expire:认证有效期,status|get_c_status:类型,must|get_must_status:是否必须" 
+	actionlist="edit:{%EDIT}, id|do_del=$type" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

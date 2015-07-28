@@ -1,0 +1,67 @@
+<div class="inc wb">
+	<div class="inc_top">{$page_title}</div>
+	<div class="inc_main pd10">
+		<span class="red" style="font-weight:bolder;">{$user_data.user_name}</span>  {$LANG.WELCOME_BACK}  {function name="app_conf" v="SHOP_TITLE"}
+		<div class="blank"></div>
+		{$LANG.LAST_LOGIN_TIME}: {function name="to_date" v=$user_data.login_time}  {$LANG.LOGIN_IP}：{$user_data.login_ip}  {$LANG.MAY_FROM}：{$user_data.from}
+		<div class="blank"></div>
+		{$LANG.YOU_LEVEL_IS} {$user_data.user_level} {if $user_data.discount neq 10}{$LANG.DISCOUNT}：{$user_data.discount}{$LANG.DISCOUNT_OFF}{/if}
+		&nbsp;&nbsp;
+		{$LANG.MY_FANS}：<a href="{url x="shop" r="uc_center#fans"}" class="count_big">{$user_data.focused_count}</a>
+		&nbsp;&nbsp;
+		{$LANG.MY_FOCUS}：<a href="{url x="shop" r="uc_center#focus"}" class="count_big">{$user_data.focus_count}</a>
+		&nbsp;&nbsp;
+		{$LANG.YOUR_TOTAL_MONEY} <strong class="red">{function name="format_price" value=$user_info.money}</strong>
+	，{$LANG.YOUR_TOTAL_SCORE}： <strong class="red">{function name="format_score" value=$user_info.score}</strong>
+		<div class="blank"></div>
+	</div>
+	<div class="inc_foot"></div>
+</div>
+<div class="blank"></div>
+
+<div class="inc wb">
+		
+	<form method="post" id="consult-add-form"  onsubmit="return check_content(this);" action="{url x="shop" r="uc_topic#add"}" name="message"  style="padding:20px;">
+			{if $user_info}								
+				{if $is_merchant}
+				{function name="show_topic_form" text_name="content" width="585px" height="50px" is_img="1" is_topic="1" is_event="1" id="main_topic_form_textarea"}		
+				{else}
+				{function name="show_topic_form" text_name="content" width="585px" height="50px" is_img="1" is_topic="1" is_event="0" id="main_topic_form_textarea"}						
+				{/if}
+				<div class="blank"></div>
+				{if app_conf("VERIFY_IMAGE") eq 1}
+				<p class="commit">
+				<div class="verify_row">								
+				<input type="text" value="" class="f-input" name="verify" />	
+				<img src="{$APP_ROOT}/verify.php?rand={function name="rand"}" onclick="this.src='{$APP_ROOT}/verify.php?rand='+ Math.random();" title="看不清楚？换一张" />			
+				</div>	
+				</p>
+				<div class="blank"></div>
+				{/if}						
+			{else}
+				{$message_login_tip}
+			{/if}
+			<p class="commit">
+				<input type="submit" class="sub_btn" name="commit" value="{$LANG.OK_POST}">
+			</p>	
+							
+	</form>
+
+</div>
+<div class="blank"></div>	
+<ul class="uc_topic_nav">
+	<li {if $ACTION_NAME eq 'index'}class="act"{/if}><a href="{url x="shop" r="uc_topic#index"}">{$LANG.UC_CENTER_INDEX}</a></li>
+	<li {if $ACTION_NAME eq 'mytopic'}class="act"{/if}><a href="{url x="shop" r="uc_topic#mytopic"}">{$LANG.UC_CENTER_MYTOPIC}</a></li>
+	<li {if $ACTION_NAME eq 'myfav'}class="act"{/if}><a href="{url x="shop" r="uc_topic#myfav"}">{$LANG.UC_CENTER_MYFAV}</a></li>
+	<li {if $ACTION_NAME eq 'mycomment'}class="act"{/if}><a href="{url x="shop" r="uc_topic#mycomment"}">{$LANG.UC_CENTER_MYCOMMENT}</a></li>
+	<li {if $ACTION_NAME eq 'atme'}class="act"{/if}><a href="{url x="shop" r="uc_topic#atme"}">{$LANG.UC_CENTER_ATME}</a></li>
+</ul>
+<div class="blank"></div>	
+<div class="inc">
+	<div class="inc_top">{$post_title}</div>
+	<div class="inc_main">		
+		{function name='load_topic_list'}
+	</div>
+	<div class="inc_foot"></div>
+</div>
+

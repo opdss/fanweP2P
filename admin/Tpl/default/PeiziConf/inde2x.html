@@ -1,0 +1,114 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/conf.js' />
+<script type="text/javascript">
+
+</script>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<foreach name="peiziconf" item="peizi">
+	<input type="button" class="button conf_btn" rel="{$peizi.type}" value="{:l("PEI_ZI_CONF_GROUP_".$peizi['type'])}" />&nbsp;
+	</foreach>
+</div>
+<div class="blank5"></div>
+
+<foreach name="peiziconf" item="conf" key="k">
+
+<form name="edit_".$k action="__APP__" method="post" enctype="multipart/form-data">
+	<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="{$peizi.type}">
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		
+		<tr>
+			<if condition="$conf['type'] eq '2'"> 
+				<td class="item_title">配资倍数及月份:</td>
+				<td class="item_input">
+					倍数：<input type="text" class="textbox " name="beishu" value="{$conf.beishu}" />
+					月份：<input type="text" class="textbox " name="yue" value="{$conf.yue}" />
+					<span class="tip_span">【可配资的资金=投资本金*配资倍数】【借款月利率 可根据月份数和总金额设置】</span>
+				</td>
+				
+			<else />
+				<td class="item_title">申请实盘资金:</td>
+				<td class="item_input">
+					<input type="text" class="textbox " style="width: 429px;" name="money_list" value="{$conf.money_list}" />
+					<span class="tip_span">(2000, 3000,5000,10000 等)以逗号分割</span>
+				</td>
+			</if>
+			
+		</tr>
+		<tr>
+			<td class="item_title">最小申请实盘资金:</td>
+			<td class="item_input">
+				<input type="text" class="textbox " name="min_money" value="{$conf.min_money}" />
+				<span class="tip_span">0为不限制</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="item_title">最大申请实盘资金:</td>
+			<td class="item_input">
+				<input type="text" class="textbox " name="max_money" value="{$conf.max_money}" />
+				<span class="tip_span">0为不限制</span>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="item_title">协议:</td>
+			<td class="item_input">
+				<select name="contract_id">
+					<foreach name="contract" item="con">
+					<option value="{$con.id}" <if condition="$conf['contract_id'] eq $con.id">selected="selected"</if>>{$con.title}</option>
+					</foreach>
+				</select>
+				<span class="tip_span">使用协议</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="item_title">一次性业务审核费:</td>
+			<td class="item_input">
+				<input type="text" class="textbox " name="manage_money" value="{$conf.manage_money}" />
+				<span class="tip_span"></span>
+			</td>
+		</tr>
+		
+		<if condition="$conf['type'] eq '0'"> 
+		<tr>
+			<td class="item_title">是否节假日免费:</td>
+			<td class="item_input">
+				<select name="is_holiday_fee">
+					<option value="0" <if condition="$conf_['is_holiday_fee'] eq 0">selected="selected"</if>>否</option>
+					<option value="1" <if condition="$conf_['is_holiday_fee'] eq 1">selected="selected"</if>>是</option>
+				</select>
+				<span class="tip_span"></span>
+			</td>
+		</tr>
+		</if>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+		
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="PeiziConf" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%EDIT}" />
+			<input type="reset" class="button" value="{%RESET}" />
+			</td>
+		</tr>
+	</table>
+	
+
+
+</form>
+
+</foreach>
+<div class="blank5"></div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,83 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<div class="main">
+<div class="main_title">{$vo.deal_id|get_deal_url}的续约申请</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">借款人：</td>
+		<td class="item_input">
+			{$vo.user_id|get_user_name}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">借款：</td>
+		<td class="item_input">
+			{$vo.deal_id|get_deal_url}
+			<a href="__APP__?m=Deal&a=repay_plan&id={$vo.deal_id}" target="_blank">查看还款列表</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">代还金额：</td>
+		<td class="item_input">
+			{$vo.money|format_price}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">处理结果</td>
+		<td class="item_input" id="GenerationRepaySubmitStatusBox">
+			<select name="status" <if condition="$vo['status'] gt 0">disabled="disabled"</if>>
+				<option value="0" <if condition="$vo['status'] eq 0">selected="selected"</if>>{%G_REPAY_STATUS_0}</option>
+				<option value="1" <if condition="$vo['status'] eq 1">selected="selected"</if>>{%G_REPAY_STATUS_1}</option>
+				<option value="2" <if condition="$vo['status'] eq 2">selected="selected"</if>>{%G_REPAY_STATUS_2}</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">原因:</td>
+		<td class="item_input"><textarea id="msgarea" <if condition="$vo['status'] neq 2 || $vo['memo'] neq ''">disabled="true"</if> class="textbox" name="memo" style="width:400px;height:80px" >{$vo.memo}</textarea>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">操作备注:</td>
+		<td class="item_input"><textarea class="textbox" name="op_memo" <if condition="$vo['status'] neq 0">disabled="true"</if> style="width:400px;height:80px" >{$vo.op_memo}</textarea>
+		</td>
+	</tr>
+	<if condition="$vo['status'] eq 0">
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="GenerationRepaySubmit" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	</if>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#GenerationRepaySubmitStatusBox select").change(function(){
+			if($(this).val()=="2"){
+				$("#msgarea").attr("disabled",false);
+			}
+			else{
+				$("#msgarea").attr("disabled",true);
+			}
+		});
+	});
+</script>

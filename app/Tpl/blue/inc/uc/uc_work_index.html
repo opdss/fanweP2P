@@ -1,0 +1,380 @@
+<div class="list">
+	<div class="list_title clearfix">
+		<div {if $ACTION_NAME eq 'index'}class="cur"{/if}><a href="{url x="index" r="uc_account#index"}">{$LANG.UC_ACCOUNT}</a></div>
+		<div {if $ACTION_NAME eq 'work'}class="cur"{/if}><a href="{url x="index" r="uc_account#work"}">{$LANG.UC_WORK_AUTH}</a></div>
+	</div>
+	<div class="uc_r_bl_box clearfix">
+	<style>
+		.field{ width:520px}
+	</style>
+	<div class="blank"></div>
+	<form method="post" action="{url x="shop" r="uc_account#savework"}" name="modify">
+	<div class="inc wb">
+		<div class="inc_main">
+				<div class="t_name item_group" style="width:840px">工作信息</div>
+				<table width="840px" class="user_info_table">
+					<tr>
+						<td class="pt10">
+							
+							<div class="field office">
+								<label for="settings-office"><span class="red">*</span>{$LANG.OFFICE}</label>
+								<input type="text" value="{$work.office}" class="f-input" id="settings-office" name="office" size="30">
+							</div>
+							<div class="blank10"></div>
+							<div class="field jobtype">
+								<label for="settings-jobtype"><span class="red">*</span>{$LANG.JOBTYPE}</label>
+								<select name="jobtype" id="settings-jobtype">
+									<option value="">请选择</option>
+									<option value="工薪阶层" {if $work.jobtype eq '工薪阶层'}selected="selected"{/if}>工薪阶层</option>
+									<option value="私营企业主" {if $work.jobtype eq '私营企业主'}selected="selected"{/if}>私营企业主</option>
+									<option value="网络商家" {if $work.jobtype eq '网络商家'}selected="selected"{/if}>网络商家</option>
+									<option value="其他" {if $work.jobtype eq '其他'}selected="selected"{/if}>其他</option>
+								</select>
+							</div>	
+							<div class="blank10"></div>									
+							<script type="text/javascript" src="{$APP_ROOT}/system/region.js"></script>
+							<div class="field">								
+								<label for="settings-region"><span class="red">*</span>{$LANG.WORK_REGION}</label>
+								<select name="province_id">
+									<option value="0">={$LANG.SELECT_PLEASE}=</option>
+									{foreach from=$region_lv2 item=lv2}
+									<option {if $lv2.selected eq 1}selected="selected"{/if} value="{$lv2.id}">{$lv2.name}</option>
+									{/foreach}
+								</select>
+														
+								<select name="city_id">
+									<option value="0">={$LANG.SELECT_PLEASE}=</option>		
+									{foreach from=$region_lv3 item=lv3}
+									<option {if $lv3.selected eq 1}selected="selected"{/if} value="{$lv3.id}">{$lv3.name}</option>
+									{/foreach}
+								</select>
+							</div>
+							<div class="blank10"></div>
+							<div class="field officetype">
+								<label for="settings-officetype"><span class="red">*</span>{$LANG.OFFICETYPE}</label>
+								<select name="officetype" id="settings-officetype">
+									<option value="">请选择</option>
+									<option value="国家机关" {if $work.officetype eq '国家机关'}selected="selected"{/if}>国家机关</option>
+									<option value="事业单位" {if $work.officetype eq '事业单位'}selected="selected"{/if}>事业单位</option>
+									<option value="央企（包括下级单位）" {if $work.officetype eq '央企（包括下级单位）'}selected="selected"{/if}>央企（包括下级单位）</option>
+									<option value="地方国资委直属企业" {if $work.officetype eq '地方国资委直属企业'}selected="selected"{/if}>地方国资委直属企业</option>
+									<option value="世界500强（包括合资企业及下级单位）" {if $work.officetype eq '世界500强（包括合资企业及下级单位）'}selected="selected"{/if}>世界500强（包括合资企业及下级单位）</option>
+									<option value="外资企业（包括合资企业）" {if $work.officetype eq '外资企业（包括合资企业）'}selected="selected"{/if}>外资企业（包括合资企业）</option>
+									<option value="一般上市公司（包括国外上市）" {if $work.officetype eq '一般上市公司（包括国外上市）'}selected="selected"{/if}>一般上市公司（包括国外上市）</option>
+									<option value="一般民营企业" {if $work.officetype eq '一般民营企业'}selected="selected"{/if}>一般民营企业</option>
+								</select>
+							</div>
+							<div class="blank10"></div>
+							<div class="field officedomain">
+								<label for="settings-officedomain"><span class="red">*</span>{$LANG.OFFICEDOMAIN}</label>
+								<select name="officedomain" id="settings-officedomain">
+									<option value="">请选择</option>
+									<option value="制造业" {if $work.officedomain eq '制造业'}selected="selected"{/if}>制造业</option>
+									<option value="IT" {if $work.officedomain eq 'IT'}selected="selected"{/if}>IT</option>
+									<option value="政府机关" {if $work.officedomain eq '政府机关'}selected="selected"{/if}>政府机关</option>
+									<option value="媒体/广告" {if $work.officedomain eq '媒体/广告'}selected="selected"{/if}>媒体/广告</option>
+									<option value="零售/批发" {if $work.officedomain eq '零售/批发'}selected="selected"{/if}>零售/批发</option>
+									<option value="教育/培训" {if $work.officedomain eq '教育/培训'}selected="selected"{/if}>教育/培训</option>
+									<option value="公共事业" {if $work.officedomain eq '公共事业'}selected="selected"{/if}>公共事业</option>
+									<option value="交通运输业" {if $work.officedomain eq '交通运输业'}selected="selected"{/if}>交通运输业</option>
+									<option value="房地产业" {if $work.officedomain eq '房地产业'}selected="selected"{/if}>房地产业</option>
+									<option value="能源业" {if $work.officedomain eq '能源业'}selected="selected"{/if}>能源业</option>
+									<option value="金融/法律" {if $work.officedomain eq '金融/法律'}selected="selected"{/if}>金融/法律</option>
+									<option value="餐饮/旅馆业" {if $work.officedomain eq '餐饮/旅馆业'}selected="selected"{/if}>餐饮/旅馆业</option>
+									<option value="医疗/卫生/保健" {if $work.officedomain eq '医疗/卫生/保健'}selected="selected"{/if}>医疗/卫生/保健</option>
+									<option value="建筑工程" {if $work.officedomain eq '建筑工程'}selected="selected"{/if}>建筑工程</option>
+									<option value="农业" {if $work.officedomain eq '农业'}selected="selected"{/if}>农业</option>
+									<option value="娱乐服务业" {if $work.officedomain eq '娱乐服务业'}selected="selected"{/if}>娱乐服务业</option>
+									<option value="体育/艺术" {if $work.officedomain eq '体育/艺术'}selected="selected"{/if}>体育/艺术</option>
+									<option value="公益组织" {if $work.officedomain eq '公益组织'}selected="selected"{/if}>公益组织</option>
+									<option value="其它" {if $work.officedomain eq '其它'}selected="selected"{/if}>其它</option>
+								</select>
+							</div>
+							<div class="blank10"></div>
+							<div class="field officecale">
+								<label for="settings-officecale"><span class="red">*</span>{$LANG.OFFICECALE}</label>
+								<select name="officecale" id="settings-officecale">
+									<option value="">请选择</option>
+									<option value="10人以下" {if $work.officecale eq '10人以下'}selected="selected"{/if}>10人以下</option>
+									<option value="10-100人" {if $work.officecale eq '10-100人'}selected="selected"{/if}>10-100人</option>
+									<option value="100-500人" {if $work.officecale eq '100-500人'}selected="selected"{/if}>100-500人</option>
+									<option value="500人以上" {if $work.officecale eq '500人以上'}selected="selected"{/if}>500人以上</option>
+								</select>
+							</div>
+							<div class="blank10"></div>
+							<div class="field position">
+								<label for="settings-position"><span class="red">*</span>{$LANG.POSITION}</label>
+								<input value="{$work.position}" class="f-input" name="position" id="settings-position">
+							</div>
+							<div class="blank10"></div>
+							<div class="field salary">
+								<label for="settings-salary"><span class="red">*</span>{$LANG.SALEAY}</label>
+								<select name="salary" id="settings-salary">
+									<option value="">请选择</option>
+									<option value="1000元以下" {if $work.salary eq '1000元以下'}selected="selected"{/if}>1000元以下</option>
+									<option value="1001-2000元" {if $work.salary eq '1001-2000元'}selected="selected"{/if}>1001-2000元</option>
+									<option value="2000-5000元" {if $work.salary eq '2000-5000元'}selected="selected"{/if}>2000-5000元</option>
+									<option value="5000-10000元" {if $work.salary eq '5000-10000元'}selected="selected"{/if}>5000-10000元</option>
+									<option value="10000-20000元" {if $work.salary eq '10000-20000元'}selected="selected"{/if}>10000-20000元</option>
+									<option value="20000-50000元" {if $work.salary eq '20000-50000元'}selected="selected"{/if}>20000-50000元</option>
+									<option value="50000元以上" {if $work.salary eq '50000元以上'}selected="selected"{/if}>50000元以上</option>
+								</select>
+							</div>
+							<div class="blank10"></div>
+							<div class="field workyears">
+								<label for="settings-workyears"><span class="red">*</span>{$LANG.WORKYEAR}</label>
+								<select name="workyears" id="settings-workyears">
+									<option value="">请选择</option>
+									<option value="1年（含）以下" {if $work.workyears eq '1年（含）以下'}selected="selected"{/if}>1年（含）以下</option>
+									<option value="1-3年（含）" {if $work.workyears eq '1-3年（含）'}selected="selected"{/if}>1-3年（含）</option>
+									<option value="3-5年（含）" {if $work.workyears eq '3-5年（含）'}selected="selected"{/if}>3-5年（含）</option>
+									<option value="5年以上" {if $work.workyears eq '5年以上'}selected="selected"{/if}>5年以上</option>
+								</select>
+							</div>
+							<div class="blank10"></div>
+							<div class="field workphone">
+								<?php $phone_s = explode("-",$this->_var['work']['workphone']);?>
+								<label for="settings-workphone"><span class="red">*</span>{$LANG.WORKPHONE}</label>
+								<input type="text" value="<?php echo $phone_s[0];?>" class="f-input f_l f-input60" id="frphone" onkeyup="setPhone();" onblur="setPhone();">
+								<span class="f_l">&nbsp;-&nbsp;</span>
+								<input type="text" value="<?php echo $phone_s[1];?>" class="f-input f_l" id="numphone" onkeyup="setPhone();" onblur="setPhone();">
+								<input type="hidden" value="{$work.workphone}" name="workphone" id="settings-workphone">
+							</div>
+							<div class="blank10"></div>
+							<div class="field workemail">
+								<label for="settings-workemail"><span class="red">*</span>{$LANG.WORKEMAIL}</label>
+								<input type="text" class="f-input" value="{$work.workemail}" name="workemail" id="settings-workemail">
+							</div>
+							<div class="blank10"></div>
+							<div class="field officeaddress">
+								<label for="settings-officeaddress"><span class="red">*</span>{$LANG.OFFICEADDRESS}</label>
+								<input type="text" class="f-input f-input220" value="{$work.officeaddress}" name="officeaddress" id="settings-officeaddress">
+							</div>
+							<div class="blank10"></div>
+						</td>
+					</tr>
+					
+				</table>
+				<div class="blank10"></div>
+				<div class="t_name item_group" style="width:840px">直系亲属联系人<span style="font-weight:normal">（在您贷款成功后，我们会通过电话核实您的紧急联系人信息）</span></div>
+				<table width="840px" class="user_info_table">
+					<tr>
+						<td class="pt10">
+							<div class="field urgentcontact">
+								<label for="settings-urgentcontact"><span class="red">*</span>{$LANG.URGENTCONTACT}</label>
+								<input type="text" class="f-input" value="{$work.urgentcontact}" name="urgentcontact" id="settings-urgentcontact">
+							</div>
+							<div class="blank10"></div>
+							<div class="field urgentrelation">
+								<label for="settings-urgentrelation"><span class="red">*</span>{$LANG.URGENTRELATION}</label>
+								<input type="text" class="f-input" value="{$work.urgentrelation}" name="urgentrelation" id="settings-urgentrelation">
+							</div>
+							<div class="blank10"></div>
+							<div class="field urgentmobile">
+								<label for="settings-urgentmobile"><span class="red">*</span>{$LANG.URGENTMOBILE}</label>
+								<input type="text" class="f-input" value="{$work.urgentmobile}" name="urgentmobile" id="settings-urgentmobile">
+							</div>
+						</td>
+					</tr>
+				</table>
+				<div class="blank10"></div>
+				<div class="t_name item_group" style="width:840px">其他联系人</div>
+				<table width="840px" class="user_info_table">
+					<tr>
+						<td class="pt10">
+							<div class="field urgentcontact2">
+								<label for="settings-urgentcontact2"><span class="red">*</span>{$LANG.URGENTCONTACT}</label>
+								<input type="text" class="f-input" value="{$work.urgentcontact2}" name="urgentcontact2" id="settings-urgentcontact2">
+							</div>
+							<div class="blank10"></div>
+							<div class="field urgentrelation2">
+								<label for="settings-urgentrelation2"><span class="red">*</span>{$LANG.URGENTRELATION}</label>
+								<input type="text" class="f-input" value="{$work.urgentrelation2}" name="urgentrelation2" id="settings-urgentrelation2">
+							</div>
+							<div class="blank10"></div>
+							<div class="field urgentmobile2">
+								<label for="settings-urgentmobile2"><span class="red">*</span>{$LANG.URGENTMOBILE}</label>
+								<input type="text" class="f-input" value="{$work.urgentmobile2}" name="urgentmobile2" id="settings-urgentmobile2">
+							</div>
+						</td>
+					</tr>
+				</table>
+				<div class="blank"></div>
+				<div class="clearfix b" style="padding: 10px 90px">请确保您填写的资料真实有效，所有资料将会严格保密。一旦被发现所填资料有虚假，将会影响您在{function name="app_conf" v="SHOP_TITLE"}的信用，对以后借款造成影响。</div>
+					
+				<div class="blank"></div>
+				<div class="act mt10 mb10 tc">
+						<input type="submit" class="sub_btn" id="settings-submit" name="commit" value="{$LANG.SAVE}">
+				</div>
+				<div class="blank"></div>
+		</div>
+		<div class="inc_foot"></div>
+	</div>
+	</form>
+	</div>
+</div>
+
+<script type="text/javascript">
+function setPhone(){
+	var frphone = $.trim($("#frphone").val());
+	var numphone = $.trim($("#numphone").val());
+	if(frphone!=""&&numphone!=""){
+		$("#settings-workphone").val(frphone+"-"+numphone);
+	}
+	else{
+		$("#settings-workphone").val("");
+	}
+}
+$(document).ready(function(){
+
+	$("#settings-submit").click(function(){
+		if($.trim($("#settings-office").val()).length == 0){
+			$("#settings-office").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.OFFICE}");
+			
+			return false;
+		}
+		if($.trim($("#settings-jobtype").val()).length == 0){
+			$("#settings-jobtype").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.JOBTYPE}");
+			
+			return false;
+		}
+		if($("select[name='province_id']").val()== 0||$("select[name='city_id']").val() == 0)
+		{
+			$("select[name='province_id']").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.WORK_REGION}");
+			
+			return false;
+		}
+		if($.trim($("#settings-officetype").val()).length == 0){
+			$("#settings-officetype").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.OFFICETYPE}");
+			
+			return false;
+		}
+		if($.trim($("#settings-officedomain").val()).length == 0){
+			$("#settings-officedomain").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.OFFICEDOMAIN}");
+			
+			return false;
+		}
+		if($.trim($("#settings-officecale").val()).length == 0){
+			$("#settings-officecale").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.OFFICECALE}");
+			
+			return false;
+		}
+		if($.trim($("#settings-position").val()).length == 0){
+			$("#settings-position").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.POSITION}");
+			
+			return false;
+		}
+		if($.trim($("#settings-salary").val()).length == 0){
+			$("#settings-salary").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.SALARY}");
+			
+			return false;
+		}
+		if($.trim($("#settings-workyears").val()).length == 0){
+			$("#settings-workyears").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.WORKYEARS}");
+			
+			return false;
+		}
+		if($.trim($("#settings-workyears").val()).length == 0){
+			$("#settings-workyears").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.WORKYEARS}");
+			
+			return false;
+		}
+		if($.trim($("#settings-workphone").val()).length == 0){
+			$("#frphone").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.WORKPHONE}");
+			
+			return false;
+		}
+		if($.trim($("#settings-workemail").val()).length == 0){
+			$("#settings-workemail").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.WORKEMAIL}");
+			
+			return false;
+		}
+		if($.trim($("#settings-officeaddress").val()).length == 0){
+			$("#settings-officeaddress").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.OFFICEADDRESS}");
+			
+			return false;
+		}
+		
+		if($.trim($("#settings-urgentcontact").val()).length == 0){
+			$("#settings-urgentcontact").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.URGENTCONTACT}");
+			
+			return false;
+		}
+		if($.trim($("#settings-urgentrelation").val()).length == 0){
+			$("#settings-urgentrelation").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.URGENTRELATION}");
+			
+			return false;
+		}
+		if($.trim($("#settings-urgentmobile").val()).length == 0){
+			$("#settings-urgentmobile").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.URGENTMOBILE}");
+			
+			return false;
+		}
+		
+		if($.trim($("#settings-urgentcontact2").val()).length == 0){
+			$("#settings-urgentcontact2").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.URGENTCONTACT}");
+			
+			return false;
+		}
+		if($.trim($("#settings-urgentrelation2").val()).length == 0){
+			$("#settings-urgentrelation2").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.URGENTRELATION}");
+			
+			return false;
+		}
+		if($.trim($("#settings-urgentmobile2").val()).length == 0){
+			$("#settings-urgentmobile2").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.URGENTMOBILE}");
+			
+			return false;
+		}
+
+	});
+});
+
+//切换地区
+$(document).ready(function(){	
+		$("select[name='province_id']").bind("change",function(){
+			load_city($("select[name='province_id']"),$("select[name='city_id']"));
+		});
+	});
+	
+	function load_city(pname,cname)
+	{
+		var id = pname.val();
+		var evalStr="regionConf.r"+id+".c";
+
+		if(id==0)
+		{
+			var html = "<option value='0'>="+LANG['SELECT_PLEASE']+"=</option>";
+		}
+		else
+		{
+			var regionConfs=eval(evalStr);
+			evalStr+=".";
+			var html = "<option value='0'>="+LANG['SELECT_PLEASE']+"=</option>";
+			for(var key in regionConfs)
+			{
+				html+="<option value='"+eval(evalStr+key+".i")+"'>"+eval(evalStr+key+".n")+"</option>";
+			}
+		}
+		cname.html(html);
+	}
+</script>

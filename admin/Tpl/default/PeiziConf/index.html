@@ -1,0 +1,30 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{$main_title}配资参数表</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable"
+	style="dataTable"
+	name="peiziconf"
+	action="true"
+	datasource="list"
+	show="id:{%ID}|50px
+		,type:模块名
+		,money_list:申请实盘资金
+		,min_money:最小申请实盘资金
+		,max_money:最大申请实盘资金
+		,max_money2:最大申请实盘资金2
+		,contract_id:使用协议
+		,manage_money:一次性业务审核费
+		,is_holiday_fee:是否周末节假日免费
+		,day_month_list:新品
+		,is_recommend_format:type=0;type=2"
+	actionlist="edit:{%EDIT}, del:{%DEL}"
+	actionwidth="100px"/>
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,134 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+	function get_handle($id)
+	{
+		
+        $str = l("IPS_VIEW");
+        
+		$str = "<a href='".u("Ipslog/guarantor_view",array("id"=>$id))."'>".$str."</a>";
+		
+		
+		return $str;
+	}
+    function get_deal_name($deal_id)
+    {
+    	return M("deal")->where(" id=".$deal_id)->getField("name");
+    }
+	function get_acct_type($acct_type)
+	{
+		return l("P_ACCT_TYPE_".$acct_type);
+	}
+    function get_p_status($status_id)
+	{
+		return l("P_CREDITOR_STATUS_".$status_id);
+	}
+	function get_call_back($back)
+	{
+		return l("IPS_IS_CALLBACK_".$back);
+	}
+    function get_user_name_by_id($id)
+    {
+    	$data_info = M("ips_register_guarantor")->getById($id);
+
+    	if($data_info["pAcctType"] == 0)
+        {
+        	return M("user")->where(" id=".$data_info["agency_id"])->getField("name");
+        }
+        else if($data_info["pAcctType"] == 1)
+        {
+        	return M("user")->where(" id=".$data_info["agency_id"])->getField("user_name");
+    		
+        }
+        return "";
+    }
+</php>
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">{%P_GUARANTOR_TITLE}</div>
+<div class="blank5"></div>
+<form name="search" action="__APP__" method="get">	
+<div class="button_row">
+
+	<if condition="!$_REQUEST['referer']">
+	<input type="button" class="button" value="{%EXPORT}" onclick="m_export_csv('guarantor_');" />
+	</if>
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+		
+        {%P_BID_NO}：<input type="text" class="textbox" name="pBidNo" value="{:trim($_REQUEST['pBidNo'])}" style="width:100px;" />
+		{%P_MER_CODE}：<input type="text" class="textbox" name="pMerCode" value="{:trim($_REQUEST['pMerCode'])}" style="width:100px;" />
+		{%P_MER_BILL_NO}：<input type="text" class="textbox" name="pMerBillNo" value="{:trim($_REQUEST['pMerBillNo'])}" style="width:100px;" />
+       
+        {%P_FROM_IDENT_NO}：<input type="text" class="textbox" name="pFromIdentNo" value="{:trim($_REQUEST['pFromIdentNo'])}" style="width:100px;" />
+        
+        {%P_ACCOUNT_NAME}：<input type="text" class="textbox" name="pAccountName" value="{:trim($_REQUEST['pAccountName'])}" style="width:100px;" />
+<div class="blank5"></div>
+        {%P_ACCOUNT}：<input type="text" class="textbox" name="pAccount" value="{:trim($_REQUEST['pAccount'])}" style="width:100px;" />
+        
+        {%P_P2P_BILL_NO}：<input type="text" class="textbox" name="pP2PBillNo" value="{:trim($_REQUEST['pP2PBillNo'])}" style="width:100px;" />
+        
+        
+        
+        {%P_GUARANTOR_STATUS}：<select name="pStatus">
+				<option value="-1" <if condition="intval($_REQUEST['pStatus']) eq -1 || $_REQUEST['pStatus'] eq ''">selected="selected"</if>>{%ALL}</option>
+				<option value="0" <if condition="$_REQUEST['pStatus'] neq '' && intval($_REQUEST['pStatus']) eq 0">selected="selected"</if>>{%P_CREDITOR_STATUS_0}</option>		
+                <option value="1" <if condition="intval($_REQUEST['pStatus']) eq 1">selected="selected"</if>>{%P_CREDITOR_STATUS_1}</option>	
+                <option value="9" <if condition="intval($_REQUEST['pStatus']) eq 9">selected="selected"</if>>{%P_CREDITOR_STATUS_9}</option>	
+                <option value="10" <if condition="intval($_REQUEST['pStatus']) eq 10">selected="selected"</if>>{%P_CREDITOR_STATUS_10}</option>	
+		</select>
+        
+         {%P_ACCT_TYPE}：<select name="pAcctType">
+				<option value="-1" <if condition="intval($_REQUEST['pAcctType']) eq -1 || $_REQUEST['pAcctType'] eq ''">selected="selected"</if>>{%ALL}</option>
+				<option value="0" <if condition="$_REQUEST['pAcctType'] neq '' && intval($_REQUEST['pAcctType']) eq 0">selected="selected"</if>>{%P_ACCT_TYPE_0}</option>
+				<option value="1" <if condition="intval($_REQUEST['pAcctType']) eq 1">selected="selected"</if>>{%P_ACCT_TYPE_1}</option>			
+		</select>
+        
+		<div class="blank5"></div>
+        {%P_REG_DATE}：
+		<input type="text" class="textbox" name="start_time" id="start_time" value="{:trim($_REQUEST['start_time'])}" onfocus="return showCalendar('start_time', '%Y-%m-%d', false, false, 'start_time');" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" />
+	  
+		<input type="hidden" value="Ipslog" name="m" />
+		<input type="hidden" value="guarantor" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+
+</div>
+</form>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="ips_register_guarantor" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}
+         ,deal_id|get_deal_name:{%DEAL_NAME}
+    	 ,id|get_user_name_by_id:{%P_USER_NAME}
+         ,pMerBillNo:{%P_MER_BILL_NO}
+         ,pMerDate:{%P_MER_DATE}
+         ,pBidNo:{%P_BID_NO}
+         ,pAmount:{%P_AMOUNT}
+		 ,pMarginAmt:{%P_MARGIN_AMT}
+		 ,pProFitAmt:{%P_PRO_FIT_AMT}
+         ,pAcctType|get_acct_type:{%P_ACCT_TYPE}
+         ,pAccountName:{%P_ACCOUNT_NAME}
+         ,pAccount:{%P_ACCOUNT}
+         ,pP2PBillNo:{%P_P2P_BILL_NO}
+         ,pRealFreezeAmt:{%P_RRAL_FREEZE_AMT}
+         ,pCompenAmt:{%P_COMPEN_AMT}
+         ,pStatus|get_p_status:{%P_GUARANTOR_STATUS}
+		 "
+	actionlist="id|get_handle" /> 
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

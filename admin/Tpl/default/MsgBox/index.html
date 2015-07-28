@@ -1,0 +1,37 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<php>
+	function get_msg_box_type($type)
+	{
+		if($type==0)return "用户收件";
+		if($type==1)return "用户发件";
+	}
+</php>
+<script type="text/javascript">
+	function view(id)
+	{
+		location.href = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=view&id="+id;
+	}
+</script>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%FOREVERDEL}" onclick="foreverdel();" />
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="item" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,title:{%MSG_TITLE},from_user_id|get_user_name:发件人,to_user_id|get_user_name:收件人,create_time|to_date:{%CREATE_TIME},system_msg_id:系统消息编号,is_read|get_toogle_status=$item['id']#is_read:是否已读,is_delete|get_toogle_status=$item['id']#is_delete:用户删除,type|get_msg_box_type:类型" 
+	actionlist="view:{%VIEW}, foreverdel:{%FOREVERDEL}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

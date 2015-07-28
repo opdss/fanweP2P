@@ -1,0 +1,61 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/doexchange.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--收货地址-->
+<div class="blank15"></div>
+<div class="doexchange_block">
+	<div class="add_address">
+		<a href="{wap_url a="index" r="uc_address"}">
+			<i class="fa fa-plus-square-o"></i>
+			<span>添加地址</span>
+		</a>
+	</div>
+	
+</div>
+<div class="blank15"></div>
+{foreach from=$data.user_address item=item key=key}
+{if $item.is_default eq 1}
+<div class="doexchange_block y">
+{else}
+<div class="doexchange_block">
+{/if}	
+	<a href="{wap_url a="index" r="uc_address" p="id=$item.id"}">
+	<ul>
+		<li>
+			<span class="name">姓名:</span>
+         	{$item.name}   	
+		</li>
+		<li>
+			<span class="name">手机号码:</span>
+            {$item.phone}
+		</li>
+		<li>
+			<span class="name">省市:</span>
+            {$item.provinces_cities}	
+		</li>
+		<li>
+			<span class="name">详细地址:</span>
+           {$item.address}
+		</li>
+		<li>
+			<span class="name">邮编:</span>
+            {$item.zip_code}
+		</li>
+	</ul>
+	
+    <i class="fa fa-chevron-right ico_right"></i>
+    </a>
+</div>
+
+<div class="blank15"></div>
+{/foreach}
+{include file="./inc/footer.html"}
+
+
+
+
+
+

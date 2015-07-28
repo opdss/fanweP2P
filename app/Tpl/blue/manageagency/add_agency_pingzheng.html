@@ -1,0 +1,64 @@
+<form action="{url x="index" r="manageagency#add_pingzheng"}"  method="post" id="J_add" enctype="multipart/form-data">
+	<div class="uc_box clearfix">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+			<tbody>
+				<tr border="0">
+					<th width="20%">凭证名称</th>
+					<th>添加照片</th>
+				</tr>
+				
+				<tr>
+					<td  class="tl p5">
+						<input name="file_name[]" class="f-input ui-textbox"  value=''/>
+					</td>
+					<td >
+						<input class="img_int" type="file" name="img_data[]" id="img_1"/>
+					</td>
+				</tr>
+				
+				<tr>
+					<td  class="tl p5">
+						<input name="file_name[]" class="f-input ui-textbox"  value=''/>
+					</td>
+					<td >
+						<input class="img_int" type="file" name="img_data[]" id="img_2"/>
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="tl p5">
+						<input name="file_name[]" class="f-input ui-textbox"  value=''/>
+					</td>
+					<td>
+						<input class="img_int" type="file" name="img_data[]" id="img_3"/>
+					</td>
+				</tr>
+				
+				<tr>
+				<td><input class="true_btn" type="button" name="add_img" onclick="$.Add_Img()" value="添加"/>	</td>
+				<td><button class="J_add true_btn" style=" margin-right: 10px; margin-top: 4px;" type="submit">保存</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="pages">{$pages}</div>
+	</div>
+</form>	
+		
+
+<script type="text/javascript">
+$(function(){
+    var img_count =3;
+    $.Add_Img = function(){
+        $("#img_"+img_count).parent().parent().after('<tr><td class="tl p5"><input name="file_name[]" class="f-input ui-textbox" /></td>  <td > <input class="img_int" type="file" name="img_data[]" id="img_'+(img_count+1)+'"/></td></tr>');
+        img_count++;
+		init_ui_textbox();
+    };
+});
+
+</script>
+
+
+		
+
+					
+					

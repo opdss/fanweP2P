@@ -1,0 +1,37 @@
+{include file="inc/header.html"} 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".paybutton,.payLink").bind("click",function(){
+			$.weeboxs.open(APP_ROOT+"/index.php?ctl=payment&act=tip&id={$payment_notice.id}", {contentType:'ajax',showButton:false,title:LANG['PAYMENT_TIP'],width:460,height:150,type:'wee'});	
+		});
+	});
+</script>
+<div class="blank"></div>
+
+	<div class="inc wb bdl p20">
+		<div class="inc_main p10">				
+						
+			
+						<div class="msg_box">
+							<p style="padding: 20px 0pt; text-align: center;">
+							{$LANG.PAY_NOW} 
+							[&nbsp;&nbsp;{$LANG.NOTICE_SN} ：<span class="red">{$payment_notice.notice_sn}</span>&nbsp;&nbsp;]
+							</p>
+							
+							<div style="padding: 20px 0pt; text-align: center;" class="order-check-form">
+							{$payment_code}	
+							</div>
+							<div style="padding: 20px 0pt; text-align: center;">
+							<a href="{url x="index" r="uc_money#incharge"}">
+								» {$LANG.MODIFY_PAYMENT_TYPE}
+							</a>&nbsp;&nbsp;&nbsp;					
+							<a href="{url x="index" r="uc_money#incharge_log"}">» {$LANG.MY_ORDERS}</a>
+							</div>				
+						</div>
+
+		</div><!--end inc_main-->		
+		<div class="inc_foot"></div>
+	</div>
+
+
+{include file="inc/footer.html"}

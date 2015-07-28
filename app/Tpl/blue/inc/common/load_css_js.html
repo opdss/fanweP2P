@@ -1,0 +1,91 @@
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/style.css";
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/weebox.css";
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/btn.css";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery-1.8.3.min.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.bgiframe.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.weebox.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.pngfix.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/des.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/kefu.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/fanwe_utils/fanweUI.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/script.js";
+$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/fanwe_utils/fanweUI.js";
+$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/script.js";
+if(MODULE_NAME=="index"){
+	$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/adv.js";
+	$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.SuperSlide.2.1.source.js";
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/index.css";
+}
+if(MODULE_NAME=="user"){
+	$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/user.js";
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/user_login_regiter.css";
+}
+if(MODULE_NAME=="manageagency" || MODULE_NAME=="authorized" || MODULE_NAME=="agency_money"){
+	if(ACTION_NAME=="login" || ACTION_NAME=="register" || ACTION_NAME=="getpassword" || ACTION_NAME=="steptwo")
+		$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/user_login_regiter.css";
+	else
+		$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/m.css";
+}
+if(MODULE_NAME=="deal"){
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
+}
+if(MODULE_NAME=="transfer" && ACTION_NAME=="detail"){
+ $this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/transfer.css";
+}
+if(MODULE_NAME=="guide"){
+ $this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/guide.css";
+}
+if(MODULE_NAME=="score" || MODULE_NAME=="goods_information"){
+ $this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/score.css";
+ if(MODULE_NAME=="goods_information"){
+ 	$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/page_js/goods.js";
+ }
+}
+
+if(substr(MODULE_NAME,0,3)=="uc_"){
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc.css";
+	$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/page_js/u.js";
+	$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/page_js/u.js";
+}
+if(MODULE_NAME=="uc_msg"){
+	$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/page_js/pm.js";
+	$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/page_js/writepm.js";
+}
+if(app_conf("APP_MSG_SENDER_OPEN")==1)
+{
+	$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/msg_sender.js";
+	$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/msg_sender.js";
+}
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/kefu.css"
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<script type="text/javascript">
+var APP_ROOT = '{$APP_ROOT}';;
+var LOADER_IMG = '{$TMPL}/images/lazy_loading.gif';
+var ERROR_IMG = '{$TMPL}/images/image_err.gif';
+var TMPL = '{$TMPL}';
+var send_span = {function name="app_conf" v="SEND_SPAN"}000;
+{if app_conf("APP_MSG_SENDER_OPEN") eq 1 && $DEAL_MSG_COUNT > 0}
+var to_send_msg = true;
+{else}
+var to_send_msg = false;
+{/if}
+var __LOGIN_KEY = "{insert name="get_login_key"}";
+var __HASH_KEY__ = "{insert name="get_hash_key"}";
+</script>
+<script type="text/javascript" src="{$APP_ROOT}/public/runtime/app/lang.js"></script>
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs" c="$cpagejs"}"></script>
+
+<!--[if lt IE 10]>
+<script type="text/javascript" src="{$TMPL}/js/PIE.js"></script>
+<![endif]-->
+<script language="javascript">
+$(function() {
+    if (window.PIE) {
+        $('.bdr3,.bdr5,.user_info_d a,.main_adv_ctl li,.after_login .user_money A,.listbtn SPAN').each(function() {
+            PIE.attach(this);
+        });
+    }
+});
+</script>

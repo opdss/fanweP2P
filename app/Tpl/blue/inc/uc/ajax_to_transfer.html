@@ -1,0 +1,61 @@
+<style type="text/css">
+	#JTransfer_From .field {line-height: 26px;font-size: 12px;margin: 3px auto 3px;}
+	#JTransfer_From .field label{ width:120px;height:26px; line-height:26px;}
+</style>
+<form name="JTransfer_From" id="JTransfer_From" action="{url x="index" r="uc_transfer#do_transfer"}" method="post">
+	<div style="background: #F2F2F2; width: auto; border: 1px solid #D4D4D4; padding: 10px; margin: 0 auto;">
+			1、债权转让金额不得大于所投剩余本息金额。 <br>
+			2、债权转让时间限定为最近一期还款日之前，如若无人承接，将自动撤销转让。 <br>
+			3、债权转让的费用为转让管理费。平台向转出人收取，不向购买人收取任何费用。转让管理费金额为成交金额*转让管理费率，转让管理费率在目前的运营中按{function name="app_conf" v='USER_LOAD_TRANSFER_FEE'}%收取，具体金额以债权转让页面显示为准。债权转让管理费在成交后直接从成交金额中扣除，不成交平台不向用户收取转让管理费。 
+		</div>
+	<div class="blank1"></div>
+	<div class="field">
+	    <label>项目名称：</label>
+	    <span>{$transfer.name}</span>
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+	    <label>下个还款日：</label>
+	    <span>{$transfer.next_repay_time_format}</span>
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+	    <label>待还/总期数：</label>
+	    <span>{$transfer.how_much_month}/{$transfer.repay_time}</span>
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+	    <label>剩余本金：</label>
+	    <span>{$transfer.left_benjin_format}</span>
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+	    <label>剩余利息：</label>
+	    <span>{$transfer.left_lixi_format}</span>
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+	    <label>最大转让金额：</label>
+	    <span class="f_red">{$transfer.transfer_amount_format}</span>
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+	    <label>转让金额：</label>
+	    <span class="f_red"><input type="text" name="transfer_money" class="f-input ui-textbox w100"  style="width:150px"/></span>
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+	    <label>支付密码：</label>
+	    <span class="f_red"><input type="password" name="paypassword" class="f-input ui-textbox w100" style="width:150px" /></span>
+	</div>
+	
+   <div class="blank20"></div>
+	<div class="tc">
+		<input type="hidden" name="transfer_all_money" value="{function name="round" v=$transfer.all_must_repay_money f=2}" />
+		<input type="hidden" name="dltid" value="{$transfer.dltid}" />
+		<input type="hidden" name="dlid" value="{$transfer.dlid}" />
+		<input type="button" value="确认转让" class="sub_btn" />
+		<input type="button" value="取消" class="reset_btn" />
+    </div>
+	<div class="blank20"></div>
+</form>

@@ -1,0 +1,90 @@
+{// 引入标签库 }
+<tagLib name="html" />
+
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript">
+	$("select[name='vip_type']").change(function(){
+		if($(this).val()==1){
+			$("#guarantor_margin_amt_box").show();
+			$("#guarantor_amt_box").hide();
+		}
+		else if($(this).val()==2)
+		{
+			$("#guarantor_margin_amt_box").hide();
+			$("#guarantor_amt_box").show();
+		}
+		else{
+			$("#guarantor_margin_amt_box").hide();
+			$("#guarantor_amt_box").hide();
+		}
+	});
+</script>
+<div class="main">
+<div class="main_title">专项客服</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">会员名称</td>
+		<td class="item_input">
+			{$user_info.user_name}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">VIP等级</td>
+		<td class="item_input">
+			{$voty.vip_grade}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">VIP专员客服</td>
+		<td class="item_input">
+			<select name="customer_id">
+			<option value="0">客服选择</option>
+			<foreach name="customers" item="item">
+				<option value="{$item.id}" <if condition="$item['id'] eq $user_info['customer_id']">selected="selected"</if>>{$item.name}</option>
+			</foreach>
+			</select>
+			
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">电话</td>
+		<td class="item_input">
+			{$vocs.telphone}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">QQ</td>
+		<td class="item_input">
+			{$vocs.qq}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$user_info.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="VipPrivilege" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="insert_sc_service" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	</if>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>

@@ -1,0 +1,74 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<PHP>
+function getReferralsUserName($user_id)
+{
+	$user_name =  M("User")->where("id=".$user_id." and is_delete = 0")->getField("user_name");
+	if(!$user_name)
+	$user_name = l("NO_USER");
+	
+	return "<a href='".u("User/index",array("user_name"=>$user_name))."'>".$user_name."</a>";
+}
+
+
+function pay_time_stauts($pay_time,$id){
+	if(intval($pay_time) == 0)
+	{
+		return "<a href='javascript:pay(".$id.")'>".l("PAY_BY_ADMIN")."</a>";
+	}
+	else
+		return to_date($pay_time);
+}
+
+function get_deal_name($deal_id){
+	return '<a href="__ROOT__/index.php?ctl=deal&id='.$deal_id.'" target="_blank">'.D("Deal")->where("id=".$deal_id)->getfield("name").'</a>';
+}
+</php>
+</PHP>
+<script type="text/javascript">
+	function pay(id)
+	{
+		if(confirm("{%CONFIRM_PAY}"))
+		location.href = ROOT+"?"+VAR_MODULE+"=Referrals&"+VAR_ACTION+"=pay&id="+id;
+	}
+	function foreach_pay(){
+		location.href = ROOT+"?"+VAR_MODULE+"=Referrals&"+VAR_ACTION+"=foreach_pay&log_begin_time="+$("#log_begin_time").val()+"&log_end_time="+$("#log_end_time").val();
+	}
+</script>
+<div class="main">
+<div class="main_title">借款返佣列表</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		返利时间：
+		<input type="text" class="textbox" name="log_begin_time" id="log_begin_time" value="{:trim($_REQUEST['log_begin_time'])}" onfocus="return showCalendar('log_begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'log_begin_time');" />
+		-
+		<input type="text" class="textbox" name="log_end_time" id="log_end_time" value="{:trim($_REQUEST['log_end_time'])}" onfocus="return showCalendar('log_end_time', '%Y-%m-%d %H:%M:%S', false, false, 'log_end_time');" />
+
+		借款人：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+        授权服务机构：<input type="text" class="textbox" name="authorized_name" value="{:trim($_REQUEST['authorized_name'])}" style="width:100px;" />
+       
+		<input type="hidden" value="Referrals_rebate" name="m" />
+		<input type="hidden" value="borrow_index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="referrals" 
+	checkbox="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,p_user_name:{%AUTHORIZED},user_name:借款人,manage_money|format_price:管理服务费,true_manage_money_rebate|format_price:{%REFERRALS_MONEY},deal_id|get_deal_name:借款,l_key:第几期,true_repay_date:返利时间" 
+	/> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

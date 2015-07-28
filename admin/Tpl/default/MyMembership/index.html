@@ -1,0 +1,82 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+
+<php>
+	function get_user_group($group_id)
+	{
+		$group_name = M("UserGroup")->where("id=".$group_id)->getField("name");
+		if($group_name)
+		{
+			return $group_name;
+		}
+		else
+		{
+			return l("NO_GROUP");
+		}
+	}
+	function get_user_level($id)
+	{
+		$level_name = M("UserLevel")->where("id=".$id)->getField("name");
+		if($level_name)
+		{
+			return $level_name;
+		}
+		else
+		{
+			return "<span style='color:red'>无</span>";
+		}
+	}
+	function get_referrals_name($user_id)
+	{
+		$user_name = M("User")->where("id=".$user_id)->getField("user_name");
+		if($user_name)
+		return $user_name;
+		else
+			return '无';
+	}
+	function f_to_date($date){
+		return to_date($date,"Y-m-d H:i");
+	}
+
+	
+	function ips_status($ips_acct_no){
+		if($ips_acct_no==""){
+			return "未同步";
+		}
+		else{
+			return "已同步";
+		}
+	}
+	function user_type_status($type){
+		if($type==1){
+			return "企业";
+		}
+		else{
+			return "普通";
+		}
+	}
+	function user_company($id,$user){
+		if($user['user_type']==1){
+			return "<a href='javascript:user_company(".$id.");'>公司</a>&nbsp;";
+		}
+	}
+</php>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+
+<div class="blank5"></div>
+<html:list 
+	id="dataTable"
+	style="dataTable"
+	name="customer"
+	action="true"
+	datasource="list"
+	show="id:{%ID}|50px,user_name:{%USER_NAME}:edit,email:{%USER_EMAIL},mobile:{%USER_MOBILE},money|format_price:{%USER_MONEY},lock_money:{%USER_LOCK_MONEY},point:信用,level_id|get_user_level:会员等级,pid|get_referrals_name:{%REFERRALS_USER},login_ip:{%LOGIN_IP},login_time|f_to_date:{%LOGIN_TIME},create_time|f_to_date:注册时间,is_effect|get_is_effect=$user['id']:{%IS_EFFECT},ips_acct_no|ips_status:第三方" 
+	actionlist=" del:移除"
+	actionwidth="100px"/>
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

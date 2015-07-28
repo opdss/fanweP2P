@@ -1,0 +1,110 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<script type="text/javascript">
+	
+</script>
+<div class="main">
+
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="3">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">计划名称:</td>
+		<td class="item_input">
+		<span title="{$plan_list.name}">{$plan_list.name|msubstr=0,20}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">预定金额百分比:</td>
+		<td class="item_input">
+		<span title="{$plan_list.advance}">{$plan_list.advance}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">计划金额:</td>
+		<td class="item_input">
+		<span title="{$plan_list.plan_money}">{$plan_list.plan_money}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">保障方式:</td>
+		<td class="item_input">
+		<span title="{$plan_list.warrant}">{$plan_list.warrant}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">预期收益率:</td>
+		<td class="item_input">
+		<span title="{$plan_list.rate}">{$plan_list.rate}%</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">投资期限:</td>
+		<td class="item_input">
+		<span title="{$plan_list.repay_time}">{$plan_list.repay_time}</span>
+		</td>
+	</tr>
+	<!-- 
+	<tr>
+		<td class="item_title">操作:</td>
+		<td class="item_input">
+			<label><input type="radio" name="deal_status" value="0" />满标放款</lable>
+			<label><input type="radio" name="deal_status" value="1" />流标<if condition="$deal_info['buy_count'] gt 0">返还</if></lable>
+			<input type="button" class="button" value="导出投标列表" onclick="do_export_load({$deal_info.id});">
+		</td>
+	</tr>
+	 -->
+	
+	
+	<if condition="$plan_load_list">
+	<tr>
+		<td class="item_title">参与用户列表:</td>
+		<td class="item_input">
+			<table id="dataTable" class="dataTable" cellpadding="0" cellspacing="0">
+				<tr class="row">
+					<th style="width:100px">会员编号</th>
+					<th>参与金额</th>
+					<th style="width:130px">是否已支付</th>
+					<th>参与那种标种的投标</th>
+					<th style="width:130px">支付时间</th>
+					<th style="width:130px">本金赎回方式</th>
+					<th style="width:130px">参与时间</th>
+				</tr>
+				<foreach name="plan_load_list" item="load">
+				<tr>
+					<td>{$load.user_name}</td>
+					<td align="center">{$load.money|format_price}</td>
+					<td align="center"><if condition="$load['is_paid'] eq 1">已支付<else />未支付</if></td>
+					<td align="center">{$load.deal_cate_ids}</td>
+					<td align="center">{$load.pay_date}</td>
+					<td align="center"><if condition="$load['repay_status'] eq 0">还款自动返还<elseif condition="$load['repay_status'] eq 1" />转让还返 <else />到期返还</if></td>
+					<td align="center">{$load.create_date}</td>
+				</tr>
+				</foreach>
+				<tr>
+					<td colspan="7">
+						<div class="blank5"></div>
+						<div class="page">{$page}</div>
+		</div>
+			 </if>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,24 @@
+{include file="inc/header.html"} 
+<div class="blank"></div>
+	<div class="short wb f_l">
+		<div class="tree-box clearfix">
+			<div class="tree clearfix">
+			{foreach from=$cate_list item="cate_item" key=key}
+			{if $cate_item.type_id eq 0 || $cate_item.type_id eq 2}
+				<div class="hd {if $cate_item.id eq $cate.id}hd_cur{/if}"><a href="{$cate_item.url}">{$cate_item.title}</a></div>
+			{/if}
+			{/foreach}
+			</div>
+		</div>
+	</div>
+	<div class="long " >
+		<div class="bdd bddf p15 clearfix">
+			<h3 class="f18 f_blue ">{$cate.title}</h3>
+			<div class="blank20"></div>
+			{include file="inc/inc_article_list.html"}
+			<div class="blank"></div>
+			<div class="pages">{$pages}</div>
+			<div class="blank"></div>
+		</div>
+	</div>
+{include file="inc/footer.html"}

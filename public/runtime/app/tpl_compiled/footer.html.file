@@ -1,0 +1,179 @@
+</div>
+<?php if ($this->_var['MODULE_NAME'] != 'deals' && $this->_var['MODULE_NAME'] != 'transfer'): ?>
+<div class="blank20"></div>
+<?php endif; ?>
+
+<div id="ftw">
+	
+	<div id="ft">
+		<?php if ($this->_var['MODULE_NAME'] <> 'user' && $this->_var['MODULE_NAME'] <> 'manageagency' && $this->_var['MODULE_NAME'] <> 'authorized' && $this->_var['MODULE_NAME'] <> 'agency_money'): ?>
+		<div class="wrap">
+			<?php if ($this->_var['f_link_data']): ?>
+				<div class="blank15"></div>
+				<?php $_from = $this->_var['f_link_data']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'link_group');if (count($_from)):
+    foreach ($_from AS $this->_var['link_group']):
+?>		
+				    	<div class="link partner">
+					<h3><?php echo $this->_var['link_group']['name']; ?></h3>
+					<ul>
+					<?php $_from = $this->_var['link_group']['links']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'link');if (count($_from)):
+    foreach ($_from AS $this->_var['link']):
+?>
+						<li><a href="http://<?php echo $this->_var['link']['url']; ?>" target="_blank" title="<?php if ($this->_var['link']['description']): ?><?php echo $this->_var['link']['description']; ?><?php else: ?><?php echo $this->_var['link']['name']; ?><?php endif; ?>"><?php if ($this->_var['link']['img'] != ''): ?><img src='<?php echo $this->_var['link']['img']; ?>' alt="<?php if ($this->_var['link']['description']): ?><?php echo $this->_var['link']['description']; ?><?php else: ?><?php echo $this->_var['link']['name']; ?><?php endif; ?>" /><?php else: ?><?php echo $this->_var['link']['name']; ?><?php endif; ?></a></li>
+					<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+					</ul>
+					</div>	
+					<div class="blank1"></div>	
+				<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+				
+				<?php endif; ?>
+		</div>
+		<?php endif; ?>
+        	<div class="wrap">
+        		<?php if ($this->_var['MODULE_NAME'] <> 'user' && $this->_var['MODULE_NAME'] <> 'manageagency' && $this->_var['MODULE_NAME'] <> 'authorized' && $this->_var['MODULE_NAME'] <> 'agency_money'): ?>
+        		<div class="footer_line"></div>
+        		<div style="padding-bottom:50px;">
+	            <ul class="cf f_l f_box">
+	            	<?php $_from = $this->_var['deal_help']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'help_cate');$this->_foreach['help_cate'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['help_cate']['total'] > 0):
+    foreach ($_from AS $this->_var['help_cate']):
+        $this->_foreach['help_cate']['iteration']++;
+?>
+					<?php if ($this->_foreach['help_cate']['iteration'] <= app_conf ( 'HELP_CATE_LIMIT' )): ?>
+					<li class="col hp<?php echo $this->_foreach['help_cate']['iteration']; ?><?php if (($this->_foreach['help_cate']['iteration'] == $this->_foreach['help_cate']['total'])): ?> end<?php endif; ?>">
+	                    <h3 class="f_l"><?php echo $this->_var['help_cate']['title']; ?></h3>
+						<div class="blank0"></div>
+	                    <ul class="sub-list">
+							<?php $_from = $this->_var['help_cate']['help_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'help_item');$this->_foreach['help_item'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['help_item']['total'] > 0):
+    foreach ($_from AS $this->_var['help_item']):
+        $this->_foreach['help_item']['iteration']++;
+?>
+							<?php if ($this->_foreach['help_item']['iteration'] <= app_conf ( 'HELP_ITEM_LIMIT' )): ?>
+							<li><a href="<?php echo $this->_var['help_item']['url']; ?>" <?php if ($this->_var['help_item']['new'] == 1): ?>target="_blank"<?php endif; ?>><?php echo $this->_var['help_item']['title']; ?></a></li>
+							<?php endif; ?>
+							<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>  
+							<li class="blank0"></li>           
+						</ul>
+						<div class="blank0"></div>
+	                </li> 
+					<?php endif; ?>
+					<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+					<li class="col">
+						 <h3 class="f_l">关注我们</h3>
+						 <div class="blank0"></div>
+						 <div class="get_limelight clearfix f_l" style=" height:30px;">
+						 	<a  href="" target="_blank" title="新浪微博" class="share weixin "></a>
+			               <a  href="javascript:void(0);" title="微信" class="share xinlan J_weixin_code"></a>
+						 </div>
+						 <div class="blank0"></div>
+						 <span class="weixin_ss f_l">
+						 	<!--
+						 	       <img src="<?php echo $this->_var['TMPL']; ?>/images/weixin_ss.png">
+						    -->		   
+						</span>
+					</li>
+					<li class="col call_me f_r">
+						 <h3 class="f_l">联系我们</h3>
+						 <div class="blank0"></div>
+						 <ul class="sub-list">
+							<li><?php 
+$k = array (
+  'name' => 'app_conf',
+  'v' => 'COMPANY_ADDRESS',
+);
+echo $k['name']($k['v']);
+?></li>
+							<li>热线电话 : <?php 
+$k = array (
+  'name' => 'app_conf',
+  'v' => 'SHOP_TEL',
+);
+echo $k['name']($k['v']);
+?></li>
+							<li>服务邮箱 : <?php 
+$k = array (
+  'name' => 'app_conf',
+  'v' => 'REPLY_ADDRESS',
+);
+echo $k['name']($k['v']);
+?></a></li>
+							<li class="blank0"></li>
+						</ul>
+					</li>
+					<li class="blank0"></li>  
+	            </ul>
+				<div class="f_r customer">
+					<?php if ($this->_var['online_qq']): ?>
+					<span class="back_img f_r "><a href="http://wpa.qq.com/msgrd?v=3&uin=<?php echo $this->_var['online_qq']['0']['qq']; ?>&site=qq&menu=yes" class="f_blue">在线客服&nbsp;<i class="iconfont f24">&#xe61e;</i></a></span>
+					<div class="blank0"></div>
+					<?php endif; ?>
+					<div class="telphone f_r">
+						<div class="f_r">
+							<span class="telep b"><?php 
+$k = array (
+  'name' => 'app_conf',
+  'v' => 'SHOP_TEL',
+);
+echo $k['name']($k['v']);
+?></span>
+							<span class="time f12"><?php 
+$k = array (
+  'name' => 'app_conf',
+  'v' => 'ONLINE_TIME',
+);
+echo $k['name']($k['v']);
+?></span>
+						</div>
+						<i class="iconfont f_r mt1" style="font-size:50px;line-height:50px;">&#xe620;</i>
+					</div>
+					
+				</div>
+
+				<div class="blank25"></div>
+				<?php endif; ?>
+
+				<div class="blank0"></div>
+				</div>
+				<div class="footer_line"></div>
+				<div class="copyright">
+					<?php 
+$k = array (
+  'name' => 'app_conf',
+  'value' => 'SHOP_FOOTER',
+);
+echo $k['name']($k['value']);
+?> 
+					<div class="blank1"></div>
+					<?php 
+$k = array (
+  'name' => 'app_conf',
+  'value' => 'ICP_LICENSE',
+);
+echo $k['name']($k['value']);
+?>&nbsp;&nbsp;
+					<?php 
+$k = array (
+  'name' => 'app_conf',
+  'value' => 'COUNT_CODE',
+);
+echo $k['name']($k['value']);
+?>
+				</div>
+				<div class="blank"></div>
+			</div>
+			
+	</div>
+	<?php if ($this->_var['online_qq']): ?>
+	<?php echo $this->fetch('inc/kefu.html'); ?>
+	<?php endif; ?>
+	<div id="gotop"></div>
+	<?php if ($this->_var['MODULE_NAME'] != 'guide'): ?>
+<script type="text/javascript" defer="defer">
+	resetWindowBox();
+</script>
+<?php endif; ?>
+</div>
+
+</body>
+</html>

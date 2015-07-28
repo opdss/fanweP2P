@@ -1,0 +1,14 @@
+<div class="tree-box clearfix">
+	{foreach from=$deal_help key=key item=cate}
+	{if $cate.id eq $article.cate_id}
+		{if $cate.help_list}
+		<div class="tree">
+			<div class="hd">{$cate.title}</div>
+			{foreach from=$cate.help_list item=item}
+			<div class="item {if $item.id eq $article.id}act{/if}"><a href="{$item.url}" {if $item.new eq 1}target="_blank"{/if}>{$item.title}</a></div>
+			{/foreach}
+		</div>
+		{/if}
+	{/if}
+	{/foreach}
+</div>

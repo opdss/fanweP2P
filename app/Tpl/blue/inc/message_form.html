@@ -1,0 +1,34 @@
+<div class="box-t f_blue f18"><i class="iconfont">&#xe627;</i>&nbsp;留言板</div>
+<div class="box-bd">	
+	<form method="post" id="consult-add-form" action="{url x="index" r="msg#add"}"  onsubmit="return check_content(this);" name="message">
+		<div>
+			{if $user_info}					
+				<textarea name="content" rows="5" cols="60" class="f-text ui-textarea" style="width:100%"></textarea>
+				<div class="blank"></div>
+				
+				<p class="commit f_r" >
+					<input type="hidden" value="1" name="ajax" />
+					<input type="hidden" value="{$rel_table}" name="rel_table">
+					<input type="hidden" value="{$rel_id}" name="rel_id">
+					<input type="submit" class="sub_btn f_r" name="commit" value="{$LANG.OK_POST}">
+					{if app_conf("VERIFY_IMAGE") eq 1}
+					<div class="commit w150 f_r">
+						<div class="verify_row">								
+						<input type="text" value="" class="f-input ui-textbox w50 lh28 f_l mr5" style="height:28px;" name="verify" />	
+						<img height="40" src="{$APP_ROOT}/verify.php?w=89&h=44&rand={function name="rand"}" onclick="this.src='{$APP_ROOT}/verify.php?w=89&h=44&rand='+ Math.random();" title="看不清楚？换一张" />			
+						</div>	
+					</div>
+					{/if}
+				</p>
+			{else}
+				{$message_login_tip}
+			{/if}
+		</div>		
+	</form>
+</div>
+<div class="blank"></div>
+<div class="box-bd">	
+	<div  class="message-list">
+	{function name='load_message_list'}
+	</div>
+</div>

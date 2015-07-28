@@ -1,0 +1,49 @@
+<script type="text/javascript">
+function closeWeeboxs(){
+	$.weeboxs.close();
+}
+</script>>
+<div class="tabbox clearfix">
+	<div><a href="{url x="index" r="authorized#invest"}">客户投资列表</a></div>
+	<div class="tab cur"><a href="{url x="index" r="authorized#refdetail" p="id=$deal.id"}">投资回款列表</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	<div style="padding:0 10px;{if !$smarty.foreach.user_load.first}margin-top:30px;{/if}">
+		<div class="clearfix">
+			<table class="data_table" id="refundTab" cellspacing="1">
+	            <tr>
+                <!--，投资人，利息管理费，预期佣金，实际佣金，状态（待还、已还、已转、坏账），还款日-->
+	                <th width="15%">第几期</th>
+	                <th width="15%">利息管理费</th>
+	                <th width="15%">预计佣金</th>
+	                <th width="15%">实际佣金</th>
+	                <th width="15%">状态</th>
+	                <th width="15%">还款日</th>
+	            </tr>
+				<?php $idx=0;?>
+				{foreach from=$list item=loan key=key name="loans"}
+	          	<tr>
+	                <td width="10%">
+					{$loan.ll_key}
+					</td>
+	                <td width="12%">{function name="number_format" v=$loan.manage_interest_money_format f=2}</td>
+	                <td width="12%" style="color:red">
+                    {function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$loan.manage_interest_money_rebate f=2}
+                    </td>
+	              
+	              	<td width="12%">
+                    {function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$loan.true_manage_interest_money_rebate f=2}</td>
+	                <td width="12%">
+                    {$loan.status_format}
+                    </td>
+	               
+	                <td width="12%" class="f_green">
+                        {function name="to_date" v=$loan.repay_day f="Y-m-d"}
+					</td>
+	            </tr>
+				{/foreach}
+	        </table>
+			
+		</div>
+	</div>	
+</div>

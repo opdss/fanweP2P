@@ -1,0 +1,86 @@
+{include file="inc/header.html"}
+<style type="text/css">
+	#aboutBorrow .left {width:900px;}
+	#aboutBorrow .right {width: 260px;display: inline;}
+	#aboutBorrow .right .tit {
+		background: url('{$TMPL}/images/borrowBluebg.jpg') no-repeat 0 bottom;
+		padding-left: 15px;
+		color: white;
+		line-height: 24px;
+		margin-bottom: 20px;
+	}
+	#aboutBorrow .left .border {
+		border: 1px solid #E3E3E3;
+		padding: 15px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		margin-bottom: 10px;
+		background:#fff
+	}
+	#aboutBorrow .left .border .tit {
+		background: url('{$TMPL}/images/borrowLine.jpg') no-repeat center bottom;
+		height: 34px;
+		line-height: 34px;
+		position: relative;
+	}
+	#aboutBorrow .left .border .tit h3 {
+		color: black;
+	}
+	#aboutBorrow .left .border .tit a {
+		display: block;
+		background: url("{$TMPL}/images/saveSetting.png") no-repeat scroll 0 0 transparent;
+		width: 114px;
+		height: 34px;
+		line-height: 34px;
+		font-size: 14px;
+		font-weight: bold;
+		position: absolute;
+		right: 0px;
+		top: -10px;
+		color: white;
+		text-align: center;
+	}
+	#aboutBorrow .left .border table {
+		width: 100%;
+		margin: 10px 0;
+	}
+	#aboutBorrow .left .border table td {
+		line-height: 30px;
+		padding-left: 20px;
+	}
+	#aboutBorrow .left .border table tr.even {
+		background: #ECF7FF;
+		height: 30px;
+	}
+	
+	#aboutBorrow .left .border table tr.odd {
+		background: #D1E7F6;
+		height: 30px;
+	}
+	#aboutBorrow .left .border .titcen p {
+		background: #D1E7F6;
+		padding: 10px;
+	}
+	#aboutBorrow .left .border .titcen h4 {
+		background: #ECF7FF;
+		padding: 10px;
+	}
+</style>
+<div class="blank"></div>
+<adv adv_id="如何借款顶部广告" />
+<div class="wrap bdd bddf clearfix" id="aboutBorrow">
+	<div class="left p15 f_l">
+		{$info.content}
+	</div>
+	
+	<div class="right f_r wb pl10 pt10 pb10">
+    	<div class="tit">首次申请流程</div>
+        <div id="firstLC">
+        	<img src="{$TMPL}/images/liuchen.jpg">
+        </div>
+    </div>
+</div>
+<div class="blank"></div>
+
+{include file="inc/footer.html"}

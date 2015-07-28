@@ -1,0 +1,32 @@
+<div class="list">
+	<div class="list_title clearfix">
+		<div {if $ACTION_NAME eq 'index'}class="cur"{/if}><a href="{url x="shop" r="uc_voucher#index"}">{$LANG.UC_VOUCHER}</a></div>
+		<div {if $ACTION_NAME eq 'exchange'}class="cur"{/if}><a href="{url x="shop" r="uc_voucher#exchange"}">{$LANG.UC_VOUCHER_EXCHARGE}</a></div>
+	</div>
+	<div class="list_cont">
+		<div class="i_deal_list clearfix">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+				<tr border="0" style="background-color:#00bef0; color:#fff; height:34px;">
+					<th>{$LANG.VOUCHER_NAME}</th>
+					<th style="width:20%">{$LANG.VOUCHER_MONEY}</th>
+					<th style="width:20%">{$LANG.EXCHANGE_SCORE_VOUCHER}</th>
+					<th style="width:20%">{$LANG.DO_EXCHANGE}</th>
+				</tr>
+				{foreach from=$list item=voucher key=key}
+				<tr {if $key mod 2 eq  0}class="alt"{/if}>
+					<td style="text-align:left;padding-left:10px">
+						{$voucher.name}
+					</td>
+					<td>{function name="format_price" value=$voucher.money} </td>
+					<td>{function name="format_score" value=$voucher.exchange_score}</td>
+					<td style="padding-right:10px"><a href="{url x="shop" r="uc_voucher#do_exchange" p="id=$voucher.id"}">{$LANG.DO_EXCHANGE}</a></td>
+				</tr>
+				{/foreach}
+				</tbody>
+			</table>
+			<div class="pages">{$pages}</div>
+		</div>
+	</div>
+	<div class="inc_foot"></div>
+</div>

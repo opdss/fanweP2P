@@ -1,0 +1,43 @@
+.integral_goods{ background:#fff; border-top:1px solid #cbcbcb;}
+.integral_goods li{ padding:10px; border-bottom:1px solid #cbcbcb; overflow:hidden; padding:10px;padding-left:110px; }
+.integral_goods li .left_img{ border:1px solid #cbcbcb; overflow:hidden; width:80px; height:80px; padding:3px; float:left; margin-left:-100px;}
+.integral_goods li .left_img img{ width:100%; height:100%;}
+.integral_goods li .right_p h5{ color:#878787;  font-size:15px;display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.integral_goods li .right_p{ font-size:14px;  line-height:30px; color:#a9a8a8;}
+
+.integral_nav_1{ border:1px solid @main_color; border-radius:5px; margin:0 10px; overflow:hidden; background:#fff;}
+.integral_nav_1 li{ float:left; width:25%; border-right:1px solid @main_color; line-height:30px; font-size:16px; color:@main_color; text-align:center;}
+.integral_nav_1 li a{ color:@main_color; display: block;}
+.integral_nav_1 th:last-child{ border-right:none;width:24%; }
+.integral_nav_1 .y{ background:@main_color; color:#fff;}
+.integral_nav_1 .y a{background:@main_color; color:#fff; }
+
+.integral_nav_0{ background:#fff; color:#878787; font-size:16px; line-height:35px; border-bottom:1px solid #cbcbcb;  overflow:hidden;}
+.integral_nav_0 li{ float:left; width:50%; border-right:1px solid #cbcbcb; text-align:center; cursor: pointer;}
+.integral_nav_0 li:last-child{ border-right:none;width:49%; }
+
+
+.integral_mall_nav{ position:absolute; top:0px; left:0px; height:100%; width:80%; margin-left:20%; background:#f4f4f4; }
+.integral_mall_nav h5{ position:relative; font-size:18px; line-height:50px; color:#878787;  text-align:center;border-bottom:1px solid #cbcbcb;}
+.integral_mall_nav h5 span{ color:@main_color; position:absolute; display:block; right:10px; top:0px; cursor: pointer;}
+.b_blank{ height:40px; clear:both; background:#e1e1e1;}
+.integral_mall_nav li{ overflow:hidden; padding:0 10px 0 20px; border-bottom:1px solid #cbcbcb; line-height:50px; font-size:16px; color:#878787;}
+.integral_mall_nav ul .y{ color:@main_color;	}
+.integral_mall_nav li a{ display: block;  overflow: hidden;}
+.integral_mall_nav li .ico{ display: none;}
+.integral_mall_nav ul .y .ico{ display: block; color: @main_color;}
+
+
+
+.integral_nav_1 th{ width: 25%;border-right: 1px solid @main_color;line-height: 30px;font-size: 16px;color: @main_color; font-weight: 100;}
+.integral_nav_1 th a{color:@main_color; display: block;}
+
+
+
+
+
+
+
+
+
+

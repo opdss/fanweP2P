@@ -1,0 +1,78 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/user_edit.js' />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">{%ADD} <a href="{:u("Index/manage_carry")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+
+<div class="blank5"></div>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">管理员编号:</td>
+		<td class="item_input" style="height:42px;">
+			<input type="hidden" name="admin_id" value="{$adm_session.adm_id}"/>{$adm_session.adm_id}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">管理员姓名:</td>
+		<td class="item_input" style="height:42px;">
+			<input type="hidden" name="admin_name" value="{$adm_session.adm_name}"/>{$adm_session.adm_name}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">提现金额:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="money" value="" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">提款备注:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="memo" value="" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">创建时间:</td>
+		<td class="item_input" style="height:42px;">
+			<input type="hidden" name="creat_time" value="<PHP> echo to_date(get_gmtime());</PHP>" /><PHP> echo to_date(get_gmtime());</PHP>
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="index" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="insert_carry" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%ADD}" />
+			<input type="reset" class="button" value="{%RESET}" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 		 
+</form>
+
+</div>
+<include file="Public:footer" />

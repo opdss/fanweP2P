@@ -1,0 +1,35 @@
+<!--<?php if ($this->_var['MODULE_NAME'] <> 'user' && $this->_var['MODULE_NAME'] <> 'manageagency' && $this->_var['MODULE_NAME'] <> 'authorized' && $this->_var['MODULE_NAME'] <> 'agency_money'): ?>-->
+<div class="constr">
+	<div class="wrap">
+		<?php if (app_conf ( "APPLE_DOWLOAD_URL" ) || app_conf ( "ANDROID_DOWLOAD_URL" )): ?>
+		<div class="app_down f_l" id="J_APP_DOWN">
+			<a href="javascript:void(0);"><i class="iconfont">&#xe613;</i>下载移动客户端</a>
+			<div class="grcode_box ps hide">
+				<img src="<?php 
+$k = array (
+  'name' => 'gen_qrcode',
+  'v' => $this->_var['MOBILE_DOWN_PATH'],
+  's' => '8',
+);
+echo $k['name']($k['v'],$k['s']);
+?>"  />
+			</div>
+		</div>
+		<?php endif; ?>
+		<div class="f_r lh30">
+			<div id="user_head_tip" class="pr f_r">
+				<?php 
+$k = array (
+  'name' => 'load_user_tip',
+);
+echo $this->_hash . $k['name'] . '|' . base64_encode(serialize($k)) . $this->_hash;
+?>
+				<span class="line"></span>
+				<span class="li"><a href="<?php
+echo parse_url_tag("u:index|helpcenter|"."".""); 
+?>">帮助中心</a></span>
+			</div>
+		</div>		
+	</div>
+</div>
+<!--<?php endif; ?>-->

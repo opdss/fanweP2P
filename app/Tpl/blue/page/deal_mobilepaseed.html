@@ -1,0 +1,70 @@
+{include file="inc/header.html"}
+<?php
+$this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$dealcss"}" />
+<div class="blank"></div>
+<div class="clearfix wb">
+	<div class="beleader">
+   	<div class="toptitle pt15">成为理财人</div>
+     <div class="line950"></div>
+     <div class="beleader_cen">
+      <div class="left f_l">
+      	<div class="blank"></div>
+       		<span style="color:#7670a7">绑定身份证、手机号码即可成为{function name="app_conf" v="SHOP_TITLE"}理财人。</span>
+       		<form id="stepVerifyIdCardAndPhone" method="post" action="./">
+            <table border="0">
+              <tbody>
+                <tr height="60px">
+                  <td width="150px" class="tr">姓名：</td>
+                  <td>
+                  <input class="f-input" name="name" id="name" value="{$user_info.real_name}">
+                  </td>
+                </tr>
+                <tr height="60px">
+                  <td class="tr">身份证号：</td>
+                  <td width="360px;"><input class="f-input {if $user_info.idcardpassed eq 1}readonly{/if}" {if $user_info.idcardpassed eq 1}disabled="true"{/if} name="idno" id="idno" value="{$user_info.idno}"></td>
+                </tr>
+				{if $user_info.idcardpassed eq 0}
+                <tr height="60px">
+                  <td class="tr">确认身份证号：</td>
+                  <td width="360px;"><input class="f-input" name="idno_re" id="idno_re" value=""></td>
+                </tr>
+				{/if}
+                <tr height="60px">
+                  <td class="tr">手机号码：</td>
+                  <td><input class="f-input {if $user_info.mobilepassed eq 1}readonly{/if}" name="phone" {if $user_info.mobilepassed eq 1} disabled="true"{/if} id="J_Vphone" value="{$user_info.mobile}">
+				  {if $user_info.mobilepassed eq 0}
+				  <input type="button" id="reveiveActiveCode" class="reveiveActiveCode" value="{$LANG.DO_SEND}{$LANG.MOBILE_VERIFY_CODE}" onclick="sendPhoneCode(this,'#J_Vphone');">
+                  {/if}
+                  </td>
+                </tr>
+				{if $user_info.mobilepassed eq 0}
+                <tr height="60px">
+                  <td class="tr">验证码：</td>
+                  <td><input class="f-input" id="validateCode2" name="validateCode" value=""></td>
+                </tr>
+				{/if}
+                <tr>
+                  <td> </td>
+                  <td>
+                      <input type="submit" id="licaiuser" class="licaiuser" style="text-indent:0px;" value="&nbsp;&nbsp;" name="submit">
+					  <a class="f12 ml10" href="{url x="index" r="uc_money#incharge"}" target="_blank">我要充值</a>
+					  <a href="{url x="index" r="uc_money"}" class="ml20" target="_blank">账户余额</a>
+                    </td>
+                </tr>
+                <tr>
+                	<td colspan="2" style="padding-top:10px; padding-left:166x;"><span id="submsg" style="color:red"></span></td>
+				</tr>
+              </tbody>
+            </table>
+          </form>
+           <div style="color:#7670A7">注意：若第一次验证失败，即姓名与身份证号码不匹配。 第二次验证，将按审核成本5元/次的标准收取验证费，请务必填写您的真实信息！进行手机绑定后，本手机号将作为{function name="app_conf" v="SHOP_TITLE"}和您确认贷款的途径之一，请使用您常用的手机号码进行绑定，您的手机号码不会以任何形式被泄露。<p class="red">如果您收不到手机验证码，请拨打客服电话：{function name="app_conf" v="SHOP_TEL"}</p></div>
+          	<div class="blank"></div>
+		  </div>
+        </div>
+        <div class="fr"><img src="{$TMPL}/images/beLend.jpg"></div>
+        
+     </div>
+</div>
+{include file="inc/footer.html"}

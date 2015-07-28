@@ -1,0 +1,111 @@
+<form action="{url x="index" r="uc_deal_quota#do_add_quota"}"  method="post" id="add_quota_form" >
+	<div class="field">
+		<label>借款标题</label>
+		<input class="f-input" name="name" value="" style="width:280px">
+		&nbsp;&nbsp;<a href="{url x="index" r="borrow#applyamount"}" target='_blank'>点这补齐认证资料</a>，更容易通过哦！
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+		<label>申请额度</label>
+		<input class="f-input" name="borrow_amount" value="">
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+		<label>详细说明</label>
+		<div class="f_l pt10">
+		{function name="show_ke_textarea" id="description" w="540" height="350" cnt=""}
+		</div>
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+		<label>展示资料：</label> 
+		<div class="f_l">
+			<div style="width:550px;">
+			 				 
+	    	 {if $user_view_info}
+	    	 	 {foreach from =$user_view_info item="img_item" key=key}
+					<p style="float:left">
+					<input  style=" margin-top: 12px; {if $img_item.is_user neq 1}display:none{/if} "  {if $img_item.is_selected eq 1} checked="checked" {/if}  type="checkbox" name="file_key[]" value="{$img_item.key}">
+					<a href='{$img_item.img}' target="_blank" title="{$img_item.name}"><img width="35" height="35" style="float:left; border:#ccc solid 1px; margin-left:5px;" id="{$img_item.name}" src="{$img_item.img}"></a>
+					</p>
+				 {/foreach}
+	    	 {/if}
+	            
+	    	 </div>
+	    	<div class="blank0" style="height:5px;"></div>
+	    	<div style="width:550px;">
+				<span class="f_l pl5 pt2">名称：</span><input type="text"  class="f-input mt2" name="file_name_1" />
+		  		<span class="f_l pl5 pt2">图片：</span>{function name="show_ke_image" v="file_1"}
+				
+				<div class="blank"></div>
+				
+				<span class="f_l pl5 pt2">名称：</span><input type="text"  class="f-input mt2" name="file_name_2" />
+		  		<span class="f_l pl5 pt2">图片：</span>{function name="show_ke_image" v="file_2"}
+				
+				<div class="blank"></div>
+				
+				<span class="f_l pl5 pt2">名称：</span><input type="text" class="f-input mt2" name="file_name_3" />
+		  		<span class="f_l pl5 pt2">图片：</span>{function name="show_ke_image" v="file_3"}
+				
+				<div class="blank" id="J_ke_u_line"></div>
+		 		<input type="button" class="formbutton" name="add_img" onclick="$.Add_Img();" style="height: 36px;line-height: 36px;" value="添加"/>
+				<input type="hidden" name="file_upload_count" value="3" />
+	  		</div>
+		</div>
+	</div>
+	<div class="blank1"></div>
+	<div class="act tc">
+		<input class="true_btn" type="submit" value="提交" />
+	</div>
+</form>
+<div class="hide" id="J_tmp_ke_box">
+	<div class="blank"></div>
+	<span class="f_l pl5 pt2">名称：</span><input type="text" class="f-input mt2" name="file_name_%s" />
+	<span class="f_l pl5 pt2">图片：</span>{function name="show_ke_image" v="file_%s"}
+</div>
+<script type="text/javascript">
+	bindKindeditor();
+	bindKeUpload();
+	jQuery(function(){
+		$("#add_quota_form").submit(function(){
+			if($.trim($(this).find("input[name='name']").val())==""){
+				$.showErr("请输入借款标题",function(){
+					$("#add_quota_form input[name='name']").focus();
+				});
+				return false;
+			}
+			if($.trim($(this).find("input[name='borrow_amount']").val())==""  || parseInt($(this).find("input[name='money']").val())==0){
+				$.showErr("请输入申请金额",function(){
+					$("#add_quota_form input[name='borrow_amount']").focus();
+				});
+				return false;
+			}
+			
+			if($.trim($('#add_quota_form #description').val())==""){
+				$.showErr("请输入借款描述",function(){
+					$("#add_quota_form #description").focus();
+				});
+				return false;
+			}
+			
+			if($.getStringLength($('#add_quota_form #description').val(),"text")<10 ){
+				$.showErr("借款描述必须大于10个字",function(){
+					$("#add_quota_form #description").focus();
+				});
+				return false;
+			}
+			
+			return true;
+		});
+		
+		 var img_add =4;
+	    $.Add_Img = function(){
+	        img_add++;
+			var html = $("#J_tmp_ke_box").html();
+			html = html.replace(/%s/g,img_add);
+	        $("#J_ke_u_line").before(html);
+			bindKeUpload();
+			$("input[name='file_upload_count']").val(img_add);
+	    };
+	});
+</script>

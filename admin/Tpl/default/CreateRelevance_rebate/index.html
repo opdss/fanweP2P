@@ -1,0 +1,72 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+<load href='__TMPL__Common/style/jquery.autocomplete.css' />
+<load href='__TMPL__Common/js/jquery.autocomplete.min.js' />
+
+<PHP>
+	function get_del_referrals($user_id,$referrals){
+		if($referrals['pid'] > 0){
+			$str = '<a href="javascript:del_referrals('.$user_id.');">取消关联</a>&nbsp;';
+		}
+		return $str;
+	}
+</PHP>
+<script type="text/javascript">
+	function edit(user_id)
+	{
+		$.weeboxs.open(ROOT+'?m=CreateRelevance_rebate&a=edit&id='+user_id, {contentType:'ajax',showButton:false,title:'开始关联',width:600,height:260});
+	}
+	
+	function del_referrals(user_id)
+	{
+		var returnVal = window.confirm("是否取消关联");
+		if(returnVal) {
+			location.href = ROOT+'?m=CreateRelevance_rebate&a=del_referrals&id='+user_id; 
+		}
+	
+	}
+</script>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		{%AUTHORIZED_NAME}：<input type="text" class="textbox" name="authorized_name" value="{:trim($_REQUEST['authorized_name'])}" style="width:100px;" />
+        状态：<select name="status">
+			<option value="all" <if condition="$_REQUEST['status'] eq 'all' || trim($_REQUEST['status']) eq ''">selected="selected"</if>>所有状态</option>
+			<option value="0" <if condition="$_REQUEST['status'] neq 'all' && trim($_REQUEST['status']) neq '' && intval($_REQUEST['status']) eq 0">selected="selected"</if>>未关联</option>
+			<option value="1" <if condition="intval($_REQUEST['status']) eq 1">selected="selected"</if>>已关联</option>
+		</select>
+        <input type="hidden" value="CreateRelevance_rebate" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="referrals" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,user_name:用户名
+	,email:邮箱
+	,status:状态
+	,humans:授权服务机构"
+	actionlist="edit:开始关联,id|get_del_referrals=$referrals"
+	/> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

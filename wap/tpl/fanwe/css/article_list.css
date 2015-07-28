@@ -1,0 +1,50 @@
+.article_li .backg{
+  padding:0px 50px 0 10px;	
+  margin:0 10px;
+  border-bottom:1px solid @border_color;
+  line-height:40px;
+  font-size:16px;
+  position:relative;
+  height:40px;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  -o-text-overflow:ellipsis;
+  overflow: hidden;
+  font-weight:700;
+}
+.article_list{
+	background:@box_color;
+	padding-bottom:20px;
+}
+.article_li .backg i{
+	position:absolute;
+	right:0px;
+	top:12px;
+	color:@font_main;
+}
+.article_show{
+	background:@box_color;
+	padding:10px 10px 40px 10px;
+	
+}
+.article_show h2{
+	font-size:18px;
+	line-height:40px;
+	text-align:center;
+	font-weight:bolder;
+	margin:0px 20px;
+}
+.article_show .show_detail{
+	line-height:25px;
+	text-indent:30px;
+	padding:10px 0;
+	color:@font_main;
+}
+.article_show .jieshao{
+	line-height:20px;
+	text-align:right;
+	
+}
+.jieshao span{
+	padding:0 10px;
+}

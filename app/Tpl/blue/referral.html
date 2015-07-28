@@ -1,0 +1,74 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="referrals">
+			<div id="content" class="refers">				
+			<div class="box" id="login">				
+				<div class="box">
+					<div class="box-top"></div>
+					<div class="box-content">
+						<div class="head">
+							<h2>{$page_title}</h2>							
+						</div>
+						<div class="sect">
+							{function name="app_conf" value="SHOP_REFERRAL_HELP"}	
+						</div>
+						{if $user_info}
+						<div class="sect">
+								<div class="share-list">
+								<div class="blk im">
+									<div class="logo"><img src="{$TMPL}/images/tuan/logo_msn.png"></div>
+									<div class="info">
+										<h4>{$LANG.SHARE_LINK}：</h4>
+										<input type="text" onfocus="this.select()" class="f-input" id="share-copy-text" size="30" value="{$deal.share_url}">
+										<input type="button" class="formbutton" id="share-copy-button" value="{$LANG.COPY}">
+									</div>
+								</div>
+								<div class="blk last">
+									<div class="logo"><img src="{$TMPL}/images/tuan/logo_share.gif"></div>
+									<div class="info">
+										<h4>{$LANG.SHARE_REFERRAL}</h4>
+										<div class="deal-info">
+											<p class="pic">
+												<a target="_blank" href="{url x="tuan" r="deal" p="id=$deal.id"}" title="{$deal.name}">
+													<img height="90" width="150" src="{$deal.img}">
+												</a>
+											</p>
+											<p class="deal-title">{$deal.name}</p>
+										</div>										
+										<div id="deal-share">
+											<div class="deal-share-links">
+												<h4>{$LANG.SHARE_TO}：</h4>
+												<ul class="cf">
+												{include file="inc/share_to_site.html"}									
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div><!--end sect 2-->
+						{else}
+						<div class="sect user-lr-box-left">
+							{include file="inc/page_login_form.html"} 
+						</div>
+						{/if}
+					</div>
+					<div class="box-bottom"></div>
+				</div>
+			</div>
+			</div>
+			<div id="sidebar">
+				<div class="sbox">
+					<div class="sbox-top"><h2>常见问题<h2/></div>
+					<div class="sbox-content">
+						{function name="app_conf" value="SHOP_REFERRAL_SIDE_HELP"}
+					</div>
+					<div class="sbox-bottom"></div>
+				</div>
+			</div>
+	</div>
+	<!-- bd end -->
+</div></div>
+{include file="inc/footer.html"}

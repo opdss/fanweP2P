@@ -1,0 +1,61 @@
+{if $today_deal}
+<div class="inc">
+	<div class="inc_top">{$LANG.TODAY_DEAL}</div>
+	<div class="inc_main">
+		
+		<a href="{if $today_deal.uname}{url x="tuan" r="deal" p="id=$today_deal.uname"}{else}{url x="tuan" r="deal" p="id=$today_deal.id"}{/if}" title="{$today_deal.name}" class="today_deal_title">{function name="msubstr" v=$today_deal.name s=0 e=25}</a>
+		
+		<div class="today_deal_img">
+			<a href="{if $today_deal.uname}{url x="tuan" r="deal" p="id=$today_deal.uname"}{else}{url x="tuan" r="deal" p="id=$today_deal.id"}{/if}" title="{$today_deal.name}">
+				<img src="{function name="get_spec_image" v=$today_deal.img w="170" h="130" g=1}" />
+			</a>
+		</div>
+		<div class="blank"></div>
+		<a href="{if $today_deal.uname}{url x="tuan" r="deal" p="id=$today_deal.uname"}{else}{url x="tuan" r="deal" p="id=$today_deal.id"}{/if}" class="tuan_price">
+			{function name="format_price" value=$today_deal.current_price}
+		</a>
+		<div class="blank1"></div>
+		<div class="tuan_footer">
+		<div class="today_deal_info f_l">
+				{function name="sprintf" value=$LANG.SUCCESS_BUY_COUNT p=$today_deal.buy_count}			
+		</div>		
+		<div class="today_deal_time f_r">
+			<ul class="counter" endTime="{if $today_deal.time_status eq 0}<?PHP echo to_date($this->_var['today_deal']['begin_time'],'r');?>{else}<?PHP echo to_date($this->_var['today_deal']['end_time'],'r');?>{/if}"></ul>	
+		</div>
+		</div>
+	</div>
+	<div class="inc_foot"></div>
+</div>
+
+<script type="text/javascript">
+var updEndNowTime = <?PHP echo (get_gmtime()+ (intval(app_conf("TIME_ZONE"))*3600))."000";?>;
+function updateEndTime()
+{
+
+	var time = updEndNowTime;
+	$(".counter").each(function(i){
+		var endDate =new Date(this.getAttribute("endTime"));
+		var endTime = endDate.getTime();
+		var lag = (endTime - time) / 1000;
+		if(lag > 0)
+		{
+			var second = Math.floor(lag % 60);     
+			var minite = Math.floor((lag / 60) % 60);
+			var hour = Math.floor((lag / 3600) % 24);
+			var day = Math.floor((lag / 3600) / 24);
+			var timeHtml = "<span>"+hour+"</span>"+LANG['HOUR']+"<span>"+minite+"</span>"+LANG['MIN']+"";
+			if(day > 0)
+				timeHtml ="<span>"+day+"</span>"+LANG['DAY']+"" + timeHtml;
+			timeHtml+="<span>"+second+"</span>"+LANG['SEC']+"";
+			$(this).html(timeHtml);
+		}
+		else
+			$(this).html("");
+	});
+	updEndNowTime+=1000;
+	setTimeout("updateEndTime()",1000);
+}
+updateEndTime();
+</script>
+<div class="blank"></div>
+{/if}

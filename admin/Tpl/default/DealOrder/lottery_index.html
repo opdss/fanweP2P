@@ -1,0 +1,82 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<php>
+	function get_handle($id)
+	{
+		return "<a href='javascript:del_lottery(".$id.");'>".l("DEL")."</a>";
+	}
+	function get_deal_name($deal_id)
+	{
+		$name = M("Deal")->where("id=".$deal_id)->getField("name");
+		return "<span title='".$name."'>".msubstr($name)."</span>";
+	}
+</php>
+<script type="text/javascript">
+	function del_lottery(id)
+	{
+		if(!id)
+		{
+			idBox = $(".key:checked");
+			if(idBox.length == 0)
+			{
+				alert(LANG['DELETE_EMPTY_WARNING']);
+				return;
+			}
+			idArray = new Array();
+			$.each( idBox, function(i, n){
+				idArray.push($(n).val());
+			});
+			id = idArray.join(",");
+		}
+		if(confirm(LANG['CONFIRM_DELETE']))
+		$.ajax({ 
+				url: ROOT+"?"+VAR_MODULE+"=DealOrder&"+VAR_ACTION+"=del_lottery&id="+id, 
+				data: "ajax=1",
+				dataType: "json",
+				success: function(obj){
+					$("#info").html(obj.info);
+					if(obj.status==1)
+					location.href=location.href;
+				}
+		});
+	}
+</script>
+<div class="main">
+<div class="main_title">{%DEAL_LOTTERY}</div>
+<div class="blank5"></div>
+<form name="search" action="__APP__" method="get">	
+
+<div class="search_row">
+
+		{%DEAL_ID}：<input type="text" class="textbox" name="deal_id" value="{:trim($_REQUEST['deal_id'])}" style="width:30px;" />
+		{%USER_NAME_S}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		{%LOTTERY_SN}：<input type="text" class="textbox" name="lottery_sn" value="{:trim($_REQUEST['lottery_sn'])}" style="width:100px;" />
+
+		
+		<input type="hidden" value="DealOrder" name="m" />
+		<input type="hidden" value="lottery_index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		<input type="button" class="button" value="{%DEL}" onclick="del_lottery();" />
+
+</div>
+</form>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal_order" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		 ,lottery_sn:{%LOTTERY_SN}
+		 ,user_id|get_user_name:{%LOTTERY_USER}
+		 ,buyer_id|get_user_name:{%LOTTERY_BUYER}
+		 ,deal_id|get_deal_name:{%LOTTERY_DEAL}"
+	actionlist="id|get_handle" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

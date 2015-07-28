@@ -1,0 +1,57 @@
+<script type="text/javascript">
+	function switch_style(type)
+	{
+		var ajaxurl = APP_ROOT+"/tuan.php?ctl=ajax&act=switch_style&type="+type;
+		$.ajax({ 
+			url: ajaxurl,
+			success: function(text){
+				location.href = location.href;
+			},
+			error:function(ajaxobj)
+			{
+//				if(ajaxobj.responseText!='')
+//				alert(ajaxobj.responseText);
+			}
+		});
+	}
+	
+	function set_sort(type)
+	{
+		var ajaxurl = APP_ROOT+"/tuan.php?ctl=ajax&act=set_sort&type="+type;
+		$.ajax({ 
+			url: ajaxurl,
+			success: function(text){
+				location.href = location.href;
+			},
+			error:function(ajaxobj)
+			{
+//				if(ajaxobj.responseText!='')
+//				alert(ajaxobj.responseText);
+			}
+		});
+	}
+</script>
+<div class="list_type_row">
+	<div class="sort_title">
+	{$LANG.SORT_TYPE}
+	</div>
+	<div class="sort_icon {if $sort_field eq 'end_time'}sort_{$sort_type}{else}sort_gray{/if}">
+	<a href="javascript:void(0);" onclick="set_sort('end_time');">{$LANG.DEAL_TIME}</a>
+	</div>
+	<div class="sort_icon {if $sort_field eq 'current_price'}sort_{$sort_type}{else}sort_gray{/if}">
+	<a href="javascript:void(0);" onclick="set_sort('current_price');">{$LANG.DEAL_PRICE}</a>
+	</div>
+	<div class="sort_icon {if $sort_field eq 'buy_count'}sort_{$sort_type}{else}sort_gray{/if}">
+	<a href="javascript:void(0);" onclick="set_sort('buy_count');">{$LANG.DEAL_BUY_COUNT}</a>
+	</div>
+	<div class="sort_icon">
+	<a href="javascript:void(0);" onclick="set_sort('sort');">{$LANG.SORT_DEFAULT}</a>
+	</div>
+	<div class="list_type" style="padding-top:4px;">
+	<span class="{if $list_type eq 1}grid_enable{else}grid_disable{/if}" onclick="switch_style('grid');"></span>
+	<span class="{if $list_type eq 0}line_enable{else}line_disable{/if}" onclick="switch_style('line');"></span>
+	</div>
+	<div style="float:right; font-size:12px; padding-top:2px;">{$LANG.DISPLAY_STYLE}：</div>
+</div>
+
+<div class="blank1"></div>

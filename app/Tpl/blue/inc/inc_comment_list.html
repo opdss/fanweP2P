@@ -1,0 +1,39 @@
+{function name='load_comment_list'}	
+{if $user_info}
+<div class="goods_comment_form">
+<form name="comment" id="consult-add-form" action="{$APP_ROOT}/index.php" method="post"  onsubmit="return check_content(this);" >
+<span id="comment_box">
+{if $is_buy eq 1}
+{$LANG.COMMENT}：
+{/if}
+<span id="comment_input">
+<input type="hidden" name="point" value="0" />
+</span>
+</span>
+
+<div class="blank"></div>
+{if $is_image eq 1}
+{function name="show_topic_form" text_name="content" width=$width height=$height}	
+{else} 
+<textarea class="f-textarea pubform" name="content" style="width:{$width}; height:{$height};" ></textarea>
+{/if}
+<div class="blank"></div>
+{if app_conf("VERIFY_IMAGE") eq 1}
+	<div class="verify_row">								
+	<input type="text" value="" class="f-input" name="verify" />	
+	<img src="{$APP_ROOT}/verify.php?rand={function name="rand"}" onclick="this.src='{$APP_ROOT}/verify.php?rand='+ Math.random();" title="看不清楚？换一张" />			
+	</div>
+	<div class="blank"></div>
+{/if}
+<input type="hidden" value="1" name="ajax" />
+<input type="hidden" value="{$rel_id}" name="rel_id" />
+<input type="hidden" value="{$rel_table}" name="rel_table" />
+<input type="hidden" value="{$is_effect}" name="is_effect" />
+<input type="hidden" value="comment" name="ctl" />
+<input type="hidden" value="add" name="act" />
+<input type="submit" value="{$LANG.OK_POST}" name="commit" class="msg_btn" />
+</form>
+</div>
+{else}
+{$message_login_tip}			
+{/if}

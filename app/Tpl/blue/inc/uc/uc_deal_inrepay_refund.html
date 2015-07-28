@@ -1,0 +1,129 @@
+<script type="text/javascript">
+function closeWeeboxs(){
+	$.weeboxs.close();
+}
+</script>
+<div class="tabbox clearfix">
+	<div class="tab"><a href="{url x="index"r="uc_deal#refund" p="status=0"}">还款列表</a></div>
+	<div class="tab"><a href="{url x="index"r="uc_deal#refund" p="status=1"}">已还清借款</a></div>
+	<div class="tab cur"><a href="###">提前还清借款</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	<div class="bid_item clearfix">
+        <div class="bid_title">
+        	<span class="f_l">{$deal.name} 还款中!</span>
+            <span class="r_c"><a href="javascript:void(0);" onclick="openWeeboxFrame('{url x="index" r="uc_deal#contract" p="id=$deal.id"}','电子协议',1024,668);">查看电子协议</a></span>
+        </div>
+		<div class="blank0"></div>
+        <div class="bid_detail">
+            <div class="info">
+            	 借款金额：
+                <span class="f_red">{$deal.borrow_amount_format}</span>
+            </div>
+            <div class="info">
+            	年利率：
+                <span class="f_red">{function name="number_format" v=$deal.rate f=2}%</span>
+            </div>
+            <div class="info">
+            	期限：
+                <span class="f_red">{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</span>
+            </div>
+           	<div class="info">
+            	已还金额：
+                <span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.repay_money f=2}</span>
+            </div>
+            <div class="info">
+            	应还管理费： 
+                <span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$true_all_manage_money f=2}</span>
+            </div>
+			<div class="info" style="width: 380px;">
+				应还本息（应还本金+当期利息）：
+                <span class="f_red" id="shouldPayPrincipal">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$total_repay_money f=2}</span>
+            </div>
+            <div class="info">
+            	罚息：
+                <span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$impose_money f=2}</span>
+            </div>
+        </div>
+    </div>
+	
+	<div class="clearfix">
+		
+		<table class="refundTab">
+	        <tr>
+	            <td>
+	                <div class="pt15 f16 b lh30 tl">
+	                    <span style="padding: 0 20px;width: 240px;display: block;">
+						管&nbsp;&nbsp;理&nbsp;&nbsp;费：<span >{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$true_all_manage_money f=2}</span><br>
+						应还本息：<span>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$total_repay_money f=2}</span><br>
+						提前罚息：<span>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$impose_money f=2}</span><br>
+						总计还款：<span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$true_total_repay_money f=2}</span>
+						</span>
+	                </div>
+	            </td>
+	        </tr>
+	    </table>
+		<br>
+		<div style="padding: 10px 0 15px 0;">
+			<span class="pl20" style="display:inline;float:left;height:30px;line-height:30px;">支付密码：</span>
+			<input type="password" autocomplete="off" class="f-input ui-textbox w120 f_l mr10" name="paypassword" id="J_PAYPASSWORD" />
+			还未设置？<a href="{url x="index" r="uc_account#security"}" target="_blank" class='f_blue'>点这里</a>
+		</div>
+		<div class="blank10"></div>
+		<span style="padding: 15px 0 15px 20px;">
+            <input type="hidden" name="loanId" value="46420" id="loanId">
+            <input class="conf_refund" id="J_repay_borrow_money" type="button">
+        </span>
+		<span style="padding-top:20px; font-size: 14px;">
+            <input type="hidden" name="avaliablePoint" value="{$user_info.money}" id="avaliablePoint">
+            <span style="font-weight: bold;color: #565656;padding-left: 10px; ">我的可用余额:</span><span class="f_red">{function name="format_price" v=$user_info.money}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url x="index" r="uc_money#incharge"}" style="color:#f85c4e">[ 我要充值 ]</a>
+            <span style="color: red;font-size: 14px;padding-left: 10px; display: none" id="payTip">还款中...</span>
+        </span>
+	</div>
+</div>
+<script type="text/javascript">
+	var is_repay_lock = false;
+	jQuery(function(){
+		$("#J_repay_borrow_money").click(function(){
+			if(confirm("您确定要还款吗？")){
+				if(is_repay_lock){
+					$.showErr("正在处理中，请稍后!");
+					return false;
+				}
+				if($("#J_PAYPASSWORD").val() == ""){
+					$.showErr("请输入支付密码!",function(){
+						$("#J_PAYPASSWORD").focus();
+					});
+					return false;
+				}
+				$("#payTip").show();
+				is_repay_lock = true;
+				
+				var query = new Object();
+					query.id = {$deal.id};
+					query.paypassword = FW_Password($("#J_PAYPASSWORD").val());
+					
+				$.ajax({
+					url:APP_ROOT + "/index.php?ctl=uc_deal&act=inrepay_repay_borrow_money",
+					data:query,
+					type:"post",
+					dataType:"json",
+					success:function(result){
+						is_repay_lock = false;
+						$("#payTip").hide();
+						if(result.status==1){
+							$.showSuccess("还款成功！",function(){
+								window.location.href = '{url x="index" r="uc_deal#refund" p="status=1"}';
+							});
+						}
+						else{
+							$.showErr(result.info);
+						}
+					}
+				});
+			}
+		});
+	});
+	
+</script>

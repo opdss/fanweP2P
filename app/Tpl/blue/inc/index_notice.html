@@ -1,0 +1,11 @@
+<div class="inc">
+	<div class="inc_top">{$LANG.SHOP_NOTICE}<span class="f_r more"><a href="{url x="shop" r="notice#list"}" title="{$LANG.MORE}">{$LANG.MORE}</a></span></div>
+	<div class="inc_main">
+		<ul class="notice_list_mall">
+		{foreach from=$notice_list item=notice}
+		<li><a href="{$notice.url}" title="{$notice.title}">{function name="msubstr" v=$notice.title b=0 e=12}</a></li>
+		{/foreach}
+		</ul>
+	</div>
+	<div class="inc_foot"></div>
+</div>

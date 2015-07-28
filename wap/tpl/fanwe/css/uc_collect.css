@@ -1,0 +1,18 @@
+
+.invest_tit {
+	position:relative;
+}
+.invest_tit .delete{
+	top:1px;
+	right:1px;
+	height:26px;
+	line-height:26px;
+	font-size:14px;
+	background:@main_color;
+	border-radius:3px;
+	width:auto;
+	padding:0 5px;
+	color:@font_white;
+	border:1px solid #fff;
+	display:none;
+}

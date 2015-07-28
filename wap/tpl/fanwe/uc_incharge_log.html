@@ -1,0 +1,42 @@
+	{include file="./inc/header.html"}
+	<?php
+		$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/Log_recharge.css";	
+		$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+	?>
+	<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+	<!--充值日志-->
+	<style>
+		
+	</style>
+	<div class="new_p-m">
+		<table class="Journal_table">
+			<tr>
+				<th>支付单号</th>
+				<th>应付金额</th>
+				<th>下单时间</th>
+				<th>付款方式</th>
+			</tr>
+			{foreach from=$data.item item="item"}
+			<tr>
+				<td>单号：{$item.notice_sn}</td>
+				<td>{$item.money_format}</td>
+				<td>{$item.create_time_format}</td>
+				<td>{$item.name}</td>
+			</tr>
+			{/foreach}
+			
+		</table>
+	</div>
+	<div class="new-but-block ">
+		<div class="but-block">
+		<button class="but_sure"><a href="{wap_url a="index" r="uc_incharge"}">充值</a></button> 
+		</div>
+	</div>
+	{include file="./inc/footer.html"}
+
+
+
+
+
+
+

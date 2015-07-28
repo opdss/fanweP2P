@@ -1,0 +1,12 @@
+<php>$idx = 1;</php>
+<foreach name="list" item="item">
+	<php>if($idx!=1){</php>
+	<div class="blank5"></div>
+	<div style="border-bottom:solid 1px #ccc;"></div>
+	<php>}</php>
+	{$item.name}：
+	<foreach name="item.city" item="city_item">
+		<label>{$city_item.name}<input type="checkbox" name="city_id_{$item.id}[]" <if condition="$city_item['checked'] gt 0 || $cate_type_id eq 0">checked="checked"</if> value="{$city_item.id}" /></label>
+	</foreach>
+	<php>$idx++;</php>
+</foreach>

@@ -1,0 +1,384 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/deal.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--投资借款简单详情-->
+<div class="detail">
+<div class="mainblok mainborder">
+            <div class="detail_tit">
+                <h3>{$data.deal.name}</h3>
+                <span>借款编号:{$data.deal.id}</span>
+            </div>
+            <div class="detail_list">
+                <ul>
+                    <li>
+                        <label>借款金额</label>
+                        <div class="list_con">{$data.deal.borrow_amount_format}</div>
+                    </li> 
+					{if $data.deal.uloadtype eq 1}
+					<li>
+                        <label>可投份数</label>
+                        <div class="list_con detail_Orange">{$data.deal.need_portion}</div>
+                    </li>
+					{else}
+					<li>
+                        <label>可投金额</label>
+                        <div class="list_con detail_Orange">{$data.deal.need_money}</div>
+                    </li>
+					{/if}
+                    
+                    <li>
+                        <label>最低金额</label>
+                        <div class="list_con">{$data.deal.min_loan_money_format}</div>
+                    </li>
+					{if $data.deal.uloadtype eq 1}
+					<li>
+                        <label>已认购</label>
+                        <div class="list_con">{$data.deal.buy_portion}笔</div>
+                    </li>
+					{else}
+					<li>
+                        <label>已认购</label>
+                        <div class="list_con">{function name="format_price" v=$data.deal.load_money" f=2}</div>
+                    </li>
+					{/if}
+					
+                </ul>
+            </div>
+        </div><!--mainblok——end--> 
+
+        <div class="mainblok mainborder">
+            <div class="detail_list">
+                <ul>
+                    <li>
+                        <label>年利率</label>
+                        <div class="list_con detail_Orange">{$data.deal.rate_foramt}%</div>
+                    </li>
+                    <li>
+                        <label>期限</label>
+                        <div class="list_con">{$data.deal.repay_time}{if $data.deal.repay_time_type eq 0}天{else}月{/if}</div>
+                    </li>
+                    <li>
+                        <label>还款方式</label>
+                        <div class="list_con">
+                        {if $data.deal.loantype eq 0}等额本息{elseif $data.deal.loantype eq 1}付息还本{elseif $data.deal.loantype eq 2}到期还本息{/if}
+						</div>
+                    </li>
+                    <li>
+                        <label>风险等级</label>
+                        <div class="list_con">
+                        	{if $data.deal.rish_rank eq 0}低{elseif $data.deal.rish_rank eq 1}中{elseif $data.deal.rish_rank eq 2}高{/if}
+						</div>
+                    </li>
+                    <li>
+                        <label>剩余时间</label>
+                        <div class="list_con">{$data.deal.remain_time_format}</div>
+                    </li>
+                </ul>
+            </div>
+        </div><!--mainblok——end--> 
+
+		<div class="blank15"></div>
+       
+        <div class="mainblok mainborder">
+         {if $data.deal.deal_status eq 1}
+            <div class="detail_list">
+                <ul>
+                    <li>
+                        <label>可用余额</label>
+                        <div class="list_con">
+                        	<em class="detail_Orange">{function name="format_price" v=$data.user_money" f=2}</em>元
+							{if $is_login eq 0}
+							<a href="{wap_url a="index" r="login"}" class="recharge">我要充值</a>
+							{else}
+							<a href="{wap_url a="index" r="uc_incharge"}" class="recharge">我要充值</a>
+							{/if}
+						</div>
+                    </li>
+					{if $data.deal.uloadtype eq 1}
+					 <li>
+                        <label>投标金额</label>
+                        <div class="list_con">
+                        	<table width="100%">
+                        		<tr>
+                        			<td width="50%" >
+                        			<!--
+								 	<div class="nun_choose clearfix">
+										<span class="Minus f_l">−</span>
+										<input id="deal_id" type="hidden" value="{$data.deal.id}"  />
+										<input id="buy_number" name="buy_number" type="hidden" value="{$data.deal.min_loan_money}" >
+									    <input type="text"  value="1" class="nun f_l"  autocomplete="off" name="pay_inmoney" id="pay_inmoney"/>
+									    <span class="Plus f_l">+</span>
+									</div>
+									-->
+									<div id="deal-intro">
+									 <div class="deal-rf">
+									 	<div class="nun_choose clearfix">
+									<div id="deal-intro" class="touzbox pr {if $data.deal.uloadtype eq 1}c_number-box{/if}">
+										<a href="javascript:void(0);" class="c_number " rel="-">-</a>
+										<input id="deal_id" type="hidden" value="{$data.deal.id}"  />
+										<input id="buy_number" name="buy_number" type="hidden" value="{$data.deal.min_loan_money}" >
+									    <input type="text" style=""  value="1" class="nuns f_l"  autocomplete="off" name="pay_inmoney" id="pay_inmoney"/>
+									    <a href="javascript:void(0);" class="c_number "  rel="+">+</a>
+									</div>
+									</div>
+									</div>
+									</div>
+									</td>
+									<td width="50%">
+										收益：<span class="J_u_money_sy f_red">0.00</span>
+									</td>
+                        		</tr>
+								
+                        	</table>
+                        </div>
+                     </li>	
+					{else}
+					 <li>
+                        <label>投标金额</label>
+                        <div class="list_con">
+                        	<table width="100%">
+                        		<tr>
+                        			<td width="50%"><input id="deal_id" type="hidden" value="{$data.deal.id}"  />
+                        				<input id="pay_inmoney" name="pay_inmoney"  class="ui-button_login ui_width" type="text" placeholder="输入金额，最低投标金额50元">
+									</td>
+									<td width="50%">
+										收益：<span class="J_u_money_sy f_red">0.00</span>
+									</td>
+                        		</tr>
+								
+                        	</table>
+                        
+                        </div>
+                     </li>
+					{/if}
+                   
+					<li class="reset_pay_pwd">
+                        <label>支付密码</label>
+                        <div class="list_con">
+                        <input id="pay_inmoney_password" class="ui-button_login ui_width" type="password" placeholder="输入密码">
+                        {if $is_login eq 0}
+							<a href="{wap_url a="index" r="login"}" class="recharge">设置支付密码</a>
+							{else}
+							<a href="{wap_url a="index" r="reset_pay_pwd"}" class="recharge">设置支付密码</a>
+							{/if}
+						</div>
+					 </li>
+                </ul>
+            </div>
+			{/if}
+        </div><!--mainblok——end--> 
+   </div>
+<div class="detail_foot">
+    <div class="lookdetail"><a href="{wap_url a="index" r="deal_mobile" p="id=$data.deal.id"}">查看详情</a></div>
+    {if $is_login eq 1}
+	            {if $data.deal.deal_status eq 1}<div id="pay_deal" class="I_Investment">我要投资</div>{/if}
+				{if $data.deal.deal_status eq 2}<div class="I_Investment disabled">满标</div>{/if}
+				{if $data.deal.deal_status eq 3}<div class="I_Investment disabled">流标</div>{/if}
+				{if $data.deal.deal_status eq 4}<div class="I_Investment disabled">还款中</div>{/if}
+				{if $data.deal.deal_status eq 5}<div class="I_Investment disabled">已还款</div>{/if}
+				{if $data.deal.deal_status eq 0}<div class="I_Investment disabled">等待材料</div>{/if}
+   	{else}
+	            {if $data.deal.deal_status eq 1}<div id="pay_deal" class="I_Investment"><a href="{wap_url a="index" r="login"}">我要投资</a></div>{/if}
+				{if $data.deal.deal_status eq 2}<div class="I_Investment disabled">满标</div>{/if}
+				{if $data.deal.deal_status eq 3}<div class="I_Investment disabled">流标</div>{/if}
+				{if $data.deal.deal_status eq 4}<div class="I_Investment disabled">还款中</div>{/if}
+				{if $data.deal.deal_status eq 5}<div class="I_Investment disabled">已还款</div>{/if}
+				{if $data.deal.deal_status eq 0}<div class="I_Investment disabled">等待材料</div>{/if}
+	{/if}
+</div>
+{include file="./inc/footer.html"}
+<script>
+	$(document).ready(function(){
+		$(".Model").click(function(){
+			if(	!$(this).hasClass("y"))
+		{
+			$(this).siblings().removeClass("y");
+			$(this).addClass("y");
+		}
+		});
+		
+		$(".Minus").click(function(){
+			var x=$(".nun_choose .nun").val();
+			if(x>1)
+			{
+				x-=1;
+				$(".nun_choose .nun").val(x);
+			}
+			else
+			{
+				alert("数量不能小于1");
+				$(".nun_choose .nun").val(1);
+			}
+		});
+		$(".Plus").click(function(){
+			var x=$(".nun_choose .nun").val();
+			var y={$data.deal.need_portion};//20暂代库存
+			//var y=20;//20暂代库存
+			if(x>(y-1))
+			{
+				
+				alert("数量不能大于可投份数");
+				$(".nun_choose .nun").val(y);
+			}
+			else
+			{
+				x=parseInt(x) + 1;
+				$(".nun_choose .nun").val(x);
+			}
+		});
+		
+	});
+</script>
+<script type="text/javascript">
+$("#pay_deal").click(function(){
+	
+		var ajaxurl = '{wap_url a="index" r="deal_dobid"}';
+		var query = new Object();
+		
+		query.id = $.trim($("#deal_id").val());
+		query.bid_money = $.trim($("#pay_inmoney").val());
+		query.buy_number = $.trim($("#buy_number").val());
+		query.bid_paypassword = $.trim($("#pay_inmoney_password").val());
+	
+		
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.show_err);
+				if(data.response_code == 1){
+					window.location.href = '{wap_url a="index" r="uc_invest"}';
+				}
+			}
+		});
+	});
+</script>	
+<script type='text/javascript'>
+	function fav_result(o)
+	{
+		$(o).parent().html("已关注");
+	}
+	var is_submit_lock =false;
+	var bid_paypassword = "";
+	var bid_calculate = null;
+	jQuery(function(){
+		{if $data.deal.uloadtype eq 1}
+		$("a.c_number").click(function(){
+			var rel=$(this).attr("rel");
+			var obj = $(this);
+			var number = parseInt($("#pay_inmoney").val());
+			switch(rel){
+				case "-":
+					if(number-1 > 1){
+						$("#pay_inmoney").val(number-1);
+					}
+					else{
+						$("#pay_inmoney").val(1);
+					}
+					break;
+				case "+":
+					 var max_portion = {if $data.deal.max_portion gt 0}<?php echo $this->_var['deal']['max_portion'] - $this->_var['has_bid_portion'];  ?>{else}{$data.deal.need_portion}{/if};
+					if(number+1 <= max_portion){
+						$("#pay_inmoney").val(number+1);
+					}
+					else{
+						$("#pay_inmoney").val(max_portion);
+					}
+					break
+			}
+			loadSy();
+		});
+		{/if}
+		
+		
+		$("#J_bindpassword_rbtn").live("click",function(){
+			$.weeboxs.close("paypass-box");
+		});
+		
+		$("#pay_inmoney").keyup(function(){
+			loadSy();
+		});
+//		$("#pay_inmoney").onchange(function(){
+//			loadSy();
+//		});
+		
+		loadSy();
+		
+	});
+	
+	function loadSy(){
+		var ajaxurl = '{wap_url a="index" r="calc_bid"}';
+		var id =  $.trim($("#deal_id").val());
+		var money = $.trim($("#pay_inmoney").val());
+		var number = $.trim($("#buy_number").val());
+		var query = new Object();
+		//query.id = '{$data.deal.id}';
+		query.id =  $.trim($("#deal_id").val());
+		query.money = $.trim($("#pay_inmoney").val());
+		query.number = $.trim($("#buy_number").val());
+		
+		if(bid_calculate) bid_calculate.abort(); /*终止之前所有的未结束的ajax请求，然后重新开始新的请求  */
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				//alert(result.profit);
+				$(".J_u_money_sy").html(result.profit);
+				
+			}
+		});
+	}
+	
+	function to_load(){
+		if(is_submit_lock)
+		{
+			return false;
+		}
+		is_submit_lock = true;
+		var query = new Object();
+		query.bid_money=$.trim($("#pay_inmoney").val())
+		query.id="{$data.deal.id}";
+		query.bid_paypassword = FW_Password(bid_paypassword);
+		query.ajax=1;
+		
+		$.ajax({
+			url:'{wap_url x="index" r="calc_bid"}',
+			data:query,
+			type:"POST",
+			dataType:"json",
+			success:function(result){
+				if(result.status==1){
+					is_submit_lock = false;
+					$.showSuccess(result.info,function(){
+						window.location.reload();
+					});
+				}
+				else if(result.status==2){
+					window.location.href=result.jump;
+				}
+				else{
+					is_submit_lock = false;
+					$.showErr(result.info);
+				}
+			},
+			error:function(ajaxobj)
+			{
+			}
+		});
+	}
+</script>
+
+
+
+
+
+
+

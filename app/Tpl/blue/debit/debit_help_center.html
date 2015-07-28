@@ -1,0 +1,57 @@
+{include file="debit/debit_header.html"} 
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/debit_help_center.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<div style=" background:#ff3f44; height:2px;"></div>
+<div class="help_center">
+
+	<div class="blank20"></div>
+	<div class=" wrap clearfix">
+		<ul class="nav_list">
+			<li class="nav_0 y"><!--是否选择，区别在类y-->
+				理财人常见问题
+			<span></span>
+			</li>
+			<li class="nav_1 ">
+				借款人常见问题
+			<span></span> 
+			</li>
+			<li class="nav_2">
+				产品及计划介绍
+			<span></span>
+			</li>
+			<li class="nav_3">
+				账户充值、提现
+			<span></span>
+			</li>
+			<li class="nav_4">
+				其他
+			<span></span>
+			</li>
+		</ul>
+	</div>
+	<div class="blank10"></div>
+	<div class=" wrap clearfix">
+		<ul class="content_list">
+			<li class="content_0 " style=" display:block;">
+            	{$art_list[0].content}
+			</li>
+			<li class="content_1">
+				{$art_list[1].content}
+			</li>
+			<li class="content_2">
+				{$art_list[2].content}
+			</li>
+			<li class="content_3">
+				{$art_list[3].content}
+			</li>
+			<li class="content_4">
+				{$art_list[4].content}
+			</li>
+		</ul>
+	</div>
+	<div class="blank20"></div>
+	
+</div>
+{include file="debit/debit_footer.html"}

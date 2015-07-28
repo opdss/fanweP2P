@@ -1,0 +1,84 @@
+.goods_information_bor0{ color:#878787;border:1px solid @main_color; margin:0 10px; padding:10px; background:#fff; border-radius:5px; overflow:hidden;}
+.goods_information_bor0 .show_img img{ width:100%;}
+.goods_information_bor0 h5{ font-size:17px; line-height:20px; font-weight:600; padding:10px 0;}
+.Property li{  float:left; width:50%;}
+.Property{ overflow:hidden; line-height:30px; font-size:14px;}
+.Product_Details{border:1px solid @main_color; margin:0 10px; background:#fff; border-radius:5px; overflow:hidden; }
+.Product_Details .Details{ padding:10px;}
+.Product_Details h5{border-bottom:1px solid @main_color; color:@main_color; line-height:30px; font-weight:600; font-size:16px; padding-left:10px;}
+
+.new-but-block{ border:none; padding:5px 0 10px 0;}
+.new-but-block .but-block{ margin:0px;}
+
+.Property_choose li{ overflow:hidden; margin-bottom:15px; padding-left:70px;}
+.Property_choose li .name{ float:left; margin-left:-70px; line-height:30px;}
+.Property_choose li label{ display:block; float:left; line-height:30px; height:30px; padding:0 7px; border:1px solid #cbcbcb; border-radius:3px; margin-right:5px; margin-bottom:5px;}
+.Property_choose li .y{ border:1px solid @main_color;}
+.Property_choose li label input{ display:none; width:0px; height:0px;} 
+
+.nun_choose .Minus,.nun_choose .Plus{ height:30px; line-height:30px; width:30px; border:1px solid #cbcbcb; text-align:center; font-size:12px; color:#878787; display:block; background:#fff;}
+.nun_choose .nun{ width:60px; line-height:30px; border-bottom:1px solid #cbcbcb;border-top:1px solid #cbcbcb; text-align:center;  color:#878787;}
+.nun_choose .Minus{ border-radius:3px 0 0 3px;}
+.nun_choose .Plus{ border-radius:0px 3px 3px 0px;}
+
+
+
+.choose_address{ position:absolute; width:80%;  background:#fff; margin:0 10%; top:100px; border: 8px solid #3e4040; border-radius:5px; padding-bottom: 50px;}
+.choose_address h5{ background:#f3f5f7; line-height: 40px;font-size: 15px; border-bottom:1px solid #c1d1db;border-top:1px solid #c1d1db; padding: 0 10px; overflow: hidden; }
+.choose_address h5 .name{ float: left; color: @main_color;}
+.choose_address h5 .close{ float: right; display: block; width: 40px; height: 40px; text-align: center; font-size: 18px;}
+.choose_address .a_nav{ padding: 10px; overflow: hidden;}
+.choose_address .a_nav .y{ display: block; background: @main_color; float: left; line-height: 30px; height: 30px; padding: 0 10px; color: #fff; border-radius:3px; margin-right: 10px; cursor: pointer;  }
+.choose_address .a_nav .add{display: block;float: left; line-height: 30px; height: 30px; padding: 0 10px;  color: #666; background: #ddd;border-radius:3px;}
+
+.choose_address .address_list{ padding: 0 10px;}
+.choose_address .address_list label{ display: block; line-height:30px;}
+.choose_address .address_list label input{ width: 0px; height: 0px;}
+.choose_address .address_list .y{ color: @main_color;}
+.fa-toggle-on{display: none;}
+.choose_address .address_list .y .fa-toggle-off{ display: none;}
+.choose_address .address_list .y .fa-toggle-on{ display: inline-block;}
+.choose_address .sure_block{ width: 120px;  margin: 0 auto; overflow: hidden;}
+.choose_address .sure_block .sure_but button{
+	font-size: 15px;
+color: #fff;
+background: none;
+width: 100%;
+height: 100%;
+text-align: center;}
+
+.choose_address .sure_block .sure_but{
+	border-radius:5px;
+height: 30x;
+line-height: 30px;
+color: #fff;
+font-size: 15px;
+text-align: center;
+background: @main_color;
+width: 50px;
+float: left;
+}
+
+.choose_address .sure_block .Cancel_but{ float: right;border-radius:5px;
+height: 30x;
+line-height: 30px;
+color: #666;
+font-size: 15px;
+text-align: center;
+background: #ddd;
+width: 50px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

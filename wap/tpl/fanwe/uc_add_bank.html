@@ -1,0 +1,115 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_add_bank.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--添加提现银行列表-->
+<div class="uc_add_bank">
+			<div class="bank_bg">
+				<ul>
+					<li class="dl">
+						<span class="name">开户名</span>
+						<div class="info">
+							<input type="text" value="{$data.real_name}" readonly="true"/>
+						</div>
+						
+					</li>
+					<li class="dl">
+						<span class="name">账户类型</span>
+						<div class="info clearfix">
+							<span class="card_type f_l">借记卡</span>
+							<span class="no_type f_r">不支持信用卡</span>
+						</div>
+					</li>
+					<li class="dl">
+						<span class="name">选择银行</span>
+						<div class="info bank_list">
+							<div class="this_bank">查看银行列表<input type="hidden" value=""></div>
+							<div class="seclet_but"><i class="fa fa-chevron-down"></i></div>
+							
+							
+							<ul class="bank_seclet" style="display:none;">
+								{foreach from="$data.item" item="item"}
+									<li>{$item.name}<input id="bank_id" type="hidden" value="{$item.id}"  /></li>
+								{/foreach}
+							</ul>
+							
+							<!-- 
+							<select id="Jbank_bank_id" name="bank_id">
+					    		<option value="">请选择</option>
+								{foreach from="$data.item" item="item"}
+								<option value="{$item.id}" day="{$item.day}">{$item.name}</option>
+								{/foreach}
+								<option value="other">其他</option>
+							</select> -->
+							
+						</div>
+					</li>
+					<li class="dl">
+						<span class="name">开户行</span>
+						<div class="info">
+							<input id="bankzone" type="text" placeholder="输入开户行"/>
+						</div>
+					</li>
+					<li class="dl">
+						<span class="name">银行卡号</span>
+						<div class="info">
+							<input id="bankcard" type="text" placeholder="输入银行卡号"/>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="detail_foot">
+			    <div class="lookdetail"><button id="add_bank" class="but_sure">确认</button></div>
+			    <div class="I_Investment"><a href="{wap_url a="index" r="uc_bank"}"><button class="but_sure">取消</button></a></div>
+		    </div>
+	
+</div>
+<script>
+	$(".seclet_but").click(function(){
+		$(".bank_seclet").toggle();
+	});
+	$(".bank_seclet li").click(function(){
+		var value=$(this).html();
+		$(".this_bank").html(value);
+		$(this).parent().hide();
+		$(this).addClass("active").siblings().removeClass("active");
+	});
+	/*
+	act=uc_save_bank
+	email: 用户名或邮箱
+	pwd: 密码
+	
+	bank_id：银行ID
+	$("input[name='paypath']:checked").val();
+	bankzone：开户行网点
+	bankcard：银行卡号
+*/
+	 
+ 	$("#add_bank").click(function(){
+ 		var ajaxurl = '{wap_url a="index" r="uc_save_bank"}';
+ 		var query = new Object();
+ 		
+ 		query.bank_id = $("li.active input").val();// $.trim($("#bank_id").val());
+ 		query.bankzone = $.trim($("#bankzone").val());
+ 		query.bankcard = $.trim($("#bankcard").val());
+ 		query.post_type = "json";
+ 		$.ajax({
+ 			url:ajaxurl,
+ 			data:query,
+ 			type:"Post",
+ 			dataType:"json",
+ 			success:function(data){
+ 				alert(data.show_err);
+ 				window.location.href = '{wap_url a="index" r="uc_bank"}';
+ 			}
+ 		});
+ 	});
+		 	
+</script>
+{include file="./inc/footer.html"}
+
+
+
+
+

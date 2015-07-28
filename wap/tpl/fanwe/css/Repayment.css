@@ -1,0 +1,42 @@
+.r-b{ border-radius:5px; overflow:hidden; background:#fff; margin:0 10px;}
+.Repayment_block_0 h5{ background:@main_color;height: 30px;line-height: 30px;padding:0 10px;font-size:15px;color:#fff;}
+.Repayment_block_0 h5 a{ color:#fff;}
+
+.Repayment_block_0 table{ color:#878787; font-size:14px;  line-height:30px; width:100%;}
+.Repayment_block_0 table .name{ width:45%; text-align:center;}
+
+.Repayment_block_2{ font-size:13px; line-height:30px; color:#878787; }
+.Repayment_block_2 h5{ padding:10px 10px; line-height:20px;}
+.Repayment_block_2 table{ width:100%;}
+.Repayment_block_2 table .name{ width:45%; text-align:center;}
+
+.Repayment_block_1{ background:#fff; border-radius:5px; overflow:hidden; margin:0 10px; line-height:30px; font-size:13px; font-weight:600; color:#878787;}
+.Repayment_block_1 .left_h{ width:25%; background:@main_color; float:left;}
+.Repayment_block_1 .left_h ul li{ text-align:center; color:#fff; border-bottom:1px solid #fff;}
+.Repayment_block_1 .left_h ul li:last-child{ border-bottom:1px solid @main_color;}
+.Repayment_block_1 .left_h ul li:first-child{ border-top:1px solid @main_color;}
+.Repayment_block_1 .r_content_list{ width:75%; overflow:hidden; float:left; height: 311px; position: relative;}
+.Repayment_block_1 .r_content_list ul li{ width:33%; float:left; border-right:1px solid @main_color;border-bottom:1px solid @main_color; height:310px;}
+.Repayment_block_1 .r_content_list ul li dl dd{ text-align:center;  border-bottom:1px solid @main_color; font-size:12px; font-weight:100;}
+.Repayment_block_1 .r_content_list ul{ overflow:hidden; position: absolute;}
+.Repayment_block_1 .r_content_list ul li dl dd:first-child{border-top:1px solid @main_color;}
+
+.Repayment_block_1 .r_content_list .pre{ height: 30px; width: 30px; background: #a9a8af; position: absolute; top: 141px; left: 2px;border-radius:50px; line-height: 30px; color: #fff;text-align: center; font-size: 18px;opacity: .5;  }
+.Repayment_block_1 .r_content_list .next{ height: 30px; width: 30px; background: #a9a8af; position: absolute; top: 141px; right: 2px;border-radius:50px; line-height: 30px; color: #fff;text-align: center; font-size: 18px;opacity: .5;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

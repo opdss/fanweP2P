@@ -1,0 +1,24 @@
+{if $cate_tree}
+<div class="cate_tree_inc">
+	<div class="inc_main">
+		<ul class="cate_tree">
+		{foreach from=$cate_tree item=cate_item key=key}
+		
+		{if $cate_item.level eq 0}
+				{if $key neq 0}
+				</div>
+				{/if}
+			<div {if $cate_item.is_hide}style="display:none;"{/if}>
+		{/if}	
+			
+		<li style="text-indent:{$cate_item.level}em;" {if $cate_item.level eq 0} class="first" {else} class="subcate"{/if}>
+			<a href="{$cate_item.url}" title="{$cate_item.name}">{$cate_item.name}</a>
+		</li>
+		
+		{/foreach}
+		</div>
+		</ul>
+	</div>
+	<div class="inc_foot"></div>
+</div>
+{/if}

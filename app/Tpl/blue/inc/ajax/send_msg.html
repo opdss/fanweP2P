@@ -1,0 +1,79 @@
+<style type="text/css">
+	.sendmsg_box .field{ margin-top:0; margin-bottom:5px; font-size:14px; line-height:26px; }
+	.sendmsg_box .field label{line-height:26px; height:26px}
+</style>
+<form name="J_sendMsg_form" id="J_sendMsg_form" method="post">
+<div class="clearfix pt1 pl10 pr10 sendmsg_box">
+	<div class="pm_form">
+		<div class="field">
+			<label for="settings-username">收件人：</label>
+			{$u_info.user_name}
+			<span class="f-input-tip"></span>
+		</div>
+		<div class="field" >
+			<label>内容：</label>
+			<textarea style="width:360px; height:100px; border:#ccc solid 1px;" cols="10" name="content"></textarea>
+		</div>
+		<div class="field">		
+			<label for="act"></label>
+			<input type="hidden" name="user_name" value="{$u_info.user_name}">
+			<input type="button" value="发送" name="commit" id="settings-Msg-submit" class="formbutton">
+		</div>
+	</div>
+</div>
+</form>
+<script type="text/javascript" src="{$TMPL}/js/writepm.js"></script>
+<script type="text/javascript">
+	var is_sendMsg_lock = false;
+	$("#settings-Msg-submit").click(function(){
+		if(is_sendMsg_lock == true){
+			alert("正在发送中，请稍后！");
+			return false;
+		}
+				
+		var uname = $("#J_sendMsg_form input[name='user_name']").val();
+		var content = $("#J_sendMsg_form textarea[name='content']").val();
+		if($.trim(uname)=='')
+		{
+			$.showErr("请选择收件人");
+			return;
+		}
+		if($.trim(content)=='')
+		{
+			$.showErr("请输出消息内容");
+			return;
+		}
+		if(content.length>200)
+		{
+			$.showErr("消息长度不能超过200个字");
+			return;
+		}
+		is_sendMsg_lock = true;
+		/*验证收件人*/
+		var query = new Object();
+		query.user_name = uname;
+		var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=check_send";
+		$.ajax({ 
+			url: ajaxurl,
+			dataType: "json",
+			type: "POST",
+			data:query,
+			success: function(ajaxobj){
+				if(ajaxobj.status==0)
+				{
+					alert(LANG['FANS_ONLY']);
+				}
+				else
+				{
+					/*验证通过*/
+					send_pm(uname,content);
+				}
+			},
+			error:function(ajaxobj)
+			{
+				/*if(ajaxobj.responseText!='')
+				alert(ajaxobj.responseText);*/
+			}
+		});	
+	});
+</script>

@@ -1,0 +1,129 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<div class="main">
+<div class="main_title">{$deal_repay.user_id|get_user_name} 的《{$deal_repay.name}》 《第 {$deal_repay.l_key_index} 期》 账单</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">借款</td>
+		<td class="item_input">
+			{$deal_repay.name}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">期数</td>
+		<td class="item_input">
+			第 {$deal_repay.l_key_index} 期
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">借款人</td>
+		<td class="item_input">
+			{$deal_repay.user_id|get_user_name_real}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">还款金额</td>
+		<td class="item_input">
+			{$deal_repay.repay_money|format_price}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">逾期费用</td>
+		<td class="item_input">
+			{$deal_repay.impose_money|format_price}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">管理费</td>
+		<td class="item_input">
+			{$deal_repay.manage_money|format_price}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">逾期管理费</td>
+		<td class="item_input">
+			{$deal_repay.manage_impose_money|format_price}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">垫付总额</td>
+		<td class="item_input">
+			<span style="color:red">{$deal_repay.total_money|format_price}</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">垫付天数</td>
+		<td class="item_input">
+			<span style="color:red">{$deal_repay.fee_day}</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">垫付罚息</td>
+		<td class="item_input">
+			<span style="color:red">{$deal_repay.total_money_fee|format_price}</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">账单状态</td>
+		<td class="item_input">
+			{$deal_repay.site_bad_status}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">垫付收款状态</td>
+		<td class="item_input">
+			{$deal_repay.status_format}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">账单操作</td>
+		<td class="item_input" id="DealStatusBox">
+			<select name="status" >
+				<option value="0" selected="selected">不操作</option>
+				<option value="1" >垫付待收款</option>
+				<option value="2" >垫付已收款</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">操作备注:</td>
+		<td class="item_input"><textarea class="textbox" id="msgarea" name="memo" style="width:400px;height:80px" >{$deal_repay.memo}</textarea>
+		</td>
+	</tr>
+	<if condition="$vo['status'] eq 0">
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$deal_repay.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Deal" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="do_op_generation_repay_status" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	</if>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>

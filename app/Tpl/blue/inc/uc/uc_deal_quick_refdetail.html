@@ -1,0 +1,133 @@
+<script type="text/javascript">
+function closeWeeboxs(){
+	$.weeboxs.close();
+}
+</script>
+<div class="tabbox clearfix">
+	<div class="tab"><a href="{url x="index"r="uc_deal#refund" p="status=0"}">还款列表</a></div>
+	<div class="tab"><a href="{url x="index"r="uc_deal#refund" p="status=1"}">已还清借款</a></div>
+	<div class="tab cur"><a href="###">还款详情</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	<div class="bid_item clearfix">
+        <div class="bid_title">
+        	<span class="f_l">{$deal.name} 还款记录!</span>
+            <span class="r_c"><a href="javascript:void(0);" onclick="openWeeboxFrame('{url x="index" r="uc_deal#contract" p="id=$deal.id"}','电子协议',1024,668);">查看电子协议</a></span>
+        </div>
+		<div class="blank0"></div>
+        <div class="bid_detail">
+            <div class="info">
+            	 借款金额：
+                <span class="f_red">{$deal.borrow_amount_format}</span>
+            </div>
+             <div class="info">
+            	成交服务费：
+                <span class="f_red"><?php echo format_price($this->_var['deal']['borrow_amount']*$this->_var['deal']['services_fee']*0.01) ;?></span>
+            </div>
+            <div class="info">
+            	年利率：
+                <span class="f_red">{function name="number_format" v=$deal.rate f=2}%</span>
+            </div>
+            <div class="info">
+            	期限：
+                <span class="f_red">{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</span>
+            </div>
+            <div class="info">
+            	已还本息：
+                <span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.repay_money f=2}</span>
+            </div>
+			<div class="info">
+				管理费：
+				<span class="f_red">￥{function name="number_format" v=$manage_fee f=2}</span>
+			</div>
+			{if $impose_money neq 0}
+			<div class="info">
+				逾期/违约：<span class="f_red">￥{function name="number_format" v=$impose_money f=2}</span>
+			</div>
+			{/if}
+			{if $manage_impose_fee neq 0}
+			<div class="info">
+				<span title="逾期/违约管理费">逾期/违约[管]</span>：<span class="f_red">￥{function name="number_format" v=$manage_impose_fee f=2}</span>
+			</div>
+			{/if}
+			<div class="info">
+            	还款方式：
+                <span class="f_red">{function name="loantypename" v="$deal.loantype"}</span>
+            </div>
+        </div>
+    </div>
+	
+	<div class="pt20 pb10 b">
+                还款记录
+   	</div>
+	<div class="clearfix">
+		<table class="data_table" id="refundTab" cellspacing="1">
+            <tr>
+                <th width="12%">还款日</th>
+                <th width="12%">实际还款日</th>
+                <th>已还本息</th>
+                <th width="12%">借款管理费</th>
+                <th width="13%">逾期/违约金</th>
+				<th width="16%">逾期/违约管理费</th>
+                <th width="10%">状态</th>
+				<th width="6%">明细</th>
+            </tr>
+			<?php $idx=0;?>
+			{foreach from=$loan_list item=loan key=key name="loans"}
+          	<tr>
+                <td>
+                	{$loan.repay_date}
+				</td>
+                <td>{$loan.true_repay_date}</td>
+                <td>{$loan.repay_money_format}</td>
+                <td>{$loan.manage_money_format}</td>
+                <td>{$loan.impose_money_format}</td>
+				<td>{$loan.manage_impose_money_format}</td>
+                <td class="f_blue">
+					{$loan.status_format}
+				</td>
+				<td>
+					<a href="javascript:viewLoanItem('.Text-{$key}',{$deal.id},{$loan.l_key});">查看</a>
+				</td>
+				
+            </tr>
+			<tr class="hide Text-{$key}">
+				<td colspan="8">
+					<div class="p10">
+					loading...
+					</div>
+				</td>
+			</tr>
+			{/foreach}
+        </table>
+		
+		<table class="refundTab">
+	        <tr>
+	            <td colspan="8">
+	                <div class="f16 b tl" style=" display: block;line-height: 200%;height: 50px;">
+	                    <div class="blank10"></div>
+						<span class="f_l" style="padding: 0px;display: block;">
+						{if $inrepay_info}
+						因在<span class="f_red">{function name="to_date" v=$inrepay_info.true_repay_time f="Y-m-d"}</span>提前还款<span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$inrepay_info.repay_money f=2}</span>，故计算方式改变。
+						<div class="blank1"></div>
+						{/if}
+						管理费：<span class="f_red">￥{function name="number_format" v=$manage_fee f=2}</span>
+						<div class="blank1"></div>
+						
+						{if $impose_money neq 0}
+						逾期/违约金：<span class="f_red">￥{function name="number_format" v=$impose_money f=2}</span>
+						<div class="blank1"></div>
+						{/if}
+						{if $manage_impose_fee neq 0}
+						逾期/违约管理费：<span class="f_red">￥{function name="number_format" v=$manage_impose_fee f=2}</span>
+						<div class="blank1"></div>
+						{/if }
+						本息还款：<span class="f_red">￥{function name="number_format" v=$repay_money f=2}</span>
+						</span>
+	                </div>
+	            </td>
+	        </tr>
+	    </table>
+		
+	</div>
+</div>

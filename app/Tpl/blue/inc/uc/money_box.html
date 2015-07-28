@@ -1,0 +1,12 @@
+<div class="money_box">			
+	{$LANG.YOU_LEVEL_IS} {$user_data.user_level} {if $user_data.discount neq 10}{$LANG.DISCOUNT}：{$user_data.discount}{$LANG.DISCOUNT_OFF}{/if}
+	{if $user_data.point_level}[{$user_data.point_level}]{/if}
+	&nbsp;&nbsp;						
+	<?PHP echo sprintf($GLOBALS['lang']['INCHARGE_TO_SITE'],app_conf("SHOP_TITLE"));?>
+	<a href="{url x="shop" r="uc_money#incharge"}">» {$LANG.UC_MONEY_INCHARGE}</a>							
+	<div class="blank"></div>							
+	<h3 class="credit-title">{$LANG.YOUR_TOTAL_MONEY} <strong class="red">{function name="format_price" value=$user_info.money}</strong>
+	，{$LANG.YOUR_TOTAL_SCORE}： <strong class="red">{function name="format_score" value=$user_info.score}</strong>
+	，当前经验值： <strong class="red">{$user_info.point}</strong>
+	</h3>	
+</div>				

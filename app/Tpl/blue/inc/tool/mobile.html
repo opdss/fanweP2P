@@ -1,0 +1,104 @@
+<div class="list">
+	<div class="list_title clearfix">
+		<div class="cur"><a href="###">{$LANG.T_CHECK_MOBILE}</a></div>
+	</div>
+	<div class="list_cont clearfix">
+		<div class="bdd p10" >
+	        <div class="f16 b pt5 pb5 f_blue" >
+			{$LANG.T_CHECK_MOBILE}
+	        </div>
+	        <div class="f_dgray">
+	        	在下面的输入框输入你要查询的手机号码，点查询就会显示该手机号码所在地区。 
+	        </div>
+	    </div>
+		<div class="blank10"></div>
+		<div class="bdd">
+			<div class="gray_title clearfix">
+				<div class="f_l f_dgray b">查询</div>
+			</div>
+			<div class="clearfix pt5 pb5 pl10 pr10">
+				<form action="http://guishu.showji.com/search.htm" method="GET" name="J_check_mobile_form" id="J_check_mobile_form" target="_blank">
+				<div class="p10">
+	                <div class="clearfix">
+	                    <div class="f_l">
+	                    	手机号码：<input type="text" id="mobile" name="m" class="f-input" style="width:145px">
+	                    </div>
+						<span style="color: red" class="lh26" id="T_error"></span>
+	                </div>
+	                <div class="clearfix">
+	                    <div style="padding:10px 0 0 120px">
+	                        <button class="sub_btn" id="J_saveSettingBnt" type="button">
+	                        	查询
+	                        </button>
+	                    </div>
+	                </div>
+	            </div>
+			</div>
+		</div>
+		<div id="J_check_Result" class="hide">
+			<div class="blank10"></div>
+			<div class="bdd">
+				<div class="gray_title clearfix">
+					<div class="f_dgray b">结果</div>
+				</div>
+				<div class="clearfix pt5 pb5 pl10 pr10">
+					<div class="clearfix p10 lh24">
+	                    <p>
+	                       	 归属地：<span id="txtProvince"></span>
+	                    </p>
+	                    <p>
+	                    	卡类型：<span id="txtCard"></span>
+	                    </p>
+	                    <p>
+	                    	区号：<span id="txtAreaCode"></span>
+	                    </p>
+	                    <p>
+	                    	 邮编：<span id="txtPostCode"></span>
+	                    </p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	jQuery(function(){
+		$("#J_saveSettingBnt").click(function(){
+			$("#T_error").html("");
+			$("#J_check_Result").addClass("hide");
+			if($.trim($("#J_check_mobile_form #mobile").val())==""){
+				$("#T_error").html("请输入手机号码。");
+				return false;
+			}
+			if(!$.checkMobilePhone($("#J_check_mobile_form #mobile").val())){
+				$("#T_error").html("您输入的手机号码格式有误，请重新输入。");
+				return false;
+			}
+			$("#J_check_mobile_form").submit();
+			/*var query = new Object();
+			query.ctl = "tool";
+			query.act = "ajax_mobile";
+			query.mobile = $("#J_check_mobile_form #mobile").val();
+			$.ajax({
+				url : APP_ROOT + "/index.php",
+				data:query,
+				type:"post",
+				dataType:"json",
+				cache:true,
+				success:function(result){
+					if(result.QueryResult=="True"){
+						$("#J_check_Result").removeClass("hide");
+						$("#txtProvince").html(result.Province + result.City);
+						$("#txtCard").html(result.Corp + result.Card);
+						$("#txtAreaCode").html(result.AreaCode);
+						$("#txtPostCode").html(result.PostCode);
+					}
+					else{
+						$("#T_error").html("您输入的手机号码格式有误，请重新输入。");
+					}
+				}
+			});*/
+		});
+	});
+</script>

@@ -1,0 +1,63 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<script type="text/javascript">
+	function check_incharge_form()
+	{
+		if($("input[name='rel_user_id']").val()=='')
+		{
+			alert("请填写关联用户名");
+			return false;
+		}
+		return true;
+	}
+</script>
+<div class="main">
+<div class="main_title">关联用户 </div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data" onsubmit="return check_incharge_form();">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">关联用户:</td>
+		<td class="item_input">{$list['user_name']}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">关联推广人用户名:</td>
+		<td class="item_input"><input type="text" class="textbox require J_autoUserName" name="rel_user_name" value="{$list['rel_user_name']}"/>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">返利:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="referral_rate" size="5" value="{$list['referral_rate']}"/> %
+		</td>
+	</tr>
+
+	<tr>
+		<td class="item_title">邀请备注:</td>
+		<td class="item_input"><input type="text" class="textbox" name="referer_memo" style="width:400px;" value="{$list['referer_memo']}"/>
+		</td>
+	</tr> 
+
+	
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$list.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="CreateRelevance" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>

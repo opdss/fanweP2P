@@ -1,0 +1,112 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+
+<php>
+	function get_user_group($group_id)
+	{
+		$group_name = M("UserGroup")->where("id=".$group_id)->getField("name");
+		if($group_name)
+		{
+			return $group_name;
+		}
+		else
+		{
+			return l("NO_GROUP");
+		}
+	}
+	function get_user_level($id)
+	{
+		$level_name = M("UserLevel")->where("id=".$id)->getField("name");
+		if($level_name)
+		{
+			return $level_name;
+		}
+		else
+		{
+			return "<span style='color:red'>无</span>";
+		}
+	}
+	function get_referrals_name($user_id)
+	{
+		$user_name = M("User")->where("id=".$user_id)->getField("user_name");
+		if($user_name)
+		return $user_name;
+		else
+			return '无';
+	}
+	function f_to_date($date){
+		return to_date($date,"Y-m-d H:i");
+	}
+
+	
+	function ips_status($ips_acct_no){
+		if($ips_acct_no==""){
+			return "未同步";
+		}
+		else{
+			return "已同步";
+		}
+	}
+	function user_type_status($type){
+		if($type==1){
+			return "企业";
+		}
+		else{
+			return "普通";
+		}
+	}
+	function user_company($id,$user){
+		if($user['user_type']==1){
+			return "<a href='javascript:user_company(".$id.");'>公司</a>&nbsp;";
+		}
+	}
+</php>
+<div class="main">
+<div class="main_title">会员分配</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		<div class="blank5"></div>
+		会员名称：<input type="text" class="textbox" name="name" value="{:trim($_REQUEST['name'])}" />
+		所属管理员：
+		<select name="adm_names">
+			<option value="-2" <if condition="intval($_REQUEST['adm_names']) eq -2">selected="selected"</if>>未分配</option>
+			<option value="-1" <if condition="intval($_REQUEST['adm_names']) eq -1">selected="selected"</if>>已分配</option>
+			<foreach name="admin_cate" item="item">
+				<option value="{$item.id}">{$item.adm_name}</option>
+			</foreach>
+		</select>	
+		
+		所属客服：
+		<select name="cnames">
+			<option value="-2" <if condition="intval($_REQUEST['cnames']) eq -2">selected="selected"</if>>未分配</option>
+			<option value="-1" <if condition="intval($_REQUEST['cnames']) eq -1">selected="selected"</if>>已分配</option>
+			<foreach name="customer_cate" item="item">
+				<option value="{$item.id}">{$item.name}</option>
+			</foreach>
+		</select>
+		
+		
+		
+		
+		<input type="hidden" value="MyCustomer" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable"
+	style="dataTable"
+	name="customer"
+	action="true"
+	datasource="list"
+	show="id:{%ID}|50px,user_name:{%USER_NAME}:edit,email:{%USER_EMAIL},mobile:{%USER_MOBILE},adm_name:所属管理员,cname:所属客服" 
+	actionlist="edit:分配"
+	actionwidth="100px"/>
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

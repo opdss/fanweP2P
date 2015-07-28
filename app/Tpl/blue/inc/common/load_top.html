@@ -1,0 +1,21 @@
+<!--{if $MODULE_NAME <> 'user' && $MODULE_NAME <> 'manageagency' && $MODULE_NAME <> 'authorized' && $MODULE_NAME <> 'agency_money'}-->
+<div class="constr">
+	<div class="wrap">
+		{if app_conf("APPLE_DOWLOAD_URL") || app_conf("ANDROID_DOWLOAD_URL")}
+		<div class="app_down f_l" id="J_APP_DOWN">
+			<a href="javascript:void(0);"><i class="iconfont">&#xe613;</i>下载移动客户端</a>
+			<div class="grcode_box ps hide">
+				<img src="{function name="gen_qrcode" v=$MOBILE_DOWN_PATH s=8}"  />
+			</div>
+		</div>
+		{/if}
+		<div class="f_r lh30">
+			<div id="user_head_tip" class="pr f_r">
+				{insert name="load_user_tip"}
+				<span class="line"></span>
+				<span class="li"><a href="{url x="index" r="helpcenter"}">帮助中心</a></span>
+			</div>
+		</div>		
+	</div>
+</div>
+<!--{/if}-->

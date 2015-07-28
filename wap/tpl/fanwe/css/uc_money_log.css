@@ -1,0 +1,52 @@
+.uc_money_log{
+	background:@box_color;
+}
+
+.uc_money_log_list{
+	border-bottom:1px solid @border_color;
+	padding:10px 10px;
+}
+
+.balance{
+	line-height:20px;
+	max-width:49%;
+	text-align:right;
+}
+.balance_son{
+	padding-right:10px;
+}
+.balance span{
+	font-weight:700;
+}
+.freeze{
+	border-left:1px solid @border_color;
+	
+	max-width:49%;
+}
+.freeze_son{
+	padding-left:10px;
+}
+.freeze span{
+	color:@font_black;
+	font-weight:700;
+}
+.freeze p{
+	color:@font_main;
+}
+.balance p{
+	color:@font_main;
+}
+.type h4{
+	font-size:15px;
+	color:@font_black;
+	font-weight:700;
+}
+.type p{
+	color:@font_main;
+}
+.type{
+	max-width:46%;
+}
+.money{
+	width:54%;
+}

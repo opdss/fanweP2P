@@ -1,0 +1,28 @@
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index" r="authorized#commission"}">我的返佣</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	<div class="blank"></div>
+	 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+            <tr border="0">
+				<th width="10%">编号</th>
+				<th width="10%">操作金额</th>
+                <th width="10%">余额</th>
+                <th>备注</th>
+				<th width="20%">操作时间</th>
+			</tr>
+			{foreach from=$list item=invite key=key name="invites"}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.invites.last}style="border-bottom:0"{/if}>
+				<td>{$invite.id}</td>
+				<td>{$invite.money}</td>
+                <td>{$invite.account_money}</td>
+                <td>{$invite.memo}</td>
+				<td>{function name="to_date" value=$invite.create_time}</td>
+			</tr>
+			{/foreach}
+	</table>
+	
+	<div class="blank"></div>
+	<div class="pages">{$pages}</div>
+	<div class="blank"></div>
+</div>

@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>电子合同</title>
+</head>
+
+<body style="padding:8px;margin:0">
+	<div style="font-size:12px">
+	    <div style="background-color: #FFFFFF; border:#dfe6ea solid 1px; padding: 5px 12px;">
+	    <a href="{url x="index" r="uc_deal#dcontract" p="id=$deal.id"}" >下载借款协议</a>
+			{$contract}
+			<div style="text-align: center">
+	            <input type="button" value="关 闭" align="center" onclick="callPClose()">
+	        </div>
+	    </div>
+	    <div class="bt">
+	    </div>
+	</div>
+	<script type="text/javascript">
+		function callPClose(){
+			window.parent.closeWeeboxs();
+		}
+	</script>
+</body>
+</html>

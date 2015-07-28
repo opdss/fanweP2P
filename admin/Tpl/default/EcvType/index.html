@@ -1,0 +1,58 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+	function get_send_types($type)
+	{
+		if($type==0)
+		{
+			return l("ADMIN_SEND");
+		}
+		else
+		{
+			return l("SCORE_EXCHANGE");
+		}
+	}
+	function get_send($id)
+	{
+		if(M("EcvType")->where("id=".$id)->getField("send_type")==0)
+		{
+			return "<a href='".u("EcvType/send",array("id"=>$id))."'>".l("SEND_VOUCHER")."</a>";
+		}
+	}
+</PHP>
+<script type="text/javascript">
+	function view(id)
+	{
+		location.href = ROOT+"?"+VAR_MODULE+"=Ecv&"+VAR_ACTION+"=index&ecv_type_id="+id+"&";
+	}
+</script>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+	<input type="button" class="button" value="{%FOREVERDEL}" onclick="foreverdel();" />
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="article" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,name:{%VOUCHER_NAME}
+	,money|format_price:{%VOUCHER_MONEY}
+	,use_limit:{%VOUCHER_LIMIT}
+	,begin_time|to_date:{%VOUCHER_BEGIN_TIME}
+	,end_time|to_date:{%VOUCHER_END_TIME}
+	,gen_count:{%VOUCHER_GEN_COUNT}
+	,send_type|get_send_types:{%VOUCHER_SEND_TYPE}" 
+	actionlist="edit:{%EDIT},foreverdel:{%FOREVERDEL},id|get_send,view:{%VIEW}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,129 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+
+<script type="text/javascript">
+jQuery(function(){
+	$("#time_normal").datepicker({showAnim:'fadeIn'});
+	
+	$("#qiehuan").click(function(){
+		if ($(".sub_nav .cc").hasClass('hide')) {
+			$(".sub_nav .cc").removeClass("hide")
+			$(".sub_nav .bb").addClass("hide");
+     	 }else{
+     		$(".sub_nav .cc").addClass("hide");
+     		
+     		$(".sub_nav .bb").removeClass("hide")
+     	 };
+     	 
+     	 if($.trim($(this).html()) == "切换简单查询" )
+   		 {
+		 	$("#time_status").val(0);
+   			$(this).html("切换高级查询");
+   		 }
+     	 else
+  		 {
+		 	$("#time_status").val(1);
+  			$(this).html("切换简单查询");
+  		 }
+     	
+	});
+	
+	$("#search-form").submit(function(){
+		var val= $("#time_normal").val();
+		$("#time_format").val(val.replace(/-/g,""));
+	});
+	
+	
+});
+</script>
+
+<div class="tabbox clearfix">
+	<div class="tab {if $status eq 0}cur{/if}"><a href="{url x="index"r="uc_score_exchange#record" p="status=0"}">积分详情</a></div>
+	<div class="tab {if $status eq 1}cur{/if}"><a href="{url x="index"r="uc_score_exchange#index" p="status=1"}">积分兑换</a></div>
+</div>
+
+<div class="uc_box bdd bt0 clearfix">
+	<form method="get" action="{$APP_ROOT}" id="search-form" name="search">  		
+		<div class="sub_nav">
+			<div class="aa f_l">
+				<div class="f_l">查询类型：</div>
+				<select name="type_title" class="ui-select">
+				{foreach from=$title_array item="item" key=key }
+					<option {if $type_title eq $key}selected="selected"{/if} value="{$key}">
+						{$item}
+					</option>
+				{/foreach}			
+				</select>
+			</div>
+			<div class="cc pl10 {if $time_status eq 1}hide {/if} f_l">
+				<div class="f_l">查询时间：</div>
+	            <select  name="times" class="ui-select">
+	            {foreach from=$times_array item="item" key=key }
+	              <option  {if $times eq $key}selected="selected"{/if} value="{$key}">{$item}</option>
+	           	{/foreach}	
+	            </select>
+	         </div>
+			<div class="bb pl10 {if $time_status eq 0}hide {/if} f_l">
+				查询时间：<input class="f-input ui-textbox w100" id="time_normal" type="text" value="{$time_normal}">
+				<input type="hidden" name="time" id="time_format" value="{$time}">
+				
+			</div>
+			<input type="hidden" name="ctl" value="{$MODULE_NAME}" />
+			<input type="hidden" name="act" value="{$ACTION_NAME}" />
+			<input type="hidden" name="t" value="{$t}" />
+			<input type="hidden" name="time_status" id="time_status" value="{$time_status}" />
+			<input type="submit" class="ml10 true_btn select_btn" value="搜索" />
+				
+			<div class="dd  f_r">
+	          <a id="qiehuan" href="javascript:void(0);" color: #2ea7e0; text-decoration: none;">切换{if $time_status eq 0}高级{else}简单{/if}查询</a>
+	        </div>
+		</div>
+		
+	</form>
+		
+	<div class="blank0"></div>
+
+	{if $list}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+		<tbody>
+			<tr border="0">
+				<th style="width:18%">时间</th>
+				<th style="width:17%">操作类型</th>
+				<th style="width:14%">操作积分</th>
+				<th style="width:14%">总积分</th>
+				<th>备注</th> 
+			</tr>
+			{foreach from=$list item=log key=key name="log"}
+				 <tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.log.last}style="border-bottom:0"{/if}>
+					<td>{function name="to_date" v=$log.create_time}</td>
+					<td>{$log.title}</td>
+					<td>{if $log.score gt 0}<span class="f_gr">+{$log.score}</span>{elseif $log.score eq 0}{$log.score}{else}<span class="f_red">{$log.score}</span>{/if}</td>
+					<td> {$log.account_score}</td>
+					<td>{$log.memo}</td>
+				</tr>
+			{/foreach}
+		</tbody>
+	</table>
+
+	<div class="pages">{$pages}</div>
+	{else}	
+	<div align="center" style="padding:20px 0">暂无记录</div>
+	{/if}
+	<div class="blank"></div>
+</div>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	

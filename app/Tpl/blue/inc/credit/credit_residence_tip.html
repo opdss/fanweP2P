@@ -1,0 +1,61 @@
+<div class="dot"></div>
+<div class="blank5"></div>
+<div class="clearfix credit_upload">
+	<script type="text/javascript" src="{$APP_ROOT}/system/region.js"></script>
+	<div class="field">										
+		<label for="settings-region"><span class="red">*</span>目前所在省市</label>
+		<select name="province_id" class="f_l ui-select w90 select-w90 mr5" height="300">
+			<option value="0">={$LANG.SELECT_PLEASE}=</option>
+			{foreach from=$region_lv2 item=lv2}
+			<option {if $lv2.selected eq 1}selected="selected"{/if} value="{$lv2.id}">{$lv2.name}</option>
+			{/foreach}
+		</select>
+								
+		<select name="city_id" class="f_l ui-select w120 select-w120" height="300">
+			<option value="0">={$LANG.SELECT_PLEASE}=</option>		
+			{foreach from=$region_lv3 item=lv3}
+			<option {if $lv3.selected eq 1}selected="selected"{/if} value="{$lv3.id}">{$lv3.name}</option>
+			{/foreach}
+		</select>
+		
+	</div>
+	<div class="blank"></div>
+	
+	<div class="field address">
+		<label for="settings-address"><span class="red">*</span>{$LANG.ADDRESS}</label>
+		<input value="{$user_info.address}" class="f-input ui-textbox" name="address" id="settings-address">
+	</div>
+	<div class="blank"></div>
+	<div class="field phone">
+		<?php $phone_s = explode("-",$this->_var['user_info']['phone']);?>
+		<label for="settings-phone">{$LANG.PHONE}</label>
+		<input type="text" value="<?php echo $phone_s[0];?>" class="f-input f_l ui-textbox w60" id="frphone" onkeyup="setPhone();" onblur="setPhone();" >
+		<span class="f_l">&nbsp;-&nbsp;</span>
+		<input type="text" value="<?php echo $phone_s[1];?>" class="f-input f_l ui-textbox" id="numphone" onkeyup="setPhone();" onblur="setPhone();" >
+		<input type="hidden" value="{$user_info.phone}" name="phone" id="phone">
+	</div>
+	<div class="blank"></div>
+	<div class="field postcode">
+        <label for="settings-postcode"><span class="f_red b">*</span> 居住地邮编：</label>
+        <span><input name="postcode" class="f-input ui-textbox w180" value="{$user_info.postcode}" id="settings-postcode"></span>
+    </div>
+</div>
+<div class="blank0"></div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("select[name='province_id']").bind("change",function(){
+			load_city($("select[name='province_id']"),$("select[name='city_id']"));
+		});
+	});
+	function setPhone(){
+		var frphone = $.trim($("#frphone").val());
+		var numphone = $.trim($("#numphone").val());
+		if(frphone!=""&&numphone!=""){
+			$("#phone").val(frphone+"-"+numphone);
+		}
+		else{
+			$("#phone").val("");
+		}
+	}
+	
+</script>

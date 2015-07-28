@@ -1,0 +1,93 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<div class="main">
+<div class="main_title">{$vo.user_id|get_user_name}的信用额度申请</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">申请额度</td>
+		<td class="item_input">
+			{$vo.money}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">推荐人</td>
+		<td class="item_input">
+			{$vo.referraler}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">详细说明</td>
+		<td class="item_input">
+			{$vo.memo|nl2br}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">其他说明</td>
+		<td class="item_input">
+			{$vo.other_memo|nl2br}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">处理结果</td>
+		<td class="item_input" id="QuotaStatusBox">
+			<select name="status" <if condition="$vo['status'] gt 0">disabled="disabled"</if>>
+				<option value="0" <if condition="$vo['status'] eq 0">selected="selected"</if>>{%QUOTA_STATUS_0}</option>
+				<option value="1" <if condition="$vo['status'] eq 1">selected="selected"</if>>{%QUOTA_STATUS_1}</option>
+				<option value="2" <if condition="$vo['status'] eq 2">selected="selected"</if>>{%QUOTA_STATUS_2}</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">原因:</td>
+		<td class="item_input"><textarea id="msgarea" disabled="true" class="textbox" name="msg" style="width:400px;height:80px" >{$vo.bad_msg}</textarea>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">操作备注</td>
+		<td class="item_input">
+			<textarea id="note" name="note"  class="textbox" style="width:400px;height:80px" >{$vo.note}</textarea>
+		</td>
+	</tr>
+	
+	<if condition="$vo['status'] eq 0">
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="QuotaSubmit" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	</if>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#QuotaStatusBox select").change(function(){
+			if($(this).val()=="2"){
+				$("#msgarea").attr("disabled",false);
+			}
+			else{
+				$("#msgarea").attr("disabled",true);
+			}
+		});
+	});
+</script>

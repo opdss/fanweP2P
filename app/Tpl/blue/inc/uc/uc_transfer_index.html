@@ -1,0 +1,255 @@
+<script type="text/javascript">
+function closeWeeboxs(){
+	$.weeboxs.close();
+}
+</script>
+<div class="uc_box bdd bt0">
+	<table width="100%" align="center" border="0" cellspacing="1px" class="funds">
+		<thead>
+		  <tr>
+		    <td></td>
+		    <td>债权统计</td>
+		    <td>待收本金</td>
+		    <td>待收利息</td>
+		    <td>已收本息</td>
+		  </tr>
+		</thead>
+		<tbody>
+		 <tr>
+		    <td>可以转让</td>
+		    <td><a href="{url x="index" r="uc_transfer#index" p="status=1"}" id="can_change">{$statics.need_transfer}</a>笔</td>
+		    <td>{function name="format_price" v="$statics.need_transfer_benjin"}</td>
+		    <td>{function name="format_price" v="$statics.need_transfer_lixi"}</td>
+		    <td>-</td>
+		 </tr>
+		 <tr>
+		    <td>正在转让</td>
+		    <td><a href="{url x="index" r="uc_transfer#index" p="status=2"}" id="now_change">{$statics.in_transfer}</a>笔</td>
+		    <td>{function name="format_price" v="$statics.in_transfer_benjin"}</td>
+		    <td>{function name="format_price" v="$statics.in_transfer_lixi"}</td>
+		    <td>-</td>
+		 </tr>
+		 <tr>
+		    <td>回收中</td>
+		    <td><a href="{url x="index" r="uc_transfer#buys" p="status=1"}" id="recover_change">{$statics.inback_transfer}</a>笔</td>
+		     <td>{function name="format_price" v="$statics.inback_transfer_benjin"}</td>
+		    <td>{function name="format_price" v="$statics.inback_transfer_lixi"}</td>
+		    <td>-</td>
+		 </tr>
+		 <tr>
+		    <td>回收完</td>
+		    <td><a href="{url x="index" r="uc_transfer#buys" p="status=2"}" id="recover_yes_change">{$statics.hasback_transfer}</a>笔</td>
+		    <td>-</td>
+		    <td>-</td>
+		    <td>{function name="format_price" v="$statics.hasback_transfer_all"}</td>
+		 </tr>
+		</tbody>
+	</table>
+</div>
+<div class="blank"></div>
+<div class="tabbox ">
+	<div class="tab {if $ACTION_NAME eq 'index'}cur{/if}"><a href="{url x="index" r="uc_transfer"}">{$page_title}</a></div>
+	<div class="tab {if $ACTION_NAME eq 'buys'}cur{/if}"><a href="{url x="index" r="uc_transfer#buys"}">购买记录</a></div>
+	<div class="f_r">
+		<form id="J_transfer_form" action="{if $ACTION_NAME eq 'buys'}{url r="index" x="uc_transfer#buys"}{else}{url r="index" x="uc_transfer"}{/if}"  method="POST" style="_margin-top:15px;">
+			
+			<select name="status" onchange="$('#J_transfer_form').submit();" class="ui-select w100 select-w100 mt5 f_r">
+                <option value="0">全部</option>
+				{if $ACTION_NAME eq 'index'}
+                <option value="1" {if $status eq 1}selected="selected"{/if}>可转让</option>
+			    <option value="2" {if $status eq 2}selected="selected"{/if}>转让中</option>
+			    <option value="3" {if $status eq 3}selected="selected"{/if}>已转让</option>
+			    <option value="4" {if $status eq 4}selected="selected"{/if}>已撤销</option>
+				{else}
+                  <option value="1" {if $status eq 1}selected="selected"{/if}>回收中</option>
+				  <option value="2" {if $status eq 2}selected="selected"{/if}>已回收</option>
+				{/if}
+			</select>
+			<div class="f_r">状态：</div>
+		</form>
+	</div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	{if $list}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+		<tbody>
+			<tr border="0">
+				<th style="width:14%">转让时间-到期时间</th>
+				<th class="tl">项目</th>
+				<th style="width:10%">待还/总期数</th>
+				<th style="width:12%">待收本金</th>
+				<th style="width:12%">待收利息</th>
+				<th style="width:12%">转让价格</th>
+				<th style="width:10%">状态</th>
+				<th style="width:10%">操作</th>
+			</tr>
+			{foreach from=$list item="item" key=key}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+				<td class="lh20 pt5 pb5">
+					{if $ACTION_NAME eq 'buys'}
+					{$item.transfer_time_format}
+					<div>-</div>
+					{else}
+                	{if $item.tras_status neq ''}
+						{$item.tras_create_time_format}
+						<div>-</div>
+					{/if}
+				{/if}
+                {$item.final_repay_time_format}
+				</td>
+				<td class="tl">
+					<a href="{url x="index" r="deal" p="id=$item.id"}" title="{$item.name}">{function name="msubstr" v="$item.name" b=0 e=13}</a>
+				</td>
+				<td>
+					{$item.how_much_month}/{$item.repay_time}
+				</td>
+				<td>
+					{$item.left_benjin_format}
+				</td>
+				<td>
+					{$item.left_lixi_format}
+				</td>
+				<td>
+					{$item.transfer_amount_format}
+				</td>
+				<td>
+					{$item.tras_status_format}
+				</td>
+				<td class="lh28">
+					{if $ACTION_NAME eq 'index'}						
+	                    {if $item.tras_status eq ''}
+						<a href="javascript:void(0);" class="J_do_transfer true_btn btn_green select_btn f_white" dataid="{$item.dlid}">转让</a>
+						{elseif $item.tras_status eq 0}
+							{if $item.how_much_month eq 0}
+							还款完毕<br>无法转让
+							{else}
+							{if $item.next_repay_time +24*3600-1 - TIME_UTC lt 0}
+							逾期还款<br>
+							无法转让
+							{else}
+							<a href="javascript:void(0);" class="J_do_transfer true_btn btn_orange select_btn f_white" dataid="{$item.dlid}" datatid="{$item.dltid}">重转让</a>
+							{/if}
+							{/if}
+						{elseif $item.tras_status eq 1}
+						 {if $item.t_user_id gt 0}
+						 	<a href="{url x="index" r="transfer#detail" p="id=$item.dltid"}">查看详情</a><br>
+						<a href="javascript:void(0);" onclick="openWeeboxFrame('{url x="index" r="uc_transfer#contact" p="id=$item.dltid"}','转让协议',1024,668);">转让协议</a>
+						 {else}
+							 <a href="javascript:void(0);"  class="J_do_reback true_btn select_btn f_gray" dataid="{$item.dltid}">撤销</a>
+						 {/if}
+						{/if}
+					{else}
+						<a href="{url x="index" r="transfer#detail" p="id=$item.dltid"}">查看详情</a><br>
+						<a href="javascript:void(0);" onclick="openWeeboxFrame('{url x="index" r="uc_transfer#contact" p="id=$item.dltid"}','转让协议',1024,668);">转让协议</a>
+					{/if}
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="pages">{$pages}</div>
+	{else}	
+	<div align="center" style="padding:20px 0">暂无记录</div>
+	{/if}
+	<div class="blank"></div>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		
+		$(".J_do_transfer").click(function(){
+			var id=$(this).attr("dataid");
+			var tid=$(this).attr("datatid");
+			$.ajax({
+				url:'{url r="index" x="uc_transfer#to_transfer"}',
+				data:"&id="+id+"&tid="+tid,
+				dataType:"text",
+				success:function(result){
+					$.weeboxs.open(result, {boxid:"do-tras-box",contentType:'text',showButton:false, title:'转让债权',type:'wee',width:560,onopen:function(){
+						init_ui_textbox();
+					}});
+				},
+				error:function(){
+					$.showErr("请求数据失败");
+				}
+			});
+		});
+		
+		$("#JTransfer_From .reset_btn").live("click",function(){
+			$.weeboxs.close("do-tras-box");
+		});
+		
+		$("#JTransfer_From .sub_btn").live("click",function(){
+			if($.trim($("#JTransfer_From input[name='transfer_money']").val())==""){
+				$.showErr("请求输入转让金额",function(){
+					$("#JTransfer_From input[name='transfer_money']").focus();
+				});
+				return false;
+			}
+			
+			if(parseFloat($("#JTransfer_From input[name='transfer_money']").val()) > parseFloat($("#JTransfer_From input[name='transfer_all_money']").val())){
+				$.showErr("转让金额不得大于最大转让金额",function(){
+					$("#JTransfer_From input[name='transfer_money']").focus();
+				});
+				return false;
+			}
+			
+			if($.trim($("#JTransfer_From input[name='paypassword']").val())==""){
+				$.showErr("请求输入支付密码",function(){
+					$("#JTransfer_From input[name='paypassword']").focus();
+				});
+				return false;
+			}
+			var query = new Object();
+			query.transfer_all_money = $.trim($("#JTransfer_From input[name='transfer_all_money']").val());
+			query.dltid = $.trim($("#JTransfer_From input[name='dltid']").val());
+			query.dlid = $.trim($("#JTransfer_From input[name='dlid']").val());
+			query.transfer_money = $.trim($("#JTransfer_From input[name='transfer_money']").val());
+			query.paypassword = FW_Password($("#JTransfer_From input[name='paypassword']").val());
+			
+			$.ajax({
+				url:'{url r="index" x="uc_transfer#do_transfer"}',
+				data:query,
+				type:'post',
+				dataType:'json',
+				success:function(result){
+					if(result.status==1){
+						$.showSuccess("转让提交处理成功",function(){
+							window.location.reload();
+						});
+					}
+					else{
+						$.showErr(result.info);
+					}
+				},
+				error:function(){
+					$.showErr("请求数据失败");
+				}
+			});
+		});
+		
+		$(".J_do_reback").click(function(){
+			var dltid = $(this).attr("dataid");
+			$.showCfm("确认撤销吗？",function(){
+				$.ajax({
+					url:'{url r="index" x="uc_transfer#do_reback"}',
+					data:"&dltid="+dltid,
+					type:"post",
+					dataType:'json',
+					success:function(result){
+						if(result.status==1){
+							$.showSuccess("撤销成功");
+							window.location.reload();
+						}
+						else{
+							$.showErr(result.info);
+						}
+					},
+					error:function(){
+						$.showErr("请求数据失败");
+					}
+				});
+			});
+		});
+
+	});
+</script>

@@ -1,0 +1,60 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<php>
+	function get_medal_effect($effect)
+	{
+		return l("IS_EFFECT_".$effect);
+	}
+	function get_medal_install($install)
+	{
+		return l("IS_INSTALL_".$install);
+	}
+</php>
+<script type="text/javascript">
+	function uninstall(id)
+	{
+		if(confirm("{%CONFIRM_DELETE}"))
+		{
+			location.href = ROOT + "?m=Medal&a=uninstall&id="+id;
+		}
+	}
+</script>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+
+<table cellspacing="0" cellpadding="0" class="dataTable" id="dataTable">
+	<tbody>
+		<tr>
+			<td class="topTd" colspan="7">&nbsp; </td>
+			</tr>
+			<tr class="row">
+				<th>勋章名称</th>
+				<th>{%IS_EFFECT}</th>
+				<th>{%IS_INSTALL}</th>
+				<th>{%TAG_LANG_OPERATE}</th>
+				</tr>
+				<foreach name="medal_list" item="medal_item">
+				<tr class="row">
+					<td>{$medal_item.name}</td>
+					<td>{$medal_item.is_effect|get_medal_effect}</td>
+					<td>{$medal_item.installed|get_medal_install}</td>
+					
+					<td>
+						<if condition="$medal_item['installed'] eq 0">
+						<a href="{:u("Medal/install",array("class_name"=>$medal_item['class_name']))}">{%INSTALL}</a>
+						<else />
+						<a href="{:u("Medal/edit",array("id"=>$medal_item['id']))}">{%EDIT}</a>
+						<a href="javascript:uninstall({$medal_item.id});" >{%UNINSTALL}</a>
+						</if>
+					</td>
+				</tr>
+				</foreach>
+				<tr><td class="bottomTd" colspan="7"> &nbsp;</td></tr>
+			</tbody>
+		</table>
+
+
+</div>
+<include file="Public:footer" />

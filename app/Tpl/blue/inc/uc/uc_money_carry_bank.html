@@ -1,0 +1,321 @@
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index" value="uc_money#bank"}">银行卡列表</a></div>
+	<div class="tab ">
+		<a href="{url x="index" value="uc_money#bank"}">{$LANG.UC_CARRY}</a>
+	</div>
+	<div class="tab">
+		<a href="{url x="index" value="uc_money#carry_log"}">提现日志</a>
+	</div>
+</div>
+<div class="blank0"></div>
+<div class="uc_box  bdd bt0">
+	<div class="p10">
+		{if app_conf("OPEN_IPS") gt 0}
+		<div class="cf p15">
+			<label class="ui-radiobox" rel="common_carry_type"><input type="radio" name="carry_type" checked="checked" value="0" /> 本站资金提现</label>
+			<label class="ui-radiobox" rel="common_carry_type"><input type="radio" name="carry_type"  value="1"/> 第三方资金提现</label>
+		</div>
+		{/if}
+		<div class="cf" id="SITE_CARRY">
+			<div class="t_name item_group">银行卡信息：</div>
+			{foreach from=$bank_list item="item" name="bk"}
+			<div class="item_bank" {if $smarty.foreach.bk.iteration mod 3 eq 0}style="margin-right:0"{/if}>
+				<div class="tip" onclick="window.location.href='{url x="index" r="uc_money#carry" p="bid=$item.id"}'">
+		         <img src="{$item.icon}" alt="{$item.bank_name}" style="*margin-bottom:-4px;_margin-bottom:-6px;">
+				 <p>{function name="utf_substr" v=$item.real_name}</p>
+				 <p>尾号：{function name="msubstr" v=$item.bankcode s="-4" l="4" charset="utf-8" su=false}</p>
+				</div>
+				<div class="edit_card">
+					<a href="javascript:void(0);" class="a_link J_deal_bank" dataid="{$item.id}">删除此银行卡</a>
+				</div>
+			</div>
+			{/foreach}
+			{if $bank_list}
+			<a href="javascript:void(0);" class="a_link" id="add_bank" style="display:block;float:left">
+			<div class="item_bank add_bank">
+				<div class="tip">
+		         <img src="{$TMPL}/images/add.jpg" alt="添加银行卡" style="*margin-bottom:-4px;_margin-bottom:-6px;">
+				 <p>继续添加银行卡</p>
+				  <p>&nbsp;</p>
+				 </div>
+				 <div class="edit_card">
+					添加银行卡
+				 </div>
+			</div>
+			</a>
+			{else}
+			<a href="javascript:void(0);" class="a_link" id="add_bank" style="display:block;">
+			<div class="item_bank add_bank">
+				<div class="tip">
+		         <img src="{$TMPL}/images/add.jpg" alt="添加银行卡" style="*margin-bottom:-4px;_margin-bottom:-6px;">
+				 <p>您的提现银行卡尚未添加</p>
+				 <p>请先设置银行卡号</p>
+				</div>
+				 <div class="edit_card">
+					添加银行卡
+				 </div>
+			</div>
+			</a>
+			{/if}
+		</div>
+		{if app_conf("OPEN_IPS") gt 0}
+	   	<div class="cf hide p15 pr" id="IPS_CARRY">
+	    	 {if ($is_yee && $yee_bank ) || !$is_yee}
+			<form id="IPS_CARRY_FORM" name="IPS_CARRY_FORM">
+				<div class="field">
+	                <label>可用资金：</label>
+	                <span class="J_u_money_0 f_red"></span>
+					<input id="Jcarry_totalAmount" type="hidden" value="0" />
+	            </div>
+				<div class="blank10"></div>
+				<div class="field">
+	                <label><span class="f_red b">*</span> 提取金额：</label>
+	                <span><input type="text" autocomplete="off" name="amount" class="f-input ui-textbox w100" id="Jcarry_amount">&nbsp;&nbsp;元</span>
+	                &nbsp;
+					<span id="Jcarry_balance" class="f_red lh28"></span>
+	            </div>
+				<div class="blank10"></div>
+	            <div class="field">
+	                <label>提现费用：</label>
+	                <span id="Jcarry_fee">0.00 元</span>
+					{if $fee_config}
+					<img src="{$TMPL}/images/tips_wh.jpg" id="imgtips" class="pr" style="top:3px;left:15px;z-index:999; cursor:pointer;" onmouseover="tips(this,'第三方收取提现手续费:&lt;/br&gt;&lt;table width=\'100%\' class=\'tiptable\' cellspacing=\'1\' border=\'0\' &gt;&lt;tr style=\'background:#eff5fe;text-align:center\'&gt;{foreach from="$fee_config" item="fee"}&lt;td height=\'22\'&gt;{$fee.name}&lt;/td&gt;{/foreach}&lt;/tr&gt;&lt;tr class=\'bg\'&gt;{foreach from="$fee_config" item="fee"}&lt;td&gt;{$fee.fee_format}&lt;/td&gt;{/foreach}&lt;/tr&gt;&lt;/table&gt;',65,290)"><br>
+	            	{/if}
+				</div>
+				<div class="blank10"></div>
+	            <div class="field">
+	                <label>实付金额：</label>
+	                <span id="Jcarry_realAmount">0.00 元</span><br>
+	            </div>
+				<div class="blank10"></div>
+	            <div class="field">
+	                <label>提现后账户可用余额：</label>
+	                <span id="Jcarry_acount_balance">0.00 元</span>
+	                <br>
+	            </div>
+				<div class="f_red tc" style="font-size:14px;">警告：禁止信用卡套现、虚假交易等行为，一经确认，将终止该账户的使用。</div>
+				<div class="blank20"></div>
+				<div class="tc">
+					<input type="hidden" name="acount_balance" id="Jcarry_acount_balance_res" style="width:70px">
+		            <input type="submit" value="申请提现" class="sub_btn">
+		        </div>
+			</form>
+	        {else}
+	        	<div class="t_name item_group">第三方托管银行卡信息：</div>
+	            <a href="javascript:void(0);" class="a_link" id="yee_add_bank" style="display:block;">
+	            <div class="item_bank add_bank">
+	                <div class="tip">
+	                 <img src="{$TMPL}/images/add.jpg" alt="添加银行卡" style="*margin-bottom:-4px;_margin-bottom:-6px;">
+	                 <p>您的提现银行卡尚未添加</p>
+	                 <p>请先设置银行卡号</p>
+	                </div>
+	                 <div class="edit_card">
+	                    添加银行卡
+	                 </div>
+	            </div>
+	            </a>
+	        {/if}
+		</div>
+		{/if}
+	</div>
+</div>	
+<script type="text/javascript" src="{$APP_ROOT}/public/runtime/app/region.js"></script>	
+<script type="text/javascript" src="{$TMPL}/js/utils/jquery.bank.js"></script>	
+<script type="text/javascript">
+	{if app_conf("OPEN_IPS") gt 0}
+	var json_fee = {$json_fee};
+	{/if}
+	jQuery(function(){
+		{if app_conf("OPEN_IPS") gt 0}
+			
+			checkIpsBalance(0,{$user_info.id},function(result){
+				if(result.pErrCode=="0000"){
+					$(".J_u_money_0").html(result.pBalance);
+					$("#Jcarry_totalAmount").val(result.pBalance);
+				}
+			});
+			
+			$("input[name='carry_type']").click(function(){
+				if($(this).val()=="1"){
+					$("#IPS_CARRY").removeClass("hide");
+					$("#SITE_CARRY").addClass("hide");
+					
+				}
+				else{
+					$("#IPS_CARRY").addClass("hide");
+					$("#SITE_CARRY").removeClass("hide");
+				}
+			});
+			$("#IPS_CARRY_FORM").submit(function(){
+				if($.trim($("#Jcarry_amount").val())=="" || !$.checkNumber($("#Jcarry_amount").val()) || parseFloat($("#Jcarry_amount").val())<=0){
+					$.showErr(LANG.CARRY_MONEY_NOT_TRUE,function(){
+						$("#Jcarry_amount").focus();
+					});
+					return false;
+				}
+				if(parseFloat($("#Jcarry_acount_balance_res").val())<0){
+					$.showErr(LANG.CARRY_MONEY_NOT_ENOUGHT,function(){
+						$("#Jcarry_acount_balance_res").focus();
+					});
+					return false;
+				}
+				
+				window.location.href= APP_ROOT + "/index.php?ctl=collocation&act=DoDwTrade&user_type=0&user_id={$user_info.id}&pTrdAmt="+$.trim($("#Jcarry_amount").val());
+				return false;
+			});
+		{/if}
+		$(".J_deal_bank").click(function(){
+			var obj = $(this);
+			var query = new Object();
+			query.id = $(this).attr("dataid");
+			if(confirm("确定要删除吗")){
+				$.ajax({
+					url:'{url x="index" r="uc_money#delbank"}',
+					data:query,
+					type:"post",
+					dataType:"json",
+					success:function(result){
+						if(result.status==1)
+						{
+							obj.parent().parent().fadeOut("fast",function(){
+								obj.parent().parent().remove();
+							});
+						}
+						else{
+							$.showErr(result.info);
+						}
+					},
+					error:function(){
+						$.showErr("发生错误");
+					}
+				});
+			}
+		});
+		$("#add_bank").click(function(){
+			$.ajax({
+				url:'{url x="index" r="uc_money#addbank"}',
+				dataType:"json",
+				success:function(result){
+					if(result.status==1)
+					{
+						$.weeboxs.open(result.info, {boxid:"addbank-box",contentType:'text',showButton:false, title:'添加银行卡',type:'wee',width:800,onopen:function(){
+							init_ui_textbox();
+							init_ui_select();
+						}});
+					}
+					else{
+						$.showErr(result.info,function(){
+							if(result.jump!='')
+								window.location.href=result.jump;
+						});
+						
+					}
+				}
+			});
+		});
+		
+		$("#yee_add_bank").click(function(){
+			window.location.href= APP_ROOT + "/index.php?ctl=collocation&act=BindBankCard&user_type=0&user_id={$user_info.id}";
+			return false;
+		});
+		$("select[name='region_lv1']").live("change",function(){
+			load_select("1");
+		});
+		$("select[name='region_lv2']").live("change",function(){
+			load_select("2");
+		});
+		$("select[name='region_lv3']").live("change",function(){
+			load_select("3");
+		});	
+		
+		
+		$("select[name='bank_id']").live("change",function(){
+			if($(this).val()=="other"){
+				$("select[name='otherbank']").removeClass("hide");
+			}
+			else{
+				$("select[name='otherbank']").addClass("hide");
+			}
+			$("select[name='otherbank']").ui_select({refresh:true});
+		});
+		
+		$("#addbank-box .reset_btn").live("click",function(){
+			$.weeboxs.close("addbank-box");
+		});
+		
+		$("#addbank-box .sub_btn").live("click",function(){
+			
+			if($("#Jbank_real_name").val()==""){
+				$.showErr("请输入开户名",function(){
+					$("#Jbank_real_name").focus();
+				});
+				return false;
+			}
+			if($("select[name='bank_id']").val()==""){
+				$.showErr(LANG.PLASE_ENTER_CARRY_BANK);
+				return false;
+			}
+			if($("select[name='bank_id']").val()=="other" && $("select[name='otherbank']").val()==""){
+				$.showErr(LANG.PLASE_ENTER_CARRY_BANK);
+				return false;
+			}
+			
+			if($("select[name='region_lv3']").val()=="" || $("select[name='region_lv3']").val()=="0"){
+				$.showErr("请选择开户行所在地");
+				return false;
+			}
+			
+			if($("#Jbank_bankzone").val()==""){
+				$.showErr("请输入开户行网点",function(){
+					$("#Jbank_bankzone").focus();
+				});
+				return false;
+			}
+			
+			if($.trim($("#Jbank_bankcard").val())==""){
+				$.showErr(LANG.PLASE_ENTER_CARRY_BANK_CODE,function(){
+					$("#Jbank_bankcard").focus();
+				});
+				return false;
+			}
+			if($.trim($("#Jbank_rebankcard").val())==""){
+				$.showErr(LANG.PLASE_ENTER_CARRY_CFR_BANK_CODE,function(){
+					$("#Jbank_rebankcard").focus();
+				});
+				return false;
+			}
+			if($.trim($("#Jbank_bankcard").val())!=$.trim($("#Jbank_rebankcard").val())){
+				$.showErr(LANG.TWO_ENTER_CARRY_BANK_CODE_ERROR,function(){
+					$("#Jbank_rebankcard").focus();
+				});
+				return false;
+			}
+			
+			
+			var query = $("#Jbank_From").serialize();
+			var ajaxurl = $("#Jbank_From").attr("action");
+			$.ajax({
+				url:ajaxurl,
+				data:query,
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					if(result.status==1){
+						$.showSuccess(result.info,function(){
+							window.location.reload();
+						});
+					}
+					else{
+						$.showErr(result.info);
+					}
+				},
+				error:function(){
+					$.showErr("发生错误");
+				}
+			});
+		});
+	});
+	
+	
+
+</script>

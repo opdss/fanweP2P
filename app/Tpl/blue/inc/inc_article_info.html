@@ -1,0 +1,14 @@
+<div class="bdd bddf article_box clearfix" style="padding:0 50px">
+	<div class="article_title f16 b tc pt10">
+         {$article.title}
+	</div>
+	<div class="publish_time bbd clearfix pr" style="min-height: 25px;">
+        {function name="to_date" v=$article.create_time f="Y-m-d"}
+        <div class="f_r ps" style="right:0; top:5px ;"><a href="javascript:window.history.back();">[返回]</a>{if $all_list}&nbsp;&nbsp;<a href="{$all_list}">[全部文章]</a>{/if}</div>
+<div class="blank0"></div>
+    </div>
+    <div class="blank0"></div>
+	<div class="article_info">
+	{$article.content}
+	</div>
+</div>

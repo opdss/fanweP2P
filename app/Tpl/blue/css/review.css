@@ -1,0 +1,178 @@
+#dp-tab {
+  background: url("../images/review/dot.png") repeat-x scroll 0 100% transparent;
+  height: 36px;
+  padding: 0 15px 0 10px;
+}
+#dp-tab ul {
+  float: left;
+}
+.blank {
+	clear: both;
+	height: 10px;
+	overflow: hidden;
+	display: block;
+}
+.blank0 {
+	clear: both;
+	height: 1px;
+	overflow: hidden;
+	display: block;
+}
+#dp-tab li {
+  background: url("../images/review/left.png") repeat scroll 0 0 transparent;
+  float: left;
+  height: 36px;
+  margin: 0 2px 0 0;
+  overflow: hidden;
+  padding: 0 0 0 5px;
+}
+#dp-tab li.current {
+  background: url("../images/review/left_c.png") repeat scroll 0 0 transparent;
+}
+#dp-tab li a {
+  background: url("../images/review/right.png") repeat scroll 100% 0 transparent;
+  color: #333333;
+  float: left;
+  font-size: 14px;
+  font-weight: bold;
+  height: 26px;
+  padding: 10px 17px 0 12px;
+}
+#dp-tab li.current a {
+  background: url("../images/review/right_c.png") repeat scroll 100% 0 transparent;
+}
+#dp-tab li a em {
+  font-family: simSun;
+  font-weight: normal;
+  font-style: normal;
+}
+#dp-filter {
+  background: none repeat scroll 0 0 #F6F6F6;
+  border-bottom: 1px dashed #DDDDDD;
+  padding: 11px 13px 10px 18px;
+  height:15px;
+}
+#dp-filter label {
+  float: left;
+  margin: 1px 0 0;
+}
+#dp-filter a {
+  float: left;
+  margin: 1px 0 0 5px;
+}
+#dp-filter a.current{
+	font-weight:bolder;
+}
+#dp-list .cut {
+  background: url("../images/review/review_bg.png") no-repeat scroll 100% -116px transparent;
+  float: left;
+  width: 1px;
+}
+#dp-filter .filter-select {
+  float: right;
+}
+.review_item { border-bottom:1px solid #ccc; margin-bottom:8px}
+.review_item .hd{ float:left; width:100px; text-align:center;}
+.review_item .hd .user_name a,a.viewall{ color:#416AC2; line-height:22px; }
+.review_item .hd .user_name a:hover,a.viewall:hover{ color:#f60; line-height:22px; }
+
+.review_item .review_content{ float:left; width:640px; margin-left:10px;}
+
+.point_title{ display:inline-block; width:40px; text-align:right; float:left;}
+.point_result{ display:inline-block; *display:inline; color:#f60; text-align:left;float:left;}
+
+.is_best_ico{ margin-left:3px; float:right; background:url(../images/review/dplist.png) no-repeat 0px -95px; width:18px; height:17px; font-size:0px; line-height:0px;}
+.is_hot_ico{ float:right; background:url(../images/review/dplist.png) no-repeat -25px -95px; width:18px; height:17px; font-size:0px; line-height:0px;}
+.is_top_ico{ float:right; background:url(../images/review/dplist.png) no-repeat -50px -95px; width:18px; height:17px; font-size:0px; line-height:0px;}
+
+.review_point{ border-bottom:dotted 1px #ccc; height:22px;}
+.review_title{ height:30px; line-height:30px;}
+.review_title a{ font-size:14px; font-weight:bolder; color:#1166BB;}
+.review_title a:hover{ font-size:14px; font-weight:bolder; color:#f60;}
+.imgbox{ text-align:center; margin-top:5px; width:550px; overflow:hidden;}
+.review_date{ color:#ccc; border-bottom:#ccc dashed 1px;}
+
+
+.response span {
+  color: #999999;
+  float: left;
+  margin: 3px 9px 0 0;
+}
+
+.response p {
+  background: url("../images/review/dplist.png") no-repeat scroll 0 -35px transparent;
+  float: left;
+  margin: 0 12px 0 0;
+  padding: 0 0 0 18px;
+  position: relative;
+}
+.response a {
+  float: left;
+  text-decoration: underline;
+  color:#1166BB;
+}
+.response a:hover{
+	color:#f60;
+}
+
+.response .response-good {
+  background-position: 0 -37px;
+}
+.response .response-bad {
+  background-position: -20px -37px;
+}
+
+.response .response-good a, .response .response-bad a {
+  background: none repeat scroll 0 0 #FFFFFF;
+  margin: 3px 0 0;
+}
+
+.response .response-good b,.response .response-bad b {
+  background: none repeat scroll 0 0 #FFFFFF;
+  color: #666666;
+  float: left;
+  font-weight: normal;
+  margin: 3px 0 0;
+}
+
+.funcbox{ float:right;}
+.funcbox a{ float:none;}
+
+
+.review_header{ background:url(../images/review/review_header.png) repeat-x; width:775px; height:59px; border:none; padding:5px 10px;}
+.review_title{ font-size:16px; font-weight:bolder; font-family:"\5FAE\8F6F\96C5\9ED1"; color:#f60;}
+.review_detail{ border-top:#f6e6c8 solid 2px; border-bottom:#f6e6c8 solid 2px; background:url(../images/review/boxside.png) repeat-y;}
+.detail_hd{ padding-left:10px; padding-top:10px;}
+.review_item .detail_content{ width:570px; margin-left:15px;} 
+
+.reply_title{ height:30px; border-bottom:#ccc solid 1px; position:relative;}
+.reply_title span.hy{ display:inline-block; position:absolute; background:url(../images/review/reply_title.png) ; width:79px; height:30px; text-align:center; line-height:30px; font-size:14px; color:#f60; font-weight:bolder;}
+
+
+.reply_hd{ width:50px; float:left; }
+.sign_box{ float:left; width:695px; margin-left:10px;}
+.sign_box .sign_textarea{ width:100%; border:#ccc solid 1px; height:90px;}
+.input_tip{ text-align:right; color:#ccc; line-height:22px;}
+.submit_bg{ cursor:pointer; background:url(../images/review/reply_btn.gif); width:72px; height:29px; border:0px; text-align:center; line-height:29px; color:#fff;}
+.submit_bg_forbid{ background:url(../images/review/reply_btn_forbid.gif); width:72px; height:29px; border:0px; text-align:center; line-height:29px; color:#fff;}
+
+.reply_item{ margin:10px 0px;}
+.reply_item_hd{ width:60px;}
+.reply_item_content{ width:690px;} 
+.reply_item_date{ background:#f5f5f5; color:#ccc; height:25px; line-height:25px; padding:0px 10px;}
+.reply_item_date span{ color:#98875e; }
+
+.blue{color:#126185;}
+a.blue{ text-decoration:underline;}
+a.blue:hover{ text-decoration:none;}
+.store_sms{background:url(../images/review/share-button.png) no-repeat 0 -14px; padding-left:16px; font-size:12px; line-height:12px; padding-top:4px; display:block; height:13px; overflow:hidden;}
+
+.store_sms_form div.store_tip{line-height:180%; padding:3px 0}
+.store_sms_form div.sms_content{ padding:10px; background:#f1f1f1; line-height:180%}
+.store_sms_form div.tel dt{ width:70px; padding-left:10px; line-height:26px; height:26px;}
+.store_sms_form div.tel dd{ width:200px;line-height:26px; }
+
+.tag_vote{ display:inline-block; background:#FF8524; color:#fff; height:22px; line-height:22px; padding:0px 5px; cursor:pointer;}
+.user_sign a{ float:left; display:inline-block; width:50px; height:50px; text-align:center; margin:10px 0px 0px 10px;}
+
+

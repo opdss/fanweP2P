@@ -1,0 +1,27 @@
+<div class="tabbox ">
+	<div class="tab cur"><a href="{url x="index" r="uc_center#setweibo"}">{$page_title}</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	
+		{foreach from=$apis item=api}
+		<div style="width:170px; margin:0px auto;">
+		{if $api.is_bind eq 0}
+			立即绑定
+			<div class="blank"></div>
+			<span id="api_{$api.class_name}_2"><script type="text/javascript">load_api_url('{$api.class_name}',2);</script></span>
+			
+		{else}
+			同步发送到微博？ 
+			{if $api.is_syn eq 1}
+				<input type="checkbox" checked="checked" onclick="set_syn('is_syn_{function name="strtolower" v=$api.class_name}');" />
+			{else}
+				<input type="checkbox" onclick="set_syn('is_syn_{function name="strtolower" v=$api.class_name}');" />
+			{/if}
+			<div class="blank"></div>
+			<img src="{$api.bicon}" />
+		{/if}
+		</div>
+		<div class="blank"></div>
+		{/foreach}
+	
+</div>

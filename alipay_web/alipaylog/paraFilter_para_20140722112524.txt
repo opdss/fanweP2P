@@ -1,0 +1,10 @@
+Array
+(
+    [out_trade_no] => 2014072211244426
+    [request_token] => requestToken
+    [result] => success
+    [trade_no] => 2014072271718376
+    [sign] => 32b8238849574c4ce8e7e1af15e58e2b
+    [sign_type] => MD5
+    [city] => t2fanwenet
+)

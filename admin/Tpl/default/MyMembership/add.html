@@ -1,0 +1,304 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/user_edit.js' />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">{%ADD} <a href="{:u("My_membership/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+
+<div class="blank5"></div>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">会员类型:</td>
+		<td class="item_input">
+			<label><input type="radio" name="user_type" value=0 />普通会员</label>
+			<label><input type="radio" name="user_type" value=1 />企业会员</label>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_NAME}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="user_name" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_EMAIL}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="email" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_MOBILE}:</td>
+		<td class="item_input"><input type="text" class="textbox <PHP>if(intval(app_conf("MOBILE_MUST"))==1) echo 'require';</PHP>" name="mobile" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_PASSWORD}:</td>
+		<td class="item_input"><input type="password" class="textbox require" name="user_pwd" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_CONFIRM_PASSWORD}:</td>
+		<td class="item_input"><input type="password" class="textbox require" name="user_confirm_pwd" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">邀请人[编号]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="pid" size="10" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%USER_GROUP}:</td>
+		<td class="item_input">
+			<select name="group_id">
+				<foreach name="group_list" item="group_item">
+					<option value="{$group_item.id}">{$group_item.name}</option>
+				</foreach>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="item_title" style="text-align:center;"><b>身份信息</b></td>
+	</tr>
+	<tr>
+		<td class="item_title">姓名:</td>
+		<td class="item_input"><input type="text"  class="textbox" name="real_name" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">身份证号码:</td>
+		<td class="item_input"><input type="text" class="textbox" name="idno" /></td>
+	</tr>
+		
+	<tr>
+		<td class="item_title">{%USER_BIRTHDAY}:</td>
+		<td class="item_input">
+			<input type="text" name="byear" class="textbox" value=""  style="width:40px" maxlength="4" />{%USER_BYEAR}
+			<input type="text" name="bmonth" class="textbox" value="" style="width:20px" maxlength="2"/>{%USER_BMONTH}
+			<input type="text" name="bday" class="textbox" value=""  style="width:20px" maxlength="2" />{%USER_BDAY}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">性别:</td>
+		<td class="item_input">
+			<select name="sex">
+				<option value="0">女</option>
+				<option value="1">男</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="item_title" style="text-align:center;"><b>学历信息</b></td>
+	</tr>
+	<tr>
+		<td class="item_title">最高学历:</td>
+		<td class="item_input">
+			<select name="graduation">
+				<option value="">请选择</option>
+				<option value="高中或以下">高中或以下</option>
+				<option value="大专">大专</option>
+				<option value="本科">本科</option>
+				<option value="研究生或以上">研究生或以上</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">入学年份:</td>
+		<td class="item_input">
+			<select name="graduatedyear">
+				<?php $y = date("Y"); for($i=$y;$i>=$y-100;$i--): ?>
+					<option value="<?php echo $i;?>"><?php echo $i;?></option>
+				<?php endfor; ?>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">毕业院校:</td>
+		<td class="item_input">
+			<input type="text" name="university" class="textbox" value="" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">12位在线验证码:</td>
+		<td class="item_input">
+			<input type="text" name="edu_validcode" class="textbox" value="" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="item_title" style="text-align:center;"><b>婚姻状况</b></td>
+	</tr>
+	<tr>
+		<td class="item_title">婚姻状况:</td>
+		<td class="item_input">
+			<label><input type="radio" class="f-radio" value="已婚" name="marriage">已婚</label>
+			<label><input type="radio" class="f-radio" value="未婚" name="marriage">未婚</label>
+			<label><input type="radio" class="f-radio" value="离异" name="marriage">离异</label>
+			<label><input type="radio" class="f-radio" value="丧偶" name="marriage">丧偶</label>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="item_title" style="text-align:center;"><b>房产信息</b></td>
+	</tr>
+	<tr>
+		<td class="item_title">是否有房:</td>
+		<td class="item_input">
+			<label><input type="radio" class="f-radio" value="1" name="hashouse">有</label>
+			<label><input type="radio" class="f-radio" value="0" name="hashouse" checked="checked">无</label>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">有无房贷:</td>
+		<td class="item_input">
+			<label><input type="radio" class="f-radio" value="1" name="houseloan">有</label>
+			<label><input type="radio" class="f-radio" value="0" name="houseloan" checked="checked">无</label>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="item_title" style="text-align:center;"><b>购车信息</b></td>
+	</tr>
+	<tr>
+		<td class="item_title">是否有车:</td>
+		<td class="item_input">
+			<label><input type="radio" class="f-radio" value="1" name="hascar"  <if condition="$vo['hascar'] eq 1">checked="checked"</if>>有</label>
+			<label><input type="radio" class="f-radio" value="0" name="hascar"  <if condition="$vo['hascar'] eq 0">checked="checked"</if>>无</label>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">有无车贷:</td>
+		<td class="item_input">
+			<label><input type="radio" class="f-radio" value="1" name="carloan"  <if condition="$vo['carloan'] eq 1">checked="checked"</if>>有</label>
+			<label><input type="radio" class="f-radio" value="0" name="carloan"  <if condition="$vo['carloan'] eq 0">checked="checked"</if>>无</label>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">汽车品牌:</td>
+		<td class="item_input">
+			<input type="text" name="car_brand" class="textbox" value="" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">购车年份:</td>
+		<td class="item_input">
+			<input type="text" name="car_year" class="textbox" value="" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">车牌号码:</td>
+		<td class="item_input">
+			<input type="text" name="car_number" class="textbox" value="" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="item_title" style="text-align:center;"><b>其他</b></td>
+	</tr>
+	<tr>
+		<td class="item_title">有无子女:</td>
+		<td class="item_input">
+			<label><input type="radio" class="f-radio" value="1" name="haschild" />有</label>
+			<label><input type="radio" class="f-radio" value="0" name="haschild" />无</label>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">籍贯:</td>
+		<td class="item_input">
+			<select name="n_province_id">
+				<option value="0">={%PLEASE_SELECT}=</option>
+				<foreach name="region_lv2" item="lv2">
+				<option value="{$lv2.id}">{$lv2.name}</option>
+				</foreach>
+			</select>
+									
+			<select name="n_city_id">
+				<option value="0">={%PLEASE_SELECT}=</option>	
+				<foreach name="region_lv3" item="lv3">
+				<option value="{$lv3.id}">{$lv3.name}</option>
+				</foreach>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">户口所在地:</td>
+		<td class="item_input">
+			<select name="province_id">
+				<option value="0">={%PLEASE_SELECT}=</option>
+				<foreach name="region_lv2" item="lv2">
+				<option value="{$lv2.id}">{$lv2.name}</option>
+				</foreach>
+			</select>
+									
+			<select name="city_id">
+				<option value="0">={%PLEASE_SELECT}=</option>	
+				<foreach name="region_lv3" item="lv3">
+				<option value="{$lv3.id}">{$lv3.name}</option>
+				</foreach>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">居住地址:</td>
+		<td class="item_input">
+			<input type="text" value="" class="textbox" name="address" size="50">
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">电话:</td>
+		<td class="item_input">
+			<input type="text" class="textbox"  value="" name="phone">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="item_title" style="text-align:center;"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%IS_EFFECT}:</td>
+		<td class="item_input">
+			<lable>{%IS_EFFECT_1}<input type="radio" name="is_effect" value="1" checked="checked" /></lable>
+			<lable>{%IS_EFFECT_0}<input type="radio" name="is_effect" value="0" /></lable>
+		</td>
+	</tr>
+	<foreach name="field_list" item="field_item">
+	<tr>
+		<td class="item_title">{$field_item.field_show_name}:</td>
+		<td class="item_input">
+			 <if condition="$field_item['input_type'] eq 0">
+			 	<input type="text" class="textbox <if condition="$field_item['is_must'] eq 1">require</if>" name="{$field_item.field_name}" />
+			 </if>
+			 
+			 <if condition="$field_item['input_type'] eq 1">
+			 	<select name="{$field_item.field_name}">
+			 		<foreach name="field_item.value_scope" item="value_item">
+			 			<option value="{$value_item}">{$value_item}</option>
+			 		</foreach>
+			 	</select>
+			 </if>
+		</td>
+	</tr>
+	</foreach>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="admin_id" value="{$adm_id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="MyMembership" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="insert" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%ADD}" />
+			<input type="reset" class="button" value="{%RESET}" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 		 
+</form>
+</div>
+<include file="Public:footer" />

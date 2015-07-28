@@ -1,0 +1,80 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/Statistics.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--理财统计-->
+
+<div class="blank15"></div>
+    <div class="Statistics_block">
+    	<h5>借款统计</h5>
+		<div class="data clearfix">
+			<div class="left_data">
+				<ul>
+					<li>贷款总额</li>
+					<li>借款笔数</li>
+					<li>已还本息</li>
+					<li>待还本息</li>
+					<li>已付管理费用</li>
+					<li>待付管理费用</li>
+					<li>逾期费用</li>
+				</ul>
+			</div>
+			<div class="right_data">
+				<ul>
+					<li>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.user_statistics.borrow_amount f=2}</li>
+					<li>{$data.user_statistics.success_deal_count}笔</li>
+					<li>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.user_statistics.repay_amount f=2}</li>
+					<li>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.user_statistics.need_repay_amount f=2}</li>
+					<li>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.user_statistics.repay_manage_amount f=2}</li>
+					<li>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.user_statistics.need_manage_amount f=2}</li>
+					<li>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.user_statistics.yuqi_impose f=2}</li>
+				</ul>
+			</div>
+		</div>
+    </div>
+<div class="blank15"></div>
+<div class="Statistics_block">
+    	<h5>投资统计</h5>
+		<div class="data clearfix">
+			<div class="left_data">
+				<ul>
+					<li>投资总额</li>
+					<li>投资笔数</li>
+					<li>已挣利息</li>
+					<li>待还本息</li>
+					<li>已回收本息</li>
+					<li>待回收本息</li>
+					<li>已付管理费</li>
+					
+				</ul>
+			</div>
+			<div class="right_data">
+				<ul>
+					<li>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.user_statistics.load_money f=2}</li>
+					<li>{$data.user_statistics.load_count}</li>
+					<li>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.user_statistics.load_earnings f=2}</li>
+					<li>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.user_statistics.load_wait_earnings f=2}</li>
+					<li>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.user_statistics.load_repay_money f=2}</li>
+					<li>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.user_statistics.load_wait_repay_money f=2}</li>
+					<li>{$data.true_repay_manage_money}</li>
+				</ul>
+			</div>
+		</div>
+    </div>
+<div class="blank15"></div>
+<div class="Statistics_data">
+	<ul>
+		<li>
+			<p class="data">{$data.incharge_count}</p>
+			<p class="name">充值总额</p>
+		</li>
+		<li>
+			<p class="data">{$data.carry_money}</p>
+			<p class="name">提现总额</p>
+		</li>
+	</ul>
+</div>
+<div class="blank15"></div>
+{include file="./inc/footer.html"}

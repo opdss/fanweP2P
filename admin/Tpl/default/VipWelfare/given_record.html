@@ -1,0 +1,108 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<php>
+	function get_given_type($given_type){
+		if($given_type==1)
+		return "现金红包";
+		else
+		return "积分";
+	}
+	function get_given_name_type($id,$given_name){
+		if($given_name['given_name_type']==1){
+			return "生日礼品";
+		}
+		elseif($given_name['given_name_type']==2){
+			if($given_name['gift_id']>0){
+				return "节日礼品"."(".$given_name['given_name'].")";
+			}else{
+				return "节日礼品";
+			}
+			
+		}
+		
+	}
+	function get_given_value($id,$given_name){
+		if($given_name['given_type']==1){
+			return $given_name['given_value']." 元现金红包";
+		}else{
+			return $given_name['given_value']." 积分";
+		}
+		
+	}
+	function get_send_state($send_state){
+		if($send_state==1)
+		return "已发放";
+		else
+		return "未发放";
+	}
+	
+	function get_vip_id($vip_id)
+    {
+    	return M("VipType")->where(" id=".$vip_id)->getField("vip_grade");
+    }
+	
+</php>
+<div class="main">
+<div class="main_title">福利发放列表</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">
+		VIP等级：
+		<select name="vip_id">
+			<option value="-1" <if condition="intval($_REQUEST['vip_id']) eq -1 || intval($_REQUEST['vip_id']) eq '' ">selected="selected"</if>>{%ALL}</option>
+			<foreach name="vip_list" item="vip_item">
+				<option value="{$vip_item.id}" <if condition="$_REQUEST['vip_id'] eq $vip_item['id']">selected="selected"</if>>{$vip_item.vip_grade}</option>
+			</foreach>
+		</select>	
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		
+		礼品名称：
+		<select name="given_name_type">
+			<option value="-1" <if condition="intval($_REQUEST['given_name_type']) eq -1 || intval($_REQUEST['given_name_type']) eq '' ">selected="selected"</if>>{%ALL}</option>
+			<option value="1" <if condition="$_REQUEST['given_name_type'] eq 1">selected="selected"</if>>生日礼品</option>
+			<option value="2" <if condition="$_REQUEST['given_name_type'] eq 2">selected="selected"</if>>节日礼品</option>
+		</select>
+		礼品类型：
+		<select name="given_type">
+			<option value="-1" <if condition="intval($_REQUEST['given_type']) eq -1 || intval($_REQUEST['given_type']) eq '' ">selected="selected"</if>>{%ALL}</option>
+			<option value="1" <if condition="$_REQUEST['given_type'] eq 1">selected="selected"</if>>现金红包</option>
+			<option value="2" <if condition="$_REQUEST['given_type'] eq 2">selected="selected"</if>>积分</option>
+		</select>
+		
+		发放日期：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d', false, false, 'begin_time');" style="width:130px" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" style="width:130px" />
+		<input type="hidden" value="VipWelfare" name="m" />
+		<input type="hidden" value="given_record" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		<input type="button" class="button" value="{%EXPORT}" onclick="export_csv();" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="given_name" 
+	checkbox="true" 
+	action="" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,user_id|get_user_name_real:VIP会员
+		,vip_id|get_vip_id:VIP等级
+		,id|get_given_name_type=$given_name:礼品名称
+		,id|get_given_value=$given_name:礼品值
+		,given_num:数量
+		,send_date:发放日期
+		,send_state|get_send_state:发放状态" 
+	actionlist="del:{%DEL}" 
+	actionwidth="100px"/> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,55 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript">
+	function uninstall(id)
+	{
+		if(confirm("{%CONFIRM_DELETE}"))
+		{
+			location.href = ROOT + "?m=Promote&a=uninstall&id="+id;
+		}
+	}
+</script>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+
+<table cellspacing="0" cellpadding="0" class="dataTable" id="dataTable">
+	<tbody>
+		<tr>
+			<td class="topTd" colspan="4">&nbsp; </td>
+			</tr>
+			<tr class="row">
+				<th>{%PROMOTE_NAME}</th>
+				<th>{%PROMOTE_DESCRIPTION}</th>		
+				<th>{%SORT}</th>
+				<th>{%TAG_LANG_OPERATE}</th>
+				</tr>
+				<foreach name="promote_list" item="promote_item">
+				<tr class="row">
+					<td>{$promote_item.name}</td>
+					<td>{$promote_item.description}</td>					
+					<td> 
+						<if condition="$promote_item['id']">
+						<span onclick="set_sort({$promote_item.id},{$promote_item.sort},this);" class="sort_span">{$promote_item.sort}</span> 
+						<else />
+						{$promote_item.sort}
+						</if>
+					</td>
+					<td>
+						<if condition="$promote_item['installed'] eq 0">
+						<a href="{:u("Promote/install",array("class_name"=>$promote_item['class_name']))}">{%INSTALL}</a>
+						<else />
+						<a href="javascript:edit({$promote_item.id});" >{%EDIT}</a>
+						<a href="javascript:uninstall({$promote_item.id});" >{%UNINSTALL}</a>
+						</if>
+					</td>
+				</tr>
+				</foreach>
+				<tr><td class="bottomTd" colspan="4"> &nbsp;</td></tr>
+			</tbody>
+		</table>
+
+
+</div>
+<include file="Public:footer" />

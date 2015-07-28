@@ -1,0 +1,58 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<php>
+	function get_red_envelope($status){
+		if($status==1)
+		return "已发放";
+		else
+		return "未发放";
+	}
+	
+</php>
+<div class="main">
+<div class="main_title">红包发放列表</div>
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		红包金额：<input type="text" class="textbox" name="money" value="{:trim($_REQUEST['money'])}" style="width:100px;" />
+		发放时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d', false, false, 'begin_time');" style="width:130px" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" style="width:130px" />
+		
+		<input type="hidden" value="VipRedEnvelope" name="m" />
+		<input type="hidden" value="red_envelope_record" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		<!---<input type="button" class="button" value="{%EXPORT}" onclick="export_csv();" />--->
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="user" 
+	checkbox="true" 
+	action="" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,user_id|get_user_name:{%USER_NAME}
+	,money:红包金额
+	,status|get_red_envelope:发放状态
+	,release_date:发放时间
+	"/> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

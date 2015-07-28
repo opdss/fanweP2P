@@ -1,0 +1,33 @@
+<div id="J_TMPINPUT" style="display:none">
+	<div class="item">
+	期限：
+	<input type="text" class="textbox " name="repaytime[$num][time]" value=""  size="3" />
+	时间：
+	<select name="repaytime[$num][timetype]">
+		<option value="1">月</option>
+		<option value="0">天</option>
+	</select>
+	最小利率
+	<input type="text" class="textbox " name="repaytime[$num][minrate]" value=""  size="3" />
+	最大利率
+	<input type="text" class="textbox " name="repaytime[$num][maxrate]" value="" size="3" />
+	<a href="javascript:void(0)" class="J_rm">移除</a>
+	
+	<div class="blank5"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	var maxlength = {$vo.repaytime_list|count};
+	jQuery(function(){
+		$("a.J_rm").live("click",function(){
+			$(this).parent().remove();
+		});
+		$("a.J_add").click(function(){
+			maxlength ++ ;
+			var html = $("#J_TMPINPUT").html();
+			html = html.replace(/\$num/g,maxlength);
+			$(this).before(html);
+		});
+	});
+	
+</script>

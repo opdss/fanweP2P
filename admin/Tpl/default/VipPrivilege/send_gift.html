@@ -1,0 +1,150 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<script type="text/javascript">
+	$("select[name='given_type']").change(function(){
+		if($(this).val()==1){
+			$("#guarantor_margin_amt_box").show();
+			$("#guarantor_amt_box").hide();
+		}
+		else if($(this).val()==2)
+		{
+			$("#guarantor_margin_amt_box").hide();
+			$("#guarantor_amt_box").show();
+		}
+		else{
+			$("#guarantor_margin_amt_box").hide();
+			$("#guarantor_amt_box").hide();
+		}
+	});
+</script>
+
+<div class="main">
+<div class="main_title">生日礼品发放</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">会员名称</td>
+		<td class="item_input">
+			{$vo.user_name}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">VIP等级</td>
+		<td class="item_input">
+			{$voty.vip_grade}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">生日时间</td>
+		<td class="item_input">
+			{$vo.byear}-{$vo.bmonth}-{$vo.bday}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">礼品类型</td>
+		<td class="item_input">
+			<if condition="$vog['send_state'] eq 1">
+				<select name="given_type" disabled="disabled">
+					<option value="1" <if condition="$vog['send_state'] eq 1">selected="selected"</if>>现金红包</option>
+					<option value="2" <if condition="$vog['send_state'] eq 2">selected="selected"</if>>积分</option>
+				</select>
+			<else />
+				<select name="given_type">
+					<option value="0">类型选择</option>
+					<option value="1">现金红包</option>
+					<option value="2">积分</option>
+				</select>
+			</if>
+		</td>
+	</tr>
+	
+	<tr id="guarantor_margin_amt_box" style="display:none">
+		<td class="item_title">红包金额:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="guarantor_margin_amt" value="{$vog.given_value}" style="width:100px;" />
+		</td>
+	</tr>
+	
+	<tr id="guarantor_amt_box" style="display:none">
+		<td class="item_title">积分值:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="guarantor_amt" value="{$vog.given_value}" style="width:100px;" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">数量</td>
+		<td class="item_input">
+			<input type="text" class="textbox" style="width:100px;" name="given_num" value="{$vog.given_num}" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">发放状态</td>
+		<td class="item_input" >
+			<if condition="$vog['send_state'] eq 1">
+				<select name="send_state" <if condition="$vog['send_state'] eq 1">disabled="disabled"</if>>
+				<option  value="0" selected="selected" >已发放</option>
+				</select>
+			<else />
+				<select name="send_state" <if condition="$vog['send_state'] eq 1">disabled="disabled"</if>>
+				<option value="1" <if condition="$vo['send_state'] eq 1">selected="selected"</if>>已发放</option>
+				<option value="0" <if condition="$vo['send_state'] eq 0">selected="selected"</if>>未发放</option>
+				</select>
+			</if>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">备注</td>
+		<td class="item_input">
+			<textarea id="brief" name="brief"  class="textbox" style="width:400px;height:80px" >{$vog.brief}</textarea>
+		</td>
+	</tr>
+	
+	<if condition="$vog['send_state'] eq 1">
+		<else />
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		
+		
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<input type="hidden" name="vip_id" value="{$vo.vip_id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="VipPrivilege" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="send_update_gift" />
+			
+			<!--隐藏元素-->
+			
+			
+				<input type="submit" class="button" value="{%OK}" />
+				<input type="reset" class="button" value="{%RESET}" />
+		</td>
+		
+	</tr>
+	</if>
+	
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#QuotaStatusBox select").change(function(){
+			if($(this).val()=="2"){
+				$("#msgarea").attr("disabled",false);
+			}
+			else{
+				$("#msgarea").attr("disabled",true);
+			}
+		});
+	});
+</script>

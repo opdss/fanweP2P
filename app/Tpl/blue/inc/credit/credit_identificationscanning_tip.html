@@ -1,0 +1,56 @@
+<div class="dot"></div>
+<div class="blank20"></div>
+<div class="clearfix credit_upload" style="padding-left:52px">
+	<div class="field">
+        <label><span class="f_red b">*</span>{if $user_type eq 1}法人姓名{else}真实姓名{/if}：</label>
+        <span><input type="text" class="f-input ui-textbox" name="real_name" value="{$user_info.real_name}" id="settings-real_name"></span>
+    </div>
+	<div class="blank10"></div>
+	<div class="field">
+        <label><span class="f_red b">*</span>{if $user_type eq 1}法人{/if}身份证号：</label>
+        <input type="text" value="{$user_info.idno}" class="f-input ui-textbox " id="settings-idno" name="idno" size="30" onkeyup="idcheck(this);">
+    </div>
+	<div class="blank10"></div>
+	<div class="field">
+        <label><span class="f_red b">*</span>性别：</label>
+        <select name="sex" class="f_l ui-select">
+			<option value="-1" {if $user_info.sex eq -1}selected="selected"{/if}>{$LANG.USER_SEX_NULL}</option>
+			<option value="0" {if $user_info.sex eq 0}selected="selected"{/if}>{$LANG.USER_SEX_0}</option>
+			<option value="1" {if $user_info.sex eq 1}selected="selected"{/if}>{$LANG.USER_SEX_1}</option>
+		</select>
+    </div>
+	<div class="blank10"></div>
+	<div class="field clearfix">
+		<label ><span class="red">*</span>{$LANG.USER_BIRTHDAY}</label>
+		<div class="f_l">
+			<select name="byear" class="ui-select f_l  w80 select-w80" height="300">
+				<option value="0">{$LANG.PLEASE_SELECT}</option>
+				<?php for($i = date("Y") - 100 ;$i<=date("Y"); $i++){ ?>
+				<option value="<?php echo $i; ?>" <?php if($i==$GLOBALS['user_info']['byear']){echo 'selected="selected"';} ?>><?php echo $i; ?></option>
+				<?php
+				}
+				?>
+			</select>
+			<span class="f_l">&nbsp;{$LANG.SUPPLIER_YEAR}&nbsp;</span>
+			<select name="bmonth" class="ui-select f_l  w80 select-w80">
+				<option value="0">{$LANG.PLEASE_SELECT}</option>
+				<?php for($i = 1 ;$i<=12; $i++){ ?>
+				<option value="<?php echo $i; ?>"  <?php if($i==$GLOBALS['user_info']['bmonth']){echo 'selected="selected"';} ?>><?php if($i<10):echo "0".$i;else: echo $i; endif; ?></option>
+				<?php
+				}
+				?>
+			</select>
+			<span class="f_l">&nbsp;{$LANG.SUPPLIER_MON}&nbsp;</span>
+			<select name="bday" class="ui-select f_l  w80 select-w80">
+				<option value="0">{$LANG.PLEASE_SELECT}</option>
+				<?php for($i = 1 ;$i<=31; $i++){ ?>
+				<option value="<?php echo $i; ?>" <?php if($i==$GLOBALS['user_info']['bday']){echo 'selected="selected"';} ?>><?php if($i<10):echo "0".$i;else: echo $i; endif; ?></option>
+				<?php
+				}
+				?>
+			</select>
+			<span class="f_l">&nbsp;{$LANG.SUPPLIER_DAY}&nbsp;</span>
+		</div>
+	</div>
+</div>
+<div class="blank20"></div>

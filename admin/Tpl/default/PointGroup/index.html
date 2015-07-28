@@ -1,0 +1,23 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="location.href='__APP__?m=PointGroup&a=add'" />
+	<input type="button" class="button" value="{%FOREVERDEL}" onclick="foreverdel();" />
+</div>
+<html:list 
+	id="checkList" 
+	style="dataTable" 
+	name="point" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|80,name:{%NAME}:edit,sort|get_sort=$point['id']:{%SORT}" 
+	actionlist="edit:{%EDIT}:id,foreverdel:{%del}:id" />
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

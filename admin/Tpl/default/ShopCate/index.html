@@ -1,0 +1,34 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<php>
+	function get_recommend($r,$id)
+	{
+		if($r==0)
+		return l("RECOMMEND_".$r);
+		else
+		return "<span style='color:red;'>".l("RECOMMEND_".$r)."</span> <a href='".u("Adv/index",array("rel_table"=>"shop_cate","rel_id"=>$id))."'>".l("PUBLIC_ADV")."</a>";		
+	}
+</php>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+<div class="blank5"></div>
+<html:tree_list 
+	id="dataTable" 
+	style="dataTable" 
+	name="dealcate" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,name:{%TITLE_SHOW},is_effect|get_is_effect=$dealcate['id']:{%IS_EFFECT},recommend|get_recommend=$dealcate['id']:{%RECOMMEND},sort|get_sort=$dealcate['id']:{%SORT}" 
+	actionlist="edit:{%EDIT}, del:{%DEL}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

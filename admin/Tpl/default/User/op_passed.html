@@ -1,0 +1,57 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<div class="main">
+<div class="main_title">{$user_info.user_name}</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title"><php>echo $field_array[$field];</php>:</td>
+		<td class="item_input" id="passedBox">
+			<select name="{$field}">
+				<option value="0" <if condition="$user_info[$field] eq 0">selected="selected"</if>>未审核</option>
+				<option value="1" <if condition="$user_info[$field] eq 1">selected="selected"</if>>审核通过</option>
+				<option value="2" <if condition="$user_info[$field] eq 2">selected="selected"</if>>审核失败</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">原因:</td>
+		<td class="item_input"><textarea type="text" id="msgarea" <if condition="$user_info[$field] neq 2">disabled="true"</if> class="textbox" name="msg" style="width:400px;height:100px" ></textarea>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$user_info.id}" />
+			<input type="hidden" name="field" value="{$field}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="User" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="modify_passed" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#passedBox select").change(function(){
+			if($(this).val()=="2"){
+				$("#msgarea").attr("disabled",false);
+			}
+			else{
+				$("#msgarea").attr("disabled",true);
+			}
+		});
+	});
+</script>

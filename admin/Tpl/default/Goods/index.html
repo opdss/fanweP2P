@@ -1,0 +1,36 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable"
+	style="dataTable"
+	name="customer"
+	checkbox="true"
+	action="true"
+	datasource="list"
+	show="id:{%ID}|50px
+		,name:名称
+		,sub_name:商品简称
+		,cate_name:分类
+		,sort:排序
+		,max_bought:库存数
+		,score:购买所需积分
+		,is_delivery_format:是否配送
+		,is_hot_format:热卖
+		,is_new_format:新品
+		,is_recommend_format:是否推荐"
+	actionlist="edit:{%EDIT}, del:{%DEL}"
+	actionwidth="100px"/>
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

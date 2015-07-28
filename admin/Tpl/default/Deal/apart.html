@@ -1,0 +1,118 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<div class="main">
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" id="J_APART_FORM">
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">拆标说明:</td>
+		<td class="item_input">
+			<span class="tip_span">拆标就是【将当前所筹到的金额】作为满标金额，拆标后直接【放款并满标】。</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_NAME}:</td>
+		<td class="item_input">
+			<a href='javascript:void(0);' onclick="preview({$deal.id});">{$deal.name}</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%BORROW_AMOUNT}:</td>
+		<td class="item_input">
+			{$deal.borrow_amount_format}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">已筹借款:</td>
+		<td class="item_input">
+			{$deal.load_money_format}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">生成新标:</td>
+		<td class="item_input">
+			<select name="make_new">
+				<option value="0">否</option>
+				<option value="1">是</option>
+			</select>
+			<span class="tip_span">将剩余借款金额生成一个新标</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">还款时间</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="repay_start_time" id="repay_start_time" value="{$NOW_TIME}" style="width:120px" /> 格式：2014-01-01
+			<div class="blank5"></div>
+			<label>直接收取管理费 <input type="checkbox" value="1" name="get_manage" id="get_manage" /></label>
+			<br>
+			<span class="tip_span">
+				还款日：<br>
+				天标按确认之日起算，如 设置为 2014.1.1，借款期限为2天，还款日为：2014.1.3<br>
+				其他标从确认时间开始的起算，如 设置为 2014.1.1 即第一次还款日为：2014.2.1，确认时间不要设置为29,30,31号
+			</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$deal.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Deal" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="do_apart" />
+			<!--隐藏元素-->
+			<input type="button" class="button" id="J_APART_DO"  value="确定" />
+			<input type="button" class="button" id="J_APART_REST" value="取消" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 	 
+</form>
+</div>
+<script type="text/javascript">
+	$("#J_APART_DO").unbind("click");
+	$("#J_APART_DO").click(function(){
+		if(confirm("确定拆标操作吗？")){
+			var query  = $("#J_APART_FORM").serialize();
+			$.ajax({
+				url:$("#J_APART_FORM").attr("action"),
+				data:query,
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					if(result.status==1){
+						alert(result.info);
+						window.location.reload();
+					}
+					else if(result.status ==2){
+						alert("拆分成功");
+						window.location.href = result.jump;
+					}
+					else{
+						alert(result.info);
+					}
+				}
+			});
+		}
+	});
+	$("#J_APART_REST").unbind("click");
+	$("#J_APART_REST").click(function(){
+		$.weeboxs.close();
+	});
+</script>

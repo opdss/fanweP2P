@@ -1,0 +1,14 @@
+20:17:28	UPDATE fanwe_deal_load_repay SET true_interest_money = true_repay_money - true_self_money where has_repay=1
+
+20:18:17	select * from  fanwe_deal_load_repay SET true_interest_money
+
+20:18:33	select sum(true_interest_money ) from  fanwe_deal_load_repay where has_repay=1
+
+20:18:45	select * from  fanwe_deal_load_repay where has_repay=1
+
+20:19:28	select * from  fanwe_deal_load_repay where has_repay=1 and true_interest_money <0
+
+20:19:49	delete  from  fanwe_deal_load_repay where id=2534
+
+20:19:58	delete  from  fanwe_deal_load_repay where deal_id=0
+

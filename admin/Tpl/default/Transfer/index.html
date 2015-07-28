@@ -1,0 +1,100 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<php>
+	function show_deal($name,$deal_id){
+		return '<a href="__ROOT__/index.php?ctl=deal&id='.$deal_id.'" target="_blank">'.$name.'</a>';
+	}
+	function get_transfer_status($status,$t_user_id){
+		if($t_user_id > 0){
+			return '已转让';
+		}
+		elseif($status == 0){
+			return '已撤销';
+		}
+		else
+			return '转让中';
+	}
+	function transfer_reback($id,$transfer){
+		if($transfer['status'] > 0 && $transfer['t_user_id']==0){
+			return '<a href="javascript:reback('.$id.');">撤销</a>';
+		}
+	}
+</php>
+<script>
+function export_csv()
+{
+	var inputs = $(".search_row").find("input");
+	var selects = $(".search_row").find("select");
+	var param = '';
+	//var csv_set =  $("#csv_set").val();
+	for(i=0;i<inputs.length;i++)
+	{
+		if(inputs[i].name!='m'&&inputs[i].name!='a')
+		param += "&"+inputs[i].name+"="+$(inputs[i]).val();
+	}
+	for(i=0;i<selects.length;i++)
+	{
+		param += "&"+selects[i].name+"="+$(selects[i]).val();
+	}
+	var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_csv";
+	location.href = url+param;
+}
+</script>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="search_row"> 
+	<input type="hidden" name="csv_set" id="csv_set" value = "{$csv_set}">
+	<input type="hidden" value="Transfer" name="m" />
+	<input type="hidden" value="<php>echo ACTION_NAME;</php>" name="a" />
+	<input type="button" class="button" value="{%EXPORT}" onclick="export_csv();" /> 
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="transfer" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		 ,name|show_deal=$transfer['deal_id']:原始标
+		 ,user_id|get_user_name_real:转让者
+		 ,t_user_id|get_user_name_real:承接者
+		 ,transfer_time|to_date:承接时间
+		 ,transfer_amount|format_price:转让价格
+		 ,transfer_number:转让期数
+		 ,create_time|to_date:发布时间
+		 ,status|get_transfer_status=$transfer['t_user_id']:状态" 
+	actionlist="vdetail:详情,id|transfer_reback=$transfer" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<script type="">
+	function vdetail(id){
+		window.open("__ROOT__/index.php?ctl=transfer&act=detail&id="+id);
+	}
+	function reback(id){
+		$.ajax({
+			url:ROOT+'?m=Transfer&a=reback&id='+id,
+			dataType:"json",
+			success:function(ajaxobj){
+				if(ajaxobj.status == 1){
+					$.weeboxs.open(ajaxobj.info, {contentType:'html',showButton:false,title:"撤销转让",width:600,height:400});
+				}
+				else{
+					alert(ajaxobj.info);		
+				}
+			},
+			error:function(){
+				alert("操作失败");
+			}
+		});
+		
+	}
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,151 @@
+{include file="inc/header.html"}
+     <div class="regstep">
+            <ol class="ui-step ui-step-3">
+                <li class="ui-step-start ui-step-done">
+                    <div class="ui-step-line">-</div>
+                    <div class="ui-step-icon">
+                        <i class="iconfont"></i>
+                        <i class="ui-step-number">1</i>
+                        <span class="ui-step-text">填写账户信息</span>
+                    </div>
+                </li>
+                <li class="ui-step-active">
+                    <div class="ui-step-line">-</div>
+                    <div class="ui-step-icon">
+                        <i class="iconfont"></i>
+                        <i class="ui-step-number">2</i>
+                        <span class="ui-step-text">实名信息</span>
+                    </div>
+                </li>
+                <li class="ui-step-end">
+                    <div class="ui-step-line">-</div>
+                    <div class="ui-step-icon">
+                        <i class="iconfont"></i>
+                        <i class="ui-step-number">3</i>
+                        <span class="ui-step-text">注册成功</span>
+                    </div>
+                </li>
+            </ol>
+        </div>
+	<div class="blank20"></div>
+	
+<div class="wrap register_box">
+	<div class="wrap">
+		<div class="bdd bddf " >
+			<div class="user-lr-box f_l pt50 pl30 pb30" style="width:590px">
+				<form action="{url x="index" r="manageagency#do_re_name_id"}" method="post" id="re_name_and_id" autocomplete="off">
+                    
+					<div class="field real_name" >
+						<label for="real_name"><span class="f_red">*</span>姓名</label>
+						<div class="f_l frbox pr">
+							<div class="u_icon">
+								<i class="iconfont">&#xe623;</i>
+							</div>
+							<input type="text" class="f-input ui-textbox" holder="输入真实姓名" id="real_name" name="real_name" size="30">
+							<span class="f-input-tip"></span> 
+							<span class="hint"></span>
+						</div>
+						<div class="blank0"></div>
+					</div>
+					<div class="blank10"></div>
+					
+					<div class="field idno">
+						<label for="idno"><span class="f_red">*</span>身份证号</label>
+						<div class="f_l frbox pr">
+							<div class="u_icon">
+								<i class="iconfont">&#xe60a;</i>
+							</div>
+							<input type="text" class="f-input ui-textbox" id="idno" holder="输入身份证" name="idno" size="30" onkeyup="idcheck(this);">
+							<span class="f-input-tip"></span> 
+							<span class="hint"></span> 
+						</div>
+						<div class="blank0"></div>
+					</div>
+					<div class="blank10"></div>
+					
+					<div class="act">
+						<input type="submit" class="btn_blue w180 f_white f18 b p10 bdr3 reg-submit-btn" id="commit" name="commit" value="验证">				
+					</div>
+					<div class="blank20"></div>
+				</form>
+			</div>
+			<div class="blank0"></div>
+		</div>		
+		
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+
+
+jQuery(function(){
+	
+	
+	$("#re_name_and_id").submit(function(){
+		
+	
+		if($.trim($(".real_name #real_name").val()).length == 0)
+		{			
+			formError($(".real_name #real_name"),"真实姓名不为空");
+			return false;
+		}	
+		
+		if($.trim($(".idno #idno").val()).length == 0)
+		{			
+			formError($(".idno #idno"),"身份证号不为空");
+			return false;
+		}
+		
+		if(  ($.trim($(".idno #idno").val()).length == 18 ) || ($.trim($(".idno #idno").val()).length ==15))
+		{			
+			
+		}	
+		else
+		{	
+			formError($(".idno #idno"),"身份证格式错误");
+			return false;
+		}
+		return true;
+	});
+	
+
+	
+	$(".idno #idno").bind("blur",function(){
+		var obj = $(this);
+		if($.trim(obj.val()).length == 0)
+		{			
+			formError(obj,"身份证号不为空");
+			return false;
+		}
+		
+		if(  ($.trim(obj.val()).length == 18 ) || ($.trim(obj.val()).length ==15))
+		{			
+			formSuccess(obj,"验证正确");
+			return true;
+		}	
+		else
+		{	
+			formError(obj,"身份证格式错误");
+			return false;
+		}
+	}); //身份证验证
+	
+	$(".real_name #real_name").bind("blur",function(){
+		var obj = $(this);
+		if($.trim(obj.val()).length == 0)
+		{			
+			formError(obj,"用户名不为空");
+			return false;
+		}	
+		formSuccess(obj,"验证正确");
+		return true;
+	}); //用户名验证
+	
+});
+</script>
+
+</div>
+<div class="blank20"></div>
+{include file="inc/footer.html"}

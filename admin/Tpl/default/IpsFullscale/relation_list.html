@@ -1,0 +1,89 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+	function get_handle($id)
+	{
+		
+        $str = l("IPS_VIEW");
+        
+		$str = "<a href='".u("IpsFullscale/relation_view",array("id"=>$id))."'>".$str."</a>";
+		return $str;
+	}
+    function get_f_a_type($id)
+    {
+    	return l("P_ACCT_TYPE_".$id);
+    }
+    function get_user_name_by_id($id)
+    {
+    	return M("user")->where(" id=".$id)->getField("user_name");
+    }
+    function get_is_repay($id)
+    {
+    	return l("IS_REPAY_".$id);
+    }
+    function get_is_rebate($id)
+    {
+    	return l("IS_REBATE_".$id);
+    }
+    function get_is_has_loans($id)
+    {
+    	return l("IS_HAS_LOANS_".$id);
+    }
+    function get_is_auto($id)
+    {
+    	return l("IS_AUTO_".$id);
+    }
+    function get_p_status($id)
+    {
+    	if($id)
+    		return l("P_TRANSFER_STATUS_".$id);
+    }
+	function get_deal_name($deal_id)
+    {
+    	if($deal_id)
+    		return M("deal")->where(" id=".$deal_id)->getField("name");
+    }
+	
+</php>
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">{%IPS_FULL_RELATION_TITLE}
+	<a href="{:u("IpsFullscale/index")}" class="back_list">{%BACK_LIST}</a>
+</div>
+<div class="blank5"></div>
+<form name="search" action="__APP__" method="get">	
+<div class="button_row">
+
+	<if condition="!$_REQUEST['referer']">
+	<input type="button" class="button" value="{%EXPORT}" onclick="m_export_csv('relation_');" />
+	</if>
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+      <input type="hidden" name="id" value="{:trim($_REQUEST['id'])}" />
+</div>
+</form>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="repayment" 
+	datasource="list" 
+    pk = "mid"
+	show="mid:{%ID}
+    	 ,user_name:投资人
+         ,pTrdAmt:{%P_TRD_AMT}
+         ,pStatus|get_p_status:{%P_TRANSFER_STATUS}
+         ,pIpsDetailTime:{%P_IPS_DETAIL_TIME}
+         " /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

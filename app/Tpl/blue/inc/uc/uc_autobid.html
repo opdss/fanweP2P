@@ -1,0 +1,119 @@
+<div class="tabbox ">
+	<div class="tab cur"><a href="{url x="index" r="uc_autobid"}">{$page_title}</a></div>
+</div>
+<div class="uc_box  bdd bt0  clearfix">
+		<div class="autobid clearfix">
+			<form id="autoBidSaveForm" name="autoBidSaveForm" action="{url x="index" r="uc_autobid#save"}" method="post" style="position:relative;">
+				<div class="b f16 pt20 pb10">设置我的自动投标工具：</div>
+				<table style="color:#666; margin-left:100px">
+	                <tbody>
+	                	<tr style="line-height: 2.5">
+	                    	<td class="w200 tr">自动投标状态：</td>
+	                    	<td style="color:#00bef0">{if $autobid.is_effect eq 0}关闭{else}开启{/if}状态</td>
+	                    	<td style="color:#f85c4e"></td>
+	                	</tr>
+		                <tr style="line-height: 2.5">
+		                    <td class="tr">您的账户余额：</td>
+		                    <td style="">{function name="number_format" v=$user_info.money f=2} 元</td>
+		                    <td style="color: red">（大于等于50元才可开启自动投标工具）</td>
+		                </tr>
+		                <tr style="line-height: 2.5">
+		                    <td class="tr">每次投标金额：</td>
+		                    <td>
+		                        <input class="f-input ui-textbox w60" type="text" value="{if $autobid.fixed_amount neq ''}{function name="round" v=$autobid.fixed_amount f=2}{else}50.00{/if}" id="ten_value" name="fixedamount">&nbsp;&nbsp;元
+		                        <span class="bdd f14 ml10" style="cursor: pointer; padding: 0px 2px; vertical-align: middle;-moz-user-select: none;" onclick="jiajian('jia')" unselectable="on" onselectstart="return false;">＋</span>
+								<span class="bdd f14 ml10" style="cursor: pointer; padding: 0px 2px; vertical-align: middle; -moz-user-select: none;" onclick="jiajian('jian')" unselectable="on" onselectstart="return false;">－</span></td>
+		                    <td style="color: red">（该数值须不小于50元，且为50的倍数）</td>
+		                </tr>
+		                <tr style="line-height: 2.5">
+		                    <td class="tr">利息范围：</td>
+		                    <td><input class="f-input ui-textbox w60" type="text" value="{if $autobid.min_rate}{$autobid.min_rate}{else}{$min_rate.0}{/if}" id="ten_min_lixi" name="min_rate">&nbsp;&nbsp;%
+							－ <input class="f-input ui-textbox w60" type="text" value="{if $autobid.max_rate}{$autobid.max_rate}{else}{$max_rate.0}{/if}" id="ten_max_lixi" name="max_rate">&nbsp;&nbsp;%</td>
+		                    <td class="f_red">（{$min_rate.0}%-{$max_rate.0}%为有效利率范围）</td>
+		                </tr>
+		                <tr style="line-height: 2.5">
+		                    <td class="tr">借款期限：</td>
+		                    <td>
+		                    	<select class="ui-select f_l" id="ten_min_date" name="min_period">
+		                           {foreach from="$min_date" item="sdate"}
+		                            <option value="{$sdate}" {if $autobid.min_period eq $sdate}selected="selected"{/if}>{$sdate}</option>
+									{/foreach}
+		                        </select>
+								<span class="f_l pl5 pr5">月 －</span>
+								<select class="ui-select" id="ten_max_date" name="max_period">
+		                            {foreach from="$max_date" item="sdate"}
+		                            <option value="{$sdate}" {if $autobid.max_period eq $sdate}selected="selected"{/if}>{$sdate}</option>
+									{/foreach}
+		                        </select>
+								<span class="f_l pl5 pr5">月</span>
+								</td>
+		                    <td></td>
+		                </tr>
+		                <tr style="line-height: 2.5">
+		                    <td class="tr">信用等级范围：</td>
+		                    <td>
+		                    	<select class="ui-select f_l" id="ten_min_rank" name="min_level">
+		                    	{foreach from="$min_level" item="item"}
+		                            <option value="{$item.id}" {if $autobid.min_level eq $item.id}selected="selected"{/if}>{$item.name}</option>
+								{/foreach}
+		                        </select>
+								<span class="f_l pl5 pr5">－</span>
+								<select class="ui-select f_l" id="ten_max_rank" name="max_level">
+		                           {foreach from="$max_level" item="item"}
+		                            <option value="{$item.id}" {if $autobid.max_level eq $item.id}selected="selected"{/if}>{$item.name}</option>
+									{/foreach}
+		                        </select>
+							</td>
+		                    <td></td>
+		                </tr>
+						<tr style="line-height: 2.5">
+		                    <td class="tr">投标分类：</td>
+		                    <td colspan="2">
+		                    	{foreach from="$deal_cates" item="cate"}
+								<label class="ui-checkbox" rel="agreement"><input type="checkbox"  name="deal_cate[]" {if in_array($cate.id,$autobid.deal_cates)}checked="checked"{/if} value="{$cate.id}" /> {$cate.name}</label>
+								{/foreach}
+		                    </td>
+		                </tr>
+		                <tr style="line-height: 2.5">
+		                    <td class="tr">账户保留金额：</td>
+		                    <td><input class="f-input" type="text" value="{if $autobid.retain_amount neq ''}{function name="round" v=$autobid.retain_amount f=2}{else}0.00{/if}" id="ten_remain" name="retain_amount">&nbsp;&nbsp;元</td>
+		                    <td style="color: red">（您可填写一个金额，这部分钱不会加入自动投标）</td>
+		                </tr>
+	            	</tbody>
+				</table>
+				<div class="blank20"></div>
+				<div class="btn">
+					<input type="hidden" name="is_effect" value="{if $autobid.is_effect eq 0}1{else}0{/if}" />
+					<span> 
+					{if $autobid.user_id gt 0  && $user_info.money gt 50}
+						<button class="{if $autobid.is_effect eq 0}true_btn close{else}reset_btn open{/if}" id="J_autoBidEnable" type="button">{if $autobid.is_effect eq 0}开启{else}关闭{/if}自动投标</button>
+					{else}
+	                	<button class="reset_btn" disabled="disabled" type="button">开启自动投标</button>
+					{/if}
+		            </span>
+					<span>
+		                <input class="sub_btn" type="submit" value="保存设置" />
+		            </span>
+				</div>
+			</form>
+		</div>
+	
+	<div class="blank"></div>
+	<div class="bdd p10" style="border:0; border-top:1px dashed #e3e3e3; padding-left:60px">
+	    <div class="t_name">自动投标工具说明</div>
+	    <div class="t_cont lh24">
+	        1、贷款进入招标中三十分钟后，才会启动自动投标。<br>
+	        2、投标进度达到95%时停止自动投标。若投标后投标进度超过95%，则按照投标进度达到95%的金额向下取50的倍数投标。<br>
+	        3、单笔投标金额若超过该标贷款总额的20%，则按照20%比例的金额向下取50的倍数投标。<br>
+	        4、满足自动投标规则的金额小于设定的每次投标金额，也会进行自动投标。<br>
+	        5、贷款用户在获得贷款时会自动关闭自动投标，以避免借款被用作自动投标资金。<br>
+	        6、投标排序规则如下：<br>
+	        <div class="pl20">
+	            a）投标序列按照开启自动投标的时间先后进行排序。<br>
+	            b）每个用户每个标仅自动投标一次，投标后，排到队尾。<br>
+	            c）轮到用户投标时没有符合用户条件的标，也视为投标一次，重新排队。<br>
+	        </div>
+	    </div>
+	</div>
+</div>
+

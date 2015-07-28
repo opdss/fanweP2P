@@ -1,0 +1,93 @@
+<link rel="stylesheet" href="{$APP_ROOT}/admin/public/kindeditor/themes/default/default.css" />
+<script type='text/javascript'  src='{$APP_ROOT}/admin/public/kindeditor/kindeditor.js'></script>
+<script type="text/javascript" src="{$APP_ROOT}/admin/public/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+	var VAR_MODULE = "m";
+	var VAR_ACTION = "a";
+	var ROOT = '{$APP_ROOT}/file.php';
+	var ROOT_PATH = '{$APP_ROOT}';
+	var can_use_quota = "{$can_use_quota}";
+	var MAX_FILE_SIZE = "<?php echo (app_conf("MAX_IMAGE_SIZE")/1000000)."MB"; ?>";
+</script>
+<style type="text/css">
+	.user_info_box_green .field{ width:827px; margin:10px 0; padding-right:0; overflow:hidden; float:none; }
+	.user_info_box_green .field label{ width:140px; padding-right:5px; }
+	.ke-toolbar td { padding:0}
+	.user_info_item span.w125{ display:inline-block;}
+</style>
+<div class="blank"></div>
+<div class="blank5"></div>
+<div style="background: #fdfdfd;border:1px solid #ddd;" class="lh30 p20 pt10 pb10 ">
+	<div class="clearfix pb5">
+  			<div style="height:50px; border-bottom:1px solid #ddd">
+				<span class="f_l" style="font-weight: bold; font-size:24px; ">{$deal.name}</span>
+				<a href="{$deal.url}" class="f_r f_blue" target="_blank">借款申请信息预览</a>
+			</div>
+	 		<div class="blank15"></div>
+			<div class="cf">
+  				<div class=" f_l" style="width: 33%;"> 借款金额：<span class="f_red">{$deal.borrow_amount_format}</span> </div>
+  				<div class=" f_l" style="width: 33%;"> 年化利率<span class="spanML">：</span><span class="f_red">{function name="number_format" v=$deal.rate}%</span> </div>
+  				<div class=" f_l" style="width: 33%;"><div class="mL25"> 借款期限：<span class="f_red">{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</span></div></div>
+			</div>
+			<div class="blank10"></div>
+			<div class="cf">
+       			<div class=" f_l pt10"  style="width: 33%;"> 
+					信用等级：<a href="{url x="index" r="space#level" p="id=$deal.user_id"}" target="_blank"><img align="absmiddle" src="{$TMPL}/images/{$u_info.point_level}.png" width="40" title="{$u_info.point_level}" alt="{$u_info.point_level}"></a> 
+       			</div>
+       			
+				<div class="f_l pt5" style="margin: 0 0 0 28px;background:url({$TMPL}/images/t.gif) no-repeat 20px center  #FCE6BF;border: 1px solid #FCDA9F;border-radius: 10px;text-align: left;width: 440px;height: 49px; line-height:48px; padding-left:45px">
+        			温馨提示：您的借款申请将于3个工作日内为您审核完成。
+				</div>
+       			
+ 			</div>
+	</div>
+</div>
+<div class="blank20"></div>
+<div class="p20 tc f_red b f20">请务必填写补充以下认证资料</div>
+<div class="user_info_box_green p10 clearfix">
+	<div class="field" style="clear: both;">
+		<label class="pt20">必要信用认证：</label>
+		<div class="f_l" id="credit_html_box" style="width:650px"></div>
+	</div>
+</div>
+
+<div class="blank10"></div>
+<div class="tc">
+	<input type="button" class="true_btn" id="J_reback" value="先撤销审核，我还要改改" />
+</div>
+<div class="blank10"></div>
+<script type="text/javascript">
+	jQuery(function(){
+		ajax_load_credit();
+		$("#J_reback").click(function(){
+			$.ajax({
+				url:'{url x="index" r="borrow#reback" p="id=$deal.id"}',
+				dataType:"json",
+				success:function(result){
+					if(result.status==1)
+					{
+						window.location.href='{url x="index" r="borrow#stepone"}';
+					}
+					else{
+						$.showErr(result.info);
+					}
+				},
+				error:function(){
+					$.showErr("操作失败");
+				}
+			});
+		});
+	});
+	function ajax_load_credit(){
+		var loadntype = {$deal.type_id};
+		$.ajax({
+			url : '{url x="index" r="borrow#applyamount"}',
+			data:{loantype:loadntype,is_ajax:1},
+			type:"post",
+			dataType:"text",
+			success:function(result){
+				$("#credit_html_box").html(result);
+			}
+		});
+	}
+</script>

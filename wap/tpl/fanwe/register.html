@@ -1,0 +1,115 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/login.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+
+<div class="login">
+    <div id="mb_register">
+		<input class="logininput mainborder" id="user_name" name="user_name" type="text" placeholder="输入用户名">
+		<input class="logininput mainborder" id="user_pwd" name="user_pwd" type="password" placeholder="输入密码">
+		<input class="logininput mainborder" id="user_pwd_confirm" name="user_pwd_confirm" type="password" placeholder="确认密码">
+		<input class="logininput mainborder" id="phone" name="phone" type="text" placeholder="输入手机">
+		<input class="logininput_getcode mainborder" id="mobile_code" name="mobile_code" type="text" placeholder="输入验证码">
+		<input class="ui-button_getcode specialbackground" id="getcode" type="button" value="获取验证码">
+		<input class="logininput mainborder" id="referer" name="referer" type="text" placeholder="输入推荐人手机号/用户名">
+		<div class="blank"></div> 
+		<input class="ui-button_login Headerbackground_dark" type="submit" name="commit" id="signup-submit" value="注册">
+    </div>
+</div>
+<script type="text/javascript">
+
+$("#signup-submit").click(function(){
+	var name;
+	name=$.trim($("#user_pwd").val())
+	var reg=/^[a-zA-z0-9]{6,}$/;  
+	var regs=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/;
+	if(reg.test(name)){	
+		if(regs.test(name)){	
+		}
+		else{
+			alert("安全等级低，请用数字+字母");
+			return false;
+		}
+	}
+	else{
+		alert("长度在6~16之间，只能包含字符、数字和下划线。");
+		return false;
+	}
+	
+	var ajaxurl = '{wap_url a="index" r="register"}';
+	var query = new Object();
+	query.user_name = $.trim($("#user_name").val());
+	query.user_pwd = $.trim($("#user_pwd").val());
+	query.user_pwd_confirm = $.trim($("#user_pwd_confirm").val());
+	query.mobile = $.trim($("#phone").val());
+	query.mobile_code = $.trim($("#mobile_code").val());
+	query.referer = $.trim($("#referer").val());
+	query.post_type = "json";
+	$.ajax({
+		url:ajaxurl,
+		data:query,
+		type:"Post",
+		dataType:"json",
+		success:function(data){
+			if(data.user_login_status)
+			{	
+				alert(data.show_err);
+				window.location.href = '{wap_url a="index" r="register_idno"}';
+			}else{
+				alert(data.show_err);
+			}
+		}
+	});
+});
+
+
+$("#getcode").click(function(){
+	var ajaxurl = '{wap_url a="index" r="send_register_code"}';
+	var query = new Object();
+	query.mobile = $.trim($("#phone").val());
+	query.post_type = "json";
+	$.ajax({
+		url:ajaxurl,
+		data:query,
+		type:"Post",
+		dataType:"json",
+		success:function(data){
+			alert(data.show_err);
+		}
+	});
+});
+
+$("#user_name").bind("blur",function(){
+	var obj = $(this);
+	var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=check_field";
+	var query = new Object();
+	query.field_name = "user_name";
+	query.field_data = $.trim(obj.val());
+	$.ajax({ 
+		url: ajaxurl,
+		data:query,
+		type: "POST",
+		dataType: "json",
+		success: function(data){
+			if(data.status==1)
+			{
+			
+			}
+			else
+			{
+				alert(data.info);
+			}
+		}
+	});	
+}); //用户名验证
+
+</script>
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

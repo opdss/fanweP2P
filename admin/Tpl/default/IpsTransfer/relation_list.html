@@ -1,0 +1,76 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+
+    function get_is_site_repay($id)
+    {
+    	return l("IS_SITE_REPAY_".$id);
+    }
+    function get_user_name_by_id($id)
+    {
+    	return M("user")->where(" id=".$id)->getField("user_name");
+    }
+    function get_has_repay($id)
+    {
+    	return l("HAS_REPAY_".$id);
+    }
+	function get_deal_name($deal_id)
+    {
+    	if($deal_id)
+    		return M("deal")->where(" id=".$deal_id)->getField("name");
+    }
+	
+</php>
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">{%P_TRANSFER_RELATION_TITLE}
+	<a href="{:u("IpsTransfer/index")}" class="back_list">{%BACK_LIST}</a>
+</div>
+<div class="blank5"></div>
+<form name="search" action="__APP__" method="get">	
+<div class="button_row">
+	
+	
+	<if condition="!$_REQUEST['referer']">
+	<input type="button" class="button" value="{%EXPORT}" onclick="m_export_csv('relation_');" />
+	</if>
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<input type="hidden" name="id" value="{:trim($_REQUEST['id'])}" />
+</div>
+</form>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="repayment" 
+	datasource="list"
+	show="id:{%ID}
+    	 ,deal_id|get_deal_name:{%DEAL_NAME}
+         ,self_money:{%SELF_MONEY}
+         ,repay_money:{%REPAY_MONEY}
+         ,manage_money:{%MANAGE_MONEY}
+         ,manage_interest_money:利息管理费
+		 ,impose_money:{%IMPOSE_MONEY}
+		 ,repay_time|to_date='Y-m-d':{%RELATION_REPAY_TIME}
+		 ,true_repay_time|to_date:{%TRUE_REPAY_TIME}
+		 ,status:{%REPAY_STATUS}
+         ,is_site_repay|get_is_site_repay:{%IS_SITE_REPAY}
+         ,ll_key:{%L_KEY}
+         ,has_repay|get_has_repay:{%HAS_REPAY}
+         ,user_name:{%RELATION_USER_NAME}
+         ,t_user_name:{%RELATION_T_USER_NAME}
+         "         
+	 /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

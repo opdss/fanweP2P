@@ -1,0 +1,9 @@
+Array
+(
+    [out_trade_no] => 2014102011244524
+    [request_token] => requestToken
+    [result] => success
+    [trade_no] => 2014102000001000570036139806
+    [sign] => 414cd300dbb9153158ce9a5de840d30c
+    [sign_type] => MD5
+)

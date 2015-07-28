@@ -1,0 +1,149 @@
+<div class="tabbox clearfix">
+	<div class="tab  {if $ACTION_NAME eq 'index'}cur{/if}">
+		<a href="{url x="index" r="agency_money#index"}">{$LANG.UC_LOGS}</a>
+	</div>
+	<div class="tab  {if $ACTION_NAME eq 'incharge'}cur{/if}">
+		<a href="{url x="index" r="agency_money#incharge"}">{$LANG.UC_MONEY_INCHARGE}</a>
+	</div>
+	<div class="tab  {if $ACTION_NAME eq 'incharge_log'}cur{/if}">
+		<a href="{url x="index" r="agency_money#incharge_log"}">{$LANG.UC_MONEY_INCHARGE_LOG}</a>
+	</div>
+	<div class="tab  {if $ACTION_NAME eq 'bank'}cur{/if}">
+		<a href="{url x="index" value="agency_money#bank"}">{$LANG.UC_CARRY}</a>
+	</div>
+	<div class="tab  {if $ACTION_NAME eq 'carry_log'}cur{/if}">
+		<a href="{url x="index" value="agency_money#carry_log"}">提现日志</a>
+	</div>
+</div>
+<div class="uc_box bdd bt0">
+		<table width="100%;" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+			<tr border="0">
+				<th style="width:10%">提现金额</th>
+				<th style="width:10%">手续费</th>
+                <th style="width:10%">IPS手续费收取方</th>
+				<th style="width:10%">提现订单号</th>
+                <th style="width:10%">提现模式</th>
+				<th style="width:10%">提现资料</th>
+				<th style="width:12%">处理结果</th>
+			</tr>
+			{foreach from=$list item=order key=key}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+			
+				<td style="font-size:12px;">
+					{function name="format_price" value=$order.pTrdAmt}
+				</td>
+				<td style="font-size:12px;">
+					{function name="format_price" value=$order.pMerFee}
+				</td>
+				<td style="font-size:12px;">
+                	{if $order.pIpsFeeType==1}
+                    	平台支付
+                    {else}
+                    	提现方支付
+                    {/if}
+				</td>
+				<td>{$order.pMerBillNo}</td>
+                <td style="font-size:12px;">
+                	{if $order.pOutType==1}
+                    	普通提现
+                    {else}
+                    	定向提现
+                    {/if}
+				</td>
+				<td class="tl">
+					证件号码：<br/>{$order.pIdentNo}<br/>
+                	姓名:<br/>{$order.pRealName}
+				</td>
+				<td style="font-size:12px;">
+					{if $order.pErrCode eq 'MG00000F'}
+						成功
+					{else}
+                    	{$order.pErrCode}
+					{/if}
+				</td>
+			</tr>
+			{/foreach}
+		</table>
+		<div class="pages">{$pages}</div>
+	</div>				
+		
+<script type="text/javascript">
+	{if $below_payment}
+	function SelectPayType(i){
+		switch(i){
+			case 0:
+				$("#J_online_pay").show();
+				$("#J_below_pay").hide();
+				break;
+			case 1:
+				$("#J_online_pay").hide();
+				$("#J_below_pay").show();
+				break;
+		}
+	}
+	{/if}
+	$(document).ready(function(){
+		$("#incharge_done").click(function(){
+			if(!($("input[name='money']").val()!=''&&!isNaN($("input[name='money']").val())&&$("input[name='money']").val()>0))			
+			{
+				$.showErr("{$LANG.PLEASE_INPUT_CORRECT_INCHARGE}");
+				return false;
+			}
+			else if(!$("input[name='payment']:checked").val())
+			{
+				$.showErr("{$LANG.PLEASE_SELECT_PAYMENT}");
+				return false;
+			}
+		});
+	});
+	jQuery(function(){
+			$(".J_do_reback").click(function(){
+			var dltid = $(this).attr("dataid");
+			$.showCfm("确认撤销吗？",function(){
+				$.ajax({
+					url:'{url r="index" x="uc_money#do_reback"}',
+					data:"&dltid="+dltid,
+					type:"post",
+					dataType:'json',
+					success:function(result){
+						if(result.status==1){
+							$.showSuccess("撤销成功");
+							window.location.reload();
+						}
+						else{
+							$.showErr(result.info);
+						}
+					},
+					error:function(){
+						$.showErr("请求数据失败");
+					}
+				});
+			});
+		});
+		$(".J_do_apply").click(function(){
+			var dltid = $(this).attr("dataid");
+			$.showCfm("继续申请吗？",function(){
+				$.ajax({
+					url:'{url r="index" x="uc_money#do_Apply"}',
+					data:"&dltid="+dltid,
+					type:"post",
+					dataType:'json',
+					success:function(result){
+						if(result.status==1){
+							$.showSuccess("申请成功");
+							window.location.reload();
+						}
+						else{
+							$.showErr(result.info);
+						}
+					},
+					error:function(){
+						$.showErr("请求数据失败");
+					}
+				});
+			});
+		});
+
+	});
+
+</script>

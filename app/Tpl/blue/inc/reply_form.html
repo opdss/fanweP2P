@@ -1,0 +1,149 @@
+<div class="topic_pub_form">
+<textarea class="f-textarea pubform" name="{$text_name}" id="{$box_id}" style="width:{$width}; height:{$height};"></textarea>
+<div class="blank"></div>
+<div class="f_l">
+<span class="form_face form_ico reply_form_face">{$LANG.FACE}</span>
+</div>
+{if $show_btn}
+<div class="f_r verify_row">
+	<input type="button" onclick="{$js_func}(this);" class="topic_form_button" name="commit" value="{$LANG.SUBMIT_FORM}" />	
+</div>
+{/if}
+<div class="blank1"></div>
+<script type="text/javascript">
+function valid_length()
+{
+			var c = $("#{$box_id}").val();
+			if(c.length>500)
+			{
+				$("#{$box_id}").val(c.substr(0,500));
+			}
+}
+$(document).ready(function(){		
+		init_reply_form();
+});
+
+function init_reply_form()
+{
+	$("#{$box_id}").bind("change keyup",function(){
+			valid_length();
+		});	
+	$(".reply_form_face").bind("click",function(){
+			var obj = this;
+			var face_html = $("#face_box_hd").html();
+			var face_tab_html = $("#face_box_tab").html();
+			$.weeboxs.open(
+				face_html, 
+				{
+					boxid:'form_pop_box',
+					contentType:'text',
+					position:'element',
+					trigger:obj,
+					draggable:false,
+					modal:false,
+					showButton:false,
+					title:face_tab_html,
+					width:405
+				});
+			bind_set_reply_expression();
+		});
+		
+//		var txt = $("#{$box_id}");
+//		txt.attr({"position":txt.val().length});			
+//		txt.bind('click', function(){
+//				txt.attr({"position":$(this).position()});
+//		});			
+//		txt.bind('keyup', function(){
+//				txt.attr({"position":$(this).position()});
+//		});	
+}
+function bind_set_reply_expression()
+{
+	$(".emotion").find("a").bind("click",function(){
+		var o = $(this);
+		insert_reply_cnt("["+$(o).attr("rel")+"]");	
+	});
+	
+}
+
+function insert_reply_cnt(cnt)
+{
+	var val = $("#{$box_id}").val();
+	$("#{$box_id}").val(val+cnt);
+}
+function toogle_mo(o)
+{
+	$(o).blur();
+	$(o).parent().parent().parent().parent().parent().find(".emotion").hide();
+	$(o).parent().parent().find("li").removeClass("c");
+	$(o).parent().addClass("c");
+	$(o).parent().parent().parent().parent().parent().find(".emotion[f='"+$(o).parent().attr("f")+"']").show();
+}
+
+function insert_{$box_id}_cnt(cnt)
+{
+	var val = $("#{$box_id}").val();
+//	var pos = $("#{$box_id}").attr("position");
+//	var bpart = val.substr(0,pos);
+//	var epart = val.substr(pos,val.length);
+//	$("#{$box_id}").val(bpart+cnt+epart);
+	$("#{$box_id}").val(val+cnt);
+}
+
+
+//获取光标位置
+//$.fn.position = function(){
+//		var s,e,range,stored_range;
+//		if(this[0].selectionStart == undefined)
+//		{
+//			var selection=document.selection;
+//			if (this[0].tagName.toLowerCase() != "textarea")
+//			{
+//				var val = this.val();
+//				range = selection.createRange().duplicate();
+//				range.moveEnd("character", val.length);
+//				s = (range.text == "" ? val.length:val.lastIndexOf(range.text));
+//				range = selection.createRange().duplicate();
+//				range.moveStart("character", -val.length);
+//				e = range.text.length;
+//			}
+//			else
+//			{
+//				range = selection.createRange(),
+//				stored_range = range.duplicate();
+//				stored_range.moveToElementText(this[0]);
+//				stored_range.setEndPoint('EndToEnd', range);
+//				s = stored_range.text.length - range.text.length;
+//				e = s + range.text.length;
+//			}
+//		}
+//		else
+//		{
+//			s=this[0].selectionStart,
+//			e=this[0].selectionEnd;
+//		}
+//		var te=this[0].value.substring(s,e);
+//		return s;
+//};
+</script>
+
+<div id="face_box_tab" style="display:none;">
+	<ul class="lb_tab">
+	{foreach from=$expression key=key item=item}
+	<li class="{if $key =='qq'}c{/if} rt3 " f="{$key}" title="{$key}"><a onclick="toogle_mo(this);" onfocus="$(this).blur();" href="javascript:void(0)">
+		<?php echo $GLOBALS['lang']['EXPRESSION_'.strtoupper($GLOBALS['tmpl']->_var['key'])];?>
+	</a></li>
+	{/foreach}
+	</ul>
+</div>
+<div id="face_box_hd" style="display:none;">
+<div class="blank1"></div>
+{foreach from=$expression key=key item=item}
+<div class="emotion {$key}" f="{$key}" {if $key !='qq'}style="display:none;"{/if}>
+{foreach from=$item item=exp}
+	<a href="javascript:void(0);" title="{$exp.title}" rel="{$exp.emotion}"><img src="{$exp.filename}" /></a>
+{/foreach}
+</div>
+{/foreach}
+</div>
+</div>

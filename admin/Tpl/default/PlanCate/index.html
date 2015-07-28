@@ -1,0 +1,32 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+<div class="blank5"></div>
+<!-- ,description:计划简介 -->
+<html:list 
+	id="dataTable"
+	style="dataTable"
+	name="plancate"
+	checkbox="true"
+	action="true"
+	datasource="list"
+	show="id:{%ID}|50px
+		,name:计划名称
+		,rate:预期收益率
+		,is_effect|get_is_effect=$plancate['id']:{%IS_EFFECT}
+		,sort:排序
+		,repay_time:锁定期限"
+	actionlist="edit:{%EDIT}, del:{%DEL}"
+	actionwidth="100px"/>
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

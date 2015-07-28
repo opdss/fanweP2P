@@ -1,0 +1,32 @@
+
+<div class="card_info">
+	<div class="f_l">
+		<a href="{url x="index" r="space" p="id=$card_info.id"}"><img src="{function name="get_user_avatar" v=$card_info.id t="small"}" /></a>
+	</div>
+	<div class="f_l pl10" >
+		<a href="{url x="index" r="space" p="id=$card_info.id"}" class="f_blue b">{$card_info.user_name}</a>
+		<a href="{url x="index" r="space#fans" p="id=$card_info.id"}">{$LANG.FANS}:{$card_info.focused_count}</a>
+		<a href="{url x="index" r="space#focus" p="id=$card_info.id"}">{$LANG.FOCUS}:{$card_info.focus_count}</a>
+	</div>
+	<div class="blank5"></div>
+	{if $card_info.my_intro}
+	<span title="{$card_info.my_intro}">{function name="msubstr" v=$card_info.my_intro b=0 e=12}</span>
+	{else}
+	这家伙太懒了，什么都没留下
+	{/if}
+	{if $card_info.point_level or $card_info.medal_list}
+	<div class="blank5"></div>
+	<span class="f_blue">{$card_info.point_level}</span>&nbsp;&nbsp;
+	{/if}	
+</div>
+<div class="usercard_focus">
+	{if $card_info.focused eq 1}
+		<a href="javascript:;" onclick="focus_user({$card_info.id},this);" class="remove_focus" style="margin:0px 5px; _margin-top:-1px;">{$LANG.CANCEL_FOCUS}</a>
+	{else}
+		{if $card_info.id eq $user_info.id}
+			&nbsp;&nbsp;自己都不认识了？
+		{else}
+			<a href="javascript:;" onclick="focus_user({$card_info.id},this);" class="add_focus"  style="margin:0px 5px;  _margin-top:-1px;">{$LANG.FOCUS_THEY}</a>
+		{/if}
+	{/if}
+</div>

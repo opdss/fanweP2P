@@ -1,0 +1,76 @@
+.clearfix:after{
+content:"."; display:block; height:0; clear:both;
+visibility:hidden;
+}
+
+.transfer .detail{
+	border:1px solid @border_color;
+	border-radius:5px;
+	background:#f4f2f3;
+	color: @font_main;
+}
+.transfer{
+	padding:10px;
+}
+.transfer .detail .h{
+	padding:4px 0px;
+	border-bottom:2px solid @border_color;
+	width:100%;
+}
+.transfer .detail .text{
+	background:@box_color;
+	border-bottom-right-radius:5px;
+	border-bottom-left-radius:5px;
+}
+.transfer .detail .h .name{
+	float:left;
+	padding-left:10px;
+	margin-left:-3px;
+	height:22px;
+	line-height:20px;
+	text-align:left;
+	color:@font_white;
+	background:url(../images/transfer/name.png) no-repeat;
+	min-width:61px;
+}
+.transfer .detail .h h3{
+	float:left;
+	padding-left:10px;	
+	line-height:20px;
+}
+.trans_li{
+	margin-bottom:15px;
+}
+.transfer .text dd{
+	float:left;
+	width:25%;
+	text-align:center;
+	line-height:25px;
+}
+ dd font{
+	color:@font_black;
+	
+}
+.transfer .text dl{
+	padding:10px 0;
+	overflow:hidden;
+}
+.transfer .time_p{
+	border-top:1px dotted @border_color;
+	padding:5px 10px;
+	line-height:20px;
+	
+}
+.user_name{
+	height:22px;
+	background:#3b95d3;
+	float:left;
+	padding-right:10px;
+}
+.user_name_footer{
+	float:left;
+	height:22px;
+	width:8px;
+	overflow:hidden;
+	background:url(../images/transfer/name.png) no-repeat -63px 0;
+}

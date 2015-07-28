@@ -1,0 +1,97 @@
+<div class="clearfix f_dgray">
+	<form name="J_reportguy_form" id="J_reportguy_form" method="post">
+	<div class="tips" style="width:auto">
+        <span class="f_red">请如实举报，本举报为实名举报。</span>
+    </div>
+	<div class="clearfix" style="padding:10px 0">
+        <div class="f_l pr10 w100 tr">
+		被举报用户：
+        </div>
+        <div class="f_l">
+            {$u_info.user_name}
+        </div>
+    </div>
+	<div class="clearfix" style="padding:10px 0">
+        <div class="f_l pr10 w100 tr">
+         	举报原因：
+        </div>
+        <div class="f_l">
+            <label><input type="radio" name="reason" value="在其他网站有借款" checked=""> 此用户在其他网站有借款：（请提供链接，用户名等）</label>
+        </div>
+    </div>
+	<div class="clearfix" style="padding:10px 0">
+        <div class="f_l pr10 w100 tr">
+            &nbsp;
+        </div>
+        <div class="f_l">
+            <label><input type="radio" name="reason" value="乱发骚扰信息"> 此用户乱发骚扰信息：（请提供信息内容如站内信）</label>
+        </div>
+    </div>
+	<div class="clearfix" style="padding:10px 0">
+        <div class="f_l pr10 w100 tr">
+            &nbsp;
+        </div>
+        <div class="f_l">
+            <label><input type="radio" name="reason" value="冒用他人身份"> 此用户冒用他人身份：如照片，列表内容，身份信息，网站等</label>
+        </div>
+    </div>
+	<div class="clearfix" style="padding:10px 0">
+        <div class="f_l pr10 w100 tr">
+            &nbsp;
+        </div>
+        <div class="f_l">
+            <label><input type="radio" name="reason" value="有虚假信息"> 怀疑此人有虚假信息：（请提供理由，链接等）</label>
+        </div>
+    </div>
+	<div class="clearfix" style="padding:10px 0">
+        <div class="f_l pr10 w100 tr">
+            &nbsp;
+        </div>
+        <div class="f_l">
+            <label><input type="radio" name="reason" value="发表了不当语言或图片"> 其他/此用户发表了不当语言或图片：（请说明或提供链接）</label>
+        </div>
+    </div>
+	<div class="clearfix" style="padding:10px 0; height: 90px">
+        <div class="f_l pr10 w100 tr">
+           	 举报内容：
+        </div>
+        <div class="f_l">
+            <textarea name="content" id="res_content" style="width:320px; height:80px"></textarea>
+        </div>
+    </div>
+	<div class="clearfix tc" style="height:30px">
+		<input type="hidden" value="{$u_info.id}" name="user_id">
+        <input type="submit" value="提交" class="common_btn" style="width: 80px;height:27px">
+    </div>
+	</form>
+</div>
+<script type="text/javascript">
+	var is_reportguy_lock = false;
+	$("#J_reportguy_form").submit(function(){
+		if(is_reportguy_lock == true){
+			alert("处理中，请稍后！");
+			return false;
+		}
+		is_reportguy_lock = true;
+		var query  = $(this).serialize();
+		$.ajax({
+			url:APP_ROOT+"/index.php?ctl=ajax&act=savereportguy",
+			data : query,
+			type: "post",
+			dataType : "json",
+			success:function(result){
+				is_reportguy_lock = false;
+				if(result.status == 1){
+					$.showSuccess("举报成功，我们将尽快处理！",function(){
+						$("#J_reportGuy_{$u_info.id}").html("已举报该用户");
+						$.weeboxs.close();
+					});
+				}
+				else{
+					$.showErr(result.message);
+				}
+			}
+		});
+		return false;
+	});
+</script>

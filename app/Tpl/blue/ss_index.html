@@ -1,0 +1,19 @@
+{include file="inc/header.html"} 
+<div class="blank"></div>
+<div class="short f_l">
+	{include file="inc/cate_tree.html"}
+</div>
+<div class="long f_r">
+{if $filter}
+	{include file="inc/search_filter.html"}
+	<div class="blank"></div>
+{/if}
+{if $show_list}
+{include file="inc/inc_goods_list.html"}
+<div class="blank"></div>
+<div class="pages">{$pages}</div>	
+{/if}
+</div>
+<div class="blank"></div>
+
+{include file="inc/footer.html"}

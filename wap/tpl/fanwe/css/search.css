@@ -1,0 +1,59 @@
+.condition_team{
+            overflow:hidden;
+			padding:10px 0 0px 110px;
+			border-bottom:1px solid  @border_color;
+}
+.condition_team  h3{
+	 margin-left:-110px;
+	 float:left;
+	 font-size:15px;
+	 line-height:30px;
+}
+.condition_team  h3 i{
+	color:#ccc;
+	padding:0 10px;
+	
+}
+.condition_team dl dd{
+	float:left;
+	display:block;
+	border-radius:5px;
+	text-align:center;
+	color:@main_color;
+	width:90px;
+	margin:0 10px 10px 0;
+	line-height:30px;
+	height:30px;
+	cursor:pointer;
+	overflow:hidden;
+}
+.condition_team dl dd p{
+	display:block;
+}
+.condition_team dl .current{
+	color:#fff;
+	background:@main_color;
+}
+.but_search{
+	width:100%;
+	height:50px;
+	background:@main_color;
+	text-align:center;
+	line-height:50px;
+	color:#fff;
+	position:fixed;
+	bottom:0px;
+	font-size:18px;
+	cursor:pointer;
+}
+.but_search input{
+	width:100%;
+	height:100%;
+	background:none;
+	text-align:center;
+		line-height:50px;
+	color:#fff;
+	font-size:18px;
+	font-weight:700;
+	float:left;
+}

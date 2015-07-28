@@ -1,0 +1,41 @@
+<?php
+$this->_var['mdjs'][] = $this->_var['TMPL_REAL']."/js/medal.js";
+$this->_var['cpmdjs'][] = $this->_var['TMPL_REAL']."/js/medal.js";
+$this->_var['mdcss'][] = $this->_var['TMPL_REAL']."/css/medal.css";
+?>
+<script type="text/javascript" src="{function name="parse_script" v="$mdjs" c="$cpmdjs"}"></script>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$mdcss"}" />
+<div class="inc wb">
+	<div class="inc_top">{$page_title}</div>
+	
+	<div class="inc_main medal_list clearfix">
+		<span class="medal_group">所有勋章</span>
+		<div class="blank"></div>
+		{foreach from=$list item=medal}
+		<div class="medal_item">
+		<a href="javascript:void(0);" class="medal_icon" title="{$medal.name}" rel="{$medal.id}">
+			<img src="{function name="get_spec_image" v=$medal.icon w=100 h=100 g=1}" alt="{$medal.name}" />
+		</a>
+		<a href="javascript:void(0);" class="medal_name" title="{$medal.name}"  rel="{$medal.id}">{$medal.name}</a>
+		</div>
+		
+		{/foreach}
+		<div class="blank"></div>
+		{if $my_list}
+		<span class="medal_group">我的勋章</span>
+		<div class="blank"></div>
+		{foreach from=$my_list item=medal}
+		<div class="medal_item">
+		<span class="medal_icon" title="{$medal.name}">
+			<img src="{function name="get_spec_image" v=$medal.icon w=100 h=100 g=1}" alt="{$medal.name}" />
+		</span>
+		<span title="{$medal.name}">{$medal.name}</span>
+		</div>
+		
+		{/foreach}
+		<div class="blank"></div>
+		{/if}
+	</div>
+	<div class="inc_foot"></div>
+</div>
+

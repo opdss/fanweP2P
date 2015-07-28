@@ -1,0 +1,21 @@
+{foreach from=$reply_list item=reply}
+<div class="reply_item">
+<div class="f_l reply_item_hd">
+	<a target="_blank" href="{url x="index" r="space" p="id=$reply.user_id"}">{function name="show_avatar" uid=$reply.user_id  type="small" }</a>
+</div>
+<div class="f_l reply_item_content">
+		<div class="reply_item_date">
+			<div class="f_l"><span>{$reply.user_name}</span> 于 {$reply.create_time_format} 发表回应</div>
+			<div class="f_r">{if $user_auth[dp][replydel]}<a href="javascript:void(0);" onclick="op_dp_replydel({$reply.id});">删除</a>{/if}</div>
+		</div>
+		<div style="padding:5px;"><?php echo nl2br(msubstr($this->_var['reply']['content'],0,500)); ?></div>
+</div>
+<div class="blank"></div>
+</div>
+{/foreach}
+
+<div class="pagination">
+	<div class="pages">
+	{$pages}
+	</div>
+</div>

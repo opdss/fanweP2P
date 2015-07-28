@@ -1,0 +1,47 @@
+{include file="inc/vote_header.html"} 
+<body style="background:#ECECEC;">
+	<div class="vote_box">
+		<div class="vote_box_top"></div>
+		<div class="vote_box_main">
+			<div class="vote_main">
+						<div class="vote_head">
+							{$vote.name}
+						</div>
+						<div class="blank"></div>
+						<div class="vote_desc">{$vote.description}</div>
+						<div class="blank"></div>
+						<form action="{url x="shop" r="vote#dovote"}" method="post">
+								<ol class="vote-list">
+									{foreach from=$vote_ask item=ask}
+									<li>
+										<h4>{$ask.name}</h4>
+										<div class="choices">
+											{foreach from=$ask.val_scope item=val}
+											{if $val neq ''}
+											<label><input type="{if $ask.type neq 2 and $ask.type neq 5}radio{/if}{if $ask.type neq 1 and $ask.type neq 4}checkbox{/if}" name="name[{$ask.id}][]" value="{$val}" class="choice" /> {$val} </label>
+											{/if}
+											{/foreach}
+											{if $ask.type eq 3 or $ask.type eq 4 or $ask.type eq 5}
+											{$LANG.OTHER_VOTE}: <input type="text" name="name[{$ask.id}][]" class="f-text" />
+											{/if}
+										</label>
+										</div>
+										<div class="blank"></div>
+									</li>		
+									{/foreach}						
+								</ol>
+								<div class="blank"></div>
+								<div class="commit">
+									<input type="hidden" value="{$vote.id}" name="vote_id">
+									<input type="submit" value="{$LANG.OK_AND_SUBMIT}" name="submit" class="formbutton">
+								</div>
+							</form>
+												
+				
+					
+			</div>
+		</div><!--end vote_box_main-->
+		<div class="vote_box_foot"></div>
+	</div><!--vote_box-->	
+</body>
+<html>

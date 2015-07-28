@@ -1,0 +1,431 @@
+<div class="tabbox clearfix">
+	<div class="tab cur">
+		<a href="{url x="index" r="authorized#security"}">{$LANG.UC_SECURITY}</a>
+	</div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	<ul class="security-ul">
+		<li>
+			<div class="it cf clearfix">
+				<div class="icon">
+					<i class="iconfont f_blue">&#xe633;</i>
+				</div>
+				<h3>昵称</h3>
+				{if $authorized_info.user_name}
+				<p>已设置</p>
+				{else}
+				<p class="f_red">未设置</p>
+				{/if}
+				<div class="update">{$authorized_info.user_name}</div>
+			</div>
+		</li>
+		
+		
+		<li>
+			<div class="it cf clearfix">
+				<div class="icon">
+					<i class="iconfont f_blue">&#xe634;</i>
+				</div>
+				<h3>登录密码</h3>
+				{if $authorized_info.user_pwd}
+				<p>已设置</p>
+				{else}
+				<p class="f_red">未设置</p>
+				{/if}
+				<div class="update"><a href="javascript:void(0);" id="J_setting_pwd">修改</a></div>
+			</div>
+			<div id="setting-pwd-box"  style="display:none;">
+				<div class="inc_main">
+					<div class="lh22 f14" style="margin-bottom:20px;padding-left:52px;padding-top:50px;">
+						<div class="field password">
+							<label for="settings-password"><span class="red">*</span>手机验证码</label>
+							<input type="hidden" value="{$authorized_info.mobile}" id="mobiles">
+							<input type="text" value="" class="f-input ui-textbox"  name="sms_code" id="settings-sms_code">
+							<input type="button" value="获取验证码" class="sendsms_button f_l" id="get_regsms_code" class="ml5 f_l"  />
+							<span class="hint">请输入收到的手机验证码</span> 
+						</div>
+						<div class="blank1"></div>
+						
+						
+						<div class="field password">
+							<label for="settings-password"><span class="red">*</span>密码</label>
+							<input type="password" value="" class="f-input ui-textbox" name="password" id="settings-password">
+							<span class="hint">{$LANG.USER_TITLE_USER_PWD_TIP}</span> 
+						</div>
+						<div class="blank10"></div>
+						<div class="field passwrod">
+							<label for="settings-password-comfirm"><span class="red">*</span>确认密码</label>
+							<input type="password" value="" class="f-input ui-textbox" name="password-confirm" id="settings-password-confirm">
+						</div>
+						<div class="blank20"></div>
+						<div style="padding-left:190px;_padding-left:180px;">
+							<input type="button" class="sub_btn" id="settings-password-submit" name="commit" value="保存更改">
+						</div>
+					</div>
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="it cf clearfix">
+				<div class="icon">
+					<i class="iconfont f_blue">&#xe636;</i>
+				</div>
+				<h3>绑定邮箱</h3>
+				{if $authorized_info.email neq '' && $authorized_info.emailpassed eq 1}
+				<p>已绑定</p>
+				{elseif $authorized_info.email neq '' && $authorized_info.emailpassed eq 0}
+				<p>已设置&nbsp;{function name="hideEmail" v=$authorized_info.email}</p>
+				{else}
+				<p class="f_red">未设置</p>
+				{/if}
+				<div class="update">
+					{if $authorized_info.email neq '' && $authorized_info.emailpassed eq 1}
+						{function name="hideEmail" v=$authorized_info.email}
+					{else}
+						<a href="javascript:void(0);" id="J_setting_email">修改</a>
+					{/if}
+				</div>
+			</div>
+			
+			<div id="setting-email-box" style="display:none;"></div>
+		</li>
+		<li>
+			<div class="it cf clearfix">
+				<div class="icon">
+					<i class="iconfont f_blue">&#xe632;</i>
+				</div>
+				<h3>绑定手机</h3>
+				{if $authorized_info.mobilepassed}
+				<p>{function name="hideMobile" v=$authorized_info.mobile}</p>
+				{elseif !$authorized_info.mobilepassed && $authorized_info.mobile!=""}
+                <p class="f_red">未验证</p>
+                {else}
+				<p class="f_red">未绑定</p>
+				{/if}
+				<div class="update"><a href="{url x="index" r="authorized#mobile"}" id="J_setting_mobile">修改</a></div>
+			</div>
+			<div id="setting-mobile-box" style="display:none;"></div>
+		</li>
+        <li>
+			<div class="it cf clearfix">
+				<div class="icon pr">
+					<i class="iconfont ps small f_blue">&#xe604;</i>
+					<i class="iconfont f_blue">&#xe634;</i>
+				</div>
+				<h3>支付密码</h3>
+				{if $authorized_info.paypassword}
+				<p>已设置</p>
+				{else}
+				<p class="f_red">未设置</p>
+				{/if}
+				<div class="update"><a href="{url x="index" r="authorized#paypassword"}" id="J_setting_paypwd">设置</a></div>
+			</div>
+			<div id="setting-paypwd-box" style="display:none;"></div>
+		</li>
+	</ul>
+</div>	
+<link rel="stylesheet" href="{$APP_ROOT}/admin/public/kindeditor/themes/default/default.css" />
+<script type='text/javascript'  src='{$APP_ROOT}/admin/public/kindeditor/kindeditor.js'></script>
+<script type="text/javascript" src="{$APP_ROOT}/admin/public/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+	var VAR_MODULE = "m";
+	var VAR_ACTION = "a";
+	var ROOT = '{$APP_ROOT}/file.php';
+	var ROOT_PATH = '{$APP_ROOT}';
+	var MAX_FILE_SIZE = "<?php echo (app_conf("MAX_IMAGE_SIZE")/1000000)."MB"; ?>";
+	jQuery(function(){
+		$("#J_setting_idno").click(function(){
+			if($(this).hasClass("v")){
+				$(this).removeClass("v");
+				$(this).html($(this).attr("rel"));
+				$("#setting-idno-box").slideUp();
+			}
+			else{
+				$(this).addClass("v");
+				$(this).html("取消"+$(this).attr("rel"));
+				if($.trim($("#setting-idno-box").html())==""){
+					var ajaxurl = '{url x="index" r="credit_agencies"}';
+					$.ajax({
+						url:ajaxurl,
+						data:"&type=credit_identificationscanning&is_ajax=1",
+						type:"post",
+						dataType:"json",
+						success:function(ajaxobj){
+							if(ajaxobj.status == 1){
+								$("#setting-idno-box").html(ajaxobj.info);
+								bindKindeditor();
+								$("#setting-idno-box").slideDown();
+								init_ui_checkbox();
+								init_ui_select();
+								init_ui_textbox();
+							}
+							else{
+								$.showErr(ajaxobj.info);
+							}
+						}
+					});
+				}
+				else
+					$("#setting-idno-box").slideDown();
+			}
+		});
+		
+		
+		$("#J_setting_email").click(function(){
+			if($(this).hasClass("v")){
+				$(this).removeClass("v");
+				$(this).html("修改");
+				$("#setting-email-box").slideUp();
+			}
+			else{
+				$(this).addClass("v");
+				$(this).html("取消修改");
+				if($.trim($("#setting-email-box").html())==""){
+					var ajaxurl = '{url x="index" r="authorized#email"}';
+					$.ajax({
+						url:ajaxurl,
+						data:"&step=1",
+						type:"post",
+						dataType:"text",
+						success:function(ajaxobj){
+							$("#setting-email-box").html(ajaxobj);
+							$("#setting-email-box").slideDown();
+							init_ui_textbox();
+						}
+					});
+				}
+				else
+					$("#setting-email-box").slideDown();
+			}
+		});
+		$("#J_setting_pwd").click(function(){
+			if($(this).hasClass("v")){
+				$(this).removeClass("v");
+				$(this).html("修改");
+				$("#setting-pwd-box").slideUp();
+			}
+			else{
+				$(this).addClass("v");
+				$(this).html("取消修改");
+				$("#setting-pwd-box").slideDown();
+			}
+		});
+		$("#J_setting_mobile").click(function(){
+			if($(this).hasClass("v")){
+				$(this).removeClass("v");
+				$(this).html("修改");
+				$("#setting-mobile-box").slideUp();
+			}
+			else{
+				$(this).addClass("v");
+				$(this).html("取消修改");
+				if($.trim($("#setting-mobile-box").html())==""){
+					var ajaxurl = $(this).attr("href");
+					$.ajax({
+						url:ajaxurl,
+						data:"&is_ajax=1",
+						type:"post",
+						dataType:"text",
+						success:function(ajaxobj){
+							$("#setting-mobile-box").html(ajaxobj);
+							$("#setting-mobile-box").slideDown();
+							init_ui_textbox();
+						}
+					});
+				}
+				else
+					$("#setting-mobile-box").slideDown();
+			}
+			return false;
+		});
+		$("#J_setting_paypwd").click(function(){
+			if($(this).hasClass("v")){
+				$(this).removeClass("v");
+				$(this).html("设置");
+				$("#setting-paypwd-box").slideUp();
+			}
+			else{
+				$(this).addClass("v");
+				$(this).html("取消设置");
+				if($.trim($("#setting-paypwd-box").html())==""){
+					var ajaxurl = $(this).attr("href");
+					$.ajax({
+						url:ajaxurl,
+						data:"&is_ajax=1",
+						type:"post",
+						dataType:"json",
+						success:function(ajaxobj){
+							if(ajaxobj.status==1){
+								$("#setting-paypwd-box").html(ajaxobj.info);
+								$("#setting-paypwd-box").slideDown();
+								init_ui_textbox();
+							}
+							else
+								$.showErr(ajaxobj.info);
+						}
+					});
+				}
+				else
+					$("#setting-paypwd-box").slideDown();
+			}
+			return false;
+		});
+		
+		
+		var regsiter_vy_times = null;  	//定义时间
+		var is_lock_send_vys = false;	//解除锁定
+		var left_rg_times = 0;			//开始时间
+		function left_time_to_send_regvys(){
+			clearTimeout(regsiter_vy_times);
+			if(left_rg_times > 0){
+				regsiter_vy_times = setTimeout(left_time_to_send_regvys,1000);
+				$("#get_regsms_code").val(left_rg_times+"秒后重新获取");
+				$("#get_regsms_code").addClass("btn_disable");
+				left_rg_times -- ;
+			}
+			else{
+				is_lock_send_vys = false;
+				$("#get_regsms_code").removeClass("btn_disable");
+				$("#get_regsms_code").val("重新获取验证码");
+				left_rg_times = 0;
+			}
+		}
+		
+		
+		//获取手机验证码
+		$("#get_regsms_code").click(function(){
+				
+				is_lock_send_vys = true;
+				var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=get_re_pwd_verify_code";
+				var query = new Object();
+				query.user_mobile =  $.trim($("#mobiles").val());
+				$.ajax({ 
+					url: ajaxurl,
+					data:query,
+					type: "POST",
+					dataType: "json",
+					success: function(result){
+						if(result.status==1)
+						{
+							left_rg_times = 60;
+							left_time_to_send_regvys();
+							$.showSuccess(result.info,function(){
+								to_send_msg = true;
+							});
+						}
+						else
+						{	
+							is_lock_send_vys = false;
+							formError($("#get_regsms_code"),result.info);
+							return false;
+						}
+					},error:function(){
+						    is_lock_send_vys = false;
+					}
+				});	
+		}); 	
+		
+		
+		/*实名认证*/
+		$("#settings-idsno-submit").click(function(){
+			
+			
+			if($.trim($("#real_name").val()).length == 0 )
+			{			
+				$.showErr("真实姓名不为空");
+				return false;
+			}	
+			
+			if($.trim($("#idno").val()).length == 0)
+			{			
+				$.showErr("身份证号不为空");
+				return false;
+			}
+			
+			if(($.trim($("#idno").val()).length != 18 ) && ($.trim($("#idno").val()).length !=15))
+			{			
+				$.showErr("身份证格式错误");
+				return false;
+			}	
+			
+			var query = new Object();
+			query.is_ajax = 1;
+			
+			query.real_name = $("#real_name").val();
+			query.idno = $("#idno").val();
+
+			query.sta = 1;
+			
+			$.ajax({
+				url:'{url x="index" r="authorized#save_idsno"}',
+				data:query,
+				type:"post",
+				dataType:"json",
+				success:function(ajaxobj){
+					if(ajaxobj.status==1){
+						$.showSuccess(ajaxobj.info,function(){
+							window.location.reload();
+						});
+					}
+					else{
+						$.showErr(ajaxobj.info);
+					}
+				}
+				,error:function(){
+					$.showErr("请求数据失败!");
+				}
+			});
+		});
+		
+	
+		/*重置密码*/
+		$("#settings-password-submit").click(function(){
+			
+			if($("#settings-sms_code").val() == '')
+			{
+				$.showErr("验证码不为空");			
+				return false;
+			}
+			
+			var obj = $("#settings-password");
+			if(!$.minLength(obj.val(),4,false))
+			{
+				$.showErr("{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_USER_PWD}");	
+				return false;
+			}
+			
+			if($("#settings-password-confirm").val() != $("#settings-password").val())
+			{
+				$("#settings-password-confirm").focus();
+				$.showErr("{$LANG.USER_PWD_CONFIRM_ERROR}");			
+				return false;
+			}
+			
+			var query = new Object();
+			query.is_ajax = 1;
+			query.user_pwd = $("#settings-password").val();
+			query.sms_code = $("#settings-sms_code").val();
+			query.sta = 1;
+			
+			$.ajax({
+				url:'{url x="index" r="authorized#save_pwd"}',
+				data:query,
+				type:"post",
+				dataType:"json",
+				success:function(ajaxobj){
+					if(ajaxobj.status==1){
+						$.showSuccess(ajaxobj.info,function(){
+							window.location.reload();
+						});
+					}
+					else{
+						$.showErr(ajaxobj.info);
+					}
+				}
+				,error:function(){
+					$.showErr("请求数据失败!");
+				}
+			});
+		});
+	});
+</script>

@@ -1,0 +1,60 @@
+<div class="hide" id="creditGuyTemp">
+    <div class="clearfix bddf">
+        <div class="gray_title f14  pl10">
+           	如何办理个人信用报告
+        </div>
+        <div class="f_dgray"  style="padding: 5px 12px;">
+            <div style="padding:5px 0" class="f14 lh26">
+                <div>
+                	 办理个人信用报告，可由本人或委托他人到中国人民银行征信中心办理本人的信用报告，其中被委托人称为代理人。
+                </div>
+                <p>
+                	（一）本人查询信用报告
+                </p>
+                <div>
+                	携带本人有效身份证件原件及一份复印件（其中复印件留给征信分中心备查），到中国人民银行各地征信分中心查询。
+                </div>
+                <div>
+                	有效身份证件包括：身份证（第二代身份证须复印正反两面）、军官证、士兵证、护照、港澳居民来往内地通行证、
+                </div>
+                <div>
+                	台湾同胞来往内地通行证、外国人居留证等。
+                </div>
+                <p>
+                	（二）委托他人查询信用报告
+                </p>
+                <div>
+                	 需要携带的材料有委托人及代理人双方的身份证件原件及复印件、授权委托书。其中身份证件复印件和授权委托书留给
+                </div>
+                <div>
+                	征信分中心备查。委托书格式请与当地征信分中心联系取得。
+                </div>
+                <br>
+                <p class="p_1">
+                	全国各地征信中心联系方式查询
+                </p>
+                <p>
+                    <a href="http://www.pbccrc.org.cn/zxzx/lxfs/lxfs.shtml" target="_blank">http://www.pbccrc.org.cn/zxzx/lxfs/lxfs.shtml</a>
+                </p>
+            </div>
+        </div>
+    </div>  
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#creditGuy").click(function(){
+			var html = $("#creditGuyTemp").html();
+			$.weeboxs.open(html, {
+				boxid: 'ctemp_box',
+				contentType: 'text',
+				showButton: true,
+				showCancel: false,
+				showOk: false,
+				title: "",
+				width: 588,
+				height: 300,
+				type: 'wee'
+			});
+		});
+	});
+</script>

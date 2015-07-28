@@ -1,0 +1,144 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+
+<style type="text/css">
+.hide {
+    display: none;
+}
+</style>
+
+<script type="text/javascript">
+
+	function viewLoanItem(obj,deal_id,l_key){
+		if($(obj).hasClass("hide")){
+			$(obj).removeClass("hide");
+		}
+		else{
+			$(obj).addClass("hide");
+		}
+		
+		if($.trim($(obj).html()) == "" || $.trim($(obj).html()) == ""){
+			getLoanItem(obj,deal_id,l_key,1);
+		}
+	}
+
+
+ 	function getLoanItem(obj,deal_id,l_key,p){
+		var query=new Object();
+		query.deal_id = deal_id;
+		query.l_key = l_key;
+		query.obj = obj;
+		query.p = p;
+		$.ajax({
+			url:ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=repay_plan_a", 
+			data:query,
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				if(result.status==1){
+					$(obj).html(result.info);
+				}
+				else{
+					alert(result.info);
+				}
+			},
+			error:function(){
+				alert("请求数据失败");
+			}
+		});
+	}
+ 
+ 	/**
+	*到导出投标列表	**/
+
+	function do_repay_plan_export_load(id,l_key){
+		window.location.href = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=do_repay_plan_export_load"+"&id="+id+"&l_key="+l_key;
+	}
+ 	
+	/**
+	*导出所有投标列表	**/
+
+	function do_allrepay_plan_export_load(id){
+		window.location.href = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=do_allrepay_plan_export_load"+"&id="+id;
+	}
+	
+	/**
+	 * 网站代还款
+	 */
+	function do_site_repay(id,l_key){
+		if(confirm("是否替借款者还款？")){
+			window.location.href = ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=do_site_repay"+"&id="+id+"&l_key="+l_key;
+		}
+	}
+</script>
+<div class="main">
+<table class="form conf_tab dataTable" cellpadding=0 cellspacing=0>
+<tr>
+<td colspan="11">
+	<input type="button" class="button" value="导出每期计划列表" onclick="do_allrepay_plan_export_load({$deal_id});">
+</td>
+</tr>
+<tr>
+<th>{$deal_info.name|msubstr=0,20}</td>
+<th>还款日</th>
+<th>已还金额</th>
+<th>待还金额</th>
+<th>还需还金额</th>
+<th>到期应还本息</th>
+<th>到期应还本息管理费</th>
+<th>逾期费用</th>
+<th>还款情况</th>
+<th>操作</th>
+<th>查看</th>
+</tr>
+
+<foreach name="repay_list" item="item" >
+<tr>
+<td>第{$item.idx}期</td>
+<td>{$item.repay_day_format}</td>
+<td>{$item.month_has_repay_money_all_format}</td>
+<td>{$item.month_need_all_repay_money_format}</td>
+<td>{$item.month_need_all_repay_money|format_price}</td>
+<td>{$item.month_repay_money_format}</td>
+<td>{$item.month_manage_money_format}</td>
+<td>{$item.impose_money_format}</td>
+<td>{$item.status_format}</td>
+<td>
+	<if condition="$repay_list">
+		<input type="button" class="button" value="导出还款计划列表" onclick="do_repay_plan_export_load({$deal_id},{$item.l_key});">
+	</if>
+	<if condition="$deal_info.ips_bill_no eq ''">
+		<if condition="$item.has_repay eq 0">
+			<input type="button" class="button" value="网站代还款"  onclick="do_site_repay({$deal_id},{$item.l_key});" />
+		<else/>
+			<input type="button" class="disbutton" disabled="true" value="网站代还款" />
+		</if>
+	</if>
+</td>
+
+<td>
+		<a href="javascript:void(0);" onclick="viewLoanItem('.Text-{$item.l_key}',{$deal_id},{$item.l_key});">查看</a>
+</td>
+</tr>
+<tr>
+	<td colspan=12 class="hide Text-{$item.l_key}">
+	
+		
+	</td>
+</tr>
+</foreach>
+
+</table>
+
+
+</div>
+<include file="Public:footer" />

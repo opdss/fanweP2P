@@ -1,0 +1,44 @@
+{if $succuess_deal_list}
+<div class="r-block">
+	<div class="gray_title clearfix">
+		<div class="f_l pl10 f16">成功案例</div>
+		<div class="f_r pr10">
+            <span style="font-weight: normal;">
+                <a href="{url x="index" r="deals" p="cid=last"}"  class="f12" title="{$LANG.MORE}" > 更多></a>
+            </span>
+    	</div>
+	</div>
+	<div class="bdd bt0 pt5 pb5 pl10 pr10">
+		<div id="examIndex" class="pr">
+			<div class="hd hide">
+				<a class="next"></a>
+				<ul></ul>
+				<a class="prev"></a>
+				<span class="pageState"></span>
+			</div>
+			<div class="bd ovhide">
+				<ul class="ovhide cf">
+					{foreach from=$succuess_deal_list item="deal"}
+	    			<li> 
+	    				 <div class="tt">
+	    				 	<a href="{$deal.url}" target="_blank">{$deal.name}</a>
+						 </div>
+	                     <div class="f_l w80 tl">{$deal.borrow_amount_format}</div>
+	                     <div class="f_l w50 tc">{function name="number_format" b=$deal.rate f=2}%</div>
+	                     <div class="f_l w50 tc">{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</div>
+	                     <div class="f_l w90 tr">[{function name="to_date" v=$deal.success_time f="Y-m-d"}]</div>	
+	    			</li>
+					{/foreach}
+	    	   </ul>
+		   </div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	{if count($succuess_deal_list) gt 5}
+	$(document).ready(function(){
+		jQuery("#examIndex").slide({mainCell:".bd ul",autoPage:true,effect:"topLoop",autoPlay:true,vis:5});
+	});
+	{/if}
+</script>
+{/if}

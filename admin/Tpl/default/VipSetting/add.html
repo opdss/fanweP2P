@@ -1,0 +1,124 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{%ADD} <a href="{:u("VipSetting/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">VIP等级:</td>
+		<td class="item_input">
+			<select name="vip_id">
+			<foreach name="vip_list" item="vip_item">
+				<option value="{$vip_item.id}" >{$vip_item.vip_grade}</option>
+			</foreach>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">收益奖励几率:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="probability" />%</td>
+	</tr>
+	<tr>
+		<td class="item_title">借款管理费(每月):</td>
+		<td class="item_input"><input type="text" class="textbox require" name="load_mfee" />%</td>
+	</tr>
+	<tr>
+		<td class="item_title">投资利息费:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="interest" />%</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">积分折现系数:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="coefficient" />%
+		&nbsp;折现现金值 = 兑换的积分 * 积分折现系数/100 (如5元=1000积分*0.50 % 积分折现系数)
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">投资返还积分比率:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="multiple" />%
+		投标返还积分 = 投标金额 ×返还比率 
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">生日礼品:</td>
+		<td class="item_input">
+		<select name="btype">
+			<option value="1">积分</option>
+			<option value="2">现金</option>
+		</select>	
+		积分/现金值
+			<input type="text" class="textbox require" name="bgift" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">节日积分:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="holiday_score" /></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td style="font-weight:bold;">以下为随机收益奖励配置</td>
+	</tr>
+	<tr>
+		<td class="item_title">收益礼品:</td>
+		<td class="item_input">
+			<foreach name="gift_list" item="gift_list_item">
+				{$gift_list_item.name}<input type="checkbox" name="gift_records[]" value="{$gift_list_item.id}" />&nbsp;
+			</foreach>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">收益红包:</td>
+		<td class="item_input">
+		<foreach name="redenvelope_list" item="redenvelope_list_item">
+				{$redenvelope_list_item.money}元<input type="checkbox" name="red_envelopes[]" value="{$redenvelope_list_item.id}"  />&nbsp; 
+		</foreach>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">增加的收益率:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="rate" />
+		%
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">收益积分值:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="integral" />
+		积分
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%IS_EFFECT}:</td>
+		<td class="item_input">
+			<lable>{%IS_EFFECT_1}<input type="radio" name="is_effect" value="1" checked="checked" /></lable>
+			<lable>{%IS_EFFECT_0}<input type="radio" name="is_effect" value="0" /></lable>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%SORT}:</td>
+		<td class="item_input"><input type="text" class="textbox" name="sort" value="{$newsort}" /></td>
+	</tr>
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="VipSetting" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="insert" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%ADD}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<include file="Public:footer" />

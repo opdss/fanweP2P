@@ -1,0 +1,519 @@
+.blank {
+	clear: both;
+	visibility: hidden;
+}
+.theme_bgcolor, .ckgd:hover, .rel-key-rec a.current, .ui-deals-filter-r ul li a:hover, .ui-deals-filter-r ul li.current a, .ui-deals-filter-r ul li.current a:hover, .category ul li a:hover, .invester_all .con2_r .con3, .invester_all .con2_r a:hover, .tab-nav li.current a, .invester .invester_bd .r2 .tit, .pages span.current, .btn_select.cur, .switch_nav ul li.current a {
+	background: #00bef0;
+}
+.ui-small-button {
+	height: 26px;
+	line-height: 26px;
+	cursor: pointer;
+	color: #fff !important;
+	display: block;
+	float: left;
+	font-size: 14px;
+	text-align: center;
+	padding: 0 10px;
+	-moz-border-radius: 2px;
+	-khtml-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
+/* 项目状态 开始 */
+.common-fail , .common-sprite , .common-success , .common-begin {
+	color:#FFF;
+	font-family:"SimSun";
+	font-size:12px;
+	padding:0 5px;
+	height:20px;
+	line-height:20px;
+	_line-height:21px;
+	display:inline-block;
+	text-align:center;
+	-moz-border-radius:3px; -khtml-border-radius:3px; -webkit-border-radius:3px; border-radius:3px;
+}
+.common-fail { background:#c2c2c2; }
+.common-sprite{background:#12adff;}
+.common-success{background:#2dce2d;}
+.common-begin{background:#ffae00;}
+/* 项目状态 结束 */
+
+/* 项目进度 开始 */
+.ui-progress {
+	background: #d5d5d5;
+	height: 7px;
+	border-radius: 4px;
+	position: relative;
+	font-size: 0px;
+	line-height: 0px;
+	overflow: hidden;
+	width: 254px;
+}
+.ui-progress span {
+	height: 7px;
+	border-radius: 4px;
+	position: absolute;
+	display: block;
+	font-size: 0px;
+	line-height: 0px;
+}
+/* 项目进度 结束 */
+
+/* 产品众筹项目列表 开始 */
+.crowd_list .list_title{
+	background:#fff;
+	border-top:1px solid #dfdfdf;
+	border-left:1px solid #dfdfdf;
+	border-right:1px solid #dfdfdf;
+}
+.crowd_list .list{
+	background:none;
+	border:0;
+}
+.crowd_list .list_cont{
+	background:none;
+}
+.crowd_list .select_box{
+	position:relative;
+	border:1px solid #dfdfdf;
+	height:28px;
+	line-height:28px;
+	font-size:14px;
+	margin-top:9px;
+	margin-right:20px;
+	padding:0 10px;
+}
+.crowd_list .select_box .select_text{padding-right:20px;}
+.crowd_list .select_box i{
+	position:absolute;
+	top:12px;
+	right:10px;
+	width:7px;
+	height:4px;
+	background:url(../images/select_icon.png) no-repeat;
+	display:block;
+}
+.crowd_list .list{overflow:visible;}
+.crowd_list .list_title{
+	position:relative;
+}
+.crowd_list .select_ul{
+	position:absolute;
+	top:37px;
+	right:20px;
+	background:#fff;
+	border:1px solid #dfdfdf;
+	display:none;
+}
+.crowd_list .select_ul li{
+	cursor:pointer;
+	height:30px;
+	line-height:30px;
+	padding-left:10px;
+	font-size:14px;
+}
+.crowd_list .select_ul li.libg{
+	background:#01bcef;
+	color:#fff;
+}
+.deal_item_box {
+	width:263px;
+	background:#fff;
+	border:1px solid #ddd;
+	display:inline-block;
+	margin-left:21px;
+	margin-bottom:20px;
+	overflow:hidden;
+	-moz-border-radius:5px;
+	-khtml-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	-webkit-box-shadow:0 2px 2px #ddd;
+	-moz-box-shadow:0 2px 2px #ddd;
+	box-shadow:0 2px 0 #ddd;
+}
+.deal_item_box .deal_content_box {
+	padding:0px;
+}
+.deal_content_box a img {
+	width:282px;
+	height:220px;
+	-webkit-transition: all 0.3s ease-out;
+	-ms-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+}
+.deal_content_box a:hover img {
+	-webkit-transform: scale(1.04);
+	-moz-transform: scale(1.04);
+	-o-transform: scale(1.04);
+	transform: scale(1.04);
+}
+.deal_item_box .deal_title {
+	padding:12px 12px 0 12px;
+	font-size:16px;
+	text-decoration:none;
+	height:44px;
+	line-height:22px;
+	display:inline-block;
+	overflow:hidden}
+.deal_item_box .deal_title:hover {
+	font-size:16px;
+	color:#12adff;
+	text-decoration:none;
+}
+.first {
+	margin-left:0px;
+}
+.deal_item_dash {
+	border-top:#ccc solid 1px;
+	height:5px;
+	font-size:0px;
+	line-height:0px;
+}
+.ui-progress {
+	background:#d5d5d5;
+	height:7px;
+	border-radius:4px;
+	position:relative;
+	font-size:0px;
+	line-height:0px;
+	overflow:hidden;
+	width:239px;
+}
+.ui-success {
+	background:#d5d5d5;
+	height:7px;
+	border-radius:4px;
+	position:relative;
+	font-size:0px;
+	line-height:0px;
+	overflow:hidden;
+}
+.ui-success span {
+	position:absolute;
+	top:0;
+	left:0;
+	background:#2dce2d;
+	height:8px;
+	border-radius:4px;
+	display:block;
+	font-size:0px;
+	line-height:0px;
+}
+.ui-progress span {
+	height:7px;
+	border-radius:4px;
+	position:absolute;
+	display:block;
+	font-size:0px;
+	line-height:0px;
+}
+.div3 {
+	float:left;
+	width:33%;
+	height:40px;
+	padding-top:15px;
+	overflow:hidden;
+	text-align:center}
+.div3 span {
+	display:block;
+}
+.div3 span.num {
+	font-size:15px;
+	line-height:15px;
+	color:#555;
+}
+.div3 span.til {
+	color:#999;
+	font-size:12px;
+	line-height:12px;
+}
+.caption-title em{
+	font-size: 15px;
+	color: #555;
+}
+/* 产品众筹项目列表 结束 */
+
+/* 产品众筹项目详情 开始 */
+.deal_body {
+	width: 100%;
+	height: 100%;
+}
+.xqmain {
+	width: 1200px;
+	margin: 20px auto;
+	background: #fff;
+	overflow: hidden;
+}
+.hd {
+	padding-top: 25px;
+}
+.xqmain_main {
+	height: auto;
+	padding: 10px 0 20px 0;
+	overflow: hidden;
+}
+.xqmain_left {
+	width: 800px;
+	float: left;
+	padding: 20px 18px 20px 20px;
+	background: #fff;
+	font-size: 14px;
+	color: #555555;
+	overflow: hidden;
+}
+.l_hd, .l_main, .l_foot {
+	width: 100%;
+	overflow: hidden;
+}
+.l_hd img {
+	display: block;
+	width: 800px;
+	height: 600px;
+	overflow: hidden;
+}
+.l_hd span {
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 25px;
+	display: block;
+	color: #0f0f0f;
+}
+.l_main {
+	color: #555;
+	font-size: 14px;
+}
+.l_main p {
+	margin-top: 20px;
+	line-height: 150%;
+}
+.l_foot {
+	margin-top: 20px;
+	color: #555;
+	border-top: #ccc dashed 1px;
+}
+.l_foot1 {
+	float: left;
+	height: 20px;
+	padding: 15px 0;
+}
+.l_foot1 span {
+	margin: 0 15px;
+}
+.l_foot1 a {
+	color: #2e76c4;
+	display: inline-block;
+	padding: 0 2px;
+}
+.l_foot2 {
+	float: left;
+	overflow: hidden;
+	padding: 5px;
+	background: #f8f8f8;
+	width: 790px;
+}
+.lft1 {
+	padding-top: 4px;
+	display: block;
+	background: url(../images/zc/lft1.png) no-repeat left 7px;
+	padding-left: 20px;
+	font-size: 14px;
+}
+.xqmain_right {
+	width: 322px;
+	float: right;
+	background: #fff;
+	padding-right: 20px;
+}
+.box {
+	width: 320px;
+	background: #fff;
+	border: #e4e4e4 solid 1px;
+	display: inline-block;
+	margin-top: 20px;
+	border-radius: 2px;
+}
+.box_title {
+	font-size: 16px;
+	margin-top: 18px;
+	margin-left: 13px;
+}
+.zcz {
+	background: url(../images/zc/zcz.png) no-repeat transparent;
+	color: #fff;
+	font-size: 16px;
+	width: 83px;
+	height: 40px;
+	line-height: 33px;
+	display: inline-block;
+	margin-right: -9px;
+	margin-top: 10px;
+	text-align: center;
+}
+.box_nu {
+	color: #000;
+	font-size: 38px;
+	margin-top: 8px;
+	margin-left: 13px;
+	line-height: 100%;
+	display: block;
+}
+.jd {
+	margin-top: 20px;
+	padding: 10px;
+	height: 20px;
+	border-top: #e4e4e4 dashed 1px;
+	border-bottom: #e4e4e4 dashed 1px;
+}
+.jd1 {
+	font-size: 14px;
+	padding: 0 12px;
+	width: 276px;
+	overflow: hidden;
+	height: 30px;
+	line-height: 30px;
+}
+.zs {
+	color: #858585;
+}
+.nu1 {
+	font-size: 16px;
+	color: #2b3a42;
+}
+.jd2 {
+	width: 300px;
+	height: 34px;
+	line-height: 34px;
+	margin: 10px;
+	background: #f2f2f2;
+	text-align: center;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+.box2 {
+	width: 320px;
+	background: #fff;
+	border: #e4e4e4 solid 1px;
+	border-top: none;
+	display: inline-block;
+	margin-top: 20px;
+	border-radius: 2px;
+	font-size: 14px;
+}
+.box21 {
+	padding: 20px 15px;
+	height: 25px;
+	color: #555555;
+	font-size: 12px;
+	border-top: #e4e4e4 solid 1px;
+	border-bottom: #e4e4e4 dashed 1px;
+}
+.box2_title {
+	font-size: 18px;
+	color: #428bca;
+	font-weight: bold;
+}
+.box22 {
+	margin: 0px auto;
+	width: 280px;
+	padding: 10px 0;
+}
+.box22_1 {
+	color: #808080;
+	margin-top: 15px;
+	font-size: 14px;
+}
+.box22_2 {
+	color: #aaaaaa;
+	margin-top: 20px;
+	font-size: 12px;
+}
+.deal_item_images .image_item {
+	float: left;
+	border: #ccc solid 1px;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	margin-right: 10px;
+	cursor: url(../images/zc/zoom.cur),auto;
+}
+.box22_3 {
+	height: 44px;
+	line-height: 44px;
+	margin-top: 15px;
+	display: inline;
+	float: left;
+	text-align: center;
+	font-size: 22px;
+	color: #FFF;
+	margin-left: 0;
+	padding: 0 15px;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+.box3 {
+	float: left;
+	width: 320px;
+	background: #fff;
+	border: #e4e4e4 solid 1px;
+	display: inline-block;
+	margin-top: 20px;
+	border-radius: 2px;
+	font-size: 14px;
+	padding-bottom: 15px;
+	overflow: hidden;
+}
+.box31 {
+	font-size: 17px;
+	padding: 15px;
+	height: 15px;
+	color: #555555;
+	border-bottom: #e4e4e4 dashed 1px;
+}
+.box32 {
+	padding: 15px;
+}
+.box_image {
+	margin-right: 15px;
+	height: 84px;
+	width: 84px;
+	overflow: hidden;
+}
+.box_image img {
+	width: 80px;
+	height: 80px;
+	padding: 1px;
+	border: 1px solid #ddd;
+	-moz-border-radius: 50%;
+	-khtml-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+}
+.boxname {
+	font-size: 14px;
+	color: #555555;
+	display: block;
+}
+.boxtime {
+	margin-top: 5px;
+	color: #999999;
+}
+.boxaddress {
+	background: url(../images/zc/dz.png) no-repeat left top;
+	padding-left: 15px;
+	_padding-top: 2px;
+	line-height: 14px;
+}
+.boxmail {
+	background: url(../images/zc/boxmail.png) no-repeat left 1px;
+	padding-left: 20px;
+}
+/* 产品众筹项目详情 结束 */

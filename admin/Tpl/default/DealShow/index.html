@@ -1,0 +1,49 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<php>
+	function get_leftShow($show)
+	{
+    	$str = "";
+    	if($show == 1)
+        {
+        	$str = "是";
+        }
+        else
+        {
+        	$str = "否";
+        }
+		return $str;
+	}
+</php>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		名称：<input type="text" class="textbox" name="deal_name" value="{:trim($_REQUEST['deal_name'])}" />		
+		<input type="hidden" value="DealShow" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="dealshow" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,deal_name:{%DEAL_NAME}:edit,amount:{%BORROW_AMOUNT},school:学校,user_name:{%USER_NAME},create_time|to_date:{%CREATE_TIME},show_left|get_leftShow:左侧显示,sort:{%SORT}" 
+	actionlist="edit:{%EDIT}, del:{%DEL}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

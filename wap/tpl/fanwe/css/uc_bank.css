@@ -1,0 +1,102 @@
+.bank_bg{
+	background:@box_color;
+	border:1px solid @border_color;
+	border-radius:5px;
+	margin:10px;
+}
+.add_bank_card{
+	position:relative;
+	height:40px;
+	line-height:40px;
+	padding:0px 40px 0px 10px;
+	font-size:16px;
+}
+.add_bank_card i{
+	position:absolute;
+	top:12px;
+	right:10px;
+	
+	color:@font_main;
+}
+.checkin{
+	position:relative;
+	padding:5px 70px;
+	border-bottom:1px dotted @border_color;
+}
+.checkin:last-child{
+	border:none;
+}
+.checkin .detail h6{
+	font-size:16px;
+	color:@font_black;
+	line-height:25px;
+}
+.checkin .detail span{
+	color:@font_main;
+	font-size:10px;
+	line-height:20px;
+}
+.checkin img{
+	position:absolute;
+	top:8px;
+	left:8px;
+	width: 40px;
+    height: 39px;
+}
+
+.checkin .delete{
+	top:16px;
+	right:10px;
+}
+/*输入金额*/
+.figure {
+border-radius: 5px;
+background: #fff;
+border: 1px solid #d7d7d7;
+position: relative;
+margin: 10px;
+height: 40px;
+padding-left: 80px;
+}
+.figure span {
+position: absolute;
+line-height: 40px;
+font-size: 15px;
+color: #333;
+padding: 0 10px;
+left: 0px;
+}
+.figure input {
+line-height: 40px;
+width: 100%;
+background: none;
+font-size: 16px;
+color: #b6b6b6;
+}
+/*余额情况*/
+.balance_detail{
+	margin:10px;
+	background:#fff;
+	border: 1px solid #d7d7d7;
+	border-radius: 5px;
+}
+.balance_detail ul li{
+	padding-left:80px;
+	height:40px;
+	border-bottom:1px solid #d7d7d7;
+	margin-bottom:-1px;
+}
+.balance_detail ul li span{
+float:left;
+line-height: 40px;
+font-size: 15px;
+color: #333;
+padding-left:10px;
+margin-left:-80px;
+
+}
+.balance_detail ul li font{
+	line-height: 40px;
+font-size: 16px;
+color: #b6b6b6;
+}

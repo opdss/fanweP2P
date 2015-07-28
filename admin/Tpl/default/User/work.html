@@ -1,0 +1,218 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<load href='__TMPL__Common/js/user_edit.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">{$user_info.user_name}</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td colspan="2" class="item_title" style="text-align:center;"><b>工作信息</b></td>
+	</tr>
+	<tr>
+		<td class="item_title">单位名称:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="office" value="{$work_info.office}" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">职业状态:</td>
+		<td class="item_input">
+			<select name="jobtype" id="settings-jobtype">
+				<option value="">请选择</option>
+				<option value="工薪阶层" <if condition="$work_info['jobtype'] eq '工薪阶层'">selected="selected"</if>>工薪阶层</option>
+				<option value="私营企业主" <if condition="$work_info['jobtype'] eq '私营企业主'">selected="selected"</if>>私营企业主</option>
+				<option value="网络商家" <if condition="$work_info['jobtype'] eq '网络商家'">selected="selected"</if>>网络商家</option>
+				<option value="其他" <if condition="$work_info['jobtype'] eq '其他'">selected="selected"</if>>其他</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">工作城市:</td>
+		<td class="item_input">
+			<select name="province_id">
+				<option value="0">={%PLEASE_SELECT}=</option>
+				<foreach name="region_lv2" item="lv2">
+				<option <if condition="$lv2['selected'] eq 1">selected="selected"</if> value="{$lv2.id}">{$lv2.name}</option>
+				</foreach>
+			</select>
+									
+			<select name="city_id">
+				<option value="0">={%PLEASE_SELECT}=</option>	
+				<foreach name="region_lv3" item="lv3">
+				<option <if condition="$lv3['selected'] eq 1">selected="selected"</if> value="{$lv3.id}">{$lv3.name}</option>
+				</foreach>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">公司类别:</td>
+		<td class="item_input">
+			<select name="officetype" id="settings-officetype">
+				<option value="">请选择</option>
+				<option value="国家机关" <if condition="$work_info['officetype'] eq '国家机关'">selected="selected"</if>>国家机关</option>
+				<option value="事业单位" <if condition="$work_info['officetype'] eq '事业单位'">selected="selected"</if>>事业单位</option>
+				<option value="央企（包括下级单位）" <if condition="$work_info['officetype'] eq '央企（包括下级单位）'">selected="selected"</if>>央企（包括下级单位）</option>
+				<option value="地方国资委直属企业" <if condition="$work_info['officetype'] eq '地方国资委直属企业'">selected="selected"</if>>地方国资委直属企业</option>
+				<option value="世界500强（包括合资企业及下级单位）" <if condition="$work_info['officetype'] eq '世界500强（包括合资企业及下级单位）'">selected="selected"</if>>世界500强（包括合资企业及下级单位）</option>
+				<option value="外资企业（包括合资企业）" <if condition="$work_info['officetype'] eq '外资企业（包括合资企业）'">selected="selected"</if>>外资企业（包括合资企业）</option>
+				<option value="一般上市公司（包括国外上市）" <if condition="$work_info['officetype'] eq '一般上市公司（包括国外上市）'">selected="selected"</if>>一般上市公司（包括国外上市）</option>
+				<option value="一般民营企业" <if condition="$work_info['officetype'] eq '一般民营企业'">selected="selected"</if>>一般民营企业</option>
+				<option value="个体" <if condition="$work_info['officetype'] eq '个体'">selected="selected"</if>>个体</option>
+				<option value="其他" <if condition="$work_info['officetype'] eq '其他'">selected="selected"</if>>其他</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">公司行业:</td>
+		<td class="item_input">
+			<select name="officedomain" id="settings-officedomain">
+				<option value="">请选择</option>
+				<option value="制造业" <if condition="$work_info['officedomain'] eq '制造业'">selected="selected"</if>>制造业</option>
+				<option value="IT" <if condition="$work_info['officedomain'] eq 'IT'">selected="selected"</if>>IT</option>
+				<option value="政府机关" <if condition="$work_info['officedomain'] eq '政府机关'">selected="selected"</if>>政府机关</option>
+				<option value="媒体/广告" <if condition="$work_info['officedomain'] eq '媒体/广告'">selected="selected"</if>>媒体/广告</option>
+				<option value="零售/批发" <if condition="$work_info['officedomain'] eq '零售/批发'">selected="selected"</if>>零售/批发</option>
+				<option value="教育/培训" <if condition="$work_info['officedomain'] eq '教育/培训'">selected="selected"</if>>教育/培训</option>
+				<option value="公共事业" <if condition="$work_info['officedomain'] eq '公共事业'">selected="selected"</if>>公共事业</option>
+				<option value="交通运输业" <if condition="$work_info['officedomain'] eq '交通运输业'">selected="selected"</if>>交通运输业</option>
+				<option value="房地产业" <if condition="$work_info['officedomain'] eq '房地产业'">selected="selected"</if>>房地产业</option>
+				<option value="能源业" <if condition="$work_info['officedomain'] eq '能源业'">selected="selected"</if>>能源业</option>
+				<option value="金融/法律" <if condition="$work_info['officedomain'] eq '金融/法律'">selected="selected"</if>>金融/法律</option>
+				<option value="餐饮/旅馆业" <if condition="$work_info['officedomain'] eq '餐饮/旅馆业'">selected="selected"</if>>餐饮/旅馆业</option>
+				<option value="医疗/卫生/保健" <if condition="$work_info['officedomain'] eq '医疗/卫生/保健'">selected="selected"</if>>医疗/卫生/保健</option>
+				<option value="建筑工程" <if condition="$work_info['officedomain'] eq '建筑工程'">selected="selected"</if>>建筑工程</option>
+				<option value="农业" <if condition="$work_info['officedomain'] eq '农业'">selected="selected"</if>>农业</option>
+				<option value="娱乐服务业" <if condition="$work_info['officedomain'] eq '娱乐服务业'">selected="selected"</if>>娱乐服务业</option>
+				<option value="体育/艺术" <if condition="$work_info['officedomain'] eq '体育/艺术'">selected="selected"</if>>体育/艺术</option>
+				<option value="公益组织" <if condition="$work_info['officedomain'] eq '公益组织'">selected="selected"</if>>公益组织</option>
+				<option value="其它" <if condition="$work_info['officedomain'] eq '其它'">selected="selected"</if>>其它</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">公司规模:</td>
+		<td class="item_input">
+			<select name="officecale" id="settings-officecale">
+				<option value="">请选择</option>
+				<option value="10人以下" <if condition="$work_info['officecale'] eq '10人以下'">selected="selected"</if>>10人以下</option>
+				<option value="10-100人" <if condition="$work_info['officecale'] eq '10-100人'">selected="selected"</if>>10-100人</option>
+				<option value="100-500人" <if condition="$work_info['officecale'] eq '100-500人'">selected="selected"</if>>100-500人</option>
+				<option value="500人以上" <if condition="$work_info['officecale'] eq '500人以上'">selected="selected"</if>>500人以上</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">职位:</td>
+		<td class="item_input">
+			<input value="{$work_info.position}" class="textbox" name="position" id="settings-position">
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">月收入:</td>
+		<td class="item_input">
+			<select name="salary" id="settings-salary">
+				<option value="">请选择</option>
+				<option value="1000元以下" <if condition="$work_info['salary'] eq '1000元以下'">selected="selected"</if>>1000元以下</option>
+				<option value="1001-2000元" <if condition="$work_info['salary'] eq '1001-2000元'">selected="selected"</if>>1001-2000元</option>
+				<option value="2000-5000元" <if condition="$work_info['salary'] eq '2000-5000元'">selected="selected"</if>>2000-5000元</option>
+				<option value="5000-10000元" <if condition="$work_info['salary'] eq '5000-10000元'">selected="selected"</if>>5000-10000元</option>
+				<option value="10000-20000元" <if condition="$work_info['salary'] eq '10000-20000元'">selected="selected"</if>>10000-20000元</option>
+				<option value="20000-50000元" <if condition="$work_info['salary'] eq '20000-50000元'">selected="selected"</if>>20000-50000元</option>
+				<option value="50000元以上" <if condition="$work_info['salary'] eq '50000元以上'">selected="selected"</if>>50000元以上</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">在现单位工作年限:</td>
+		<td class="item_input">
+			<select name="workyears" id="settings-workyears">
+				<option value="">请选择</option>
+				<option value="1年（含）以下" <if condition="$work_info['workyears'] eq '1年（含）以下'">selected="selected"</if>>1年（含）以下</option>
+				<option value="1-3年（含）" <if condition="$work_info['workyears'] eq '1-3年（含）'">selected="selected"</if>>1-3年（含）</option>
+				<option value="3-5年（含）" <if condition="$work_info['workyears'] eq '3-5年（含）'">selected="selected"</if>>3-5年（含）</option>
+				<option value="5年以上" <if condition="$work_info['workyears'] eq '5年以上'">selected="selected"</if>>5年以上</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">公司电话:</td>
+		<td class="item_input">
+			<input value="{$work_info.workphone}" class="textbox" name="workphone" id="settings-workphone">
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">工作邮箱:</td>
+		<td class="item_input">
+			<input value="{$work_info.workemail}" class="textbox" name="workemail" id="settings-workemail">
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">公司地址:</td>
+		<td class="item_input">
+			<input value="{$work_info.officeaddress}" class="textbox" name="officeaddress" id="settings-officeaddress" size="50">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="item_title" style="text-align:center;"><b>直系亲属联系人</b></td>
+	</tr>
+	<tr>
+		<td class="item_title">姓名:</td>
+		<td class="item_input">
+			<input value="{$work_info.urgentcontact}" class="textbox" name="urgentcontact" id="settings-urgentcontact">
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">关系:</td>
+		<td class="item_input">
+			<input value="{$work_info.urgentrelation}" class="textbox" name="officeaddress" id="settings-urgentrelation">
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">手机:</td>
+		<td class="item_input">
+			<input value="{$work_info.urgentmobile}" class="textbox" name="urgentmobile" id="settings-urgentmobile">
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="item_title" style="text-align:center;"><b>其他联系人</b></td>
+	</tr>
+	<tr>
+		<td class="item_title">姓名:</td>
+		<td class="item_input">
+			<input value="{$work_info.urgentcontact2}" class="textbox" name="urgentcontact2" id="settings-urgentcontact2">
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">关系:</td>
+		<td class="item_input">
+			<input value="{$work_info.urgentrelation2}" class="textbox" name="officeaddress2" id="settings-urgentrelation2">
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">手机:</td>
+		<td class="item_input">
+			<input value="{$work_info.urgentmobile2}" class="textbox" name="urgentmobile2" id="settings-urgentmobile2">
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$user_info.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="User" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="modify_work" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>

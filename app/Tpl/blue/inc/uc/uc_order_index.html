@@ -1,0 +1,58 @@
+<div class="inc wb">
+	<div class="inc_top">{$page_title}</div>
+	<div class="inc_main">
+		<div class="sub_nav">
+			<span {if $ACTION_NAME eq 'index'}class="act"{/if}><a href="{url x="shop" r="uc_order#index"}">{$LANG.UC_ORDER}</a></span>
+			<span {if $ACTION_NAME eq 'lottery'}class="act"{/if}><a href="{url x="shop" r="uc_order#lottery"}">{$LANG.UC_LOTTERY}</a></span>
+			<span {if $ACTION_NAME eq 'ct'}class="act"{/if}><a href="{url x="shop" r="uc_order#ct"}">{$LANG.UC_CT}</a></span>
+			<span {if $ACTION_NAME eq 'ktv'}class="act"{/if}><a href="{url x="shop" r="uc_order#ktv"}">{$LANG.UC_KTV}</a></span>
+			<span {if $ACTION_NAME eq 'takeaway'}class="act"{/if}><a href="{url x="shop" r="uc_order#takeaway"}">{$LANG.UC_TAKEAWAY}</a></span>
+		</div>
+		<div class="blank1"></div>
+		<div  class="uc-table">
+			<table cellspacing="0" cellpadding="0" border="0">
+								<tr>
+									<th>{$LANG.ORDER_SN}</th>
+									<th>{$LANG.ORDER_CREATE_TIME}</th>
+									<th>{$LANG.PAY_TOTAL_PRICE}</th>
+									<th>{$LANG.ORDER_STATUS}</th>
+									<th>{$LANG.OPERATION}</th>
+								</tr>
+								{foreach from=$list item=order key=key}
+								<tr {if $key mod 2 eq  0}class="alt"{/if}>
+									<td style="text-align:left;">
+										{$order.order_sn}
+										{function name="get_order_item_list" value=$order.id}
+									</td>
+									<td>{function name="to_date" value=$order.create_time}</td>
+									<td>{function name="format_price" value=$order.total_price}</td>
+									<td>
+										<?PHP echo $this->_var['LANG']['ORDER_PAY_STATUS_'.$this->_var['order']['pay_status']];?>
+										<br />
+										<?PHP echo $this->_var['LANG']['ORDER_DELIVERY_STATUS_'.$this->_var['order']['delivery_status']];?>
+										<br />
+										<?PHP echo $this->_var['LANG']['ORDER_ORDER_STATUS_'.$this->_var['order']['order_status']];?>
+				
+										{if $order.after_sale gt 0}
+										<br />
+										<?PHP echo $this->_var['LANG']['AFTER_SALE_'.$this->_var['order']['after_sale']];?>
+										{/if}
+									</td>
+									<td>
+										<a href="{url x="shop" r="uc_order#view" p="id=$order.id"}">{$LANG.VIEW}</a>
+										{if $order.pay_status eq 0}
+										<br />
+										<a href="{url x="shop" r="uc_order#del" p="id=$order.id"}">{$LANG.CANCEL}</a>
+										{/if}
+									</td>
+								</tr>
+								{/foreach}
+						</table>
+						
+						<div class="blank"></div>
+						<div class="pages">{$pages}</div>
+		</div>				
+		
+	</div>
+	<div class="inc_foot"></div>
+</div>

@@ -1,0 +1,48 @@
+{include file="inc/header.html"} 
+<div class="blank"></div>
+<div class="short f_l">
+	{include file="inc/index_cate_tree.html"}
+	<div class="blank"></div>
+	{insert name='load_today_deal'} {* 动态载入今日团购 *}
+	{insert name='load_sale_list'} {* 动态载入销售排行 *}
+	{include file="inc/mail_submit.html"}
+</div>
+<div class="long f_r">
+<div class="middle f_l">
+	
+	<div id="main_adv_box" class="mall_adv_box">
+				<div id="main_adv_img" class="mall_adv_img">
+					<span rel="1"><adv adv_id="商城首页广告位1" /></span>
+					<span rel="2"><adv adv_id="商城首页广告位2" /></span>
+					<span rel="3"><adv adv_id="商城首页广告位3" /></span>					
+				</div>
+				<div id="main_adv_ctl" class="mall_adv_ctl">
+					<ul>
+						<li rel="1">1</li>
+						<li rel="2">2</li>
+						<li rel="3">3</li>
+					</ul>
+				</div>
+				<script type="text/javascript" src="{$TMPL}/js/index_adv.js"></script>
+	</div>
+</div>
+<div class="short f_r">
+	{include file="inc/index_notice.html"}
+</div>
+<div class="blank"></div>
+	{$hot_span_goods_html}
+
+	{$new_span_goods_html}
+
+	{$best_span_goods_html}
+</div>
+<div class="blank"></div>
+<adv adv_id="首页通栏广告位" />
+<div class="blank"></div>
+{if $recommend_cate_html}
+<div><!--通栏-->
+{$recommend_cate_html}
+</div><!--通栏-->
+{/if}
+<div class="blank"></div>
+{include file="inc/footer.html"}

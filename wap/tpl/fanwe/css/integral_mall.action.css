@@ -1,0 +1,6 @@
+.integral_goods{ background:#fff; border-top:1px solid #cbcbcb;}
+.integral_goods li{ padding:10px; border-bottom:1px solid #cbcbcb; overflow:hidden; padding:10px;padding-left:110px; }
+.integral_goods li .left_img{ border:1px solid #cbcbcb; overflow:hidden; width:80px; height:80px; padding:3px; float:left; margin-left:-100px;}
+.integral_goods li .left_img img{ width:100%; height:100%;}
+.integral_goods li .right_p h5{ color:#878787; font-weight:700; font-size:17px;display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.integral_goods li .right_p{ font-size:15px; font-weight:600; line-height:30px; color:#a9a8a8;}

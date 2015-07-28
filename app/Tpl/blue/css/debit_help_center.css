@@ -1,0 +1,11 @@
+.help_center .nav_list li{ width:175px; height:46px; border:1px solid #e2e2e2; border-radius:3px; float:left; font-size:15px; color:#666; line-height:46px; text-align:center; padding-left:46px; margin-bottom:11px; margin-right:9px; background:url(../images/debit/nav_list.png) no-repeat;_background:url(../images/debit/nav_list1.png) no-repeat; position:relative; font-weight:600;}
+.help_center .nav_list .nav_0{ background-position:9px 9px;}
+.help_center .nav_list .nav_1{ background-position:9px -71px;}
+.help_center .nav_list .nav_2{ background-position:9px -158px;}
+.help_center .nav_list .nav_3{ background-position:9px -247px;}
+.help_center .nav_list .nav_4{ background-position:9px -344px;}
+.help_center .nav_list li span{ display:none;}
+.help_center .wrap .nav_list .y{ background-color:#ff3f44; color:#fff; background-image:url(../images/debit/nav_list.png);_background-image:url(../images/debit/nav_list2.png);}
+.help_center .wrap .nav_list .y span{ display:block;  position:absolute; top:46px; left:111px; background:url(../images/debit/Angle0.png) no-repeat; width:11px; height:9px; display:block;}
+
+.content_list li{ border:1px solid #e2e2e2; padding:25px; display:none;}

@@ -1,0 +1,66 @@
+{include file="inc/header.html"}
+
+<div class="blank"></div>
+<div class="short f_l">
+	<div id="tree-box" class="tree-box clearfix">
+		<div class="tree">
+		{foreach from=$article_cate item="cate" key=key}
+		{if $cate.pid neq 0}
+			<div class="hd {if $cate.id eq $id}hd_cur{/if}" id="hd_{$cate.id}" rel="{$cate.id}">
+			    {$cate.title}
+			</div>
+		{/if}
+		{/foreach}
+		</div>
+	</div>
+</div>
+<div class="long "id="J_box">
+	<div class="bdd bddf p15">
+		{foreach from=$article_cate item="cate"}
+			{if $cate.pid neq 0}
+			<div id="J_box_{$cate.id}" class="j_box_item {if $cate.id neq $id}hide{/if}" rel="{$cate.id}">
+				<h3 class="f20 f_blue "> {$cate.title}</h3>
+				<div class="blank"></div>
+				{if $cate.article.list}
+				<?php $this->_var['idx']=0; ?>
+				{foreach from=$cate.article.list item=aitem}
+				<div class="btds clearfix pl10 pr10">
+					<div class="f16 pt10 pb10 " id="q{$aitem.id}" name="q{$aitem.id}">
+						<a href="javascript:void(0);" class="item-tit f_dgray"><b>{$aitem.title}</b></a>
+                  	</div>
+					<div class="clearfix f_dgray item-content" style="padding:3px 20px">
+					{$aitem.content}
+					</div>
+				</div>
+				<?php ++$this->_var['idx']; ?>
+				<div class="blank"></div>
+				{/foreach}
+				{/if}
+			</div>
+			{/if}
+		{/foreach}
+	</div>
+</div>
+<div class="blank"></div>
+{include file="inc/footer.html"}
+<script type="text/javascript">
+jQuery(function(){
+	$("#tree-box .hd").click(function(){
+		$("#tree-box .hd").removeClass("hd_cur");
+		$(this).addClass("hd_cur");
+		var idx = $(this).attr("rel");
+		$(".j_box_item").addClass("hide");
+		$("#J_box_"+idx).removeClass("hide");
+	});
+	
+	$(".j_box_item .item-tit").click(function(){
+		if($(this).parent().parent().find(".item-content").hasClass("hide")){
+			$(this).parent().parent().find(".item-content").removeClass("hide");
+		}
+		else{
+			$(this).parent().parent().find(".item-content").addClass("hide");
+		}
+	});
+	
+});
+</script>

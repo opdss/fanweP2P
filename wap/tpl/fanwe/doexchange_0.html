@@ -1,0 +1,60 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/doexchange.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--编辑地址-->
+<div class="blank15"></div>
+<h5 class="editor_h">请填写收货地址</h5>
+<div class="blank15"></div>
+<from>
+<div class="editor_p">
+	<label for="0">
+		<span>姓名：</span>
+        <input type="text" id="0"/>
+	</label>
+	<label for="1">
+		<span>电话号码：</span>
+        <input type="text" id="1"/>
+	</label>
+	<label for="2">
+		<span>省市：</span>
+        <input type="text" id="2"/>
+	</label>
+	<label for="3">
+		<span>详细地址：</span>
+        <input type="text" id="3"/>
+	</label>
+	<label for="4">
+		<span>邮编：</span>
+        <input type="text" id="4"/>
+	</label>
+</div>
+<div class="blank15"></div>
+<div class="Agreement_block clearfix">
+	<label for="5" class="y">
+		<span class="ico"><i class="fa fa-check"></i></span>
+		<input type="checkbox" id="5" style=" display:none;"/>
+		设置成默认收货地址
+	</label>
+</div>
+</from>
+<script>
+	$(document).ready(function(){
+		$(".Agreement_block label").click(function(){
+			if($(this).hasClass("y"))
+			{
+                $(".Agreement_block label").removeClass("y");
+			}
+			
+		});
+	});
+</script>
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

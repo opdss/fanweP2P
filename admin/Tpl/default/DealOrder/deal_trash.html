@@ -1,0 +1,25 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{%DEAL_ORDER_TRASH}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%FOREVERDEL}" onclick="foreverdel();" />
+	<input type="button" class="button" value="{%RESTORE}" onclick="restore();" />
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="order" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,order_sn:{%ORDER_SN},user_id|get_user_name:{%USER_NAME},total_price|format_price:{%PAY_AMOUNT}" 
+	actionlist="foreverdel:{%FOREVERDEL},restore:{%RESTORE}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

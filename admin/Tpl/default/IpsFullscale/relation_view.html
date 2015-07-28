@@ -1,0 +1,178 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/user_edit.js' />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">{%EDIT} <a href="{:u("IpsFullscale/relation_list",array("id"=>$ips_info["pid"]))}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+    <tr>
+		<td class="item_title">{%ID}:</td>
+		<td class="item_input">
+			{$ips_info.mid}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%P_ORI_MER_BILL_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pOriMerBillNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_TRD_AMT}:</td>
+		<td class="item_input">
+			{$ips_info.pTrdAmt}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_F_TRD_FEE}:</td>
+		<td class="item_input">
+			{$ips_info.pFTrdFee}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_T_ACCT_TYPE}:</td>
+		<td class="item_input">
+			{$ips_info.pTAcctType}
+		</td>
+    </tr>
+	<tr>
+		<td class="item_title">{%P_T_IPS_ACCT_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pTIpsAcctNo}
+		</td>
+    </tr>
+	<tr>
+		<td class="item_title">{%P_T_TRD_FEE}:</td>
+		<td class="item_input">
+			{$ips_info.pTTrdFee}
+		</td>
+    </tr>
+	<tr>
+		<td class="item_title">{%P_IPS_DETAIL_BILL_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pIpsDetailBillNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_IPS_DETAIL_TIME}:</td>
+		<td class="item_input">
+			{$ips_info.pIpsDetailTime}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_IPS_FEE}:</td>
+		<td class="item_input">
+			{$ips_info.pIpsFee}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_RELATION_STATUS}:</td>
+		<td class="item_input">
+			{$ips_info.pStatus}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MESSAGE}:</td>
+		<td class="item_input">
+			{$ips_info.pMessage}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%USER_NAME}:</td>
+		<td class="item_input">
+			{$ips_info.p_user_name}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%RELATION_USER_NAME}:</td>
+		<td class="item_input">
+			{$ips_info.user_name}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_TRANSFER_MONEY}:</td>
+		<td class="item_input">
+			{$ips_info.money}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_CREATE_TIME}:</td>
+		<td class="item_input">
+			{$ips_info.create_time}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%IS_REPAY}:</td>
+		<td class="item_input">
+			{$ips_info.is_repay}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%IS_REBATE}:</td>
+		<td class="item_input">
+			{$ips_info.is_rebate}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%IS_AUTO}:</td>
+		<td class="item_input">
+			{$ips_info.is_auto}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_P2P_BILL_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pP2PBillNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_CON_TRACT_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pContractNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MER_BILL_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pMerBillNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%IS_HAS_LOANS}:</td>
+		<td class="item_input">
+			{$ips_info.is_has_loans}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%MSG}:</td>
+		<td class="item_input">
+			{$ips_info.msg}
+		</td>
+	</tr>
+</table>
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<a href="{:u("IpsFullscale/relation_list",array("id"=>$ips_info["pid"]))}" class="button">{%BACK_LIST}</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 	 
+</div>
+<include file="Public:footer" />

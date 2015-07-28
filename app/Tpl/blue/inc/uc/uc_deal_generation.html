@@ -1,0 +1,32 @@
+<div style="background: #f9f9f9; width: auto; border: 1px solid #D4D4D4; font-size:14px; padding: 15px;  margin: 0 auto;">
+	借款人如果资金不够，可申请延期还款，延期还款就是平台代其还此借款。借款人未还部分由平台跟借款人协商。 
+</div>
+<div class="p20">
+	借&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款：<a href="{$deal.url}">{$deal.name}</a><br>
+	已还本息：<span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.repay_money f=2}</span><br>
+	待还余额：<span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.need_remain_repay_money f=2}</span><br>
+</div>
+<div class="tc pt5">
+	<a href="javascript:void(0);" class="J_generationBtn mr20">取消申请</a>
+	<a href="javascript:void(0);" class="J_nogenerationBtn ml20">取消申请</a>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$(".J_generationBtn").unbind("click");
+		$(".J_generationBtn").click(function(){
+			var ajaxurl = '{url x="index" r="uc_deal#dogeneration" p="id=$deal.id&is_ajax=1"}';
+			$.ajax({
+				url:ajaxurl,
+				dataType:"json",
+				success:function(result){
+					$.showSuccess(result.info,function(){
+						window.location.reload();
+					});
+				}
+			});
+		});
+		$(".J_nogenerationBtn").click(function(){
+			$.weeboxs.close();
+		});
+	});
+</script>

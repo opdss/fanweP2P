@@ -1,0 +1,37 @@
+
+<div class="tabbox clearfix">
+	<div class="tab"><a href="{url x="index" r="uc_invite"}">我要推荐</a></div>
+	<div class="tab {if $ACTION_NAME eq 'invite' && $type eq 0}cur{/if}"><a href="{url x="index" r="uc_invite#invite"}">有效推荐</a></div>
+	<div class="tab {if $ACTION_NAME eq 'invite' && $type eq 1}cur{/if}"><a href="{url x="index" r="uc_invite#invite" p="type=1"}">无效推荐</a></div>
+	<div class="tab"><a href="{url x="index" r="uc_invite#reward"}">奖励记录</a></div>
+</div>
+<div class="uc_box bdd bt0">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+				<tr >
+					<th>编号</th>
+					<th>{$LANG.USER_TITLE_USER_NAME}</th>
+					<th>{$LANG.REGISTER_TIME}</th>
+					{if $ACTION_NAME eq 'invite' && $type eq 1}
+					<th>无效原因</th>
+					{else}
+					<th>返利比率</th>
+					{/if}
+				</tr>
+				{foreach from=$list item=invite key=key name="invites"}
+				<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.invites.last}style="border-bottom:0"{/if}>
+					<td>{$invite.id}</td>
+					<td>{$invite.user_name}</td>
+					<td>{function name="to_date" value=$invite.create_time}</td>
+					{if $ACTION_NAME eq 'invite' && $type eq 1}
+					<td>{$invite.result}</td>
+					{else}
+					<td>{$invite.referral_rate}%</td>
+					{/if}
+				</tr>
+				{/foreach}
+		</table>
+		
+		<div class="blank"></div>
+		<div class="pages">{$pages}</div>
+		<div class="blank20"></div>
+</div>

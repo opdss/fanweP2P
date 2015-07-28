@@ -1,0 +1,12 @@
+.goods_exchange{  margin-bottom:15px; }
+.goods_exchange li{border-radius:5px; overflow:hidden;  font-size:12px; line-height:30px; margin:0 10px; margin-top:15px; }
+.goods_exchange li h5{padding:0 10px;line-height:40px;font-size:16px; font-weight:600; border-radius:5px 5px 0 0;}
+.goods_exchange li .y{ background:@main_color; color:#fff;   }
+.goods_exchange li .n{ background:none; color:#878787; border:1px solid #cbcbcb; background:#f4f2f3;}
+
+.goods_exchange li .order_content{ padding: 10px;padding-left: 10px; border:1px solid #cbcbcb; border-top:none;border-radius:0 0 5px 5px; background:#fff;}
+.goods_exchange li .order_content .name{ padding-right:5px; display:inline-block; width:70px;}
+.goods_exchange li .order_content .content h6{white-space: nowrap;overflow: hidden;text-overflow: ellipsis; font-weight:600; font-size:13px;}
+
+.goods_exchange li .order_content .content{ overflow:hidden; height:90px;}
+

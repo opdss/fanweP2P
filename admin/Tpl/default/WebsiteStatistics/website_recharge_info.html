@@ -1,0 +1,81 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<script type="text/javascript">	
+	function export_csv_recharge_info()
+	{
+		var inputs = $(".search_row").find("input");
+		var selects = $(".search_row").find("select");
+		var param = '';
+		for(i=0;i<inputs.length;i++)
+		{
+			if(inputs[i].name!='m'&&inputs[i].name!='a')
+			param += "&"+inputs[i].name+"="+$(inputs[i]).val();
+		}
+		for(i=0;i<selects.length;i++)
+		{
+			param += "&"+selects[i].name+"="+$(selects[i]).val();
+		}
+		var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_csv_recharge_info";
+		location.href = url+param;
+	}
+	
+</script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">充值明细</div>
+<div class="blank5"></div>
+
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		支付单号：<input type="text" class="textbox" name="notice_sn" value="{:trim($_REQUEST['notice_sn'])}" style="width:100px;" />
+		会员名称：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		
+		支付备注：<input type="text" class="textbox" name="sub_name" value="{:trim($_REQUEST['memo'])}" style="width:120px;" />
+		支付状态: 
+		<select name="is_paid">
+				<option value="4" <if condition="intval($_REQUEST['is_paid']) eq 4" >selected="selected"</if>>{%ALL}</option>
+				<option value="1" <if condition="intval($_REQUEST['is_paid']) eq 1">selected="selected"</if>>已支付</option>
+				<option value="2" <if condition="intval($_REQUEST['is_paid']) eq 2">selected="selected"</if>>未支付</option>
+				
+		</select>
+		<div class="blank5"></div>
+		时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" style="width:130px" />
+		<input type="button" class="button" id="btn_begin_time" value="{%SELECT_TIME}" onclick="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" />	
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" style="width:130px" />
+		<input type="button" class="button" id="btn_end_time" value="{%SELECT_TIME}" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" />	
+		
+		<input type="hidden" value="WebsiteStatistics" name="m" />
+		<input type="hidden" value="website_recharge_info" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+    	<input type="button" class="button" value="{%EXPORT}" onclick="export_csv_recharge_info();" />
+	</form>
+</div>		
+						
+<div class="blank5"></div>
+		
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	
+	datasource="list" 
+	show="时间:时间
+		,支付单号:支付单号
+		,user_id|get_user_name_real:会员名称
+		,应付金额|format_price:应付金额
+		,支付方式:支付方式
+		,支付状态:支付状态
+		,支付备注:支付备注
+		"/>
+			
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+
+</div>
+
+<include file="Public:footer" />

@@ -1,0 +1,81 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+function get_pay_incharge_link($id)
+{
+	if(M("DealOrder")->where("id=".$id)->getField("pay_status")!=2)
+	{
+		return "<a href='javascript:void(0);' onclick='pay_incharge(".$id.");'>".l("ORDER_PAID_INCHARGE")."</a>&nbsp;";
+	}
+}
+function get_baofoo_query_link($id,$pid)
+{
+	/*if($GLOBALS['db']->getOneCached("SELECT `class_name` FROM ".DB_PREFIX."payment WHERE id=".$pid)=="Baofoo"){
+		$payment_notice_id = $GLOBALS['db']->getOne("SELECT id FROM ".DB_PREFIX."payment_notice WHERE order_id=".$id);
+		return '<a href="javascript:checkBaofooOrder('.$payment_notice_id.');">查询</a>';
+	}*/
+}		
+</PHP>
+<script type="text/javascript">
+	function pay_incharge(id)
+	{
+		if(confirm("{%CONFIRM_PAY_INCHARGE}"))
+		location.href = ROOT+"?"+VAR_MODULE+"=DealOrder&"+VAR_ACTION+"=pay_incharge&id="+id;
+	}
+	function checkBaofooOrder(id){
+		$.ajax({
+			url:ROOT_PATH + "/baofoo_query.php?id="+id,
+			dataType:"json",
+			cache : true,
+			success:function(result){
+				if(result.status ==  1){
+					if (result.SuccTime!="") {
+						var msg = "订单号：" + result.TransID + "\n";
+						msg += "金额：" + result.factMoney + "\n";
+						msg += "交易时间：" + result.SuccTime + "\n";
+						msg += "交易状态：" + result.CheckResult;
+						alert(msg);
+					}
+					else{
+						alert("查询失败或未支付的订单");
+					}
+				}
+				else{
+					alert("查询失败");
+				}
+			}
+		});
+	}
+</script>
+<div class="main">
+<div class="main_title">{%INCHARGE_ORDER}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%ORDER_SN}：<input type="text" class="textbox" name="order_sn" value="{:trim($_REQUEST['order_sn'])}" />
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" />
+		<input type="hidden" value="DealOrder" name="m" />
+		<input type="hidden" value="incharge_index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="incharge" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,order_sn:{%ORDER_SN},user_id|get_user_name:{%USER_NAME},deal_total_price|format_price:{%INCHARGE_AMOUNT},total_price|format_price:{%PAY_AMOUNT},payment_id|get_payment_name:{%PAYMENT_TYPE},pay_status|get_pay_status:{%PAYMENT_STATUS},memo:支付备注" 
+	actionlist="id|get_pay_incharge_link,id|get_baofoo_query_link=$incharge['payment_id'], del:{%DEL}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

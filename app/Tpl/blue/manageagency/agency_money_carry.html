@@ -1,0 +1,124 @@
+<?php
+$this->_var['ujs'][] = $this->_var['TMPL_REAL']."/js/u.js";
+$this->_var['cujs'][] = $this->_var['TMPL_REAL']."/js/u.js";
+?>
+<script type="text/javascript" src="{function name="parse_script" v="$ujs" c="$cujs"}"></script>
+<script type="text/javascript">
+	var json_fee = {$json_fee};
+</script>
+<div class="uc_r_bl">
+	<div class="inc_main">		
+		<div class="list_title clearfix">
+        	<div {if $ACTION_NAME eq 'index'}class="cur"{/if}>
+				<a href="{url x="index" r="agency_money#index"}">{$LANG.UC_LOGS}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge'}class="cur"{/if}>
+				<a href="{url x="index" r="agency_money#incharge"}">{$LANG.UC_MONEY_INCHARGE}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'incharge_log'}class="cur"{/if}>
+				<a href="{url x="index" r="agency_money#incharge_log"}">{$LANG.UC_MONEY_INCHARGE_LOG}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'carry'}class="cur"{/if}>
+				<a href="{url x="index" value="agency_money#carry"}">{$LANG.UC_CARRY}</a>
+			</div>
+			<div {if $ACTION_NAME eq 'carry_log'}class="cur"{/if}>
+				<a href="{url x="index" value="agency_money#carry_log"}">提现日志</a>
+			</div>
+		</div>
+		<div class="u_incharge uc_r_bl_box clearfix pt10">
+		    <div class="prompt">
+				<p><i></i>请输入您要提现的金额，以及正确无误的银行帐号信息。</p>
+				<p><i></i>我们将在3个工作日（双休日和法定节假日除外）之内，将钱转入您指定的银行帐号 。</p>
+				<p><i></i>在双休日和法定节假日期间，用户可申请取现，但{function name="app_conf" v="SHOP_TITLE"}暂不处理，需要等恢复正常上班之后才进行处理。不便之处，请多多谅解！ <p class="f_red"><i></i>重要！！如果您填写的开户行支行不正确，提现交易将无法成功，提现费用不予返还。如果您不确定开户行支行名称，可以打电话到当地所在银行的营业网点询问或者上网查询。</p>
+			</div>
+			<div class="total clearfix"> 
+	     		<div  class="t_name f_l">累计提现金额：</div>
+	      		<div class="f_l pl10"> {function name="number_format" v=$carry_total_money f=2} 元 （备注：不含手续费，为实际到帐金额。）</div>
+			</div>
+			<div class="blank20"></div>
+			<div class="m_number clearfix" style="">
+				<div  class="t_name f_l">请输入你的提款金额：</div>
+				<style type="text/css">
+					.uc_r_bl_box .field label{ color:#666; width:180px; }
+					.cashdraw_tips {position:absolute; z-index:99999; }
+					.cashdraw_tips .cashdraw_tip_header { background: url("{$TMPL}/images/reg_tip_header_t.gif") no-repeat scroll 0 17px transparent; float: left; height: 47px; position: relative; width: 6px; z-index: 1000; }
+					.cashdraw_tips .cashdraw_tip_body_container { background: url("{$TMPL}/images/reg_tip_bg_bottom.gif") repeat-x scroll center bottom transparent; float: left; margin-left: -1px; padding-bottom: 2px; position: relative; }
+					.cashdraw_tips .cashdraw_tip_body { background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #BBBBBB; float: left; }
+					.cashdraw_tips .cashdraw_tip_body .cashdraw_tip_content { color: #666666; display: block; padding: 5px 9px 4px; width:291px; line-height:20px;}
+					.tiptable { background:#ccc}
+					.tiptable tr.bg td{ background:#fff; padding: 0 5px;text-align:center;}
+				</style>
+				<form name="Jcarry_From" id="Jcarry_From" action="{url x="index" r="uc_money#savecarry"}" method="post">
+				<div class="uc_r_bl_box clearfix" style="position:relative;">
+		            <div class="field">
+		                <label>可用资金：</label>
+		                <span class="f_l">{function name="number_format" v=$user_info.money f="2"} 元</span><span><input id="Jcarry_totalAmount" type="hidden" value="{$user_info.money}"></span>
+		            </div>
+					<div class="blank5"></div>
+		            <div class="field">
+		                <label><span class="f_red b">*</span> 提取金额：</label>
+		                <span class="f_l"><input type="text" autocomplete="off" name="amount" class="f-input" id="Jcarry_amount">&nbsp;&nbsp;元</span>
+		                &nbsp;
+						<span id="Jcarry_balance" class="f_red lh28"></span>
+		            </div>
+					<div class="blank5"></div>
+		            <div class="field">
+		                <label>提现费用：</label>
+		                <span id="Jcarry_fee" class="f_l">0.00 元</span>
+						{if $fee_config}
+						<img src="{$TMPL}/images/tips_wh.jpg" id="imgtips" style="position:relative;top:5px;left:10px;z-index:999; cursor:pointer;" onmouseover="tips(this,'第三方收取提现手续费:&lt;/br&gt;&lt;table width=\'100%\' class=\'tiptable\' cellspacing=\'1\' border=\'0\' &gt;&lt;tr style=\'background:#eff5fe;text-align:center\'&gt;{foreach from="$fee_config" item="fee"}&lt;td height=\'22\'&gt;{$fee.name}&lt;/td&gt;{/foreach}&lt;/tr&gt;&lt;tr class=\'bg\'&gt;{foreach from="$fee_config" item="fee"}&lt;td&gt;{$fee.fee_format}&lt;/td&gt;{/foreach}&lt;/tr&gt;&lt;/table&gt;',70,290)"><br>
+		            	{/if}
+					</div>
+					<div class="blank5"></div>
+		            <div class="field">
+		                <label>实付金额：</label>
+		                <span id="Jcarry_realAmount" class="f_l">0.00 元</span><br>
+		            </div>
+					<div class="blank5"></div>
+		            <div class="field">
+		                <label>提现后账户可用余额：</label>
+		                <span id="Jcarry_acount_balance" class="f_l">0.00 元</span>
+		                <br>
+		            </div>
+					<div class="blank10"></div>
+					<div class="field">
+		                <label> 开户行：</label>
+		                <span class="f_l">{$user_bank.bankname}&nbsp;&nbsp;&nbsp;&nbsp;<a href="{url x="index" r="uc_money#bank"}">我想重新选择</a></span>
+		            </div>
+					<div class="blank0"></div>
+		            <div class="field">
+		                <label>开户名：</label>
+		                <span class="f_l">{function name="utf_substr" v=$user_bank.real_name}</span>
+		            </div>
+		            <div class="blank0"></div>
+		             <div class="field">
+		                <label>卡号：</label>
+		                <span class="f_l"><?php echo msubstr($this->_var['user_bank']['bankcard'],0,strlen($this->_var['user_bank']['bankcard'])-3,"utf-8",false); ?>***</span>
+		            </div>
+					<div class="blank0"></div>
+		           <div class="field">
+		               <label>&nbsp;</label>
+		               <span class="f_gray f_l" id="Jcarry_bankSuggestNote">提现时间约为3个工作日。</span>
+		           </div>
+				   <div class="blank10"></div>
+				  <div class="field">
+						 <label>支付密码：</label>
+						<span>
+							<input type="password" autocomplete="off" class="f-input" name="paypassword" id="J_PAYPASSWORD" />
+							&nbsp;&nbsp;{if $user_info.paypassword eq ''}还未设置！{else}忘记了？{/if}<a href="{url x="index" r="uc_account#security"}" target="_blank" class='f_blue'>点这里</a>
+						</span>
+					</div>
+		        </div>
+			</div>
+			<div class="f_red tc" style="font-size:14px;">警告：禁止信用卡套现、虚假交易等行为，一经确认，将终止该账户的使用。</div>
+			<div class="blank20"></div>
+			<div class="tc">
+				<input type="hidden" name="bid" value="{$bid}" />
+				<input type="hidden" name="acount_balance" id="Jcarry_acount_balance_res" style="width:70px">
+	            <input type="submit" value="申请提现" class="sub_btn">
+	        </div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="blank"></div>	

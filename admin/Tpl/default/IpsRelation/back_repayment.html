@@ -1,0 +1,71 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+    function repay_list($id)
+	{
+		$str="<a href='".u("IpsRelation/deal_list",array("id"=>$id))."'>".$page_title."</a>";
+        return $str;
+	}
+</php>
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">{$page_title}</div>
+<div class="blank5"></div>
+<form name="search" action="__APP__" method="get">	
+<div class="button_row">
+	<if condition="!$_REQUEST['referer']">
+	<input type="button" class="button" value="{%EXPORT}" onclick="m_export_csv('back_');" />
+	</if>
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+
+		{%P_BID_NO}：<input type="text" class="textbox" name="pBidNo" value="{:trim($_REQUEST['pBidNo'])}" style="width:100px;" />
+
+		
+		{%DEAL_NAME}：<input type="text" class="textbox" name="deal_name" value="{:trim($_REQUEST['deal_name'])}" style="width:100px;" />
+
+        投资人：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		
+        {%P_REPAYMENT_DATE}：
+		<input type="text" class="textbox" name="start_time" id="start_time" value="{:trim($_REQUEST['start_time'])}" onfocus="return showCalendar('start_time', '%Y-%m-%d', false, false, 'start_time');" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" />
+		
+
+		<input type="hidden" value="IpsRelation" name="m" />
+		<input type="hidden" value="back_repayment" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+
+</div>
+</form>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="repayment" 
+	datasource="list" 
+	show="mid:{%ID}
+    	 ,pBidNo:{%P_BID_NO}
+    	 ,deal_name:{%DEAL_NAME}
+         ,user_name:投资人
+         ,repay_time|to_date:还款日
+         ,true_repay_time|to_date:实际还款日
+         ,repay_money|number_format=2:已收本息
+         ,true_manage_money|number_format=2:管理费
+         ,true_manage_interest_money|number_format=2:利息管理费
+         ,impose_money|number_format=2:逾期/违约金
+         ,status:状态
+         "         
+	 /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

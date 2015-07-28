@@ -1,0 +1,67 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+<PHP>
+	function get_is_paid($status)
+	{
+		if($status == 0)
+		return l("NO");
+		else
+		return l("YES");
+	}
+</PHP>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		支付时间 ：
+		<input type="text" class="textbox" name="start_time" id="start_time" value="{:trim($_REQUEST['start_time'])}" onfocus="return showCalendar('start_time', '%Y-%m-%d', false, false, 'start_time');" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" />
+		<div class="blank5"></div>
+		{%PAYMENT_NOTICE_SN}：<input type="text" class="textbox" name="notice_sn" value="{:trim($_REQUEST['notice_sn'])}" />
+		{%PAYMENT_METHOD}：
+		<select name="payment_id">
+			<option value="0" <if condition="intval($_REQUEST['payment_id']) eq 0">selected="selected"</if>>{%ALL}</option>
+			<foreach name="payment_list" item="payment_item">
+				<option value="{$payment_item.id}" <if condition="intval($_REQUEST['payment_id']) eq $payment_item['id']">selected="selected"</if>>{$payment_item.name}</option>
+			</foreach>
+		</select>
+		支付状态
+		<select name="is_paid">
+			<option value="-1" <if condition="intval($_REQUEST['is_paid']) eq -1 || !isset($_REQUEST['is_paid'])">selected="selected"</if>>{%ALL}</option>
+			<option value="0" <if condition="intval($_REQUEST['is_paid']) eq 0 && isset($_REQUEST['is_paid'])">selected="selected"</if>>未支付</option>
+			<option value="1" <if condition="intval($_REQUEST['is_paid']) eq 1">selected="selected"</if>>已支付</option>
+		</select>			
+		<input type="hidden" value="PaymentNotice" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="payment_notice" 
+	datasource="list" 
+	show="id:{%ID}|50px,notice_sn:{%PAYMENT_NOTICE_SN},create_time|to_date:{%CREATE_TIME}
+	,pay_time|to_date:{%PAY_TIME}
+	,is_paid|get_is_paid:{%IS_PAID}
+	,user_id|get_user_name_real:{%USER_NAME}
+	,payment_id|get_payment_name:{%PAYMENT_METHOD}
+	,money|format_price:{%PAYMENT_MONEY}
+	,fee_amount|format_price:收手续费
+	,pay_fee_amount|format_price:支出手续费
+	,outer_notice_sn:{%OUTER_NOTICE_SN}
+	,memo:{%PAYMENT_MEMO}" 
+	actionlist="del:{%DEL}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{:conf("APP_NAME")}{:l("ADMIN_PLATFORM")}</title>
+<script type="text/javascript" src="__ROOT__/public/runtime/admin/lang.js"></script>
+<script type="text/javascript">
+	var version = '{:app_conf("DB_VERSION")}';
+	var VAR_MODULE = "{:conf("VAR_MODULE")}";
+	var VAR_ACTION = "{:conf("VAR_ACTION")}";
+	var ROOT = '__APP__';
+	var ROOT_PATH = '<PHP>echo APP_ROOT;</PHP>';
+</script>
+<load href='__TMPL__Common/style/style.css' />
+<load href='__TMPL__Common/style/main.css' />
+<load href='__TMPL__Common/js/jquery.js' />
+</head>
+
+<body>
+	<div class="main">
+	<div class="main_title">{:conf("APP_NAME")}{:l("ADMIN_PLATFORM")} {%HOME}	</div>
+	<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title" style="width:200px;">
+				快捷导航
+			</td>
+			<td class="item_input">				
+				<select name="nav" id="J_nav">
+					<foreach name="navs" item="nav">
+					<option value="{$nav.key}">{$nav.name}</option>
+					</foreach>
+				</select>
+				<select name="m" id="J_m">
+					
+				</select>
+				<select name="a" id="J_a">
+					
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="item_title" style="width:200px;">
+				{%TOTAL_REG_USER_COUNT}
+			</td>
+			<td class="item_input">				
+				<PHP>echo sprintf(L("TOTAL_USER_COUNT_FORMAT"),$total_user,$total_verify_user);</PHP>
+			</td>
+		</tr>
+		<tr>
+			<td class="item_title" style="width:200px;">
+				注册待验证
+			</td>
+			<td class="item_input">				
+				<a href="{:u("User/register")}" <if condition="$register_count gt 0">style="color:#f60;"</if>>{$register_count}待审核的普通会员</a>
+				&nbsp;
+				<a href="{:u("User/company_register")}" <if condition="$company_register_count gt 0">style="color:#f60;"</if>>{$company_register_count}待审核的企业会员</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="item_title" style="width:200px;">
+				待审核的借款
+			</td>
+			<td class="item_input">				
+				<a href="{:u("Deal/publish")}" <if condition="$wait_deal_count gt 0">style="color:#f60;"</if>>{$wait_deal_count}待审核的借款</a>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="item_title" style="width:200px;">
+				等待材料的借款
+			</td>
+			<td class="item_input">				
+				<a href="{:u("Deal/wait")}" <if condition="$info_deal_count gt 0">style="color:#f60;"</if>>{$info_deal_count}等待材料的借款</a>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<td class="item_title" style="width:200px;">
+				满标的借款
+			</td>
+			<td class="item_input">				
+				<a href="{:u("Deal/full")}" <if condition="$suc_deal_count gt 0">style="color:#f60;"</if>>{$suc_deal_count}满标的借款</a>
+			</td>
+		</tr>	
+		
+		
+		<tr>
+			<td class="item_title" style="width:200px;">
+				三日内需还款的借款
+			</td>
+			<td class="item_input">				
+				<a href="{:u("Deal/three",array('status'=>1))}" <if condition="$threeday_repay_count gt 0">style="color:#f60;"</if>>{$threeday_repay_count}期需还款的借款</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="item_title" style="width:200px;">
+				逾期未还的借款
+			</td>
+			<td class="item_input">				
+				<a href="{:u("Deal/yuqi")}" <if condition="$yq_repay_count gt 0">style="color:#f60;"</if>>{$yq_repay_count}笔逾期</a>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="item_title" style="width:200px;">
+				待审核的认证
+			</td>
+			<td class="item_input">		
+				<a href="{:u("Credit/user_wait")}" <if condition="$auth_count gt 0">style="color:#f60;"</if>>{$auth_count}待审核的认证</a>
+			</td>
+		</tr>
+		
+			<tr>
+			<td class="item_title" style="width:200px;">
+				待处理的授信额度申请
+			</td>
+			<td class="item_input">		
+				<a href="{:u("DealQuotaSubmit/index",array("status"=>0))}" <if condition="$deal_quota_count gt 0">style="color:#f60;"</if>>{$deal_quota_count}待处理的授信额度申请</a>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="item_title" style="width:200px;">
+				待处理的额度申请
+			</td>
+			<td class="item_input">		
+				<a href="{:u("QuotaSubmit/index",array("status"=>0))}" <if condition="$quota_count gt 0">style="color:#f60;"</if>>{$quota_count}待处理的额度申请</a>
+			</td>
+		</tr>
+		
+	
+		
+		<tr>
+			<td class="item_title" style="width:200px;">
+				提现申请
+			</td>
+			<td class="item_input">
+				<a href="{:u("UserCarry/index",array("status"=>0))}" <if condition="$carry_count gt 0">style="color:#f60;"</if>>{$carry_count}提现申请</a>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="item_title" style="width:200px;">
+				待处理续约申请
+			</td>
+			<td class="item_input">
+				<a href="{:u("GenerationRepaySubmit/index")}" <if condition="$generation_repay_submit gt 0">style="color:#f60;"</if>>{$generation_repay_submit}待处理续约申请</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="item_title" style="width:200px;">
+				待处理举报
+			</td>
+			<td class="item_input">
+				<a href="{:u("Reportguy/index",array("status"=>0))}" <if condition="$reportguy_count gt 0">style="color:#f60;"</if>>{$reportguy_count}待处理举报</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="item_title" style="width:200px;">
+				订单统计
+			</td>
+			<td class="item_input">
+				充值成交{$incharge_order_buy_count}
+				
+				<if condition="$reminder['incharge_count'] gt 0">
+				(<a href="{:u("PaymentNotice/index")}" style="color:#f60;">{$reminder.incharge_count}新充值单</a>)
+				</if>
+			</td>
+		</tr>
+		
+		
+		<tr>
+			<td class="item_title" style="width:200px;">
+				网站数据统计
+			</td>
+			<td class="item_input">
+				<a href="{:u("Index/statistics")}">查看</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title" style="width:200px;">
+				{%CURRENT_VERSION}
+			</td>
+			<td class="item_input">
+				{%APP_VERSION}:{:conf("DB_VERSION")}
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="item_title" style="width:200px;">
+				{%TIME_INFORMATION}
+			</td>
+			<td class="item_input">
+				{%CURRENT_TIME}：<PHP> echo to_date(get_gmtime());</PHP>
+			</td>
+		</tr>
+		<tr>
+			<td class="item_title" style="width:200px;">
+				{%GET_MORE_INFO}
+			</td>
+			<td class="item_input">
+				请访问 <a href="http://www.fanwe.com" target="_blank" title="方维贷款商业系统">http://p2p.fanwe.com</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table>	
+	</div>
+<script type="text/javascript">
+	var nav_json_data = <php>echo json_encode($navs);</php>;
+	loadModule();
+	$("#J_nav").change(function(){
+		loadModule();
+	});
+	$("#J_m").change(function(){
+		loadAction();
+	});
+	function loadModule(){
+		var nav =$("#J_nav").val();
+		var html = "";
+		$.each(nav_json_data,function(i,v){
+			if(i==nav){
+				$.each(v.groups,function(ii,vv){
+					html += '<option value="'+ii+'">'+vv.name+'</option>';
+				});
+			}
+		});
+		
+		$("#J_m").html(html);
+		loadAction();
+	}
+	
+	function loadAction(){
+		var nav =$("#J_nav").val();
+		var m =  $("#J_m").val();
+		var a_html = '<option value="">请选择</option>';
+		$.each(nav_json_data,function(i,v){
+			if(i==nav){
+				$.each(v.groups,function(ii,vv){
+					if(ii==m){
+						$.each(vv.nodes,function(iii,vvv){
+							a_html += '<option value="'+vvv.action+'" module="'+vvv.module+'">'+vvv.name+'</option>';
+						});
+					}
+				});
+			}
+		});
+	
+		$("#J_a").html(a_html);
+	}
+	
+	$("#J_a").change(function(){
+		if($.trim($(this).val())!=""){
+			location.href = ROOT + '?m='+$(this).find("option:selected").attr("module")+'&a='+$(this).val();
+		}
+	})
+</script>
+</body>
+</html>

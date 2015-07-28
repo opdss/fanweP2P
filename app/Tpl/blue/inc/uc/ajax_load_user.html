@@ -1,0 +1,31 @@
+<table class="data_table" cellspacing="1">
+	 <tr>
+	 	<th class="gry">借款单号</th>
+        <th class="gry">会员</th>
+        <th class="gry">还款本息</th>
+		<th class="gry">逾期/违约金</th>
+		<th class="gry">状态</th>
+    </tr>
+	{foreach from=$load_user item="lu"}
+		<tr>
+			<td>{$lu.id}</td>
+			<td>{if $lu.t_user_id > 0}{$lu.t_user_name}{else}{$lu.user_name}{/if}</td>
+			<td>{$lu.month_repay_money_format}</td>
+			<td>{$lu.impose_money_format}</td>
+			<td>{$lu.status_format}</td>
+		</tr>
+	{/foreach}
+	
+	<tr>
+		<td colspan="5">
+			当前 {$page}/{$page_all} 页 , {$rs_count} 条记录
+			{if $page > 1}
+			<a href="javascript:void(0);" onclick="getLoanItem('{$obj}','{$deal_id}','{$l_key}',1);">第一页  </a>
+			{/if}
+			{if $page_prev > 0}<a href="javascript:void(0);" onclick="getLoanItem('{$obj}','{$deal_id}','{$l_key}','{$page_prev}');">上一页 </a>{/if}
+			{if $page < $page_all}<a href="javascript:void(0);" onclick="getLoanItem('{$obj}','{$deal_id}','{$l_key}','{$page_next}');">下一页  </a>{/if}
+			{if $page < $page_all}<a href="javascript:void(0);" onclick="getLoanItem('{$obj}','{$deal_id}','{$l_key}','{$page_all}');">末一页  </a>{/if}
+		</td>
+	</tr>
+	
+</table>

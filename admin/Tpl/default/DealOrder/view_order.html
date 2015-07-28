@@ -1,0 +1,468 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<PHP>
+function get_delivery_sn($deal_order_item_id)
+{
+	$delivery_notice = M("DeliveryNotice")->where("order_item_id=".$deal_order_item_id)->order("delivery_time desc")->find();
+	$order_id = M("DealOrderItem")->where("id=".$delivery_notice['order_item_id'])->getField("order_id");
+	$res = $delivery_notice['notice_sn'];
+	if($delivery_notice['express_id']!=0)
+	{
+		$res.=" <br /><a href='".U("Express/eprint",array("order_id"=>$order_id,"express_sn"=>$delivery_notice['notice_sn'],"express_id"=>$delivery_notice['express_id']))."' target='_blank'>".l("PRINT_EXPRESS")."</a> <a href='javascript:void(0);' onclick='track_express(\"".$delivery_notice['notice_sn']."\",\"".$delivery_notice['express_id']."\");'>".l("TRACK_EXPRESS")."</a>";
+	}
+	return $res;
+}
+function get_delivery_arrival($deal_order_item_id)
+{
+	$delivery_notice =  M("DeliveryNotice")->where("order_item_id=".$deal_order_item_id)->order("delivery_time desc")->find();
+	if($delivery_notice['is_arrival']==1)
+	{
+		return l("USER_CONFIRM_DELIVERY");
+	}
+	else
+	{
+		return l("USER_NOT_CONFIRM_DELIVERY");
+	}
+}
+function get_delivery_memo($deal_order_item_id)
+{
+	return M("DeliveryNotice")->where("order_item_id=".$deal_order_item_id)->getField("memo");
+}
+function go_to_message($content,$id)
+{
+	return "<a href='".u("Message/edit",array('id'=>$id))."' title='".$content."'>".msubstr($content)."</a>";
+}
+</PHP>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#refund_money_cbo").bind("click",function(){ bind_refund_money();});
+		$("#refund_money_box").bind("keydown keyup blur",function(){ 
+			check_max_refund(this);
+		});
+		 bind_refund_money();
+	});
+	function track_express(express_sn,express_id)
+	{	
+		$.ajax({ 
+				url: "<?php echo APP_ROOT;?>/express.php?express_sn="+express_sn+"&express_id="+express_id, 
+				data: "ajax=1",
+				dataType: "json",
+				success: function(obj){
+					if(obj.status==2)
+					{
+						window.open(obj.msg);
+					}
+					if(obj.status==1)
+					{
+						$.weeboxs.open(obj.msg, {contentType:'html',showButton:false,title:LANG['TRACK_EXPRESS'],width:530,height:280});
+					}
+					if(obj.status==0)
+					{
+						alert(obj.msg);
+					}				
+				}
+		});		
+	}
+	function check_max_refund(obj)
+	{
+		var max_refund = $("#refund_money_box").attr("ref");
+		
+		if(parseFloat($(obj).val())>parseFloat(max_refund))
+		{
+			$(obj).val(max_refund);
+		}
+	}
+	
+	function bind_refund_money()
+	{
+		var is_refund = $("#refund_money_cbo").attr("checked");;
+		if(is_refund)
+		{
+			if($("#refund_money_box").val() == ''||parseFloat($("#refund_money_box").val())==0)
+			{
+				$("#refund_money_box").val($("#refund_money_box").attr("ref"));
+			}
+			$("#refund_money").show();
+			
+		}
+		else
+		{			
+			$("#refund_money").hide();
+			$("#refund_money_box").val("0");
+		}
+	}
+</script>
+<div class="main">
+<div class="main_title"><if condition="$order_info['order_status'] eq 0">{%DEAL_ORDER_HANDLE}<else />{%DEAL_ORDER_VIEW}</if>{$order_info.order_sn}
+
+</div>
+<div class="blank5"></div>
+
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=4 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%ORDER_USER}:</td>
+		<td class="item_input">
+			{$order_info.user_id|get_user_name_js}
+		</td>
+		<td class="item_title">{%CLOSE_ORDER}:</td>
+		<td class="item_input">
+		<if condition="($order_info['pay_status'] eq 2 and ($order_info['delivery_status'] eq 2 or $order_info['delivery_status'] eq 5)) or ($order_info['pay_amount'] eq $order_info['refund_money'])">		
+			<if condition="$order_info['order_status'] eq 1">
+			{%ORDER_OVERED}
+			<input type="button" class="button" value="{%OPEN_ORDER}" onclick="location.href='__APP__?m=DealOrder&a=open_order&id={$order_info.id}';"  />
+			<else />
+			<input type="button" class="button" value="{%CLOSE_ORDER}" onclick="location.href='__APP__?m=DealOrder&a=over_order&id={$order_info.id}';"  />
+			</if>
+		<else />
+		{%ORDER_NOT_OVER}
+		</if>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%ORDER_SN}:</td>
+		<td class="item_input">{$order_info.order_sn}</td>
+		<td class="item_title">{%ORDER_CREATE_TIME}:</td>
+		<td class="item_input">{$order_info.create_time|to_date}</td>
+	</tr>	
+	<tr>
+		<td class="item_title">{%ORDER_PAY_STATUS}:</td>
+		<td class="item_input">{$order_info.pay_status|get_pay_status}
+			<if condition="$order_info['pay_status'] neq 2">
+				<input type="button" class="button" value="{%ADMIN_INCHARGE_ORDER}" onclick="location.href='__APP__?m=DealOrder&a=order_incharge&id={$order_info.id}';"  />
+			</if>
+		</td>
+		<td class="item_title">{%ORDER_DELIVERY_STATUS}:</td>
+		<td class="item_input">{$order_info.delivery_status|get_delivery_status}</td>
+	</tr>
+	<tr>
+		<th colspan=4>{%PAYMENT_INFORMATION}</th>
+	</tr>
+	<tr>
+		<td class="item_title">{%ORDER_TOTAL_PRICE}:</td>
+		<td class="item_input">{$order_info.total_price|format_price}</td>
+		<td class="item_title">{%INCHARGE_AMOUNT}:</td>
+		<td class="item_input">{$order_info.pay_amount|format_price}</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%ORDER_DEAL_TOTAL_PRICE}:</td>
+		<td class="item_input">{$order_info.deal_total_price|format_price}</td>
+		<td class="item_title">{%ORDER_USER_DISCOUNT}:</td>
+		<td class="item_input">{$order_info.discount_price|format_price}</td>		
+	</tr>
+	<tr>
+		<td class="item_title">{%ACCOUNT_PAYMENT}:</td>
+		<td class="item_input">{$order_info.account_money|format_price}</td>
+		<td class="item_title">{%ECV_PAYMENT}:</td>
+		<td class="item_input">{$order_info.ecv_money|format_price}</td>
+	</tr>
+	<if condition="$order_info['payment_id'] gt 0">
+	<tr>
+		<td class="item_title">{%PAYMENT_METHOD}:</td>
+		<td class="item_input">{$order_info.payment_id|get_payment_name}</td>
+		<td class="item_title">{%FEE_AMOUNT}:</td>
+		<td class="item_input">{$order_info.payment_fee|format_price}</td>
+	</tr>
+	</if>
+	<if condition="$order_info['delivery_id'] gt 0">
+	<tr>
+		<th colspan=4>{%ORDER_DELIVERY}</th>
+	</tr>
+	<tr>
+		<td class="item_title">{%ORDER_DELIVERY_METHOD}</td>
+		<td class="item_input">{$order_info.delivery_id|get_delivery_name}</td>
+		<td class="item_title">{%DELIVERY_FEE}:</td>
+		<td class="item_input">{$order_info.delivery_fee|format_price}</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DELIVERY_REGION_INFO}:</td>
+		<td colspan=3>
+			{%REGION_LV1}：{$order_info.region_lv1|get_region_name}
+			{%REGION_LV2}：{$order_info.region_lv2|get_region_name}
+			{%REGION_LV3}：{$order_info.region_lv3|get_region_name}
+			{%REGION_LV4}：{$order_info.region_lv4|get_region_name}		
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DELIVERY_ADDRESS}:</td>
+		<td class="item_input">{$order_info.address}</td>
+		<td class="item_title">{%DELIVERY_ZIP}:</td>
+		<td class="item_input">{$order_info.zip}</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DELIVERY_CONSIGNEE}:</td>
+		<td class="item_input">{$order_info.consignee}</td>
+		<td class="item_title">{%DELIVERY_MOBILE}:</td>
+		<td class="item_input">{$order_info.mobile}</td>
+	</tr>
+	</if>
+	<tr>
+		<th colspan=4>{%EXT_INFO}</th>
+	</tr>
+	<tr>
+		<td class="item_title">{%RETURN_MONEY}:</td>
+		<td class="item_input">{$order_info.return_total_money|format_price}</td>
+		<td class="item_title">{%RETURN_SCORE}:</td>
+		<td class="item_input">{$order_info.return_total_score|format_score}</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%ORDER_MEMO}:</td>
+		<td colspan=3>
+			{$order_info.memo}
+		</td>
+	</tr>
+	<tr>
+		<td colspan=4 class="bottomTd"></td>
+	</tr>
+</table>
+<div class="blank5"></div>
+
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=6 class="topTd"></td>
+	</tr>
+	<tr>
+		<th colspan=6>{%ORDER_DEAL_GOODS}</th>
+	</tr>
+	<tr>
+		<th>{%ORDER_DEAL_GOODS_NAME}</th>
+		<th>{%NUMBER}</th>
+		<th>{%DEAL_UNIT_PRICE}</th>
+		<th>{%DEAL_TOTAL_PRICE}</th>
+		<th width=200>{%DELIVERY_OP}</th>
+		<th width=200>{%DELIVERY_MEMO}</th>
+	</tr>
+	<foreach name="order_deals" item="deal_item">
+	<tr>
+		<td>{$deal_item.name}</td>
+		<td>{$deal_item.number}</td>
+		<td>{$deal_item.unit_price|format_price}</td>
+		<td>{$deal_item.total_price|format_price}</td>
+		<td>
+		<if condition="$deal_item['is_delivery'] eq 0">
+			{%ORDER_DELIVERY_STATUS_5}
+		<else />
+			<if condition="$deal_item['delivery_status'] eq 0">
+				<input type="button" class="button" value="{%DELIVERY}" onclick="location.href='__APP__?m=DealOrder&a=delivery&id={$order_info.id}';"  />
+			<else />
+				
+				{%ORDER_DELIVERY_STATUS_2}
+				  <br />
+				  {%DELIVERY_SN}：{$deal_item.id|get_delivery_sn}
+				 <br />
+				 {$deal_item.id|get_delivery_arrival}
+				 <br />
+				 <br />
+				 <input type="button" class="button" value="{%REDELIVERY}" onclick="location.href='__APP__?m=DealOrder&a=delivery&id={$order_info.id}';"  />
+			</if>
+		</if>
+		</td>
+		<td> {$deal_item.id|get_delivery_memo}</td>
+	</tr>
+	</foreach>
+	<tr>
+		<td colspan=6 class="bottomTd"></td>
+	</tr>
+</table>
+
+<div class="blank5"></div>
+
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=6 class="topTd"></td>
+	</tr>
+	<tr>
+		<th colspan=6>{%PAYMENT_NOTICE}</th>
+	</tr>
+	<tr>
+		<th>{%PAYMENT_NOTICE_SN}</th>
+		<th>{%OUTER_NOTICE_SN}</th>
+		<th>{%PAY_TIME}</th>
+		<th>{%PAYMENT_AMOUNT}</th>
+		<th>{%PAYMENT_METHOD}</th>
+		<th>{%PAYMENT_MEMO}</th>
+	</tr>
+	<foreach name="payment_notice" item="notice_item">
+	<tr>
+		<td>{$notice_item.notice_sn}</td>
+		<td>{$notice_item.outer_notice_sn}</td>
+		<td>{$notice_item.pay_time|to_date}</td>
+		<td>{$notice_item.money|format_price}</td>
+		<td>{$notice_item.payment_id|get_payment_name}</td>
+		<td>{$notice_item.memo}</td>
+		
+	</tr>
+	</foreach>
+	<tr>
+		<td colspan=6 class="bottomTd"></td>
+	</tr>
+</table>
+<if condition="$coupon_list">
+<div class="blank5"></div>
+	
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=10 class="topTd"></td>
+	</tr>
+	<tr>
+		<th colspan=10>{%ORDER_COUPON}</th>
+	</tr>
+	<tr>
+		<th>{%COUPON_SN}</th>
+		<th>{%COUPON_PASSWORD}</th>
+		<th>{%COUPON_DEAL}</th>
+		<th>{%USER_NAME}</th>
+		<th>{%COUPON_IS_VALID}</th>
+		<th>{%COUPON_SUPPLIER}</th>
+		<th>{%COUPON_BEGIN_TIME}</th>
+		<th>{%COUPON_END_TIME}</th>
+		<th>{%COUPON_CONFIRM_TIME}</th>
+		<th>{%TAG_LANG_OPERATE}</th>
+	</tr>
+	<foreach name="coupon_list" item="coupon_item">
+	<tr>
+		<td>{$coupon_item.sn}</td>
+		<td>{$coupon_item.password}</td>
+		<td><a href='{:u("Deal/index",array("id"=>$coupon_item['deal_id']))}'>{$coupon_item.order_deal_id|get_order_item_name}</a></td>
+		<td>{$coupon_item.user_id|get_user_name}</td>
+		<td>{:l("COUPON_IS_VALID_".$coupon_item['is_valid'])}</td>
+		<td><a href='{:u("Supplier/index",array("id"=>$coupon_item['supplier_id']))}'>{$coupon_item.supplier_id|get_supplier_name}</a></td>
+		<td>{$coupon_item.begin_time|to_date}</td>
+		<td>{$coupon_item.end_time|to_date}</td>
+		<td>
+			<if condition="$coupon_item['confirm_time'] eq 0">
+				{%NOT_USED}
+			<else />
+				{$coupon_item.confirm_time|to_date}
+			</if>
+		</td>
+		<td>
+			<a href="{:u("DealCoupon/sms",array("id"=>$coupon_item['id']))}">{%SMS_COUPON}</a>
+			<a href="{:u("DealCoupon/mail",array("id"=>$coupon_item['id']))}">{%MAIL_COUPON}</a>
+			<a href="{:u("DealCoupon/foreverdelete",array("id"=>$coupon_item['id']))}">{%DEL}</a>
+		</td>
+		
+	</tr>
+	</foreach>
+	<tr>
+		<td colspan=10 class="bottomTd"></td>
+	</tr>
+</table>
+</if>
+
+
+<div class="blank5"></div>
+<if condition="$list">
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="message" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,content|go_to_message=$message['id']:{%MESSAGE_CONTENT}
+	,create_time|to_date:{%MESSAGE_CREATE_TIME}
+	,update_time|to_date:{%MESSAGE_REPLY_TIME}
+	,user_id|get_user_name:{%USER_NAME}
+	,city_id|get_city_name:{%CITY_NAME}
+	,is_effect|get_message_is_effect:{%MESSAGE_IS_EFFECT}
+	,rel_table|get_message_type=$message['rel_id']:{%MESSAGE_TYPE}" 
+	/> 
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+
+<div class="blank5"></div>
+</if>
+<if condition="$log_list">
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+		<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr><th colspan=2>{%ORDER_LOG}</th></tr>
+			<foreach name="log_list" item="log_item">
+			<tr>
+				<td>{$log_item.log_info}</td>
+				<td>{$log_item.log_time|to_date}</td>
+			</tr>
+			</foreach>
+		<tr>
+		<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table>
+	<div class="blank5"></div>
+</if>
+<if condition="$order_info['order_status'] neq 1">
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%ADMIN_OPERATION}:</td>
+		<td class="item_input">
+			<label>{%AFTER_SALE_1}:<input type="checkbox" id="refund_money_cbo" name="after_sale[]" value="1" <if condition="$order_info['after_sale'] eq 1 or $order_info['after_sale'] eq 3">checked="checked"</if> /></label>
+			<label>{%AFTER_SALE_2}:<input type="checkbox" name="after_sale[]" value="2" <if condition="$order_info['after_sale'] eq 2 or $order_info['after_sale'] eq 3">checked="checked"</if> /></label>
+			<label id="refund_money">
+				{%REFUND_AMOUNT}:<input type="text" class="textbox" name="refund_money" size=8 value="{$order_info.refund_money}" id="refund_money_box" ref="{$order_info.pay_amount}" />
+				是否退到会员帐户：<input type="checkbox" name="refund_to_user" value="1" />
+			</label>
+			
+		</td>
+	</tr>
+
+	<tr>		
+		<td class="item_title">{%ADMIN_MEMO}:</td>
+		<td class="item_input">
+			<textarea class="textarea" name="admin_memo" >{$order_info.admin_memo}</textarea>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$order_info.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="DealOrder" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="admin_memo" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%EDIT}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+<else />
+<div class="blank5"></div>
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%AFTER_SALE}:</td>
+		<td class="item_input">
+			{:l("AFTER_SALE_".$order_info['after_sale'])}&nbsp;&nbsp;		
+			{%REFUND_AMOUNT}:{$order_info.refund_money|format_price}	
+		</td>
+	</tr>
+	<tr>		
+		<td class="item_title">{%ADMIN_MEMO}:</td>
+		<td class="item_input">
+			{$order_info.admin_memo}
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+
+</if>
+</div>
+<include file="Public:footer" />

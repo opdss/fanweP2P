@@ -1,0 +1,33 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<load href='__TMPL__Common/js/conf.js' />
+<div class="main">
+<div class="main_title">{$user_info.user_name} 资料审核</div>
+<div class="blank5"></div>
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<foreach name="credits" item="credit">
+		<tr>
+			<td class="item_title"><if condition="$credit['must'] eq 1"><span style="color:red">*</span></if>{$credit.type_name}:</td>
+			<td class="item_input">
+				<if condition="$credit['credit']['passed'] eq 0">未审核</if>
+				<if condition="$credit['credit']['passed'] eq 1"><span style="color:red">审核通过</span></if>
+				<if condition="$credit['credit']['passed'] eq 2">审核失败</if>
+				<if condition="$credit['credit']">资料已上传 <a href="###" class="CreditEdit" onclick="do_credit({$credit.credit.id});">操作</a><else/>未上传资料</if>
+			
+			</td>
+		</tr>
+	</foreach>
+	
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+
+<include file="Public:footer" />

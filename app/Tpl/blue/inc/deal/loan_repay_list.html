@@ -1,0 +1,53 @@
+{if !$user_info}
+<div class="tc">只有<a href="{url x="index" r="user#register"}" class="f_blue">注册</a>用户才可以查看借入者信用信息！现在<a href="javascript:void(0);" onclick="ajax_login();" class="f_blue">登录</a></div>
+{else}
+<div class="box-bd">
+	<table class="data_table bdr5" border="0" cellspacing="1" style="width:100%;">
+	    <tr>
+	        <th width="10%">编号</th>
+	        <th width="12%">还款日期</th>
+	        <th width="12%">已还本息</th>
+	        <th width="12%">待还本息</th>
+	        <th width="12%">已付罚息</th>
+	        <th width="12%">待还罚息</th>
+	        <th width="12%">状态</th>
+	    </tr>
+		<?php $idx=1;?>
+		{foreach from=$loan_repay_list item=loan key=key}
+	  	<tr>
+	        <td width="10%">
+				<?php echo $idx;++$idx;?>
+			</td>
+	        <td width="12%">{function name="to_date" v=$loan.repay_day f="Y-m-d"}</td>
+	        <td width="12%" style="color:red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$loan.month_has_repay_money f=2}</td>
+	        <td width="12%" style="color:red">{function name="app_conf" v="CURRENCY_UNIT"}{if $loan.has_repay eq 0}{function name="number_format" v=$loan.month_repay_money f=2}{else}0.0{/if}</td>
+	        <td width="12%" style="color:red">{function name="app_conf" v="CURRENCY_UNIT"}{if $loan.has_repay neq 0}{function name="number_format" v=$loan.impose_money f=2}{else}0.0{/if}</td>
+			<td width="12%" style="color:red">{function name="app_conf" v="CURRENCY_UNIT"}{if $loan.has_repay eq 0}{function name="number_format" v=$loan.impose_money f=2}{else}0.0{/if}</td>
+	        <td width="12%">
+	        	{if $loan.has_repay eq 1}
+		        	{if $loan.status eq 0}
+					<span style="color:#f7634f">未偿还</span>
+					{elseif $loan.status eq 1}
+					<span style="color:#83a700">提前还款</span>
+					{elseif $loan.status eq 2}
+					<span style="color:#00bef0">已偿还</span>
+					{elseif $loan.status eq 3}
+					<span style="color:#ffaa00">逾期还款</span>
+					{elseif $loan.status eq 4}
+					<span style="color:#c82e25">严重逾期</span>
+					{/if}
+				{else}
+				<span style="color:#f7634f">未偿还</span>
+				{/if}
+			</td>
+	    </tr>
+		{/foreach}
+	</table>
+</div>
+{/if}
+
+
+
+
+
+

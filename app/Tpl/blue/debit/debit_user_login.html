@@ -1,0 +1,19 @@
+{include file="debit/debit_header.html"}
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/debit_login.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<div class="wrap login_block clearfix">
+             <div class="f_l left_block">
+             	<adv adv_id="白条登陆广告位1" />
+             </div>
+             {insert name="load_debit_login_form"}
+</div>
+<div class="blank20"></div>
+<div  style=" text-align:center; line-height:50px; color:#646776;">
+    {function name="app_conf" value="SHOP_FOOTER"}
+    {function name="app_conf" value="ICP_LICENSE"}
+    {function name="app_conf" value="COUNT_CODE"}
+</div>
+<!----->
+

@@ -1,0 +1,154 @@
+.review_form_box{ border:#ccc solid 1px;}
+.form_title{ background:#f2f2f2; height:22px; line-height:22px; font-size:14px; font-weight:bolder; padding:5px; border-bottom:#ccc solid 1px;}
+
+
+.review_form_box .dp_bar {
+  margin:10px;
+}
+
+.review_form_box .dp_bar span.em {
+  color: #FE4700;
+}
+
+.starsBar span {
+  background: url("../images/review/star_bar.png") no-repeat scroll 0 0 transparent;
+  display: inline-block;
+  height: 13px;
+}
+
+.starsBar {
+  background: url("../images/review/star_bar.png") no-repeat scroll 0 0 transparent;
+  display: inline-block;
+  height: 13px;
+  text-align: left;
+  width: 75px;
+  cursor:pointer;
+}
+
+.starsBar .frontBk_red {
+  background-position: 0 -22px;
+}
+
+
+.review_form_box .dp_bar span.score_tips {
+  background: url("../images/review/tip_bar.png") scroll transparent;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.review_form_box .dp_bar span.score_tips span {
+  background-color: #FF8524;
+  color: #FFFFFF;
+  display: inline-block;
+  line-height: 15px;
+  margin-left: 3px;
+  padding: 0 3px 1px;
+}
+
+.review_form_box .dp_bar span.error_tips {
+  color: #FF0000;
+}
+
+
+
+
+.review_form_box .dp_bar .data_bar {
+	 font-size:0px;
+	 line-height:0px;
+	  position: relative;
+	  width: 150px;
+	  background: url("../images/review/img_star_bar.png") no-repeat scroll 0 0 transparent;
+	  display: inline-block;
+	  background-position: 0 -48px;
+	  height: 10px;
+	  cursor:pointer;
+
+}
+
+
+.review_form_box .dp_bar .data_bar_width {
+  margin-right: 5px;
+  background: url("../images/review/img_star_bar.png") no-repeat scroll 0 0 transparent;
+  display: inline-block;
+   background-position: 0 -38px;
+  height: 10px;
+}
+
+.review_form_box .dp_bar .data_bar_tags {
+  color:#999;
+}
+
+.dp_text{ width:500px; height:140px; padding:3px;}
+.add_face{ display:inline-block;  background:url(../images/icons_line.png) no-repeat -2px -3px; padding-left:20px;}
+.add_pic{ display:inline-block;  background:url(../images/review/img_ico.png) no-repeat 0px 2px; padding-left:20px;}
+
+
+.review_form_box .dp_bar input.tag_text {
+  width: 400px;
+}
+.review_form_box .dp_bar span.tag_notice {
+  color: #BBBBBB;
+  padding-left: 5px;
+}
+
+
+.review_form_box .dp_bar span.tag_tips a {
+  background-color: #F3F6F9;
+  border: 1px solid #CCE4F0;
+  display: inline-block;
+  line-height: 15px;
+  padding: 0 3px 1px;
+  white-space: nowrap;
+}
+
+.review_form_box .dp_bar .topic_pub_form{border:none; background:none}
+.review_form_box .dp_bar .topic_pub_form .form_face{ margin-left:70px}
+
+.review_form_box .dp_bar span.tag_tips a.current {
+  background-color: #FFFACA;
+  border-color: #F6D3AB;
+  color: #FE4700;
+}
+
+
+/*pub_box img*/
+
+.pub_box .pub_img { margin-top:15px; }
+.pub_box .pub_img li { float:left; width:100px; height:130px; text-align:center; margin-right:17px; }
+.pub_box .pub_img div { margin:0px auto; width:80px; height:80px; padding:2px; border:1px solid #cfd3c4; background-color:#FFF; text-align:center; position:relative; }
+.pub_box .pub_img div p{width:80px; height:80px; display:block; overflow:hidden;}
+.pub_box .pub_img div.g { border:1px solid #c6f455; background-color:#f7ffe5; }
+.pub_box .pub_img .tag { position:absolute; right:2px; bottom:2px; }
+.pub_box .pub_img .i { width:80px; height:80px; }
+.pub_box .pub_img div .del { position:absolute; display:block; width:21px; height:21px; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/pub_img_cancel.png', sizingMethod='scale');
+right:-7px; top:-7px; }
+.pub_box .pub_img div>.del { background:url(../images/pub_img_cancel.png) no-repeat; }
+.pub_box .pub_img .more a { color:#09c; line-height:80px; font-size:14px; }
+.pub_box .pub_img .more2 { padding-top:15px; line-height:20px; height:67px; }
+.pub_box .pub_img .more2 a { color:#09c; }
+
+.img_ext_box{ display:inline-block; margin-top:5px;}
+.img_ext_box .img_brief{ width:100px; border:#ccc solid 1px; height:20px;}
+.img_ext_box label{ display:inline-block; margin:2px 0px;}
+
+
+button.comment_btn{
+  background: url("../images/review/comment_btn.png");
+  color: #2970A4;
+  height: 30px;
+  margin-left: 58px;
+  text-align: center;
+  width: 130px;
+  border:0px;
+  cursor:pointer;
+}
+label.title,span.title{ display:inline-block; width:80px;}
+.review_form_box .dp_bar  span.tag_tips {
+  display: block;
+  margin: 3px 0 0 83px;
+}
+
+.review_form_box .dp_bar span.none {
+  color: #fff;
+}
+

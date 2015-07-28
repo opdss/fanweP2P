@@ -1,0 +1,50 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<php>
+	function get_issend($is_send){
+		if($is_send==1)
+		return "已发放";
+		else
+		return "未发放";
+	}
+	
+</php>
+<script type="text/javascript">
+	function modify_send_gift(id){
+		$.weeboxs.open(ROOT+'?m=VipFestivals&a=send_gift&id='+id+"&is_send=<php>echo $_REQUEST['is_send'];</php>", {contentType:'ajax',showButton:false,title:"节日礼品发放",width:600,height:400});
+	}
+	
+</script>
+<div class="main">
+<div class="main_title">节日积分列表</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,name:节日名称
+		,holiday_date:时间
+		,is_effect|get_is_effect=$deal['id']:有效标识
+		,sort|get_sort=$deal['id']:{%SORT}
+		,is_send|get_issend:发放状态" 
+	actionlist="edit:{%EDIT}, del:{%DEL},modify_send_gift:发放" 
+	actionwidth="150px"/> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

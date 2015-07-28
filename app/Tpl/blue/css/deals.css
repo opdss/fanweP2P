@@ -1,0 +1,184 @@
+/*上面一部分*/
+body {
+    background: none repeat scroll 0 0 #f2f2f2;
+    height: 100%;
+}
+.pos{height:100px;}
+.borrowin_box_bg {
+    background: none repeat scroll 0 0 #fff;
+}
+.borrowin_box {
+    border: 2px solid #dcdcdc;
+    padding: 0;
+}
+.ui_filter.borrowin_box.zhitou {
+    width: 948px;
+  margin-top: 20px;
+}
+.borrowin_box.zhitou {
+    overflow: hidden;
+}
+.ui_filter {
+    background: none repeat scroll 0 0 #f9f9f9;
+    border: 1px solid #e2e2e2;
+    padding: 10px 15px;
+}
+
+.borrowin_box.zhitou dd {
+    border-bottom: 2px dotted #e2e2e2;
+    padding: 10px 20px;
+}
+.ui_filter dd {
+    border-bottom: 1px dotted #e2e2e2;
+    height: 24px;
+    line-height: 24px;
+    padding: 10px 0;
+}
+.ui_filter dd ul li {
+    color: #333333;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    font: 14px/24px "Microsoft YaHei";
+    margin-right: 10px;
+}
+.ui_filter_tag.active {
+    background: none repeat scroll 0 0 #f9a130;
+}
+.borrowin_box .ui_filter_tag {
+    border-radius: 0;
+    padding: 0 15px;
+}
+.ui_filter_tag.active span {
+    color: #fff;
+}
+
+.main_r_box .main_r_list .m_r_cont li a {
+    display: inline-block;
+    font: 14px/24px "Microsoft YaHei";
+    vertical-align: top;
+    width: 210px;
+}
+.ui_filter .filter_sub {
+    background: none repeat scroll 0 0 #f3f3f3;
+    border: 1px solid #e2e2e2;
+    color: #333333;
+    cursor: pointer;
+    font: 12px/20px "Microsoft YaHei";
+    margin-left: 5px;
+    overflow: visible;
+    padding: 0 8px;
+    vertical-align: middle;
+}
+
+
+.ui_filter dd.term {
+    border: medium none;
+}
+
+.ui_filter_tag {
+    border-radius: 15px;
+    padding: 0 15px;
+}
+.ui_filter_tag:hover {
+    background: none repeat scroll 0 0 #f0f0f0;
+}
+
+
+.ui_filter_tag input {
+    display: none;
+}
+.ui_filter_money input.money_put {
+    border: 1px solid #e0e0e0;
+    font: 14px/20px "Microsoft YaHei";
+    padding: 0 5px;
+    vertical-align: middle;
+    width: 30px;
+}
+.ui_filter_money span {
+    margin-left: 3px;
+    vertical-align: middle;
+}
+.sort_filter_list {
+    box-shadow: 0 3px 3px #e2e2e2;
+    float: right;
+    margin-top: 6px;
+}
+.sort_filter_list li {
+    border: 1px solid #d5d5d5;
+    float: left;
+    height: 31px;
+    line-height: 31px;
+    position: relative;
+}
+.sort_filter_list li a {
+    border-left: 2px solid #f4f4f4;
+    color: #000;
+    display: inline-block;
+    padding: 0 20px 0 18px;
+    position: relative;
+    vertical-align: top;
+}
+.sort_filter_list li a i {
+    display: inline-block;
+    height: 15px;
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    width: 7px;
+}
+/*上面一部分*/
+
+
+.main_box_n .title1 h2 {
+   color: #e76100 !important;
+    font: 21px/40px "Microsoft YaHei" !important;
+}
+.zx_jk_list {
+    width: 98% !important;
+}
+.main_box .ing_jk_list li .jk_list_cont span.jk_rate {
+	    font: 16px/22px "Microsoft YaHei" !important;
+ margin-right: 11px !important;
+}
+
+.pages {
+    height: 74px !important;
+}
+.xsz001{    border: 2px solid #dcdcdc !important ;
+    padding: 0;}
+
+.main_box_n .title1{
+	 height: 52px !important
+}
+ .zt_tit {
+    border-bottom: 1px solid #dcdcdc;
+    height: 45px;
+    padding: 15px;
+}
+.zt_tit h2 {
+    color: #e76100;
+    float: left;
+    font: 21px/40px "Microsoft YaHei";
+}
+ .zt_tit h2 i {
+    background: url("../images/zhitou_ico.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    float: left;
+    height: 22px;
+    margin: 10px 10px 0 0;
+    width: 26px;
+}
+
+ .zt_jsq {
+    background: none repeat scroll 0 0 #00cc99;
+    border: medium none;
+    border-radius: 15px;
+    color: #fff;
+    font: 16px/20px "Microsoft YaHei";
+    margin-top: 5px;
+    padding: 4px 15px;
+}
+.fr {
+    float: right;
+}

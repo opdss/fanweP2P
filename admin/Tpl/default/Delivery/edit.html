@@ -1,0 +1,102 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<load href='__TMPL__Common/js/delivery.js' />
+<div class="main">
+<div class="main_title">{%EDIT} <a href="{:u("Delivery/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DELIVERY_NAME}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="name" value="{$vo.name}" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DELIVERY_DESCRIPTION}:</td>
+		<td class="item_input"><textarea class="textarea" name="description" >{$vo.description}</textarea></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DELIVERY_WEIGHT}:</td>
+		<td class="item_input">
+			<select name="weight_id">
+				<foreach name="weight_list" item="weight_item">
+					<option value="{$weight_item.id}" <if condition="$weight_item['id'] eq $vo['weight_id']">selected="selected"</if>>{$weight_item.name}</option>
+				</foreach>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%SORT}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="sort" value="{$vo.sort}" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%IS_EFFECT}:</td>
+		<td class="item_input">
+			<lable>{%IS_EFFECT_1}<input type="radio" name="is_effect" value="1" <if condition="$vo['is_effect'] eq 1">checked="checked"</if> /></lable>
+			<lable>{%IS_EFFECT_0}<input type="radio" name="is_effect" value="0" <if condition="$vo['is_effect'] eq 0">checked="checked"</if> /></lable>			
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">
+		{%ALLOW_DEFAULT}: 
+		<select name="allow_default">
+			<option value="1" <if condition="$vo['allow_default'] eq 1">selected="selected"</if>>{%ALLOW_DEFAULT_1}</option>
+			<option value="0" <if condition="$vo['allow_default'] eq 0">selected="selected"</if>>{%ALLOW_DEFAULT_0}</option>
+		</select>
+		</td>
+		<td class="item_input">
+		
+		{%FIRST_WEIGHT}:<input type="text" class="textbox" name="first_weight" style="width:40px;" value="{$vo.first_weight}" />
+		{%FIRST_FEE}:<input type="text" class="textbox" name="first_fee" style="width:40px;" value="{$vo.first_fee}" />
+		{%CONTINUE_WEIGHT}:<input type="text" class="textbox" name="continue_weight" style="width:40px;" value="{$vo.continue_weight}" />
+		{%CONTINUE_FEE}:<input type="text" class="textbox" name="continue_fee" style="width:40px;" value="{$vo.continue_fee}" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">		
+		<input type="button" class="button" id="add_region_conf" value="{%ADD_REGION_CONFIG}" />
+		</td>
+		<td class="item_input">
+			<div id="region_conf">
+				<foreach name="regions_list" item="region_item">
+					<div> 
+					{%FIRST_WEIGHT}:<input type='text' class='textbox' name='region_first_weight[]' style='width:40px;' value="{$region_item.first_weight}" />
+					{%FIRST_FEE}:<input type='text' class='textbox' name='region_first_fee[]' style='width:40px;' value="{$region_item.first_fee}"  />
+					{%CONTINUE_WEIGHT}:<input type='text' class='textbox' name='region_continue_weight[]' style='width:40px;' value="{$region_item.continue_weight}"  />
+					{%CONTINUE_FEE}:<input type='text' class='textbox' name='region_continue_fee[]' style='width:40px;' value="{$region_item.continue_fee}"  />
+					{%SUPPORT_REGION}:<input type='text' class='textbox' name='region_support_region_name[]' onfocus='select_delivery_regions(this);' value="{$region_item.names}"  />&nbsp;
+					<input type='hidden' name='region_support_region[]' value="{$region_item.region_ids}"  />
+					<input type='hidden' name='region_conf_id[]' value="{$region_item.id}"  />
+					[ <a href='javascript:void(0);' onclick='$(this.parentNode).remove();' style='text-decoration:none;' title='{%DELETE}'>-</a> ] </div>
+	
+				</foreach>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Delivery" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%EDIT}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<include file="Public:footer" />

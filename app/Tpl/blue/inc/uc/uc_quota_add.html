@@ -1,0 +1,51 @@
+
+	
+<form action="{url x="index" r="uc_quota#do_add_quota"}"  method="post" id="add_quota_form" >
+	<div class="field">
+		<label>当前额度</label>
+		<span class="f_red">{$user_info.quota}</span>
+	</div>
+	<div class="field">
+		<label>申请额度</label>
+		<input class="f-input" name="money" value="">
+		&nbsp;&nbsp;<a href="{url x="index" r="borrow#applyamount"}" target='_blank'>点这补齐认证资料</a>，更容易通过哦！
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+		<label>推荐人</label>
+		<input class="f-input" name="referraler" value="">
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+		<label>详细说明</label>
+		<textarea name="memo" class="f-text" rows="5" cols="50"></textarea>
+	</div>
+	<div class="blank1"></div>
+	<div class="field">
+		<label>其他说明</label>
+		<textarea name="other_memo"  class="f-text" rows="5" cols="50" ></textarea>
+	</div>
+	<div class="blank1"></div>
+	<div class="act tc">
+		<input class="true_btn" type="submit" value="提交" />
+	</div>
+</form>	
+<script type="text/javascript">
+	jQuery(function(){
+		$("#add_quota_form").submit(function(){
+			if($.trim($(this).find("input[name='money']").val())==""  || parseInt($(this).find("input[name='money']").val())==0){
+				$.showErr("请输入申请金额",function(){
+					$("#add_quota_form input[name='money']").focus();
+				});
+				return false;
+			}
+			if($.trim($(this).find("textarea[name='memo']").val())==""){
+				$.showErr("请输入详细说明",function(){
+					$("#add_quota_form textarea[name='memo']").focus();
+				});
+				return false;
+			}
+			return true;
+		});
+	});
+</script>

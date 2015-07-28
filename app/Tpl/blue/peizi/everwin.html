@@ -1,0 +1,55 @@
+{include file="inc/header.html"} 
+<script type="text/javascript">
+
+var peizi_conf = {$peizi_conf_json};
+var lever_list = peizi_conf.lever_list;
+var lever_money_list = peizi_conf.lever_money_list;
+</script>
+
+
+<script type="text/javascript" src="{$TMPL}/js/peizi.js"></script>
+
+
+{foreach from="$peizi_conf.money_array" item="item"}
+			<li>
+				<span class="label">
+					{$item.money_format}</s> 
+				</span>
+			</li>
+			{/foreach}
+
+<script type="text/javascript">
+
+init();
+
+function init() {
+	//初始化,获得第一个：申请实盘资金 
+	var money = 0;
+	for (var i=0;i<peizi_conf.money_array.length;i++){
+		money = peizi_conf.money_array[i].money;
+		break;
+	}
+	
+	alert(money);
+	
+	//通过 实盘资金 获得 位数列表
+	var lever_list = getPeiziLeverList(money);
+	var lever_index = Math.floor(lever_list.length / 2);
+	//默认获取中间一个
+	//alert(lever_index);
+	var lever = lever_list[lever_index].lever;
+	
+	alert(lever);
+	
+	//通过,实盘资金,倍数 获得：总操盘资金，亏损警戒线，亏损平仓线，账户管理费，
+	var pc = getPeiziCacl(money,lever,0,0);
+	
+	alert('total_money:' + pc.total_money + ';warning_money:' + pc.warning_money + ';open_money:' + pc.open_money + ';rate_money_format:' + pc.rate_money_format);
+	
+}
+
+
+
+</script>
+
+{include file="inc/footer.html"}

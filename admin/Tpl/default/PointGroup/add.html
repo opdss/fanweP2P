@@ -1,0 +1,37 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{%ADD_POINTGROUP} <a href="{:u("PointGroup/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form method='post' id="form" name="form" action="__APP__">
+<table cellpadding="4" cellspacing="0" border="0" class="form">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%NAME}</td>
+		<td class="item_input"><input type="text" class="textbox require" name="name" id="name" /></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%SORT}</td>
+		<td class="item_input"><input type="text" class="textbox" name="sort" value="100" size=5 /></td>
+	</tr>
+
+	
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="PointGroup" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="insert" />
+			<input type="submit" class="button" value="{%ADD}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+</form>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,139 @@
+
+.Contentbox{
+	padding-bottom: 10px;
+}
+.creditor_con{
+	padding: 0 10px;
+}
+.creditor_blok{
+	margin-top: 13px;
+	border: 1px solid #cacaca;
+	background: #fff;
+	width: 100%;
+	border-radius: 3px;
+}
+.invest_tit {
+height: 30px;
+width: 100%;
+border: none;
+font-size: 14px;
+color: #929292;
+border-top-left-radius: 3px;
+border-top-right-radius: 3px;
+line-height: 30px;
+background: #f4f2f3;
+border-bottom: 2px solid #e1e0e1;
+box-sizing: border-box;
+-moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
+}
+.invest_tit a{
+	color: #929292;
+}
+.invest_tit i{
+	color: #929292;
+}
+.invest_tit span{
+	display: inline-block;
+	float: left;
+	line-height: 27px;
+	color: #fff;
+	font-size: 12px;
+	vertical-align:top;
+	text-align: center;
+	width: 45px;
+	height: 30px;
+	margin: 0 5px;
+	background-size:45px 28px;
+	background-repeat:no-repeat;
+	background-position: 0px -1px;
+}
+.bg_blue{
+	background: url(../images/uc_transfer/bg_blue.png) top;
+}
+.bg_gray{
+	background: url(../images/uc_transfer/bg_gray.png) top;
+}
+
+
+.creditor_con1{
+
+}
+.creditor_con1 ul li {
+	padding: 10px 0;
+	width: 25%;
+	float: left;
+	text-align: center;
+	color: #535353;
+	font-size: 12px;
+}
+.creditor_con1 ul li h3{
+	line-height: 30px;
+	
+}
+.creditor_con1 ul li span{
+	color: #999999;
+}
+.creditor_con1 ul li:last-child{
+	display: block;
+	height: 0px;
+	line-height:0px;
+	clear: both;
+	visibility: hidden;
+	font-size: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+.orange{
+	color: #ff6a10;
+}
+.index_content2{
+	padding: 0 10px;
+}
+.con2_bd{
+	width: 100%;
+	border-top: 1px dashed #cacaca;
+	padding: 8px 0;
+}
+.index_Rep_time{
+	float: left;
+	line-height: 25px;
+	font-size: 11px;
+	color: #989898;
+}
+.index_Rep_time2{
+	float: left;
+	line-height: 14px;
+	font-size: 11px;
+	color: #989898;
+}
+.btn_creditor{
+	float: right;
+	width: 75px;
+	height: 25px;
+	line-height: 25px;
+	font-size:15px;
+	color: #fff;
+	text-align: center;
+	margin-right: 10px;
+	border-radius: 3px;
+}
+.btn_creditor a{
+	color: #fff;
+	display:block;
+}
+.btn_orange{
+	background: @contrast_color;
+}
+.btn_gray{
+	background: @font_main;
+}
+
+.btn_main{
+	background:@main_color;
+}
+.invest_tit .subname{
+	padding:0 10px;
+	font-size:14px;
+	color:@font_black;
+}

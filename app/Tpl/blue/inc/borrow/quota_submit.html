@@ -1,0 +1,437 @@
+<style type="text/css">
+	.borrow-info .field{ width:100%; margin:10px 0; padding-right:0; overflow:hidden; float:none; }
+	.borrow-info .field label{ width:140px; padding-right:5px; }
+	.ke-toolbar td { padding:0}
+	.user_info_item span.w125{ display:inline-block;}
+	.ui-form-table {margin-top: 20px;text-align: left;border-bottom: 1px solid #e0e0e0;}
+	.ui-form-table tr {height: 50px;}
+	.ui-form-table th, .ui-form-table td {border-top: 1px solid #e0e0e0;font-weight: 500;font-style: normal;border-spacing: 2px;}
+	.Ddescription{ display:block; width:650px; overflow:hidden;}
+	.Ddescription img{ max-width:650px;}
+</style>
+
+<div class="blank"></div>
+<div class="blank5"></div>
+<form action="{url x="index" r="borrow#savedeal"}" method="post" id="J_save_deal_form" style="margin:0 10px;">
+	
+	<div class="borrow-info p10 clearfix">
+		<div class="field">
+			<label>借款标题：</label>
+			<span class="lh30">
+			{$deal_quota.name}
+			</span>
+		</div>
+		<div class="blank0"></div>
+		<div class="field">
+			<label>借款用途：</label> 
+			<span class="lh30">
+			{$deal_quota.type_name}
+			</span>
+		</div>	
+		<div class="blank0"></div>	
+		<div class="field">
+			<label>借款金额：</label> 
+			<span class="lh30"> 
+				<input type="text" value="{$deal.borrow_amount}" name="borrowamount" id="borrowamount" class="f-input ui-textbox">
+				&nbsp;&nbsp;元
+				（借款金额<?php echo number_format(app_conf("MIN_BORROW_QUOTA")); ?>起，需为50的倍数，我的可用额度：
+				<span style="font-size: 14px;" class="f_red">
+					{$can_borrow_amount}
+				</span>） 
+			</span>
+		</div>
+		
+		<div class="blank0"></div>
+		<div class="field">
+			<label>还款周期：</label>
+			<select id="J_repaytime_type" name="repaytime_type" class="ui-select w120 select-w120">
+				{if $has_day_type eq 1}
+				<option value="0">按天借款</option>
+				{/if}
+				<option value="1">按月借款</option>
+			</select>
+		</div>
+		
+		<div class="field">
+			<label>借款期限：</label> 
+			<div class="f_l lh36" id="repaytimeBox">
+				
+			</div>
+			<span id="J_TRateTip" class="f_red lh36 ml5"></span>
+		</div>
+		<div class="blank0"></div>
+		<div class="field">
+			<label>年利率：</label> 
+			<span class="lh30"> 
+				<input class="f-input ui-textbox w60" type="text" value="{$deal.rate}" name="apr" id="apr">
+				&nbsp;&nbsp;%（利率精确到小数点后一位<span id="rateFanwei">，范围<span id="minRate">10%</span>-<span id="maxRate">24%</span>之间
+			</span>） 
+			</span>
+		</div>
+		
+		<div class="blank0"></div>
+		<div class="field">
+			<label>还款方式：</label> 
+			<span class="lh30">
+			<select id="loanType" name="loantype" class="f_l  ui-select w180 select-w180">
+				{foreach from="$loantype_list" item="loantype"}
+                <option value="{$loantype.key}" rel="{$loantype.repay_time_type_str}">{$loantype.name}</option>
+				{/foreach}
+            </select>
+		</div>
+		
+		<div class="blank0"></div>
+		<div class="field">
+			<label>筹标期限：</label>
+			<span class="lh30">
+				<select name="enddate" class="ui-select w100 select-w100">
+					{foreach from="$level_list.enddate_list.$user_info.level_id" item="eddate"}
+					<option value="{$eddate}" {if $deal.enddate eq $eddate} selected="selected"{/if}>{$eddate}</option>
+					{/foreach}
+				</select>&nbsp;&nbsp;天
+			</span>
+		</div>
+		<div class="blank0"></div>
+		<div class="field" id="monthRepayMoney_box">
+			<label>每月还本息：</label> 
+			<span style="color: red;" id="monthRepayMoney" class="lh30">￥0.00</span>
+		</div>
+		<div class="blank0"></div>
+		<div class="field" id="LastRepayMoney_box" style="display:none;">
+			<label>到期需还本金：</label>
+			<span style="color: red;" id="LastRepayMoney" class="lh30">￥0.00</span>
+		</div>
+		<div class="blank0"></div>
+		<div class="field" id="monthRepayManage_box">
+			<label>每月交借款管理费：</label> 
+			<span style="color: red;" id="managerFee" class="lh30">￥0.00</span>
+		</div>
+		<div class="blank0"></div>
+		<div class="field">
+			<label>成交服务费：</label> 
+			<div class="f_l" style="width:650px">
+				<span  class="lh30">由{function name="app_conf" v="SITE_TITLE"}平台收取，您当前等级 : <img src="{$TMPL}/images/{$level}.png" width="30" /></span>
+				<table width="100%" class="table ui-form-table" id="ratetable">
+	                <thead>
+		                <tr>
+		                    <th>信用等级</th>
+							{foreach from="$level_list.list" item="level"}
+		                    <th class="tc"><img src="{$TMPL}/images/{$level.name}.png" width="30" /></th>
+							{/foreach}
+		                </tr>
+	                </thead>
+	                <tbody>
+		                <tr>
+		                    <td>服务费率</td>
+		                    {foreach from="$level_list.list" item="level"}
+		                    <td class="tc">{$level.services_fee}%</td>
+							{/foreach}
+		                </tr>
+		                <tr>
+		                    <td>服务费</td>
+							 {foreach from="$level_list.list" item="level"}
+		                    <td class="tc J_fee" fee="{$level.services_fee}"></td>
+							{/foreach}
+		                </tr>
+	                </tbody>
+	            </table>
+			</div>
+		</div>
+		<div class="blank0"></div>
+		
+		
+		<div class="field" style="clear: both;">
+			<label>借款描述：</label> 
+			<div id="Ddescription" class="f_l lh30">
+				{$deal_quota.description}
+			</div>
+		</div>
+		
+		
+		<div class="field">
+			<label>展示资料：</label> 
+			<div class="f_l">
+				<div style="width:719px;">
+				 				 
+		    	 {if $user_view_info}
+		    	 	 {foreach from =$user_view_info item="img_item" key=key}
+						<p class="f_l">
+							<label class="ui-checkbox f_l mt10" rel="agreement">
+								<input {if $img_item.is_selected eq 1} checked="checked" {/if}  type="checkbox" name="file_key[]" value="{$img_item.key}">
+							</label>
+							<a href='{$img_item.img}' target="_blank" title="{$img_item.name}"><img width="35" height="35" class="bdd f_l mr5" id="{$img_item.name}" src="{$img_item.img}"></a>
+						</p>
+					 {/foreach}
+		    	 {/if}
+		            
+		    	 </div>
+		    	
+			</div>
+		</div>
+		
+	</div>
+	
+	
+	<div class="borrow-info p10 clearfix">
+		<div class="field" style="clear: both;">
+			<label>&nbsp;</label>
+			<span> 
+				<label class="ui-checkbox" rel="agreement">
+					<input type="checkbox" name="agreement" checked="checked" id="treaty1">
+				</label>
+				我同意{function name="app_conf" v="SHOP_TITLE"}<a href="{url x="index" r="help" p="id=$agreement"}" target="_blank" class="f_blue">《借款协议》</a>
+				
+			</span> 
+		</div>
+	</div>
+	
+	<div class="borrow-info p10 clearfix">
+		<div class="field" style="clear: both;">
+			<label>&nbsp;</label>
+			<input type="button" id="publishBnt" class="mbtn topublish" value="" onclick="saveAndPreview('publish');">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			<input type="submit" id="previewBtn" class="mbtn preview" value="" onclick="$('#J_save_deal_form').attr('target','_blank');$('#J_save_deal_form').attr('action','{url x="index" r="deal#preview" p="quota=1"}');">
+		</div>
+	</div>
+</form>
+<div class="tempSelectview hide">
+	<select name="repaytime" id="repaytime">
+		{foreach from="$level_list.repaytime_list.$user_info.level_id" item="repaytime"}
+		{if $repaytime.1 neq 0}
+		<option value="{$repaytime.0}" {if $deal.repay_time eq $repaytime.0 && $deal.repay_time_type eq $repaytime.1} selected="selected"{/if} rel="{$repaytime.1}"  minrate="{$repaytime.2}" maxrate="{$repaytime.3}">{$repaytime.0}{if $repaytime.1 eq 1}个月{else}天{/if}</option>
+		{/if}
+		{/foreach}
+	</select>
+</div>
+<script type="text/javascript">
+	var json_data = {$json_data};
+	var min_rate = 0;
+	var max_rate = 0;
+	jQuery(function(){
+		changeSelectTimeView();
+		$("#J_repaytime_type").change(function(){
+			changeSelectTimeView();
+		});
+				
+		$("#J_save_deal_form").submit(function(){
+			if(!checkSaveDealForm(false)){
+				return false;
+			}
+			return true;
+		});
+		
+		changeRate("#J_save_deal_form #repaytime");
+		
+		$("#J_save_deal_form #repaytime").live("change",function(){
+			changeRate(this);
+		});
+		$("#J_save_deal_form #repaytime").live("keyup",function(){
+			changeRate(this);
+		});
+		
+		$("#borrowamount,#apr,#loanType").bind("blur keyup change",function(){
+			CalculateDeal();
+		});
+		
+		$("#loanType").bind("change",function(){
+			var val = $(this).val();
+			var rel = $(this).find("option[value='"+val+"']").attr("rel");
+			var rel_str = rel.split(",");
+			
+			var has_day = 0;
+			for(var i=0;i<rel_str.length;i++){
+				if(has_day==0 && parseInt(rel_str[i]) == $("#J_repaytime_type").val()){
+					has_day = 1;
+				}
+			}
+			if(has_day==0){
+				$.showErr("所选还款方式不支持此借款期限类型",function(){
+					$("#loanType").val(temp_loantype);
+				});
+			}
+			else{
+				temp_loantype = $(this).val();
+			}
+			
+			BindTip(temp_loantype);
+		});
+		
+		CalculateDeal();
+	});
+	
+	function BindTip(val){
+		switch(parseInt(val))
+		{
+			case 0:
+				$("#monthRepayMoney_box label").html("每月还本息：");
+				$("#monthRepayManage_box label").html("每月交借款管理费：");
+				$("#LastRepayMoney_box").hide();
+				break;
+			case 1:
+				$("#monthRepayMoney_box label").html("每月还利息：");
+				$("#monthRepayManage_box label").html("每月交借款管理费：");
+				$("#LastRepayMoney_box").show();
+				break;
+			case 2:
+				$("#monthRepayMoney_box label").html("到期还息：");
+				$("#monthRepayManage_box label").html("到期交借款管理费：");
+				$("#LastRepayMoney_box").show();
+				break;
+			default:
+				$("#monthRepayMoney_box label").html("每月还本息：");
+				$("#monthRepayManage_box label").html("每月交借款管理费：");
+				$("#LastRepayMoney_box").hide();
+				break;
+		}
+		$("#loanType").ui_select({refresh:true});
+	}
+	
+	function changeSelectTimeView(){
+		if($("#J_repaytime_type").val()=="0"){
+			$("#J_save_deal_form #repaytimeBox").html('<input type="text" class="f-input ui-textbox" name="repaytime" id="repaytime" style="width:60px" />');
+			$("#J_save_deal_form #repaytimeBox #repaytime").ui_textbox({refresh:true});
+		}
+		else{
+			$("#J_save_deal_form #repaytimeBox").html($(".tempSelectview").html());
+			$("#J_save_deal_form #repaytimeBox #repaytime").ui_select({refresh:true});
+		}
+		
+		changeRate("#J_save_deal_form #repaytime");
+	}
+	
+	/*切换利率*/
+	function changeRate(o){
+		var val= parseInt($(o).val());
+		var attr = $("#J_repaytime_type").val();
+		if(attr == 0){
+			var is_rate_lock = false;
+			$.each(json_data,function(i,v){
+				if(v[1]==0 && val<=parseInt(v[0]) && is_rate_lock == false){
+					min_rate = v[2];
+					max_rate = v[3];
+					is_rate_lock = true;
+				}
+				else if (v[1]==0 && val>parseInt(v[0]) && is_rate_lock == false){
+					min_rate = v[2];
+					max_rate = v[3];
+				}
+			})
+			$("#J_TRateTip").html("天标费率计算方式：所填利率/12/30");
+		}
+		else{
+			min_rate = $(o).find("option:selected").attr("minrate");
+			max_rate = $(o).find("option:selected").attr("maxrate");
+			$("#J_TRateTip").html("");
+		}
+		var seleted = -1;
+		var select_rel = $("#loanType option[value='"+$("#loanType").val()+"']").attr("rel");
+		var select_rel_str = select_rel.split(",");
+		for(var i=0;i<select_rel_str.length;i++){
+			if(seleted == -1 && parseInt(select_rel_str[i]) == parseInt(attr)){
+				seleted = 0;
+			}
+		}
+		if(seleted==-1){
+			$("#loanType option").each(function(){
+				var rel = $(this).attr("rel");
+				var rel_str = rel.split(",");
+				for(var i=0;i<rel_str.length;i++){
+					if(seleted == -1 && parseInt(rel_str[i]) == parseInt(attr)){
+						$("#loanType").val($(this).val());
+						temp_loantype = $(this).val();
+						seleted = parseInt(rel_str[i]);
+					}
+				}
+			});
+		}
+		
+		$("#minRate").html(min_rate+"%"); 
+		$("#maxRate").html(max_rate+"%"); 
+		
+		BindTip($("#loanType").val());
+		CalculateDeal();
+	}
+	
+	function checkSaveDealForm(){
+		
+		if($.trim($('#borrowamount').val())=="" || parseInt($('#borrowamount').val()) < {function name="app_conf" v="MIN_BORROW_QUOTA"} || parseInt($('#borrowamount').val()) > {$can_borrow_amount} || parseInt($('#borrowamount').val())%50 !=0 ){
+			$.showErr("请正确输入借款金额",function(){
+				$("#J_save_deal_form #borrowamount").focus();
+			});
+			return false;
+		}
+		
+		if($.trim($('#J_save_deal_form #apr').val())=="" || parseFloat($('#J_save_deal_form #apr').val()) > max_rate || parseFloat($('#J_save_deal_form #apr').val()) < min_rate){
+			$.showErr("请正确输入借款利率",function(){
+				$("#J_save_deal_form #apr").focus();
+			});
+			return false;
+		}
+		
+		if($("#J_save_deal_form #treaty1:checked").length==0){
+			$.showErr("请同意我们的借款协议",function(){
+				$("#J_save_deal_form #treaty1").focus();
+			});
+			return false;
+		}
+		return true;
+	}
+	
+	function saveAndPreview(act){
+		if(!checkSaveDealForm()){
+			return false;
+		}
+		var url = '{url x="index" r="borrow#savedealquota"}';
+		if(!confirm("确定发布吗？发布后将无法修改！")){
+			return false;
+		}
+		$('#J_save_deal_form').attr('target','_self');
+		$("#J_save_deal_form").attr("action",url);
+		$("#J_save_deal_form").submit();
+		
+	}
+	
+	function CalculateDeal(){
+		var amo = parseFloat($.trim($("#borrowamount").val()));
+		var inter = parseFloat($.trim($("#apr").val()));
+		var repay_time = parseInt($("#J_save_deal_form #repaytime").val());
+		var repay_type = parseInt($("#J_repaytime_type").val());
+		var loantype = parseInt($("#loanType").val());
+		
+		if(amo >0 && inter > 0){
+			var inters=inter * 100 / 12 /(100 * 100);
+			if(repay_type==0){
+				inters = inters/30;
+			}
+			var value = 0;
+			if(loantype==1){
+				value = amo*inters;
+				$("#LastRepayMoney").html("￥"+formatNum(amo));
+			}
+			else if(loantype==2){
+				value = amo*inters * $("#J_save_deal_form #repaytime").val();
+				$("#LastRepayMoney").html("￥"+formatNum(amo));
+			}
+			else if(loantype==0){
+	        	value=amo*(inters * Math.pow(1+inters, repay_time)) / (Math.pow(1+inters, repay_time)-1);
+	        }
+			$("#monthRepayMoney").html("￥"+formatNum(value));
+			if(loantype==2){
+				if(repay_type=="1")
+					$("#managerFee").html("￥"+formatNum(amo * $("#J_save_deal_form #repaytime").val() * {$manage_fee}/100));
+				else
+					$("#managerFee").html("￥"+formatNum(amo * {$manage_fee}/100));
+			}
+			else{
+				$("#managerFee").html("￥"+formatNum(amo * {$manage_fee}/100));
+			}
+			
+			$(".J_fee").each(function(){
+				var fee = parseFloat($(this).attr("fee"));
+				$(this).html(formatNum(fee * amo / 100));
+			});
+		}
+	}
+	
+	
+</script>

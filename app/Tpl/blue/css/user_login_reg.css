@@ -1,0 +1,180 @@
+.wrap{ width:980px; overflow:hidden;}
+.user_login_bar{ background: #fff}
+.head{ position:relative; z-index:100; }
+.head .head_cont{ height:75px; line-height:75px; }
+.head .head_cont .constr{ position:relative; height:75px; }
+.logo{ height:70px; }
+.logo a{ height:70px; display:block; }
+.header .logo span{ background-size:100%; }
+.header .head_bg {
+display:block;
+background: url(../images/head_bg.png) repeat-x;
+height: 4px;
+width: 100%;
+}
+.no-nav-text {
+line-height: 40px;
+height: 40px;
+font-size: 25px;
+border-left: 1px solid #CCC;
+padding-left: 20px;
+margin-top: 17px;
+color: #aaa;
+float:left;
+margin-left:15px
+}
+.head .head_bg {
+background: url(../images/head_bg.png) repeat-x;
+height: 4px;
+width: 100%;
+}
+.xszlogin1{ background: url(../images/zx_login_l.png) no-repeat;
+height: 390px;
+overflow: hidden;
+width: 600px;
+float: left; }
+.user_login_bar .user-lr-box-left .field { padding:0; width:287px; margin:0 auto 20px; }
+
+.user-lr-box-left span.to_regsiter{ float:none; line-height:40px; }
+
+
+.header{ background-color:#555; height:75px; line-height:75px; margin-bottom:10px;}
+.header .logo span{ background-size:75% auto; }
+.header .constr{ height:75px; }
+.header .constr .hd-tel{ top:45px; color:#5B5B5B; font-size:14px;}
+.header .constr .hd-tel span{ color:#227299; font-size:16px; font-family:Arial;}
+.user_login_bar .user_inc_top{ font-size:14px; color:#333; font-weight:bolder;  border:none; width:280px}
+.user_login_bar .user-lr-box-left{ width:287px; padding:0; margin:0 auto; margin-top:50px; }
+
+.user_login_bar .user-lr-box-left .field .holder_tip{ position:absolute;left:44px; top:0; height:44px; line-height:44px; width:234px;width:254px; padding:0 10px; color:#8596B0; font-size:14px;}
+
+
+
+
+.user-lr-box-left .app_login_box a{ progid:DXImageTransform.Microsoft.BasicImage(grayscale=1); -webkit-filter:grayscale(100%);}
+.user-lr-box-left .app_login_box a:hover{ progid:DXImageTransform.Microsoft.BasicImage(grayscale=0); -webkit-filter:grayscale(0%); }
+
+
+.user_login_bar .user-lr-box-left .app_login_box{ padding:0px;float:right;}
+.user_login_bar .user-lr-box-left .app_login_box h3{ display:inline-block; float:left; font-size:12px; color:#afafaf; font-weight:normal; padding-right:8px}
+.user_login_bar .user-lr-box-left .app_login_box span{ padding-right:10px}
+
+.register_box .hd_tip{background: url(../images/reg_hd.jpg) no-repeat 0 0; height:37px ; line-height:37px; color:#fff; font-size:14px; padding-left:15px}
+.register_box .user_inc_top{  color:#00bef0; padding-left:0; border:0}
+.register_box .user-lr-box-left{ padding: 50px 0 30px 30px;}
+.register_box .user_inc_tip{ color:#989898; line-height:26px;}
+.register_box .user-lr-box-left  .field{ overflow:visible;}
+.register_box .user-lr-box-left  .field label{ color:#666; width:120px;padding-right:10px; height:44px; line-height:44px}
+.register_box .user-lr-box-left .field .hint{padding-left:130px; margin:0;height:26px;line-height:26px;margin-top:10px;}
+.register_box .user-lr-box-left .field .f-input-tip{ height:26px; top:52px; position:absolute;left:139px; margin:0}
+.register_box .user-lr-box-left .field .f-input-tip span{ float:left;}
+.register_box .user-lr-box-left .act{ margin-left:130px}
+.register_box .user-lr-box-right{width:285px; padding-right:30px;margin-top:50px;}
+.register_box .user-lr-box-right a:hover{color:#00bef0;}
+.user-lr-box-left .field .holder_tip{
+	position: absolute;
+	left: 50px;
+	top: 0;
+	height: 44px;
+	line-height: 44px;
+	width: 234px;
+	width: 254px;
+	padding: 0 10px;
+	color: #ababab;
+	font-size: 14px;
+	font-family: "Microsoft YaHei";
+}
+
+.register_box .list_title { margin-left:30px; border-left:1px solid #e3e3e3; border-bottom:none; position:relative;top:1px; height:48px; overflow:hidden;}
+.register_box .list_title .list_tt{height: 48px;line-height: 48px; background-image:url(../images/reg_hd_tab.png); background-repeat:no-repeat; padding-left:40px}
+.register_box .list_title .email{background-position:0 -96px;}
+.register_box .list_title .cur{border-bottom:none;border-top:none; color:#fff;background-color:#00bef0; }
+.register_box .list_title .mobile.cur{ background-position:0 -48px;}
+.register_box .list_title .email.cur{ background-position:0 -144px;}
+
+
+.agreement a:hover{ color:#00bef0 }
+
+.sendsms_button{  height:44px; padding:0 15px;cursor:pointer; line-height:44px; border:none; background:#00bef0; color:#fff}
+.btn_disable{ background:#ccc; color:#f1f1f1}
+
+/*注册头*/
+
+#code-error {
+    left: 474px;
+    position: absolute;
+    top: 10px;
+}
+.go-login {
+    height: 80px;
+    line-height: 80px;
+    padding-right: 86px;
+    text-align: right;
+}
+.ui-form-item .no-style {
+    background: none repeat scroll 0 0;
+    border: 0 none;
+    margin-left: 0;
+}
+.no-style {
+    color: #00a8e8;
+}
+.ui-button-disabled {
+    color: #ccc;
+}
+.ui-form-item .item-text {
+    position: absolute;
+    top: 10px;
+}
+.step2 {
+    position: relative;
+}
+.step2 .dot {
+    border-bottom: 1px dashed #ccc;
+    height: 10px;
+    position: absolute;
+    top: 360px;
+    width: 100%;
+}
+.ui-form-item .txt {
+    left: 0;
+    position: absolute;
+    top: 11px;
+}
+.step3 .info {
+    color: #888;
+    margin: 10px 0 20px;
+    text-align: center;
+}
+.step3 .info h3 {
+    color: #319b39;
+    font-size: 20px;
+}
+.step3 .info p {
+    line-height: 30px;
+}
+.go-account {
+    height: 30px;
+    line-height: 30px;
+    padding-right: 123px;
+    text-align: right;
+}
+.user-lr-box-left .focus_box{
+	-webkit-box-shadow:0 0 3px #00bef0;
+	-moz-box-shadow:0 0 3px #00bef0;
+	box-shadow:0 0 3px #00bef0;
+	-webkit-transition:all .2s ease-in-out;
+	-moz-transition:all .2s ease-in-out;
+	-o-transition:all .2s ease-in-out;
+	-ms-transition:all .2s ease-in-out;
+	transition:all .2s ease-in-out;
+}
+.user-lr-box-left .field input.input_focus{
+	border:1px solid #00bef0; 
+	-webkit-transition:all .2s ease-in-out;
+	-moz-transition:all .2s ease-in-out;
+	-o-transition:all .2s ease-in-out;
+	-ms-transition:all .2s ease-in-out;
+	transition:all .2s ease-in-out;
+}
+.user-lr-box-left .unit_btn{ background:url("../images/unit_btn.png") no-repeat center center; width:357px; height:56px; margin-left:0;}

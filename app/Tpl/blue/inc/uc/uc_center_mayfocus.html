@@ -1,0 +1,27 @@
+<div class="inc wb">
+	<div class="inc_top">{$page_title}</div>
+	<div class="inc_main pd10" id="cnt">
+		
+	</div>
+	<div class="inc_foot"></div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		load_rand_user();
+	});
+	function load_rand_user()
+	{
+		var ajaxurl = APP_ROOT+"/index.php?ctl=ajax&act=randuser";
+		$.ajax({ 
+			url: ajaxurl,
+			success: function(obj){
+				$("#cnt").html(obj);
+			},
+			error:function(ajaxobj)
+			{
+//				if(ajaxobj.responseText!='')
+//				alert(ajaxobj.responseText);
+			}
+		});	
+	}
+</script>

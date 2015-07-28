@@ -1,0 +1,48 @@
+{include file="inc/header.html"}
+<div class="blank"></div>
+<div class="wrap clearfix">
+	<div id="borrowlb">
+  		<div class="borrowbbox">
+        	<ul>
+        		{foreach from=$loan_type_list item="type" name="types"}
+        		<li {if $smarty.foreach.types.iteration mod 3 eq 0}style="margin-right:0"{/if}>
+					<div class="t" {if $type.uname neq ''}style="background:#{$type.uname}"{/if}>
+						<div class="f18 f_yahei">{$type.name}  (适用{$type.applyto})</div>
+					</div>
+					<div class="p20 info">
+						<div class="f16 pb5">申请条件</div>
+						<div class="brief">{$type.condition|nl2br}</div>
+						<div class="blank15"></div>
+						<div class="dot"></div>
+						<div class="blank15"></div>
+						<div class="f16 pb5">必要申请资料</div>
+						<div class="brief">
+							{foreach from="$credit_types" item="credit"}
+							{if $credit['must'] eq 1 || in_array($credit.type,$type.credits)}
+							<i></i>{$credit.type_name}
+							<div class="blank5"></div>
+							{/if}
+							{/foreach}
+						</div>
+					</div>
+					<div class="tc pt10">
+						<a href="{url x="index" r="borrow#stepone" id="typeid=$type.id"}"><img src="{$TMPL}/images/toview.jpg" /></a>
+					</div>
+					<div class="blank10"></div>
+				</li>
+				{/foreach}
+        	</ul>
+        </div>
+  	</div>
+</div>
+<div class="blank"></div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#borrowlb li").hover(function(){
+			$(this).addClass("cur");
+		},function(){
+			$(this).removeClass("cur");
+		});
+	});
+</script>
+{include file="inc/footer.html"}

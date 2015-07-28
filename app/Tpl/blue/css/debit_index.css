@@ -1,0 +1,69 @@
+
+
+.info_one{  float:left;  width:175px;}
+.info_one h3{ color:#fff; font-size:16px; line-height:36px;}
+.info_two li a{ color:#8693a4; }
+.info_two li { line-height:24px;}
+.inline_kefu{ display:block; width:99px; height:29px;background:url(../images/debit/inline_kefu.png) no-repeat ;  float:right;}
+
+.Introduction p{ line-height:26px; color:#9c9899;}
+.Introduction p a{ color:#0571d6;}
+.action{ display:block; width:130px; height:37px; background:url(../images/debit/action.png) no-repeat ; margin:24px auto 0 auto;}
+
+.show_block_0{ width:435px; height:367px; background:url(../images/debit/show_block_0.png) no-repeat;}
+.show_block_0 .show li{ text-align:center;}
+.show_block_0 .show li img{ width:80px; height:80px; margin-top:58px;}
+
+
+.show_block_0 .show li .time b{ font-size:37px;}
+.show_block_0 .show li .time{ font-size:15px; color:#787775; line-height:15px;}
+.show_block_0 .show li .for_what{ color:#3f4140; font-weight:bolder; font-size:28px; padding:18px 0; line-height:28px;}
+.show_block_0 .show li .for_what b{ color:#acaeab;}
+.show_block_0 .show li .name{ color:#767a79; font-size:15px; padding:15px 0; line-height:15px;}
+.show_block_0 .show li .name b{ font-size:18px;}
+
+.get_num{ width:465px;}
+.get_num h3{ width:460px; height:34px;background:url(../images/debit/get_num_h3.png) no-repeat; margin-top:15px; margin-bottom:25px;}
+.get_num .Ellipsis{width:4px; height:23px; background:url(../images/debit/Ellipsis.png) no-repeat; margin-left:24px; margin-top:5px;}
+.get_num .show_info{ height:243px; overflow:hidden;}
+.get_num .show_info  li .name{ color:#fdfffc; font-size:15px; font-weight:700; line-height:24px;}
+.get_num .show_info  li .num{ color:#ffa5a4; font-size:15px; line-height:24px;}
+.get_num .show_info  li { padding-left:69px; height:93px;}
+.get_num .show_info  li img{ width:53px; height:53px; float:left; margin-left:-69px;}
+
+.choose_block{ padding:56px 0 64px 0;}
+.choose_block h3{ width:328px; height:59px; background:url(../images/debit/choose_block_h3.png) no-repeat; margin:0 auto; margin-bottom:83px;}
+
+.type_name{font-size:17px; color:#555; line-height:43px;}
+.type_choose label{ display:block; float:left; height:45px;   border:2px solid #ccc; font-size:18px; line-height:45px; width:112px; margin-right:22px; margin-bottom:10px; text-align:center;}
+.type_choose .label_y{ border-color:#ff4c4d;background:url(../images/debit/label_y.png) no-repeat bottom right;}
+.select_list li{ background:#fff; line-height:20px; font-size:17px; padding-left:6px;}
+
+.type_choose .select{ width:150px; height:46px; border:2px solid #ccc; position:relative; background:#fff; color:#989a99; margin:0px; font-size:17px;}
+.type_choose .select .select_this{ font-size:18px;width:100px; height:46px; line-height:46px; background:url(../images/debit/select_this.png) no-repeat 84px 20px; color: #666;}
+.type_choose .select .y{background:url(../images/debit/select_this_y.png) no-repeat 84px 20px;}
+.type_choose .select .select_list{  position:absolute; width:516px;  top:56px; border: #9a9a9a solid 2px; background: #fff; left: -2px; padding:7px 15px; text-align: center; color: #666; border-radius: 5px; display: none;}
+.type_choose .select .select_list li{ line-height:30px; cursor:pointer; float: left; width: 83px; height: 30px; border: 2px solid #ccc; margin: 5px; font-size: 15px;}
+.type_choose .select .select_list .y{ background:#ccc;}
+.choose_block .type_but{  width:145px; height:49px; border:none;background:url(../images/debit/type_but.png) no-repeat; margin-top:41px;}
+.arrow_3{ background: url(../images/debit/Arrow_3.png) no-repeat; position: absolute; width: 8px; height: 6px; left: 52px; top:52px; z-index: 10; display: none;}
+.y .arrow_3{ display: block;}
+
+.Process{ width:960px; height:291px;background:url(../images/debit/Process_img.jpg) no-repeat;}
+.Process ul li{ width:110px; height:200px; position:absolute; top:45px;}
+.Process ul { position:relative;}
+.Process_0{ left:38px;}
+.Process_1{ left:296px;}
+.Process_2{ left:553px;}
+.Process_3{ left:811px;}
+.y.Process_0{ left:38px;background:url(../images/debit/Process_0.png) no-repeat 3px 5px;}
+.y.Process_1{ left:296px;background:url(../images/debit/Process_1.png) no-repeat 3px 5px;}
+.y.Process_2{ left:553px;background:url(../images/debit/Process_2.png) no-repeat 3px 5px;}
+.y.Process_3{ left:811px;background:url(../images/debit/Process_3.png) no-repeat 3px 5px;}
+
+
+.Vertical_line{ background:#fff; width:2px;  height:24px; margin: 61px 0px 0px -44px; float:left;}
+ 
+.video_block{ overflow:hidden;  width: 312px; height: 177px; padding: 17px 15px 87px 14px; background:url(../images/debit/adv_show_0.png) no-repeat;}
+
+.paybutton,a .paybutton,a:hover .paybutton{background:#39A1EA;color:#FFFFFF;cursor:pointer;padding:0px 1em; height:36px; line-height:36px; border-color:#68E1FF  #00B0DD #00B0DD #68E1FF; border-width:2px; border-style:solid;}

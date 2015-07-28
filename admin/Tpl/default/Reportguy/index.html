@@ -1,0 +1,48 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%DEL}" onclick="foreverdel();" />
+</div>
+<script type="text/javascript">
+	function view_detail(id){
+		$.weeboxs.open(ROOT+'?m=Reportguy&a=edit&id='+id +"&status=<php>echo $_REQUEST['status'];</php>", {contentType:'ajax',showButton:false,title:"查看详情",width:600,height:240});
+	}
+</script>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		举报用户：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" size="10" />
+		被举报用户：<input type="text" class="textbox" name="r_user_name" value="{:trim($_REQUEST['r_user_name'])}" size="10" />
+		
+		状态
+		<select name="status">
+			<option value="all" <if condition="$_REQUEST['status'] eq 'all' || trim($_REQUEST['status']) eq ''">selected="selected"</if>>所有状态</option>
+			<option value="0" <if condition="$_REQUEST['status'] neq 'all' && trim($_REQUEST['status']) neq '' && intval($_REQUEST['status']) eq 0">selected="selected"</if>>未处理</option>
+			<option value="1" <if condition="intval($_REQUEST['status']) eq 1">selected="selected"</if>>已处理</option>
+		</select>
+		<input type="hidden" value="Reportguy" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,user_id|get_user_name_real:举报人,r_user_id|get_user_name_real:被举报人,reason:举报原因,status|get_status:是否处理" 
+	actionlist="view_detail:查看,foreverdel:{%DEL}" /> 
+
+<div class="blank5"></div>
+
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

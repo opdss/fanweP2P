@@ -1,0 +1,71 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+<style type="text/css">
+	#J_view_repay_plan th{ color:#fff; padding:5px 0}
+</style>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get" id="ThreeGetForm">	
+		{%DEAL_NAME}：<input type="text" class="textbox" name="name" value="{:trim($_REQUEST['name'])}" />
+		收款状态：
+		<select name="status">
+			<option value="0" <if condition="intval($_REQUEST['status']) eq 0">selected="selected"</if>>所有状态</option>
+			<option value="1" <if condition="intval($_REQUEST['status']) eq 1">selected="selected"</if>>待还</option>
+			<option value="2" <if condition="intval($_REQUEST['status']) eq 2">selected="selected"</if>>提前还款</option>
+			<option value="3" <if condition="intval($_REQUEST['status']) eq 3">selected="selected"</if>>正常还款</option>
+			<option value="4" <if condition="intval($_REQUEST['status']) eq 4">selected="selected"</if>>逾期还款</option>
+			<option value="5" <if condition="intval($_REQUEST['status']) eq 5">selected="selected"</if>>严重逾期</option>
+		</select>
+	
+		
+		还款日：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d', false, false, 'begin_time');" size="10" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');"  size="10"  />
+		
+		实际还款日：
+		<input type="text" class="textbox" name="sbegin_time" id="sbegin_time" value="{:trim($_REQUEST['sbegin_time'])}" onfocus="return showCalendar('sbegin_time', '%Y-%m-%d', false, false, 'sbegin_time');" size="10" />
+		-
+		<input type="text" class="textbox" name="send_time" id="send_time" value="{:trim($_REQUEST['send_time'])}" onfocus="return showCalendar('send_time', '%Y-%m-%d', false, false, 'send_time');"  size="10"  />
+		
+		<input type="hidden" value="Deal" name="m" />
+		<input type="hidden" value="user_loads_repay" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>  <!-- 0提前，1准时，2逾期，3严重逾期 -->
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,name:贷款名称
+		,user_id|get_user_name_real:会员名
+		,money|format_price:借款金额
+		,all_repay_time:总期数
+		,rate:利率
+		,l_key_index:第几期
+		,repay_money_format:待收款
+		,yuqi_money:预期收益
+		,shiji_money:实际收益
+		,repay_time|to_date='Y-m-d':还款日
+		,true_repay_time|to_date='Y-m-d':实际还款日
+		,status_format:还款状态 
+		"
+	actionwidth="98px" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

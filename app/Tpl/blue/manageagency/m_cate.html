@@ -1,0 +1,43 @@
+<div id="uc_cate">
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe614;</i>担保机构信息
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body">
+		<ul class="menu">
+			<li class="{if $MODULE_NAME eq 'manageagency' &&$ACTION_NAME eq 'account'}act{/if}" ><a class="uc_cate" href="{url x="index" r="manageagency#account"}" title="账户资料">账户资料</a></li>
+			<li class="{if $MODULE_NAME eq 'manageagency' &&$ACTION_NAME eq 'security'}act{/if}" ><a class="uc_cate" href="{url x="index" r="manageagency#security"}" title="安全设置">安全设置</a></li>
+			<li class="{if $MODULE_NAME eq 'manageagency' && $ACTION_NAME eq 'pingzheng'}act{/if}" > <a class="uc_cate" href="{url x="index" r="manageagency#pingzheng"}" title="借款凭证">凭证管理</a></li>	
+            <li class="{if $MODULE_NAME eq 'agency_money'}act{/if}" > <a class="uc_cate" href="{url x="index" r="agency_money#index"}" title="充值提现">充值提现</a></li>	
+        </ul>
+	</div>
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe606;</i>担保管理
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body">
+		<ul class="menu">
+			<li class="{if $MODULE_NAME eq 'manageagency' && $ACTION_NAME eq 'agencydeal' }act{/if}" > <a class="uc_cate" href="{url x="index" r="manageagency#agencydeal"}" title="担保中的借款">担保中的借款</a></li>
+			<li class="{if $MODULE_NAME eq 'manageagency' && $ACTION_NAME eq 'agencydealing'}act{/if}" > <a class="uc_cate" href="{url x="index" r="manageagency#agencydealing"}" title="邀约中的借款">邀约中的借款</a></li>
+			
+		</ul>
+	</div>
+	
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#uc_cate li.act").parent().parent().prev(".hd").addClass("hd_cur");
+	$("#uc_cate li.act").parent().parent().show();
+	/* 滑动/展开 */
+	$("#uc_cate .hd").click(function(){
+		$(this).next(".c_body").slideToggle();
+	});
+});
+</script>
+

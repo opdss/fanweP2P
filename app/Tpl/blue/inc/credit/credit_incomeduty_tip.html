@@ -1,0 +1,103 @@
+<div class="hide" id="creditGuyTemp">
+    <div class="clearfix bddf">
+        <div class="gray_title f14 pl10">
+           	如何办理个人信用报告
+        </div>
+        <div class="f_dgray"  style="padding: 5px 12px;">
+            <div style="padding:5px 0" class="f14 lh26">
+                <div>
+                	 办理个人信用报告，可由本人或委托他人到中国人民银行征信中心办理本人的信用报告，其中被委托人称为代理人。
+                </div>
+                <p>
+                	（一）本人查询信用报告
+                </p>
+                <div>
+                	携带本人有效身份证件原件及一份复印件（其中复印件留给征信分中心备查），到中国人民银行各地征信分中心查询。
+                </div>
+                <div>
+                	有效身份证件包括：身份证（第二代身份证须复印正反两面）、军官证、士兵证、护照、港澳居民来往内地通行证、
+                </div>
+                <div>
+                	台湾同胞来往内地通行证、外国人居留证等。
+                </div>
+                <p>
+                	（二）委托他人查询信用报告
+                </p>
+                <div>
+                	 需要携带的材料有委托人及代理人双方的身份证件原件及复印件、授权委托书。其中身份证件复印件和授权委托书留给
+                </div>
+                <div>
+                	征信分中心备查。委托书格式请与当地征信分中心联系取得。
+                </div>
+                <br>
+                <p class="p_1">
+                	全国各地征信中心联系方式查询
+                </p>
+                <p>
+                    <a href="http://www.pbccrc.org.cn/kefuzhongxin_303.html" target="_blank">http://www.pbccrc.org.cn/kefuzhongxin_303.html</a>
+                </p>
+            </div>
+        </div>
+    </div>  
+</div>
+<div class="hide" id="bankGuyTemp">
+	<div class="clearfix bddf">
+	    <div class="gray_title f14 pl10">
+	                如何办理银行流水单
+	    </div>
+	   <div class="f_dgray"  style="padding: 5px 12px;">
+            <div style="padding:5px 0" class="f14 lh26">
+	            <div>
+	               	 银行流水单是银行卡最近一段时间内的资金交易记录，是确认借入者收入状况的重要证明，银行流水单是{function name="app_conf" v="SHOP_TITLE"}用以评价借入者还款能力的重要凭证之一。
+	            </div>
+	            <p class="b">
+	            	办理流程
+	            </p>
+	            <div>
+	              	  前往最近的工资卡所在银行，提供工资卡及本人身份证原件，要求银行打印工资卡最近半年的流水单。
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>
+<div class="hide" id="dutyGuyTemp">
+	<div class="clearfix bddf">
+        <div class="gray_title f14 pl10">
+        	如何办理个人所得税完税证明
+        </div>
+        <div class="f_dgray"  style="padding: 5px 12px;">
+            <div style="padding:5px 0" class="f14 lh26">
+                <div>
+               	     一、委托公司会计代办
+                </div>
+                <div>
+                   	 联系所在公司（负责申报个人所得税）会计，委托会计办理需提交纳税人有效身份证件原件及复印件、受托人有效身份证件原件及
+                </div>
+                <div>
+                    	复印件及委托协议原件，并填写《开具个人所得税完税证明申请表》即可。
+                </div>
+                <div>
+                  	  二、本人办理
+                </div>
+                <div>
+                    1、向所在公司会计咨询公司进行缴税的税务所。
+                </div>
+                <div>
+                    2、本人携带有效身份证件原件及复印件，前往公司缴税的税务所，填写《开具个人所得税完税证明申请表》即可领取完税证明。
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#bankGuy,#bankGuy1,#bankGuy2").click(function(){
+			var html = $("#bankGuyTemp").html();
+			$.weeboxs.open(html, {boxid:'ctemp_box',contentType:'text',showButton:true, showCancel:false, showOk:false,title:"",width:606,height:300,type:'wee'});
+		});
+		$("#dutyGuy").click(function(){
+			var html = $("#dutyGuyTemp").html();
+			$.weeboxs.open(html, {boxid:'ctemp_box',contentType:'text',showButton:true, showCancel:false, showOk:false,title:"",width:606,height:300,type:'wee'});
+		});
+	});
+</script>

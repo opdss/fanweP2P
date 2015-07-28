@@ -1,0 +1,55 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+<php>
+	function get_g_status($status){
+		return l("G_REPAY_STATUS_".$status);
+	}
+</php>
+<script type="text/javascript">
+	function modify_generation(id){
+		$.weeboxs.open(ROOT+'?m=GenerationRepaySubmit&a=edit&id='+id+"&status=<php>echo $_REQUEST['status'];</php>", {contentType:'ajax',showButton:false,title:"续约申请处理",width:600,height:400});
+	}
+</script>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		状态：<select name="status">
+			<option value="">{%ALL}</option>
+			<option value="0" <if condition="$_REQUEST['status']!='' && intval($_REQUEST['status']) eq 0">selected="selected"</if>>{%G_REPAY_STATUS_0}</option>
+			<option value="1" <if condition="intval($_REQUEST['status']) eq 1">selected="selected"</if>>{%G_REPAY_STATUS_1}</option>
+			<option value="2" <if condition="intval($_REQUEST['status']) eq 2">selected="selected"</if>>{%G_REPAY_STATUS_2}</option>
+		</select>
+		
+		<input type="hidden" value="GenerationRepaySubmit" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	<!--<input type="button" class="button" value="{%EXPORT}" onclick="export_csv();" /> -->
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="user" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,user_id|get_user_name_real:{%USER_NAME},deal_id|get_deal_url:借款,money|format_price:待还金额,create_time|to_date:申请时间,status|get_g_status:申请状态,update_time|to_date:处理时间" 
+	actionlist="modify_generation:查看/处理" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

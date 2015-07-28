@@ -1,0 +1,64 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+	function get_handle($id)
+	{
+		
+        $str = l("IPS_VIEW");
+        
+		$str = "<a href='".u("IpsRelation/deal_view",array("id"=>$id))."'>".$str."</a>";
+		return $str;
+	}
+	
+</php>
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">{%IPS_REPAYMENT_RELATION_TITLE}
+	<a href="{:u("IpsRelation/repayment")}" class="back_list">{%BACK_LIST}</a>
+</div>
+<div class="blank5"></div>
+<form name="search" action="__APP__" method="get">	
+<div class="button_row">
+	
+	<if condition="!$_REQUEST['referer']">
+	<input type="button" class="button" value="{%EXPORT}" onclick="m_export_csv('deal_');" />
+	</if>
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+		<input type="hidden" name="id" value="{:trim($_REQUEST['id'])}" />
+</div>
+</form>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="repayment"  
+    pk = "mid"
+	datasource="list" 
+	show="mid:{%ID}
+    	 ,pBidNo:{%P_BID_NO}
+         ,deal_name:{%DEAL_name}
+         ,user_name:{%RELATION_USER_NAME}
+         ,t_user_name:{%RELATION_T_USER_NAME}
+         ,self_money|number_format=2:还款本金
+         ,interest_money|number_format=2:利息
+         ,manage_money|number_format=2:管理费
+         ,impose_money|number_format=2:{%IMPOSE_MONEY}/违约金
+         ,total_repay|number_format=2:还款总额
+         ,status:{%REPAY_STATUS}
+          ,repay_time|to_date:{%RELATION_REPAY_TIME}
+         ,true_repay_time|to_date:{%TRUE_REPAY_TIME}
+         "         
+ /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

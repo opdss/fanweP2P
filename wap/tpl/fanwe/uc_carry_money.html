@@ -1,0 +1,161 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_add_bank.css";
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_save_carry.css";			
+?>
+ <link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--申请提现-->
+<div class="uc_add_bank">
+	
+			<div class="bank_bg">
+				<ul>
+				{foreach from="$data.bank_carry" item="item" }
+					<li class="dl">
+						<span class="name">卡号</span>
+						<div class="info">
+							<p class="info_num">
+								{$item.bankcard}
+							</p>
+						</div>
+						
+					</li>
+					<input id="band_id" type="hidden" value="{$item.id}">
+					<li class="dl">
+						<span class="name">银行</span>
+						<div class="info">
+							<img src="{$item.img}" width="100px;" height="40px;" title="银行图片展示">
+						</div>
+					</li>
+					
+					<li class="dl">
+						<span class="name">姓名</span>
+						<div class="info">
+							<p class="info_num">
+								{$item.real_name}
+							</p>
+						</div>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+			
+			<div class="bank_bg">
+				<ul>
+					<li class="dl">
+						<span class="name">可用金额</span>
+						<div id="Jcarry_totalAmount" class="info">
+							<p class="info_num">
+								￥{$data.money}
+							</p>
+						</div>
+						
+					</li>
+					<!-- 
+					<li class="dl">
+						<span class="name">累计提现金额</span>
+						<div class="info">
+							<p class="info_num">
+								￥{$data.carry_total_money}
+							</p>
+						</div>
+					</li>
+					 -->
+					<li class="dl">
+						<span class="name">手续费</span>
+						<div class="info">
+							<p class="info_num">
+								<span id="Jcarry_fee" class="f_l">0.00 元</span>
+							</p>
+						</div>
+					</li>
+					
+					<li class="dl">
+						<span class="name">实付金额</span>
+						<div class="info">
+							<p class="info_num specialfont">
+								<span id="Jcarry_realAmount" class="f_l">0.00 元</span>
+							</p>
+						</div>
+					</li>
+					
+				</ul>
+			</div>
+			
+			<div class="bank_bg">
+				<ul>
+					<li class="dl">
+						<span class="name">提取金额</span>
+						<div class="info">
+							<input id="Jcarry_amount" type="text" placeholder="请输入金额"/>
+						</div>
+					</li>
+					<li class="dl">
+						<span class="name">支付密码</span>
+						<div class="info">
+							<input id="paypassword" type="password" placeholder="请输入密码"/>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="specialfont presentation">
+				提现时间约为3个工作日
+			</div>
+			<div class="detail_foot">
+			
+			    <div class="lookdetail" style="width:100%;"><button class="but_sure">确认添加</button></div>
+			</div>
+	
+</div>
+<script>
+	$(".seclet_but").click(function(){
+		$(".bank_seclet").toggle();
+	});
+	$(".bank_seclet li").click(function(){
+		var value=$(this).html();
+		$(".this_bank").html(value);
+		$(this).parent().hide();
+		$(this).addClass("active").siblings().removeClass("active");
+	});
+	
+	
+	 $(document).ready(function(){
+
+		 	$(".but_sure").click(function(){
+		 		var ajaxurl = '{wap_url a="index" r="uc_save_carry"}';
+		 		var query = new Object();
+		 		query.bid = $.trim($("#band_id").val());
+		 		query.amount = $.trim($("#Jcarry_amount").val());
+		 		query.paypassword = $.trim($("#paypassword").val());
+		 		query.post_type = "json";
+		 		
+		 		$.ajax({
+		 			url:ajaxurl,
+		 			data:query,
+		 			type:"Post",
+		 			dataType:"json",
+		 			success:function(data){
+		 				alert(data.show_err);
+		 				window.location.Reload();
+		 			}
+		 		});
+		 	});
+		 	
+		 });
+	 
+	 
+	$("#Jcarry_amount").keyup(function(){
+		setCarryResult()
+	});
+	$("#Jcarry_amount").blur(function(){
+		setCarryResult()
+	});
+	 
+	function setCarryResult(){
+		
+	}
+</script>
+{include file="./inc/footer.html"}
+
+
+
+

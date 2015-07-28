@@ -1,0 +1,58 @@
+<div class="tabbox clearfix">
+	<div class="tab {if $ACTION_NAME eq 'index'}cur"{/if}>
+		<a href="{url x="index" r="agency_money#index"}">{$LANG.UC_LOGS}</a>
+	</div>
+	<div class="tab {if $ACTION_NAME eq 'incharge'}cur{/if}">
+		<a href="{url x="index" r="agency_money#incharge"}">{$LANG.UC_MONEY_INCHARGE}</a>
+	</div>
+	<div class="tab {if $ACTION_NAME eq 'incharge_log'}cur{/if}">
+		<a href="{url x="index" r="agency_money#incharge_log"}">{$LANG.UC_MONEY_INCHARGE_LOG}</a>
+	</div>
+	<div class="tab {if $ACTION_NAME eq 'bank'}cur{/if}">
+		<a href="{url x="index" value="agency_money#bank"}">{$LANG.UC_CARRY}</a>
+	</div>
+	<div class="tab {if $ACTION_NAME eq 'carry_log'}cur{/if}">
+		<a href="{url x="index" value="agency_money#carry_log"}">提现日志</a>
+	</div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	<div class="balance p20 m10 bdd bdr3 clearfix">
+		<div class="balance_l">
+			<p class="f20">账户余额</p>
+			<span class="J_u_money_1">
+			<span class="f_red f16"><?php echo format_price($this->_var['user_info']['money']['pBalance'] + $this->_var['user_info']['money']['pLock'] + $this->_var['user_info']['money']['pNeedstl'] ); ?><em class="f14">元</em></span>
+			</span>
+		</div>	
+		<div class="balance_r pl10">
+			<ul>
+				<li class="first">
+					<div>
+						<p class="f16">可用资金</p>
+						<span class="J_u_money_0"><span class="f_red">{function name="format_price" v=$user_info.money.pBalance}</span></span>
+					</div>
+                    <div class="tl">
+						<p calss="f16">未结算余额</p>
+						<span>{if $user_info.money.pNeedstl}{function name="format_price" v=$user_info.money.pNeedstl}{else}0.00{/if}</span>
+					</div>
+					<div class="inchange_box tr">
+						<a href="{url x="index" r="agency_money#incharge"}" class="true_btn" style="display:inline-block;background:#FF4E00">充值</a>
+					</div>
+				</li>
+				<li>
+					<div>
+						<p class="f16">冻结资金</p>
+						<span class="J_u_money_2"><span>{if $user_info.money.pLock}{function name="format_price" v=$user_info.money.pLock}{else}0.00{/if}</span></span>
+					</div>
+					<div class="tl">
+						<p calss="f16">已提现总额</p>
+						<span>{if $user_info.total_money}{function name="format_price" v=$user_info.total_money}{else}0.00{/if}</span>
+					</div>
+					<div class="inchange_box tr">
+						<a href="{url x="index" r="agency_money#bank"}" class="true_btn" style="display:inline-block">提现</a>
+					</div>
+				</li>
+			</ul>
+		</div>	
+	</div>
+	<div class="blank0"></div>
+</div>

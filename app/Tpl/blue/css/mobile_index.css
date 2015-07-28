@@ -1,0 +1,161 @@
+body{
+	marign:0;
+	padding: 0;
+	margin: 15px auto;
+	background:#f8f8f8;
+	font-size:14px
+}
+ul{
+	list-style:none;
+	 margin: 0;
+    padding: 0;
+}
+
+a{
+text-decoration:none;
+}
+a:link{
+text-decoration:none;
+}
+a:visited{
+text-decoration:none;
+}
+a:hover{
+text-decoration:none;
+}
+a:active{
+text-decoration:none;
+}
+.f_red {color: #FF4E00 !important;}
+.f_green{ color:#360 !important;}
+.f_gray{color:#999!important}
+i.dot{ background:url(../images/wap/dot.gif) no-repeat 0 0; display:inline-block;height:4px; width:4px; background-size:4px 4px;margin-left:5px; margin-right:5px; position: relative;top:-3px}
+ /*借款列表*/
+.jklb ul li {    								
+    color: #898989;
+    font-size: 14px;
+    width: 100%;
+    margin:0 auto;
+	height:40px; 
+	line-height:40px;
+}
+.jklb ul li a{
+    color: #4c4c4c;
+}
+.jklb {
+    margin: 0 auto;
+    width: 89%;
+}
+.jklb ul li span.label{display:block;width:40%;float:left}
+.jklb ul li span.dbox{display:block;padding-left:45%; text-align:left;color:4c4c4c;}
+
+.tzjl {
+    margin: 0 auto;
+}
+
+.shjl {
+    margin: 0 auto;
+}
+
+.jkjl {
+    margin: 0 auto;
+}
+
+ /*投资记录*/
+.tzjl ul li {                                 
+    color: #898989;
+    font-size: 14px;
+    width: 94%;margin:0 auto;
+	border-bottom:1px dashed #ddd;
+	line-height:30px;
+}
+.tzjl ul li.nbt{border-bottom:none}
+.tzjl ul li span.label{display:block;width:40%;float:left}
+.tzjl ul li span.dbox{display:block;padding-left:45%; text-align:right}
+.tzjl ul li a{
+    color: #4c4c4c;
+}
+/*审核记录*/
+.shjl ul li {                                  
+    color: #898989;
+    font-size: 14px;
+    width: 94%;
+    margin:0 auto;
+	border-bottom:1px dashed #ddd;
+	line-height:36px;
+}
+.shjl ul li.hd{background:#f3f3f3;border:none;border-radius:5px}
+.shjl ul li span.item{text-align:center; display:block;width:32%;display:inline-block}
+.shjl ul li .tl{ text-align:left}
+.shjl ul li a{
+    color: #4c4c4c;
+}
+ /*借款记录*/
+.jkjl ul li {                                 
+    color: #898989;
+    font-size: 14px;
+    width: 94%;
+    margin:0 auto;
+	border-bottom:1px dashed #ddd;
+	height:36px; 
+	line-height:36px;
+}
+.jkjl ul li.nbt{border-bottom:none}
+.jkjl ul li span.label{display:block;width:40%;float:left}
+.jkjl ul li span.dbox{display:block;padding-left:45%}
+.jkjl ul li a{
+    color: #898989;
+}
+.noxia{
+	 list-style: disc outside none;
+}
+.xia{display:table;float: left;width: 100%;}
+
+
+
+.jrzxyxx{
+	color: #4d4d4d;
+	font-size: 16px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.main{
+	min-width:280px;
+	max-width:600px;
+	margin: 0 auto;
+	padding:0 10px
+}
+.mhead{
+    height: 127px;
+	width:100%;
+	background-image:url("../images/m_bg.gif");
+	background-repeat:repeat-x;background-position:center 0;
+	
+}
+.mh1{
+	   height: 50px;
+}
+.mh2{
+	font-size: 2.2em;text-align: center; height: 77px;
+}
+
+.content {
+    background-color: #ffffff;
+    margin-top: 16px;
+}
+.mtitle{
+	background: url("../images/wap/ticon.gif") no-repeat 10px center;
+	background-size:20px;
+    height: 60px;
+    line-height: 60px;
+  	font-size: 18px;
+	padding-left: 35px;
+	border-bottom:1px solid #ccc;
+	border-top:1px solid #ccc
+}
+
+
+.box-hd{ width: 92%;margin:0 auto; font-size: 14px; background:#e0f5ff;color:#4c4c4c ; height:36px; line-height:36px; border-radius:5px; padding:5px 10px;}
+.box-hd span{ display:block;height:36px; border-left:4px solid #3b95d3; padding-left:10px;font-weight:bold}

@@ -1,0 +1,51 @@
+{include file="inc/header.html"}
+
+<div class="cf">
+  
+  <!--分类-->
+  <div class="iloan-details  bddf" id="J_deal_tab_select">
+    <!--分类标题-->
+    <div class="tab_hd" id="securityTabs">
+    	{foreach from="$article_list" item=item key=key}
+		<span class="jTab item{$key} {if $key eq 0}cur{/if}" rel="{$key}" {if $item.rel_url neq ''}onclick="window.location.href='{$item.url}'"{/if}>
+			<i class="iconfont"></i>
+		 	{$item.title}
+		</span>
+		{/foreach}
+	</div>
+	<div class="blank1"></div>
+	
+	<!--分类标题-->
+    <div id="securityPanel" class="tab_bd"> 
+           
+	 {foreach from="$article_list" item=item key=key} 
+	   <!--模块-->
+      <div class="jPanel jPanel{$key} {if $key neq 0}hide{/if}">
+       {$item.content}
+      </div>
+	  <!--模块-->
+	  
+	  {/foreach}
+ 
+    </div>
+  </div>
+  <!--分类-->
+  </div>
+
+ <!-- xsz -->
+<script type='text/javascript'>
+	jQuery(function(){
+		$("#J_deal_tab_select #securityTabs .jTab").click(function(){
+			if($(this).attr("onclick")==undefined){
+				$("#J_deal_tab_select #securityTabs .jTab").removeClass("cur");
+				$("#J_deal_tab_select #securityTabs .guide_icon").removeClass("hover");
+				$("#securityPanel .jPanel").addClass("hide");
+				$(this).addClass("cur");
+				$(this).children(".guide_icon").addClass("hover");
+				var idx = $(this).attr("rel");
+				$("#securityPanel .jPanel"+idx).removeClass("hide");
+			}
+		});
+	});
+</script>
+{include file="inc/footer.html"}

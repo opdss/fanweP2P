@@ -1,0 +1,35 @@
+<div class="inc wb">
+	<div class="inc_top">{$page_title}</div>
+	<div class="inc_main">
+		<div class="sub_nav">
+			<span {if $ACTION_NAME eq 'index'}class="act"{/if}><a href="{url x="shop" r="uc_voucher#index"}">{$LANG.UC_VOUCHER}</a></span>
+			<span {if $ACTION_NAME eq 'incharge'}class="act"{/if}><a href="{url x="shop" r="uc_voucher#incharge"}">{$LANG.UC_VOUCHER_INCHARGE}</a></span>
+			<span {if $ACTION_NAME eq 'exchange'}class="act"{/if}><a href="{url x="shop" r="uc_voucher#exchange"}">{$LANG.UC_VOUCHER_EXCHARGE}</a></span>
+		</div>
+		<div class="blank"></div>
+		{include file="inc/uc/money_box.html"}
+		<div class="blank"></div>
+		<div class="uc-table">
+			<table cellspacing="0" cellpadding="0" border="0" class="coupons-table">
+		        			<form name="incharge" action="{url x="shop" r="uc_voucher#do_incharge"}" method="post">
+								<tr>
+					        		<td>{$LANG.VOUCHER_SN}</td>
+					        		<td style="text-align:left;"><input type="text" value="" name="sn" id="sn" class="f-input"></td>
+					        	</tr>
+					        	<tr>
+					        		<td>{$LANG.VOUCHER_PASSWORD}</td>
+					        		<td style="text-align:left;"><input type="password" value="" name="password" id="password" class="f-input"></td>
+					        	</tr>
+					        	<tr>
+					        		<td></td>
+					        		<td style="text-align:left;">
+					        		<input type="submit" class="sub_btn" value="{$LANG.DO_INCHARGE}">
+					        		<input type="reset" class="sub_btn" value="{$LANG.RESET}">
+					        		</td>
+					        	</tr>
+							</form>
+			</table>
+		</div><!--end uc-table-->
+	</div>
+	<div class="inc_foot"></div>
+</div>

@@ -1,0 +1,56 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-buy">
+			<div id="content" style="overflow:hidden;">	
+			{if $deal}
+			{include file="inc/share.html"} 
+			
+			{* 问题答疑团购 *}
+			<div class="cf" id="deal-intro">
+					<div style="height: 100px;">
+						<div class="deal-price-tag"></div>
+							<p class="deal-price">
+								<strong>{function name="format_price" value=$deal.current_price}</strong>
+								<span>
+									<a href="javascript:void(0);" onclick="add_cart({$deal.id})">
+											{if $deal.buy_type eq 0}
+												<img src="{$TMPL}/images/tuan/button-deal-buy.gif">
+											{/if}
+											{if $deal.buy_type eq 2}
+												<img src="{$TMPL}/images/tuan/button-deal-order.gif">
+											{/if}
+											{if $deal.buy_type eq 3}
+												<img src="{$TMPL}/images/tuan/button-deal-second.gif">
+											{/if}
+									</a>
+								</span>							
+							</p>
+							<span title="{$deal.name}" class="comment_goods_name">{$deal.name}</span>
+					</div>
+				</div>
+			{* 问题答疑团购 *}			
+			<div class="blank"></div>
+			{/if}
+			
+			{if $message_type_list}
+			<div class="dashboard cf" id="dashboard">
+					<ul>
+						{foreach from=$message_type_list item=type_item}
+						<li {if $type_item.current eq 1}class="current"{/if}><a href="<?PHP echo url("tuan","message#".$this->_var['type_item']['type_name']);?>">{$type_item.show_name}</a>
+						<span></span>
+						</li>
+						{/foreach}							
+					</ul>
+			</div>
+			{/if}
+			
+			{include file="inc/tuan_message_form.html"}			
+			</div>
+			<div {if $message_type_list or $deal}style="padding-top:34px;"{/if}>
+			{include file="inc/side.html"} 
+			</div>
+	</div>
+	<!-- bd end -->
+</div></div>
+{include file="inc/footer.html"}

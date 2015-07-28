@@ -1,0 +1,35 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<php>
+	function get_user_input_type($input_type)
+	{
+		return l("INPUT_TYPE_".$input_type);
+	}
+	function get_is_must($is_must)
+	{
+		return l("IS_MUST_".$is_must);
+	}
+</php>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+	<input type="button" class="button" value="{%FOREVERDEL}" onclick="foreverdel();" />
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="field" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,field_show_name:{%FIELD_SHOW_NAME}:edit,field_name:{%FIELD_NAME},input_type|get_user_input_type:{%INPUT_TYPE},is_must|get_is_must:{%IS_MUST},sort|get_sort=$field['id']:{%SORT}" 
+	actionlist="edit:{%EDIT}, foreverdel:{%FOREVERDEL}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,105 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/deal.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--偿还贷款 ==>还款列表 ===>提前还款-->
+<div class="uc_quick_refund">
+	<div class="detail">
+		<div class="mainblok mainborder">
+		            <div class="detail_tit">
+		                <h3>{$data.deal.name}</h3>
+		             </div>
+		            <div class="detail_list">
+		                <ul>
+		                	<li>
+		                        <label>借款金额</label>
+		                        <div class="list_con">{$data.deal.borrow_amount_format}</div>
+		                    </li>
+		                    <li>
+		                        <label>年利率</label>
+		                        <div class="list_con detail_Orange">{$data.deal.rate_foramt_w}</div>
+		                    </li>
+		                    <li>
+		                        <label>已还总额</label>
+		                        <div class="list_con detail_Orange">{$data.deal.repay_money}</div>
+		                    </li>
+		                    <li>
+		                        <label>期限</label>
+		                        <div class="list_con">{$data.deal.repay_time}个月</div>
+		                    </li>
+							<li>
+		                        <label>管理费</label>
+		                        <div class="list_con">{$data.deal.month_manage_money_format}</div>
+		                    </li>
+							<li>
+		                        <label>罚息</label>
+		                        <div class="list_con">{$data.impose_money_format}</div>
+		                    </li>
+							<li>
+		                        <label>应还本息</label>
+		                        <div class="list_con ">
+		                        	<span class="detail_Orange">{$data.true_total_repay_money_format}</span>
+									<span class="main_font">(应还本金+当期利息)</span>
+								</div>
+								
+		                    </li>
+		                </ul>
+		            </div>
+					
+		        </div>
+				<div class="blank15"></div>
+				<div class="aggregate clearfix">
+					<p class="total">合计还款</p>
+					<p class="money specialfont" price="{$data.true_total_repay_money_format}"></p>
+				</div>
+          </div> 
+		  
+		  <!--···········这是一个控制价格样式的脚本·········--> 
+        <script type="text/javascript">
+            //控制价格样式
+            $("p[price]").each(function(i,o){
+                var price = $(o).attr("price");
+                var price_arr = price.split(".");
+                if(price_arr.length>1)
+                {
+                    $(o).html("<h1>"+price_arr[0]+"</h1><h2>."+price_arr[1]+"</h2>");
+                }
+                else
+                {
+                    $(o).html("<h1>"+price+"</h1>");
+                }
+            });
+        </script>
+<div class="detail_foot">
+    <div class="lookdetail"><a href="{wap_url a="index" r="uc_incharge"}">充值</a></div>
+    <input id="deal_id" type="hidden" value="{$data.deal.id}" />
+    <div id="submitt" class="I_Investment">确认还款</div>
+</div>
+</div>
+<script>
+	$(".detail_list  li:last").css({"border-bottom":"0px"});
+</script>
+{include file="./inc/footer.html"}
+
+
+<script type="text/javascript">
+
+$("#submitt").click(function(){
+		var ajaxurl = '{wap_url a="index" r="uc_do_inrepay_refund"}';
+		var query = new Object();
+		query.id = $.trim($("#deal_id").val());
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.show_err);
+				window.location.href = '{wap_url a="index" r="uc_refund"}';
+			}
+		});
+	});
+</script>	
+

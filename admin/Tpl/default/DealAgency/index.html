@@ -1,0 +1,71 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript">
+	function view_info(id){
+		$.weeboxs.open(ROOT+'?m=DealAgency&a=view_info&id='+id, {contentType:'ajax',showButton:false,title:"证件预览",width:1000,height:500});
+	}
+</script>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		机构名称：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" />
+		手机：<input type="text" class="textbox" name="mobile" value="{:trim($_REQUEST['mobile'])}" />
+		邮箱：<input type="text" class="textbox" name="email" value="{:trim($_REQUEST['email'])}" />
+		<input type="hidden" value="DealAgency" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+<php>
+	function send_ips($ips_acct_no,$deal){
+		if(app_conf("OPEN_IPS") == 1){
+			if($deal['real_name'] == "" || $deal['idno'] == "" || $deal['mobile'] == "" || $deal['email'] == ""){
+				return "资料不完整";
+			}
+			else{
+				if($ips_acct_no=="")
+					return '<a href="'.__ROOT__.'/index.php?ctl=collocation&act=CreateNewAcct&user_type='.$deal['user_type'].'&user_id='.$deal['id'].'" target="_blank">同步</a>';
+				else
+					return "已同步";
+			}
+		}
+		else{
+			return "未开启功能";
+		}
+	}
+</php>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,user_name:名称
+		,real_name:姓名
+		,mobile:手机号
+		,email:邮箱
+		,login_time|to_date:最后登录时间
+		,ips_acct_no|send_ips=$deal:同步到第三方|100px 
+		,is_effect|get_is_effect=$deal['id']:{%IS_EFFECT}"
+	actionlist="edit:{%EDIT}, agency_passed:{%USER_PASSED_SHORT},del:{%DEL},view_info:资料展示" 
+	actionwidth="140px"/> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

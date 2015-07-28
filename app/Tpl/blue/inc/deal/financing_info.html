@@ -1,0 +1,19 @@
+<div class="box-t f_blue f18"><i class="iconfont">&#xe627;</i>&nbsp;借款描述</div>
+<div class="box-bd financing ">
+	<div class="item item_l">
+		<span class="lb">融资公司</span>{$company.company_name}
+		<div class="blank15"></div>
+		<span class="lb">注册资金</span>{$company.register_capital}万元
+	</div>
+	<div class="item  item_m">
+		<span class="lb">法人代表</span>{function name="utf_substr" v=$company.contact}
+		<div class="blank15"></div>
+		<span class="lb">资产净值</span>{$company.asset_value}万元
+	</div>
+	<div class="item last">
+		<span class="lb">所属行业</span>{$company.officedomain}
+		<div class="blank15"></div>
+		<span class="lb">公司规模</span>{$company.officecale}
+	</div>
+	<div class="blank0"></div>
+</div>

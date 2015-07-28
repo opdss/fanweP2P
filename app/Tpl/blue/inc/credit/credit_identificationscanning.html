@@ -1,0 +1,88 @@
+{include file="inc/credit/credit_header.html"} 
+<div class="hd-bg">
+	<form action="{url x="index" r="borrow#file_upload_save"}" method="post" id="uploadIdForm" name="uploadIdForm">
+		<div id="item">
+	    	<div class="blank20"></div>
+	        <div style="width:90%;background:#FEFEFC;border:1px solid #CCC;padding:10px;margin:0 auto;">
+	            <div class="f16 b pt5 pb5" style="color:#003C85;">
+				身份证认证
+	            </div>
+	            <div class="f_dgray" style="text-indent: 2em;">
+				您上传的身份证扫描件需和您绑定的身份证一致，否则将无法通过认证。
+				</div>
+	        </div>
+	        <div class="blank20"></div>
+	        <div id="explain" style="width:80%;padding-left:40px;margin:0 auto;">
+	            <p class="f_dgray b">
+	            	认证说明：
+	            </p>
+	            <div id="explain_item">
+	                <div style="padding-left:20px">
+	                    <div class="lh22">
+	                        1、请您上传您<span class="f_red">本人身份证原件</span>的照片。如果您持有第二代身份证，请上传正、反两面照片。
+	                    </div>
+						<div class="blank10"></div>
+	                    <div class="lh22">
+	                    	如果您持有第一代身份证，仅需上传正面照片。
+	                    </div>
+						<div class="blank10"></div>
+	                    <div class="lh22">
+	                        2、请确认您上传的资料是清晰的、未经修改的数码照片（不可以是扫描图片）。
+	                    </div>
+						<div class="blank10"></div>
+	                    <div class="lh22">
+	                    	每张图片的尺寸<span class="f_red">不大于1.5M</span>。
+	                    </div>
+	                </div>
+	            </div>
+				<div class="blank5"></div>
+	            <p class="lh24">
+	                <span class="f_dgray b">审核时间：</span>
+	                <span class="f_red">3个工作日内</span>
+	            </p>
+	            <p class="lh24">
+	                <span class="f_dgray b">认证有效期：</span>
+	                <span class="f_red">永久</span>
+	            </p>
+				<div class="blank5"></div>
+	            <div class="dot"></div>
+	            <div class="blank20"></div>
+	        </div>
+	       	<div>
+				<div style="width:83%;padding-left:238px;margin:0 auto;" id="upload_file_box">
+	       			<div class="plupload_header_text pl10">每张图片最大限制为3MB，图片格式为JPG,GIF,PNG</div>
+					<div class="blank5"></div>
+					{function name="show_ke_image" v="file1"}
+					{function name="show_ke_image" v="file2"}
+				</div>
+			</div>
+	        <div class="blank20"></div>
+	        <div class="blank20"></div>
+	        <div style="text-align: center">
+	            <input type="hidden" id="path" value="{$path}" name="path"/>
+				<input type="hidden" id="auth" value="{$auth}" name="auth"/>
+	            <input type="hidden" id="uploaded" name="uploaded" value="0"/>
+	            <input type="submit" value="提交审核" class="sub_btn"/>
+	        </div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$("#uploadIdForm").submit(function(){
+		var is_upload_file = false;
+		for(var i=1;i<=2;i++){
+			$("#upload_file_box #file"+i).val(KE.util.getData('file'+i));
+			if($.trim($("#upload_file_box #file"+i).val())!=""){
+				is_upload_file = true;
+			}
+		}
+		if(!is_upload_file){
+			$.showErr("请完成文件上传后提交审核。");
+			return false;
+		}
+		
+		return true;
+	});
+
+</script>
+{include file="inc/credit/credit_footer.html"} 

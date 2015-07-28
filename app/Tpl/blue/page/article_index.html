@@ -1,0 +1,21 @@
+{include file="inc/header.html"} 
+<div class="blank"></div>
+<div class="short f_l">
+	<div class="tree-box clearfix">
+		<div class="tree clearfix">
+		{foreach from=$acate_tree item="cate_item" key=key}
+		{if $cate_item.type_id eq 0 || $cate_item.type_id eq 2}
+			<div class="hd {if $cate_item.id eq $article.cate_id}hd_cur{/if}"><a href="{$cate_item.url}" rel="{$cate_item.id}">{$cate_item.title}</a></div>
+		
+		{/if}
+		{/foreach}
+		</div>
+	</div>
+	
+</div>
+<div class="long f_r" >
+	{include file="inc/inc_article_info.html"}
+</div>
+<div class="blank"></div>
+
+{include file="inc/footer.html"}

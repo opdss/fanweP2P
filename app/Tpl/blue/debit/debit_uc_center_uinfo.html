@@ -1,0 +1,348 @@
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/debit_uc_data.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+
+<form method="post" action="{url x="debit" r="debit_uc_center#save"}" name="modify"> 
+	<div class="inc wb">
+		<div class="inc_main">
+        		
+				<table width="100%;" class="user_info_table">
+					<tbody><tr>
+						<td colspan="2" class="tr">
+							<button type="button" class="true_btn" id="edit-account">编辑资料</button>
+						</td>
+					</tr>
+					<tr>
+						<td  valign="top" style="width:150px; text-align:center">
+                        		<img id="avatar" src="{function name="get_user_avatar" uid=$user_info.id type="middle"}" />
+                                <div class="blank"></div>
+                                <div class="hide account-edit-box">
+                                    <label class="fileupload" onclick="upd_file(this,'avatar_file',{$user_info.id});">
+                                    <input type="file" class="filebox" name="avatar_file" id="avatar_file"/>
+                                    
+                                    </label>
+                                    <label class="fileuploading hide" ></label>						
+                                </div>	
+						</td>
+						
+						<td class="pt10">
+							<div class="field username">
+                                <label for="settings-username"><span class="red">*</span>{$LANG.USER_TITLE_USER_NAME}</label>
+                                <span class="f_l">{$user_info.user_name}</span>
+                            </div>
+							<div class="blank10"></div>
+						<div class="field email">
+							<label for="settings-email-address"><span class="red">*</span>Email</label>
+							<span class="f_l">{function name="hideEmail" v=$user_info.email}</span>
+							{if $user_info.email neq '' && $user_info.emailpassed eq 1}
+								<span class="passed yes">已绑定</span>
+							{elseif $user_info.email neq '' && $user_info.emailpassed eq 0}
+								<span class="passed yes">已设置</span>
+							{else}
+								<span class="passed"><a href="{url x="debit" r="debit_uc_center#security"}">去设置</a></span>
+							{/if}
+						</div>
+						<div class="blank10"></div>
+													
+						<div class="field real_name">
+							<label for="settings-real_name"><span class="red">*</span>{if $user_info.user_type}法人姓名{else}{$LANG.REAL_NAME}{/if}</label>
+							<span class="f_l">{function name="utf_substr" v="$user_info.real_name"}</span>
+							{if $user_info.idcardpassed eq 1}
+								<span class="passed yes">已认证</span>
+							{else}
+								<span class="passed"><a href="{url x="debit" r="debit_uc_center#security"}">去认证</a></span>
+							{/if}
+						</div>
+						<div class="blank10"></div>
+						<div class="field idno">
+							<label for="settings-idno"><span class="red">*</span>{if $user_info.user_type}法人{/if}{$LANG.IDNO}</label>
+							<span class="f_l">{function name="hideIdCard" v=$user_info.idno}</span>
+							{if $user_info.idcardpassed eq 1}
+								<span class="passed yes">已认证</span>
+							{else}
+								<span class="passed"><a href="{url x="debit" r="debit_uc_center#security"}">去认证</a></span>
+							{/if}
+						</div>
+						<div class="blank10"></div>
+						<div class="field mobile">
+							<label for="settings-mobile"><span class="red">*</span>{$LANG.USER_TITLE_MOBILE}</label>
+							<span class="f_l">{function name="hideMobile" v=$user_info.mobile}</span>
+							{if $user_info.mobilepassed eq 1}
+								<span class="passed yes">已绑定</span>
+							{else}
+								<span class="passed"><a href="{url x="debit" r="debit_uc_center#security"}">去绑定</a></span>
+							{/if}
+						</div>
+						<div class="blank10"></div>
+						<div class="field">
+							<label><span class="red">*</span>{$LANG.USER_SEX}</label>
+							<span class="f_l">
+							{if $user_info.sex eq 0}{$LANG.USER_SEX_0}{/if}
+							{if $user_info.sex eq 1}{$LANG.USER_SEX_1}{/if}
+							</span>
+						</div>
+						<div class="blank10"></div>
+						<div class="field clearfix">
+							<label for="settings-birthday"><span class="red">*</span>{$LANG.USER_BIRTHDAY}</label>
+							<div class="f_l">
+								{$user_info.byear}
+								-
+								{$user_info.bmonth}
+								-
+								{$user_info.bday}
+								
+							</div>
+						</div>
+						<!--显示框开始-->
+						<div class="account-view-box">
+							<div class="blank10"></div>
+							<div class="field graduation">
+								<label for="settings-graduation"><span class="red">*</span>{$LANG.GRADUATION}</label>
+								<span class="f_l">
+								{if $user_info.graduation eq $LANG.GRADUATION_1}{$LANG.GRADUATION_1}{/if}
+								{if $user_info.graduation eq $LANG.GRADUATION_2}{$LANG.GRADUATION_2}{/if}
+								{if $user_info.graduation eq $LANG.GRADUATION_3}{$LANG.GRADUATION_3}{/if}
+								{if $user_info.graduation eq $LANG.GRADUATION_4}{$LANG.GRADUATION_4}{/if}
+								</span>
+							</div>
+							<div class="blank10"></div>
+							<div class="field university">
+								<label for="university"><span class="red">*</span>{$LANG.UNIVERSITY}</label>
+								<span class="f_l">{$user_info.university}</span>
+							</div>
+                            
+                            <div class="blank10"></div>
+							<div class="field university">
+								<label for="university">专业</label>
+								<span class="f_l">{$user_info.u_special}</span>
+							</div>
+                            
+                            <div class="blank10"></div>
+							<div class="field university">
+								<label for="university"><span class="red">*</span>宿舍地址</label>
+								<span class="f_l">{$user_info.address}</span>
+							</div>
+                            
+							<div class="blank10"></div>
+							
+							
+						</div>
+						<!--显示框结束-->
+						
+						<!--编辑框开始-->
+						<div class=" account-edit-box">
+							<div class="blank10"></div>
+							<div class="field graduation">
+								<label for="settings-graduation"><span class="red">*</span>{$LANG.GRADUATION}</label>
+								<select name="graduation" id="settings-graduation" class="f_l ui-select">
+									<option value="" {if $user_info.graduation eq ''}selected="selected"{/if}>={$LANG.SELECT_PLEASE}=</option>
+									<option value="{$LANG.GRADUATION_1}" {if $user_info.graduation eq $LANG.GRADUATION_1}selected="selected"{/if}>{$LANG.GRADUATION_1}</option>
+									<option value="{$LANG.GRADUATION_2}" {if $user_info.graduation eq $LANG.GRADUATION_2}selected="selected"{/if}>{$LANG.GRADUATION_2}</option>
+									<option value="{$LANG.GRADUATION_3}" {if $user_info.graduation eq $LANG.GRADUATION_3}selected="selected"{/if}>{$LANG.GRADUATION_3}</option>
+									<option value="{$LANG.GRADUATION_4}" {if $user_info.graduation eq $LANG.GRADUATION_4}selected="selected"{/if}>{$LANG.GRADUATION_4}</option>
+								</select>
+							</div>
+							<div class="blank10"></div>
+							<div class="field university">
+								<label for="university"><span class="red">*</span>{$LANG.UNIVERSITY}</label>
+								<input type="text" value="{$user_info.university}" class="f-input f_l ui-textbox" id="settings-university" name="university" size="30">
+							</div>
+							<div class="blank10"></div>
+                            <div class="field university">
+								<label for="settings-u_special">专业</label>
+								<input type="text" value="{$user_info.u_special}" class="f-input f_l ui-textbox" id="settings-u_special" name="u_special" size="30">
+							</div>
+							<div class="blank10"></div>
+                            <div class="field university">
+								<label for="settings-address"><span class="red">*</span>宿舍地址</label>
+								<input type="text" value="{$user_info.address}" class="f-input f_l ui-textbox" id="settings-address" name="address" size="30">
+							</div>
+							<div class="blank10"></div>
+							
+							
+							
+							
+							<script type="text/javascript" src="{$APP_ROOT}/system/region.js"></script>		
+							
+							<div class="blank10"></div>
+							
+						</div>
+						</td>
+						
+					</tr>
+					
+				</tbody></table>
+				<div class="blank20"></div>
+				<div style="text-align:center">
+					<div class="hide account-edit-box">
+						<input type="submit" class="sub_btn" id="settings-submit" name="commit" value="保存更改">
+					</div>
+				</div>
+				<div class="blank"></div>
+		</div>
+		<div class="inc_foot"></div>
+	</div>
+	</form>
+<!---->
+<div id="proSchool" class="provinceSchool">
+    <div class="title"><span>已选择:</span></div>
+    <div class="proSelect">
+        <select></select>
+        <span>选择您的所在学校</span>
+        <input type="text" />
+    </div>
+    <div class="schoolList">
+        <ul></ul>
+    </div>
+    <div class="button">
+        <span flag='0'>取消</span>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="{$TMPL}/js/ajaxupload.js"></script>
+<script type="text/javascript">
+function setPhone(){
+	var frphone = $.trim($("#frphone").val());
+	var numphone = $.trim($("#numphone").val());
+	if(frphone!=""&&numphone!=""){
+		$("#phone").val(frphone+"-"+numphone);
+	}
+	else{
+		$("#phone").val("");
+	}
+}
+$(document).ready(function(){
+	$(".account-edit-box").addClass("hide");
+	$("#settings-submit").click(function(){
+		{if $user_info.email eq ''}
+		if($.trim($("#settings-email-address").val()).length == 0)
+		{
+			$("#settings-email-address").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.USER_TITLE_EMAIL}");
+			
+			return false;
+		}
+		
+		if(!$.checkEmail($("#settings-email-address").val()))
+		{
+			$("#settings-email-address").focus();			
+			$.showErr("{function name="sprintf" format=$LANG.FORMAT_ERROR_TIP value=$LANG.USER_TITLE_EMAIL}");
+			return false;
+		}
+		{/if}
+		
+		/*
+		var is_marriage = false;
+		$("input[name='marriage']").each(function(){
+			if($(this).attr("checked")=="checked" || $(this).attr("checked")==true){
+				is_marriage = true;
+			}
+		});
+		
+		if(!is_marriage){
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.MARRIAGE}");
+			return false;
+		}
+		*/
+		
+		if($.trim($("#settings-graduation").val()).length == 0){
+			$("#settings-graduation").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.GRADUATION}");
+			
+			return false;
+		}
+		
+		if($.trim($("#settings-university").val()).length == 0){
+			$("#settings-university").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=学校}");
+			
+			return false;
+		}
+		
+		
+		{foreach from=$field_list item=field_item}
+			{if $field_item.is_must eq 1}
+			if($("#settings-{$field_item.field_name}").val()=='')
+			{
+				$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$field_item.field_show_name}");	
+				$("#settings-{$field_item.field_name}").focus();
+				return false;
+			}
+			{/if}
+		{/foreach}
+		/*
+		if($("select[name='province_id']").val()== 0||$("select[name='city_id']").val() == 0)
+		{
+			$("select[name='province_id']").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$LANG.USER_REGION}");
+			
+			return false;
+		}
+		*/
+		if($.trim($("#settings-address").val()).length == 0){
+			$("#settings-address").focus();
+			$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=宿舍地址}");
+			
+			return false;
+		}
+
+	});
+});
+
+function upd_file(obj,file_id,uid)
+{	
+	$("input[name='"+file_id+"']").bind("change",function(){			
+		$(obj).hide();
+		$(obj).parent().find(".fileuploading").removeClass("hide");
+		$(obj).parent().find(".fileuploading").removeClass("show");
+		$(obj).parent().find(".fileuploading").addClass("show");
+		  $.ajaxFileUpload
+		   (
+			   {
+				    url:APP_ROOT+'/index.php?ctl=avatar&act=upload&uid='+uid,
+				    secureuri:false,
+				    fileElementId:file_id,
+				    dataType: 'json',
+				    success: function (data, status)
+				    {
+				   		$(obj).show();
+				   		$(obj).parent().find(".fileuploading").removeClass("hide");
+						$(obj).parent().find(".fileuploading").removeClass("show");
+						$(obj).parent().find(".fileuploading").addClass("hide");
+				   		if(data.status==1)
+				   		{
+				   			document.getElementById("avatar").src = data.middle_url+"?r="+Math.random();
+				   		}
+				   		else
+				   		{
+				   			$.showErr(data.msg);
+				   		}
+				   		
+				    },
+				    error: function (data, status, e)
+				    {
+						$.showErr(data.responseText);;
+				    	$(obj).show();
+				    	$(obj).parent().find(".fileuploading").removeClass("hide");
+						$(obj).parent().find(".fileuploading").removeClass("show");
+						$(obj).parent().find(".fileuploading").addClass("hide");
+				    }
+			   }
+		   );
+		  $("input[name='"+file_id+"']").unbind("change");
+	});	
+}
+
+//切换地区
+$(document).ready(function(){	
+	$("select[name='province_id']").bind("change",function(){
+			load_city($("select[name='province_id']"),$("select[name='city_id']"));
+		});
+		
+	});
+	
+	
+	
+</script>

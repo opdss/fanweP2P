@@ -1,0 +1,39 @@
+.invest{
+	margin: 0 7px;
+}
+.invest_tit{
+
+}
+.invest_tit{
+	height: 30px;
+	width: 100%;
+	border: none;
+	font-size:15px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+.invest_tit .State{
+	 color: #fff;
+	 line-height: 30px;
+	 padding: 0 10px;
+}
+.invest_tit .verticalline{
+	height: 11px;
+	display: inline-block;
+	border-right: 1px solid #fff;
+}
+.invest_tit .sub_name {
+	line-height: 30px;
+	color: #fff;
+	padding: 0 10px;
+}
+.gray{
+	background: #b5b5b5;
+}
+
+
+
+.content_list span:nth-child(1){ padding: 0px;}
+
+
+

@@ -1,0 +1,35 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<div class="main">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td colspan=2>
+		<input type="hidden" value="{$delivery_fee.id}" name="delivery_fee_id" />
+		
+		<foreach name="delivery_regions" item="region_item">
+			<div class='region_level_{$region_item.pid}' style="padding-left:{$region_item.region_level}em;">
+				<input type="checkbox" name='region_id[]' value="{$region_item.id}" onclick="check_sub(this);"  <PHP>if(in_array($region_item['id'],$delivery_fee['region_ids'])) echo "checked='checked'";</PHP> /> 
+				<a href='javascript:void(0);' onclick='switch_region(this);' style="text-decoration:none;">				
+				-
+				</a> <span>{$region_item.name}</span>
+				<foreach name="region_item.delivery_regions" item="region_item_sub">
+					<div class='region_level_{$region_item_sub.pid}' style="padding-left:{$region_item_sub.region_level}em;">
+						<input type="checkbox" name='region_id[]' onclick="check_sub(this);" value="{$region_item_sub.id}" <PHP>if(in_array($region_item_sub['id'],$delivery_fee['region_ids'])) echo "checked='checked'";</PHP> /> 
+						<a href='javascript:void(0);' onclick='switch_region(this);' style="text-decoration:none;">				
+						+
+						</a> <span>{$region_item_sub.name}</span>
+						
+					</div>
+				</foreach>
+			</div>
+		</foreach>
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</div>

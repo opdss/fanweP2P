@@ -1,0 +1,91 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/deal.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<PHP>
+function get_edit($s,$deal){
+	if($deal['is_effect'] == 2){
+		return "未通过";
+	}
+	elseif($deal['is_edit']==0)
+		return "待审核";
+	else
+		return "未提交";	
+}
+function get_edit_1($id,$deal){
+ 		if($deal['type']==1){
+			return "<a href=\"javascript:edit_investor('".$id."')\">编辑上架</a>";
+		}else{
+			return "<a href=\"javascript:edit('".$id."')\">编辑上架</a>";
+		}
+	}
+function get_item($id,$deal){
+ 		if($deal['type']==1){
+			return "";
+		}else{
+			return "<a href=\"javascript:deal_item('".$id."')\">子项目</a>";
+		}
+	}
+function edit_new($name,$id){
+		$deal=$GLOBALS['db']->getOne("select type from ".DB_PREFIX."deal where id=$id ");
+ 		if($deal['type']==1){
+			return "<a href=\"javascript:edit_investor('".$id."')\">$name</a>";
+		}else{
+			return "<a href=\"javascript:edit('".$id."')\">$name</a>";
+		}
+	}
+</PHP>
+<div class="main">
+<div class="main_title">未审核项目</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="彻底删除" onclick="foreverdel();" />
+
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		项目名称：<input type="text" class="textbox" name="name" value="{:trim($_REQUEST['name'])}" style="width:100px;" />
+		分类:<select name="cate_id">
+				<option value="0" <if condition="$_REQUEST['time_status'] eq 0">selected="selected"</if>>全部</option>
+				<foreach name="cate_list" item="cate_item">
+					<option value="{$cate_item.id}" <if condition="$_REQUEST['cate_id'] eq $cate_item['id']">selected="selected"</if>>{$cate_item.name}</option>
+				</foreach>
+			</select>
+		类型:<select name="type">
+			<option value="NULL" <if condition="$_REQUEST['type'] eq 'NULL'">selected="selected"</if> >请选择</option>
+			<option value="0" <if condition="$_REQUEST['type'] eq '0'">selected="selected"</if> >产品众筹</option>
+			<option value="1" <if condition="$_REQUEST['type'] eq '1'">selected="selected"</if> >股权众筹</option>
+			</select>
+		发起人ID: <input type="text" class="textbox" name="user_id" value="{:trim($_REQUEST['user_id'])}" style="width:30px;" />
+		<input type="hidden" value="Deal" name="m" />
+		<input type="hidden" value="submit_index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,name|edit_new=$deal['id']:项目名称
+ 		,type|get_type_name:类型|100px
+		,user_id|get_deal_user:发起人|50px
+		,limit_price|format_price:目标金额|100px
+		,deal_days:参考上线时间
+		,create_time|to_date:创建时间
+		,is_edit|get_edit=$deal:状态
+		,is_effect|get_status:上架" 
+	actionlist="id|get_item=$deal,id|get_edit_1=$deal, foreverdel:彻底删除" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

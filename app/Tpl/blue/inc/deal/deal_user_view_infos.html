@@ -1,0 +1,49 @@
+{if $view_info_list}
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/jquery.lightbox-0.5.css" media="screen" />
+	<script type="text/javascript" src="{$TMPL}/js/utils/jcarousellite_1.js"></script>
+	<script type="text/javascript" src="{$TMPL}/js/utils/jquery.lightbox-0.5.min.js"></script>
+	<div class="view-infos bdd bddf">
+		<div class="h_2">
+			<h2>借款方相关资料</h2>
+		</div>
+		<div class="blank40"></div>
+		<div class="flex-container pr" style="position: relative;">
+				{if $user_info}
+			    <a href="javascript:void(0);" class=" but prev">&nbsp;</a>
+			    <div class="jCarouselLite" style="width: 1050px">
+		           <ul id='carousel'>
+		          		{foreach from =$view_info_list item="abc" key=key}
+		              	<li class="view-item">
+		               		<a href='{function name="get_spec_image" v="$abc.img" w="800" h="800"}' rel="lightbox-myGroup" title="{$abc.name}">
+		               		<img src='{function name="get_spec_image" v="$abc.img" w="125" h="94" g=1}' style="height: 94px"/>
+		               	</a>
+		               	<div style="padding-top: 5px;">{$abc.name}</div>
+		               	</li>
+		          		{/foreach}
+		           </ul>
+			    </div>
+			    <a href="javascript:void(0);" class="but next ">&nbsp;</a>
+				{else}
+				<p align="center">
+			    	只有<a href="{url x="index" r="user#register"}" class="f_blue">注册</a>用户才可以查看借入者信用信息！现在<a href="javascript:void(0);" onclick="ajax_login();" class="f_blue">登录</a>
+				</p>
+				{/if}
+		</div>
+		<div class="blank10"></div>
+		<div class="blank20"></div>
+	</div>	
+<div class="blank20"></div>
+{if $user_info}
+<script type="text/javascript">
+	$(document).ready(function(){
+		{if count($view_info_list) > 7}
+	    $(".jCarouselLite").jCarouselLite({
+	        btnNext: ".next",
+	        btnPrev: ".prev"
+	    });
+	    {/if}
+	    $('#carousel a').lightBox();
+	});
+	</script>
+	{/if}
+{/if}

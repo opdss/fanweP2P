@@ -1,0 +1,63 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">会员投标记录</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">
+		借款ID：<input type="text" size="5" class="textbox" name="deal_id" value="{:trim($_REQUEST['deal_id'])}" />			
+		会员：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}"  style="width:80px" />		
+		{%LOG_TIME}：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" style="width:120px" />
+		<input type="button" class="button" id="btn_begin_time" value="{%SELECT_TIME}" onclick="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" />	
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" style="width:120px" />
+		<input type="button" class="button" id="btn_end_time" value="{%SELECT_TIME}" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" />	
+		
+		{%CATE_TREE}：
+		<select name="cate_id">
+			<option value="0" <if condition="intval($_REQUEST['cate_id']) eq 0">selected="selected"</if>>{%NO_SELECT_CATE}</option>
+			<foreach name="cate_tree" item="cate_item">
+				<option value="{$cate_item.id}" <if condition="intval($_REQUEST['cate_id']) eq $cate_item['id']">selected="selected"</if>>{$cate_item.title_show}</option>
+			</foreach>
+		</select>
+		<input type="hidden" value="Loads" name="m" />
+		<input type="hidden" value="<php>echo ACTION_NAME</php>" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<php>
+	function get_deal_url($name,$id){
+		return '<a href="'.__ROOT__.'/index.php?ctl=deal&id='.$id.'" target="_blank">'.$name.'</a>';
+	}
+	function get_repay_time($time,$type){
+		return $time.($type==0 ? '天' : '月');
+	}
+	function get_loantype($type){
+		$str=loantypename($type);
+		
+		return $str;
+	}
+	function is_auto_type($type){
+		return ($type==0 ? '手动投标' : '自动投标');
+	}
+	function is_repay_type($type){
+		return ($type==0 ? '成功' : '<span style="color:red">流标</span>');
+	}
+</php>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="item" 
+	datasource="list" 
+	show="id:{%ID}|50px,user_id|get_user_name_real:会员,money|number_format=2:投资金额,name|get_deal_url=$item['deal_id']:标题,cate_id|get_deal_cate_name:{%DEAL_CATE},rate:利率(%),repay_time|get_repay_time=$item['repay_time_type']:借款时间,loantype|get_loantype:还款方式,is_auto|is_auto_type:投标方式,is_repay|is_repay_type:状态,create_time|to_date:投标时间"  /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,37 @@
+
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index" r="uc_msg#deal"}">{$page_title}</a></div>
+</div>
+<div class="uc_box bdd bt0">
+	<div class="blank20"></div>
+	<div class="pm_form">
+		<div class="field">
+			<label for="settings-username">{$LANG.TO_USER}</label>
+			<input type="text" size="30" class="f-input" name="user_name" />
+			<span class="f-input-tip"></span>
+		</div>
+		<div class="blank10"></div>
+		<div class="field" style="width:700px;">
+			<label>{$LANG.CONTENT}</label>
+			<textarea style="width:450px; height:100px; border:#ccc solid 1px;" cols="10" name="content" class="f_l"></textarea>
+		</div>
+		<div class="blank20"></div>
+		<div class="field">		
+			<label for="act"></label>		
+			<input type="button" value="{$LANG.DO_SEND}" name="commit" id="settings-submit" class="formbutton f_l" onclick="do_send_pm();" />
+		</div>
+	</div>
+	
+	<div class="blank"></div>
+	{foreach from=$fans_list item=user_item}
+		<div class="rand_user" style="cursor:pointer;" onclick="set_to_user('{$user_item.user_name}');">					
+			<img src="{function name="get_user_avatar" uid=$user_item.id t="small"}" /> 		
+			<br />	
+			{$user_item.user_name}					
+		</div>		
+	{/foreach}
+	<div class="blank20"></div>
+	<div class="pages">{$pages}</div>
+	<div class="blank20"></div>
+</div>
+

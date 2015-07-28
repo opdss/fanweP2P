@@ -1,0 +1,39 @@
+{include file="inc/header.html"} 
+<div id="bdw" class="bdw">
+	<div id="bd" class="cf">
+		<div id="deal-default">
+			
+			{if $articles}
+			<div id="dashboard" class="dashboard cf">
+					<ul>
+						{foreach from=$articles item=article_item}
+						<li {if $article_item.current eq 1}class="current"{/if}><a href="{$article_item.url}">{$article_item.title}</a>
+						<span></span>
+						</li>
+						{/foreach}													
+					</ul>
+			</div>
+			{/if}
+			
+			<div id="content">
+					
+			<div class="box wb">				
+				<div class="box">
+					<div class="box-top"></div>
+					<div class="box-content">
+						<div class="head">
+							<h2>{$page_title}</h2>							
+						</div>
+						<div class="sect">
+							{$article.content}
+						</div>
+					</div>
+					<div class="box-bottom"></div>
+				</div>
+			</div>
+			</div>
+			{include file="inc/side.html"} 
+	</div>
+	<!-- bd end -->
+</div></div>
+{include file="inc/footer.html"}

@@ -1,0 +1,279 @@
+<?php exit;?>a:3:{s:8:"template";a:5:{i:0;s:44:"E:/php/fanwe3.3/app/Tpl/blue/page/score.html";i:1;s:44:"E:/php/fanwe3.3/app/Tpl/blue/inc/header.html";i:2;s:56:"E:/php/fanwe3.3/app/Tpl/blue/inc/common/load_css_js.html";i:3;s:53:"E:/php/fanwe3.3/app/Tpl/blue/inc/common/load_top.html";i:4;s:44:"E:/php/fanwe3.3/app/Tpl/blue/inc/footer.html";}s:7:"expires";i:1431956749;s:8:"maketime";i:1431956689;}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>p2p信贷</title>
+<link rel="icon" href="favicon.ico" type="/image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico" type="/image/x-icon" />
+<meta name="keywords" content="p2p信贷—最大、最安全的网络借贷平台" />
+<meta name="description" content="p2p信贷—最大、最安全的网络借贷平台" />
+<link rel="stylesheet" type="text/css" href="http://www.d.com/public/runtime/statics/f1f1b070e12b33183fe2c866df0c015a.css" />
+<script type="text/javascript">
+var APP_ROOT = '';;
+var LOADER_IMG = 'http://www.d.com/app/Tpl/blue/images/lazy_loading.gif';
+var ERROR_IMG = 'http://www.d.com/app/Tpl/blue/images/image_err.gif';
+var TMPL = 'http://www.d.com/app/Tpl/blue';
+var send_span = 2000;
+var to_send_msg = false;
+var __LOGIN_KEY = "554fcae493e564ee0dc75bdf2ebf94caget_login_key|YToxOntzOjQ6Im5hbWUiO3M6MTM6ImdldF9sb2dpbl9rZXkiO30=554fcae493e564ee0dc75bdf2ebf94ca";
+var __HASH_KEY__ = "554fcae493e564ee0dc75bdf2ebf94caget_hash_key|YToxOntzOjQ6Im5hbWUiO3M6MTI6ImdldF9oYXNoX2tleSI7fQ==554fcae493e564ee0dc75bdf2ebf94ca";
+</script>
+<script type="text/javascript" src="/public/runtime/app/lang.js"></script>
+<script type="text/javascript" src="http://www.d.com/public/runtime/statics/c50a9a628e5806c5b5d42bf209387de8.js"></script>
+<!--[if lt IE 10]>
+<script type="text/javascript" src="http://www.d.com/app/Tpl/blue/js/PIE.js"></script>
+<![endif]-->
+<script language="javascript">
+$(function() {
+    if (window.PIE) {
+        $('.bdr3,.bdr5,.user_info_d a,.main_adv_ctl li,.after_login .user_money A,.listbtn SPAN').each(function() {
+            PIE.attach(this);
+        });
+    }
+});
+</script></head>
+<body>
+<div class="header" id="header">
+   <!---->
+<div class="constr">
+	<div class="wrap">
+				<div class="f_r lh30">
+			<div id="user_head_tip" class="pr f_r">
+				554fcae493e564ee0dc75bdf2ebf94caload_user_tip|YToxOntzOjQ6Im5hbWUiO3M6MTM6ImxvYWRfdXNlcl90aXAiO30=554fcae493e564ee0dc75bdf2ebf94ca				<span class="line"></span>
+				<span class="li"><a href="/index.php?ctl=helpcenter">帮助中心</a></span>
+			</div>
+		</div>		
+	</div>
+</div>
+<!---->	<div class="main_bars">
+		<div class="main_bar wrap">	
+			<div class="logo mr15">
+				<a class="link f_l" href="/">
+										<span style='display:inline-block; width:210px; height:72px; background:url(http://www.d.com/public/attachment/201011/4cdd501dc023b.png) no-repeat; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://www.d.com/public/attachment/201011/4cdd501dc023b.png, sizingMethod=scale);_background-image:none;'></span>				</a>
+			</div>     
+			<!--加载菜单-->
+			<ul class="main_nav">
+									<li class=" jcur ml5 bdr3 pr" rel='1'>
+						<a href="/index.php" target="" class="pr20">首页 <i class="iconfont">&#xe61c;</i></a>
+						                        <div class="sub_main_nav ps hide">
+													<a href="/index.php?ctl=aboutp2p"  target="">平台原理</a>
+													<a href="/index.php?ctl=aboutlaws"  target="">政策法规</a>
+													<a href="/index.php?ctl=aboutfee"  target="">费用</a>
+													<a href="/index.php?ctl=help&id=1"  target="">关于我们</a>
+												</div>
+											</li>
+									<li class=" jcur ml5 bdr3 pr" rel='2'>
+						<a href="/index.php?ctl=deals" target="" class="pr20">我要理财 <i class="iconfont">&#xe61c;</i></a>
+						                        <div class="sub_main_nav ps hide">
+													<a href="/index.php?ctl=deals"  target="">个人贷款</a>
+													<a href="/index.php?ctl=transfer"  target="">债权转让</a>
+													<a href="/index.php?ctl=tool"  target="">工具箱</a>
+													<a href="/index.php?ctl=deals&act=about"  target="">关于理财</a>
+													<a href="/index.php?ctl=belender"  target="">成为理财人</a>
+												</div>
+											</li>
+									<li class=" jcur ml5 bdr3 pr" rel='3'>
+						<a href="/index.php?ctl=borrow" target="" class="pr20">我要贷款 <i class="iconfont">&#xe61c;</i></a>
+						                        <div class="sub_main_nav ps hide">
+													<a href="/index.php?ctl=borrow&act=aboutborrow"  target="">贷款说明</a>
+													<a href="/index.php?ctl=borrow&act=creditswitch"  target="">信用认证</a>
+													<a href="/index.php?ctl=borrow"  target="">申请贷款</a>
+												</div>
+											</li>
+									<li class=" jcur ml5 bdr3 pr" rel='4'>
+						<a href="/member.php?ctl=uc_center" target="" class="pr20">我的p2p信贷 <i class="iconfont">&#xe61c;</i></a>
+						                        <div class="sub_main_nav ps hide">
+													<a href="/member.php?ctl=uc_center"  target="">我的主页</a>
+													<a href="/member.php?ctl=uc_deal&act=refund"  target="">贷款管理</a>
+													<a href="/member.php?ctl=uc_invest"  target="">投标管理</a>
+													<a href="/member.php?ctl=uc_account"  target="">个人设置</a>
+												</div>
+											</li>
+									<li class=" jcur ml5 bdr3 pr" rel='5'>
+						<a href="/index.php?ctl=guarantee" target="" class="pr20">安全保障 <i class="iconfont">&#xe61c;</i></a>
+						                        <div class="sub_main_nav ps hide">
+													<a href="/index.php?ctl=guarantee&act=detail&id=8"  target="">本金保障</a>
+													<a href="/index.php?ctl=guarantee&act=detail&id=9"  target="">交易安全保障</a>
+													<a href="/index.php?ctl=guarantee&act=detail&id=10"  target="">贷款审核与保障</a>
+													<a href="/index.php?ctl=guarantee&act=detail&id=11"  target="">网上理财安全建议</a>
+												</div>
+											</li>
+									<li class="current  ml5 bdr3 pr" rel='6'>
+						<a href="/index.php?ctl=score" target="" >论坛 </a>
+											</li>
+							</ul>
+			<!--加载菜单END-->
+		</div>
+	</div>
+</div>
+<!---->
+<div class="wrap">
+	<div class="ur_here"><a href="/index.php">首页</a> > <a href="/index.php?ctl=score">积分商城</a></div>
+	<div class="content" class="clearfix">
+		<div class="filterbox">
+			<div class="bdd bddf clearfix" id="deallist" name="deallist">
+				<div class="propAttrs clearfix pr v" id="search_condition" >					<form action="/index.php?ctl=score" method="post" id="searchByConditionForm">
+		                <div class="attr">
+							<div class="attrKey">所有类别：</div>             
+							<div class="attrValues">
+								<ul class="av-collapse" id="cates">
+											                            <li><a href="/index.php?ctl=score"   class="cur" >不限</a></li>
+											                            <li><a href="/index.php?ctl=score&cates=1"  >服装</a></li>
+											                            <li><a href="/index.php?ctl=score&cates=2"  >电气</a></li>
+											                            <li><a href="/index.php?ctl=score&cates=6"  >食品</a></li>
+											                        </ul>
+		                    </div>
+		                </div>
+		                <div class="attr">
+							<div class="attrKey">积分范围：</div>
+							<div class="attrValues">
+								<ul class="av-collapse" name=integral id="integral">
+											                            <li><a href="/index.php?ctl=score"   class="cur" >不限</a></li>
+											                            <li><a href="/index.php?ctl=score&integral=1"  >500积分以下</a></li>
+											                            <li><a href="/index.php?ctl=score&integral=2"  >500-1000积分</a></li>
+											                            <li><a href="/index.php?ctl=score&integral=3"  >1000-3000积分</a></li>
+											                            <li><a href="/index.php?ctl=score&integral=4"  >3000-5000积分</a></li>
+											                            <li><a href="/index.php?ctl=score&integral=5"  >5000积分以上</a></li>
+											                        </ul>
+		                    </div>
+		                </div>
+		             </form>
+		        </div>
+			</div>
+			<div class="blank20"></div>
+		</div>
+		<div class="tabbox clearfix">
+						<div class="tab cur" onclick="window.location.href='/index.php?ctl=score'">默认排序</div>
+						<div class="tab " onclick="window.location.href='/index.php?ctl=score&sort=1'">最新</div>
+						<div class="tab " onclick="window.location.href='/index.php?ctl=score&sort=2'">热门</div>
+						<div class="tab " onclick="window.location.href='/index.php?ctl=score&sort=3'">积分</div>
+						
+		</div>
+		<div class="bdd bddf bt0 p15 clearfix">
+						没有数据
+					</div>
+		<div class="pages"></div>
+	</div>
+</div>
+</div>
+<div class="blank20"></div>
+<div id="ftw">
+	
+	<div id="ft">
+				<div class="wrap">
+					</div>
+		        	<div class="wrap">
+        		        		<div class="footer_line"></div>
+        		<div style="padding-bottom:50px;">
+	            <ul class="cf f_l f_box">
+	            											<li class="col hp1">
+	                    <h3 class="f_l">使用帮助</h3>
+						<div class="blank0"></div>
+	                    <ul class="sub-list">
+																					<li><a href="/index.php?ctl=help&id=8" >常见问题</a></li>
+																												<li><a href="/index.php?ctl=aboutp2p" target="_blank">平台原理</a></li>
+																												<li><a href="/index.php?ctl=borrow&act=aboutborrow" target="_blank">如何借款</a></li>
+																												<li><a href="/index.php?ctl=aboutfee" target="_blank">p2p信贷费率</a></li>
+														  
+							<li class="blank0"></li>           
+						</ul>
+						<div class="blank0"></div>
+	                </li> 
+																				<li class="col hp2">
+	                    <h3 class="f_l">关于我们</h3>
+						<div class="blank0"></div>
+	                    <ul class="sub-list">
+																					<li><a href="/index.php?ctl=authorized&act=login" target="_blank">授权服务机构登录</a></li>
+																												<li><a href="/index.php?ctl=manageagency&act=login" target="_blank">担保机构登录</a></li>
+																												<li><a href="/index.php?ctl=help&id=1" >公司简介</a></li>
+																												<li><a href="/index.php?ctl=help&id=5" >联系我们</a></li>
+																												  
+							<li class="blank0"></li>           
+						</ul>
+						<div class="blank0"></div>
+	                </li> 
+																				<li class="col hp3">
+	                    <h3 class="f_l">安全保护</h3>
+						<div class="blank0"></div>
+	                    <ul class="sub-list">
+																					<li><a href="/index.php?ctl=aboutlaws" target="_blank">政策法规</a></li>
+																												<li><a href="/index.php?ctl=help&id=3" >隐私保护</a></li>
+														  
+							<li class="blank0"></li>           
+						</ul>
+						<div class="blank0"></div>
+	                </li> 
+																				<li class="col hp4 end">
+	                    <h3 class="f_l">了解更多</h3>
+						<div class="blank0"></div>
+	                    <ul class="sub-list">
+																					<li><a href="/index.php?ctl=help&id=4" >咨询热点</a></li>
+														  
+							<li class="blank0"></li>           
+						</ul>
+						<div class="blank0"></div>
+	                </li> 
+															<li class="col">
+						 <h3 class="f_l">关注我们</h3>
+						 <div class="blank0"></div>
+						 <div class="get_limelight clearfix f_l" style=" height:30px;">
+						 	<a  href="" target="_blank" title="新浪微博" class="share weixin "></a>
+			               <a  href="javascript:void(0);" title="微信" class="share xinlan J_weixin_code"></a>
+						 </div>
+						 <div class="blank0"></div>
+						 <span class="weixin_ss f_l">
+						 	<!--
+						 	       <img src="http://www.d.com/app/Tpl/blue/images/weixin_ss.png">
+						    -->		   
+						</span>
+					</li>
+					<li class="col call_me f_r">
+						 <h3 class="f_l">联系我们</h3>
+						 <div class="blank0"></div>
+						 <ul class="sub-list">
+							<li>福州台江区</li>
+							<li>热线电话 : 0591-87119192</li>
+							<li>服务邮箱 : info@fanwe.com</a></li>
+							<li class="blank0"></li>
+						</ul>
+					</li>
+					<li class="blank0"></li>  
+	            </ul>
+				<div class="f_r customer">
+										<div class="telphone f_r">
+						<div class="f_r">
+							<span class="telep b">0591-87119192</span>
+							<span class="time f12">周一至周六 9:00-18:00</span>
+						</div>
+						<i class="iconfont f_r mt1" style="font-size:50px;line-height:50px;">&#xe620;</i>
+					</div>
+					
+				</div>
+				<div class="blank25"></div>
+				
+				<div class="blank0"></div>
+				</div>
+				<div class="footer_line"></div>
+				<div class="copyright">
+					<div style="text-align:center;">
+	联系我们：info@fanwe.com &nbsp; 福州方维信息科技有限公司
+</div>
+<div style="text-align:center;">
+	&copy; 2013 p2p信贷 All rights reserved
+</div> 
+					<div class="blank1"></div>
+					&nbsp;&nbsp;
+									</div>
+				<div class="blank"></div>
+			</div>
+			
+	</div>
+		<div id="gotop"></div>
+	<script type="text/javascript" defer="defer">
+	resetWindowBox();
+</script>
+</div>
+</body>
+</html>

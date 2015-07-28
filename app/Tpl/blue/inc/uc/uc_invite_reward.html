@@ -1,0 +1,30 @@
+<div class="tabbox">
+	<div class="tab"><a href="{url x="index" r="uc_invite"}">我要推荐</a></div>
+	<div class="tab"><a href="{url x="index" r="uc_invite#invite"}">有效推荐</a></div>
+	<div class="tab"><a href="{url x="index" r="uc_invite#invite" p="type=1"}">无效推荐</a></div>
+	<div class="tab cur"><a href="{url x="index" r="uc_invite#reward"}">奖励记录</a></div>
+</div>
+<div class="uc_box bdd bt0">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+			<tr>
+				<th>编号</th>
+				<th>{$LANG.USER_TITLE_USER_NAME}</th>
+				<th>奖励比例</th>
+				<th>返利金额</th>
+				<th>返利时间</th>
+			</tr>
+			{foreach from=$list item=invite key=key name="invites"}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.invites.last}style="border-bottom:0"{/if}>
+				<td>{$invite.id}</td>
+				<td>{$invite.re_user_name}</td>
+				<td>{$invite.referral_rate}%</td>
+				<td>{$invite.money}</td>
+				<td>{function name="to_date" value=$invite.create_time}</td>
+			</tr>
+			{/foreach}
+	</table>
+	
+	<div class="blank"></div>
+	<div class="pages">{$pages}</div>
+	<div class="blank2"></div>
+</div>

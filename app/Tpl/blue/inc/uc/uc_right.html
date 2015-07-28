@@ -1,0 +1,95 @@
+<div class="uc_right">
+<div class="inc">
+	<div class="inc_top">{$LANG.YOU_MAY_FOCUS}
+	<span class="f_r more"><a title="{$LANG.MORE}" href="{url x="shop" r="uc_center#mayfocus"}">{$LANG.MORE}</a></span>
+	</div>
+	<div class="inc_main user_list">
+		<div class="blank"></div>
+		{foreach from=$user_list item=user_item}
+		
+		<span>
+			<div class="f_l">
+			{function name="show_avatar" uid=$user_item.id  type="small"}
+			</div>
+			<div class="f_l" style="padding-left: 10px; width:90px; overflow:hidden;">
+			{function name="get_user_name" value=$user_item.id} 
+			<br />
+			{if $user_item.focused eq 1}
+			<a href="javascript:;" onclick="focus_user({$user_item.id},this);" class="remove_focus">{$LANG.CANCEL_FOCUS}</a>
+			{else}
+			<a href="javascript:;" onclick="focus_user({$user_item.id},this);" class="add_focus">{$LANG.FOCUS_THEY}</a>
+			{/if}
+			</div>
+		</span>	
+		<div class="blank"></div>									
+		{/foreach}
+		
+	</div>
+	
+	
+</div>
+{if $fans_list}
+<div class="blank"></div>
+<div class="inc">
+	<div class="inc_top">{$LANG.MY_FANS}
+	<span class="f_r more"><a title="{$LANG.MORE}" href="{url x="shop" r="uc_center#fans"}">{$LANG.MORE}</a></span>
+	</div>
+	<div class="inc_main user_list">
+		<div class="blank"></div>
+		{foreach from=$fans_list item=user_item}
+		
+		<span>
+			<div class="f_l">
+			{function name="show_avatar" uid=$user_item.id  type="small"}
+			</div>
+			<div class="f_l" style="padding-left: 10px; width:90px; overflow:hidden;">
+				{function name="get_user_name" value=$user_item.id} 
+				<br />
+			{if $user_item.focused eq 1}
+			<a href="javascript:;" onclick="focus_user({$user_item.id},this);" class="remove_focus">{$LANG.CANCEL_FOCUS}</a>
+			{else}
+			<a href="javascript:;" onclick="focus_user({$user_item.id},this);" class="add_focus">{$LANG.FOCUS_THEY}</a>
+			{/if}
+			</div>
+		</span>	
+		<div class="blank"></div>									
+		{/foreach}
+	</div>
+	
+	
+</div>
+{/if}
+{if $focus_list}
+<div class="blank"></div>
+<div class="inc">
+	<div class="inc_top">{$LANG.MY_FOCUS}
+	<span class="f_r more"><a title="{$LANG.MORE}" href="{url x="shop" r="uc_center#focus"}">{$LANG.MORE}</a></span>
+	</div>
+	<div class="inc_main user_list">
+		<div class="blank"></div>
+		{foreach from=$focus_list item=user_item}
+		
+		<span>
+			<div class="f_l">
+			{function name="show_avatar" uid=$user_item.id  type="small"}
+			</div>
+			<div class="f_l" style="padding-left: 10px; width:90px; overflow:hidden;">
+				{function name="get_user_name" value=$user_item.id} 
+				<br />
+
+			{if $user_item.focused eq 1}
+			<a href="javascript:;" onclick="focus_user({$user_item.id},this);" class="remove_focus">{$LANG.CANCEL_FOCUS}</a>
+			{else}
+			<a href="javascript:;" onclick="focus_user({$user_item.id},this);" class="add_focus">{$LANG.FOCUS_THEY}</a>
+			{/if}
+			</div>
+		</span>	
+		<div class="blank"></div>									
+		{/foreach}
+	</div>
+	
+</div>
+{/if}
+<div class="blank"></div>
+{include file="inc/topic_right.html"}
+</div>

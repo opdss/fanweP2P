@@ -1,0 +1,10 @@
+<div class="cate_tree_inc">
+	<div class="inc_main">
+		<ul class="cate_tree">
+		{foreach from=$cate_tree item=cate_item}
+		<li style="text-indent:{$cate_item.level}em;" {if $cate_item.level eq 0} class="first"{/if}><a href="{if $cate_item.uname}{url x="shop" r="score" p="id=$cate_item.uname"}{else}{url x="shop" r="score" p="id=$cate_item.id"}{/if}" title="{$cate_item.name}">{$cate_item.name}</a></li>
+		{/foreach}
+		</ul>
+	</div>
+	<div class="inc_foot"></div>
+</div>

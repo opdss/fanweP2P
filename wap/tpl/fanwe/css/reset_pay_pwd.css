@@ -1,0 +1,16 @@
+.user_phone{
+		height: 45px;
+		line-height: 45px;
+		border-radius: 5px;
+		padding: 0 10px;
+		border-width: 1px;
+		border-style: solid;
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		font-size: 15px;
+		font-weight: 700;
+		text-align:left;
+		border-color:#d7d7d7;
+		background-color:#fff;
+		}

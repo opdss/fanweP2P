@@ -1,0 +1,143 @@
+<script type="text/javascript">
+function closeWeeboxs(){
+	$.weeboxs.close();
+}
+</script>
+<div class="tabbox clearfix">
+	<div class="tab {if $status eq 0}cur{/if}"><a href="{url x="index"r="uc_deal#refund" p="status=0"}">还款列表</a></div>
+	<div class="tab {if $status eq 1}cur{/if}"><a href="{url x="index"r="uc_deal#refund" p="status=1"}">已还清借款</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	{if $deal_list}
+	{if $status eq 1}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+        <tr border="0">
+            <th class="tl pl10">借款标题</th>
+    		<th width="20%">金额</th>
+    		<th width="10%">年利率</th>
+			<th width="8%">期限</th>
+			<th width="15%">完成度</th>
+			<th width="18%">发布日期</th>
+			<th width="8%">状态</th>
+	    </tr>
+		{foreach from="$deal_list" item="deal" key=key}
+		<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+	        <td  class="tl pl10">
+	           <a href="{$deal.url}">{$deal.name}</a>
+			</td>
+	        <td>
+	        	{$deal.borrow_amount_format}
+	        </td>
+	        <td>
+	            {function name="number_format" v="$deal.rate" f="2"}%
+	        </td>
+	        <td>
+	            {$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}
+	        </td>
+	        <td>
+	        	<div class="progressvar">
+					{if  $deal.deal_status gte 4}
+					<div class="progress w100 mt13">
+						<span class="pr bdr3" style="width:100%;">
+							<img class="ps" title="100%" src="{$TMPL}/images/progressqiu.png" />
+						</span>
+					</div>
+					<div class="progresscon f_blue">100%</div>
+					{else}
+					<div class="progress w100 mt13">
+						<span class="pr bdr3" title="{function name="round" v=$deal.progress_point f=3}%" style="width:{function name="round" v=$deal.progress_point f=2}%;">
+							<img class="ps" src="{$TMPL}/images/progressqiu.png" />
+						</span>
+					</div>
+					<div class="progresscon f_blue">{function name="round" v=$deal.progress_point f=2}%</div>
+					{/if}
+				</div>
+	        </td>
+        	{if $deal.publish_wait eq 1 || $deal.publish_wait eq 0}
+			<td style="width:100px">
+                {function name="to_date" v="$deal.create_time" f="Y-m-d"}
+	            <br>
+                 {function name="to_date" v="$deal.create_time" f="H:i"}
+            </td>
+			{else}
+            <td>
+                {function name="to_date" v="$deal.start_time" f="Y-m-d"}
+            		<br>
+                 {function name="to_date" v="$deal.start_time" f="H:i"}
+            </td>
+            {/if}
+			<td><a href="{url x="index" r="uc_deal#refdetail" p="id=$deal.id"}">详情</a></td>
+		</tr>
+		{/foreach}
+	</table>
+	{else}
+	{foreach from="$deal_list" item="deal"}
+	<div class="bid_item clearfix">
+        <div class="bid_title tl">
+        	<span class="f_l mr15"><a href="{$deal.url}" target="_blank" class="f_blue">{$deal.name}</a></span>
+			<span class="f_l"><a href="javascript:void(0);" onclick="window.location.href='{url x="index" r="uc_deal#export_csv" p="id=$deal.id"}'"  class="f_red">导出详情</a></span>
+            <span class="r_c"><a href="javascript:void(0);" onclick="openWeeboxFrame('{url x="index" r="uc_deal#contract" p="id=$deal.id"}','电子协议',1024,668);">查看电子协议</a></span>
+        </div>
+		<div class="blank0"></div>
+        <div class="bid_detail">
+            <div class="info">
+            	 借款金额：
+                <span class="f_red">{$deal.borrow_amount_format}</span>
+            </div>
+            <div class="info">
+            	年利率：
+                <span class="f_red">{function name="number_format" v=$deal.rate f=2}%</span>
+            </div>
+            <div class="info">
+            	期限：
+                <span class="f_red">{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</span>
+            </div>
+            <div class="info">
+            	{if (int)$deal.end_repay_time eq (int)$deal.next_repay_time}还款日{else}下一还款日{/if}：
+                <span class="f_red">
+					{$deal.next_repay_time_format}
+				</span>
+            </div>
+            <div class="info">
+            	本期还款：
+                <span class="f_red">
+                	{if (int)$deal.end_repay_time eq (int)$deal.next_repay_time}
+                	{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.true_last_month_repay_money f=2}
+					{else}
+					{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.true_month_repay_money f=2}
+					{/if}
+				</span>
+            </div>
+            <div class="info">
+            	逾期/违约金：
+                <span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.impose_money f=2}</span>
+            </div>
+			<div class="info">
+            	已还本息：
+                <span class="f_red">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$deal.repay_money f=2}</span>
+            </div>
+            <div class="info">
+                <input class="refundBnt" type="button" onclick="window.location.href='{url x="index" r="uc_deal#quick_refund" p="id=$deal.id"}';">
+				{if !$deal.exceed_the_time && $deal.ips_bill_no eq ''}
+				<input class="inrepayBtn" type="button" onclick="$.showCfm('提前还款会将借款一次性清，并计算违约金！',function(){window.location.href='{url x="index" r="uc_deal#inrepay_refund" p="id=$deal.id"}'});">
+            	{/if}
+				{if $deal.generation_status eq 1}
+				<input class="nogenerationBtn" type="button" value="续约申请中" />
+				{elseif $deal.generation_status eq 2}
+				<input class="ygenerationBtn" type="button" value="续约成功" />
+				{elseif $deal.generation_status eq 3}
+				<input class="nogenerationBtn" type="button" value="续约失败" />
+				{elseif $deal.can_generation}
+				<input class="generationBtn" type="button" href="{url x="index" r="uc_deal#generation" p="id=$deal.id&is_ajax=1"}" />
+				{/if}
+			</div>
+        </div>
+    </div>
+	{/foreach}
+	{/if}
+	{else}
+	<div class="tc p10">暂无记录</div>
+	{/if}
+	<div class="pages">{$pages}</div>
+	<div class="blank"></div>
+</div>

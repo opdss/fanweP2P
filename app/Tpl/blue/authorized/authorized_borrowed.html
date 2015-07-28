@@ -1,0 +1,50 @@
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index"r="authorized#borrowed"}">{$page_title}</a></div>
+</div>
+	<div class="uc_box bdd bt0 clearfix">
+    {if $deal_list}
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+        <tbody>
+            <tr border="0">
+                <th >贷款名</th>
+                <th>借款人</th>
+                <th style="width:12%">借款金额</th>
+                <th style="width:10%">利率</th>
+                <th style="width:10%">期数</th>
+                <th style="width:10%">状态</th>
+                <th style="width:12%"></th> 
+            </tr>
+            {foreach from=$deal_list item="deal" key=key name="deal"}
+            <tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+                <td align="left" >
+                    <div class="pl10">
+                    <a href=" {if $deal.is_delete eq 2 || $deal.is_delete eq 3}{url x="index" r="borrow#stepone"}{else}{$deal.url}{/if}">{$deal.name}</a>
+                    </div>
+                </td>
+                <td>
+                	{$deal.user_name}
+                </td>
+                <td>
+                    {$deal.borrow_amount_format}
+                </td>
+                <td>
+                    {function name="number_format" v="$deal.rate" f="2"}%
+                </td>
+                <td>
+                    {$deal.ll_key}
+                </td>
+                <td>
+                    {$deal.status_format}
+                </td>
+                <td>
+                	<a href="{url x="index" r="authorized#deal_refdetail" p="u_id=$deal.user_id&id=$deal.did"}" class="f_red">查看</a>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+    <div class="pages">{$pages}</div>
+    {else}
+    <div class="tc p15">暂无记录</div>
+    {/if}
+	</div>

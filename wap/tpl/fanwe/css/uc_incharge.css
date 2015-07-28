@@ -1,0 +1,74 @@
+.figure{
+	border-radius:5px;
+	background:@box_color;
+	border:1px solid @border_color;
+	position:relative;
+	margin:10px;
+	height:40px;
+	padding-left:80px;
+}
+.figure span{
+	position:absolute;
+	line-height:40px;
+	font-size:15px;
+	color:@font_black;
+	padding:0 10px;
+	left:0px;
+}
+.figure input{
+	line-height:40px;
+	width:100%;
+	background:none;
+	font-size:16px;
+	color:@font_main;
+}
+.bank_list{
+	border-radius:5px;
+	background:@box_color;
+	border:1px solid @border_color;
+	margin:10px;
+}
+.bank_list li{
+	margin-left:10px;
+	padding-right:50px;
+	
+    border-bottom:1px solid @border_color;
+	position:relative;
+}
+.bank_list li:last-child{
+	border:none;
+}
+.pay_detail h5{
+	font-size:15px;
+	line-height:25px;
+	
+}
+.pay_detail{
+	color:@font_black;
+	padding:5px;
+}
+.pay_detail .info .peoplo{
+	padding-right:10px;
+}
+.pay_detail .info{
+	font-size:12px;
+	line-height:20px;
+}
+.pay_detail p{
+	font-size:12px;
+	line-height:20px;
+}
+.inline_pay_img_show{
+	float:left; overflow:hidden; height:35px;max-width:50%;margin:15px 0  0 0px;
+}
+.inline_pay_name{
+	line-height:65px; font-size:18px;
+	padding-left:10px;
+	float:left;
+}
+/*橙色按钮css---本页定位*/
+.mt{
+	position:absolute;
+	right:10px;
+	top:30px;
+}

@@ -1,0 +1,7 @@
+{foreach from=$filter_group_list item=group}
+<div class="filter_title f_l">{$group.name}：</div>
+<div class="filter_content  f_l">
+	<input type="text" name="f[{$group.id}]" class="search_txt" />
+</div>	
+<div class="blank"></div>
+{/foreach}

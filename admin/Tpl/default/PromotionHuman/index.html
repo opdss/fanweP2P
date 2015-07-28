@@ -1,0 +1,35 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+</script>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		<input type="button" class="button" value="{%EXPORT}" onclick="export_csv();" />
+	</form>
+</div>
+<php>
+	
+</php>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,id|get_user_name_real:推广人
+		,pidcount:推广人数
+		,load_count:投资次数
+		,load_money|format_price:投资总额
+		,percentage|format_price:投资提成
+		,repay_deal_count:还款次数
+		,repay_amount|format_price:还款总额" 
+	actionwidth="100px"/> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

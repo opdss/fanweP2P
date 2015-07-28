@@ -1,0 +1,276 @@
+{include file="inc/header.html"}
+<?php
+$this->_var['dealcss'][] = $this->_var['TMPL_REAL']."/css/deal.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$dealcss"}" />
+<div class="pos f_yahei">
+	<div class="pos_link f_yahei">
+		<a href="{url x="index" r="deals"}">我要理财</a>  
+		<span style="font-weight:bold;"> &gt;</span> 
+		<a href="{url x="index" r="transfer"}">投资借款列表</a>
+		<span style="font-weight:bold;"> &gt;</span> 
+		<a>我要投标</a>
+	</div>
+</div>
+<div class="clearfix bddf wb">
+		<div class="bid-title  tc b f14 pt15 pb10 bb1">
+			确认投标金额
+		</div>
+		<div class="blank"></div>
+		<div class="clearfix" style="width:930px">
+			<div class="b pt10 pb10 f14">确认借款信息</div>
+			<table width="100%" cellpadding="0" cellspacing="0" class="bid-table">
+				<tr>
+					<td class="tit tr w100">借款标题：</td>
+					<td>{$deal.name}</td>
+				</tr>
+				<tr>
+					<td class="tit tr w100">借款金额：</td>
+					<td class="f_red bg">{$deal.borrow_amount_format}</td>
+				</tr>
+				<tr>
+					<td class="tit tr w100">借款年利率：</td>
+					<td class="f_red">{function name="number_format" v=$deal.rate f=2} %</td>
+				</tr>
+				<tr>
+					<td class="tit tr w100">借款期限：</td>
+					<td class="f_red bg">{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</td>
+				</tr>
+				<tr>
+					<td class="tit tr w100">还款周期：</td>
+					<td>按月还款</td>
+				</tr>
+				<tr>
+					<td class="tit tr w100">还款方式：</td>
+					<td class="bg">{function name="loantypename" v="$deal.loantype" type=0}</td>
+				</tr>
+				<tr>
+					<td class="tit tr w100">已完成：</td>
+					<td>
+						<div class="blueProgressBar progressBar f_l" style="margin-top:16px">
+	                        <div class="p">
+	                        	<div class="c" style="width:{function name='round' val=$deal.progress_point f=3}%;"></div>
+	                       	</div>
+	                    </div>
+						<div class="f_l pl5 pt5">{function name='round' val=$deal.progress_point}%</div>
+					</td>
+				</tr>
+				{if $deal.uloadtype eq 0}
+				<tr>
+					<td class="tit tr btm w100">剩余投标金额：</td>
+					<td class="f_red bg btm">{$deal.need_money}</td>
+				</tr>
+				{else}
+				<tr>
+					<td class="tit tr  w100">每份金额：</td>
+					<td class="f_red bg ">{function name="format_price" v=$deal.min_loan_money}</td>
+				</tr>
+				<tr>
+					<td class="tit tr btm w100">剩余份数：</td>
+					<td class="f_red  btm">{$deal.need_portion}</td>
+				</tr>
+				{/if}
+			</table>
+			<div class="blank"></div>
+			<table width="100%" cellpadding="0" cellspacing="0" class="bid-table">
+				<tr>
+					<td class="tit tr w100">我的可用余额：</td>
+					<td class="f_red ">
+						<span class="J_u_money_0">{function name="format_price" v=$user_info.money}</span>
+						&nbsp;&nbsp;
+						<a href="{url x="index" r="uc_money#incharge"}" target="_blank">我要充值</a>
+					</td>
+				</tr>
+				{if $deal.uloadtype eq 0}
+				<tr>
+					<td class="tit tr w100 ">投标金额：</td>
+					<td class="f_red bg ">
+						<input class="f-input f-input90"  autocomplete="off" name="bid_money" id="J_BIDMONEY" /> 元&nbsp;&nbsp;<span class="f_dgray">(已投金额<span class="f_red">{function name="round" v=$has_bid_money" f=2}</span>元，最少投<span class="f_red">{function name="round" v=$deal.min_loan_money f=2}</span>元{if $deal.max_loan_money gt 0}，最多投<span class="f_red">{function name="round" v=$deal.max_loan_money f=2}</span>元{/if}{if (int)app_conf('DEAL_BID_MULTIPLE') gt 0}，并且是{function name='app_conf' v='DEAL_BID_MULTIPLE'}的倍数{/if})</span>
+						
+					</td>
+				</tr>
+				{else}
+				<tr>
+					<td class="tit tr w100 ">购买份数：</td>
+					<td class="f_red bg ">
+						<a href="javascript:void(0);" class="c_number mt3" rel="-">-</a><input class="f-input mt3 c_number_ipt"  autocomplete="off" name="bid_money" id="J_BIDMONEY" value="1" /><a href="javascript:void(0);" class="c_number mt3"  rel="+">+</a> 份&nbsp;&nbsp;<span class="f_dgray">(已买<span class="f_red">{$has_bid_portion}</span>份{if $deal.max_portion}，最多可购买<span class="f_red">{$deal.max_portion}</span>份{/if})</span>
+					</td>
+				</tr>
+				{/if}
+				
+				<tr>
+					<td class="tit tr w100">投资收益：</td>
+					<td class="f_red ">
+						<span class="J_u_money_sy">0.00</span>
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="tit tr w100 btm">支付密码：</td>
+					<td class="bg ">
+						<input type="hidden" name="id" value="{$deal.id}" />
+						<input type="password"  autocomplete="off" class="f-input  f-input90" name="bid_paypassword" id="J_PAYPASSWORD" autocomplete="off" />
+						{if $user_info.paypassword eq ''}还未设置！{else}忘记了？{/if}<a href="{url x="index" r="uc_account#security"}" target="_blank" class='f_blue'>点这里</a>
+					</td>
+				</tr>
+				
+			</table>
+		</div>
+		<div class="blank20"></div>
+		<div class="blank20"></div>
+		<div class="clearfix bbd bid_act_box">
+			<input  type="button" class="bid_submit_button mt20" id="J_bid_submit" value="确认投标" />
+		</div>
+</div>
+<script type="text/javascript">
+	var is_submit_lock =false;
+	jQuery(function(){
+		{if $deal.uloadtype eq 1}
+		$("a.c_number").click(function(){
+			var rel=$(this).attr("rel");
+			var obj = $(this);
+			var number = parseInt($("#J_BIDMONEY").val());
+			switch(rel){
+				case "-":
+					if(number-1 > 1){
+						$("#J_BIDMONEY").val(number-1);
+					}
+					else{
+						$("#J_BIDMONEY").val(1);
+					}
+					break;
+				case "+":
+					 var max_portion = {if $deal.max_portion gt 0}<?php echo $this->_var['deal']['max_portion'] - $this->_var['has_bid_portion'];  ?>{else}{$deal.need_portion}{/if};
+					if(number+1 <= max_portion){
+						$("#J_BIDMONEY").val(number+1);
+					}
+					else{
+						$("#J_BIDMONEY").val(max_portion);
+					}
+					break
+			}
+		});
+		{/if}
+		$("#J_bid_submit").click(function(){
+			if(is_submit_lock)
+			{
+				return false;
+			}
+			is_submit_lock = true;
+			{if $deal.uloadtype eq 0}
+			if($.trim($("#J_BIDMONEY").val())=="" || !$.checkNumber($("#J_BIDMONEY").val()){if (int)app_conf('DEAL_BID_MULTIPLE') gt 0} || parseFloat($("#J_BIDMONEY").val())%{function name='app_conf' v='DEAL_BID_MULTIPLE'}!=0{/if} || parseFloat($("#J_BIDMONEY").val())<=0 || parseFloat($("#J_BIDMONEY").val())<{$deal.min_loan_money} {if $deal.max_loan_money gt 0}|| parseFloat($("#J_BIDMONEY").val())>{$deal.max_loan_money}{/if}){
+				is_submit_lock = false;
+				$.showErr(LANG.BID_MONEY_NOT_TRUE,function(){
+					$("#J_BIDMONEY").focus();
+				});
+			
+				return false;
+			}
+			{else}
+			
+				if($.trim($("#J_BIDMONEY").val())=="" || !$.checkNumber($("#J_BIDMONEY").val()) || parseInt($.trim($("#J_BIDMONEY").val())) <=0 || parseFloat($.trim($("#J_BIDMONEY").val()))%parseInt($.trim($("#J_BIDMONEY").val()))!=0){
+					is_submit_lock = false;
+					$.showErr("请输入正确的份数",function(){
+						$("#J_BIDMONEY").focus();
+					});
+				
+					return false;
+				}
+				
+				{if $deal.max_portion gt 0}
+					if(parseInt($.trim($("#J_BIDMONEY").val())) > <?php echo $this->_var['deal']['max_portion'] - $this->_var['has_bid_portion'];  ?>){
+						is_submit_lock = false;
+						$.showErr("您已经购买了{$has_bid_portion}份，还能购买<?php echo $this->_var['deal']['max_portion'] - $this->_var['has_bid_portion'];  ?>份",function(){
+							$("#J_BIDMONEY").focus();
+						});
+					
+						return false;
+					}
+				{else}
+					if(parseInt($.trim($("#J_BIDMONEY").val())) > {$deal.need_portion}){
+						is_submit_lock = false;
+						$.showErr("您已经购买了{$has_bid_portion}份，还能购买{$deal.need_portion}份",function(){
+							$("#J_BIDMONEY").focus();
+						});
+					
+						return false;
+					}
+				{/if}
+			{/if}
+			if($.trim($("#J_PAYPASSWORD").val())==""){
+				is_submit_lock = false;
+				$.showErr("请输入支付密码",function(){
+					$("#J_PAYPASSWORD").focus();
+				});
+			
+				return false;
+			}
+			var query = new Object();
+			query.bid_money=$("#J_BIDMONEY").val();
+			query.id=$(".bid-table input[name='id']").val();
+			query.bid_paypassword = FW_Password($("#J_PAYPASSWORD").val());
+			
+			
+			$.ajax({
+				url:APP_ROOT + "/index.php?ctl=deal&act=dobid&ajax=1",
+				data:query,
+				type:"POST",
+				dataType:"json",
+				success:function(result){
+					if(result.status==1){
+						is_submit_lock = false;
+						$.showSuccess(result.info,function(){
+							window.location.href=result.jump;
+						});
+					}
+					else if(result.status==2){
+						window.location.href=result.jump;
+					}
+					else{
+						is_submit_lock = false;
+						$.showErr(result.info);
+					}
+				},
+				error:function(ajaxobj)
+				{
+		//			if(ajaxobj.responseText!='')
+		//			alert(ajaxobj.responseText);
+				}
+			});
+			return false;
+		});
+		var bid_calculate =null;
+		$("#J_BIDMONEY").keyup(function(){
+			
+			var query = new Object();
+			query.uloantype = '{$deal.uloadtype}';
+			query.minmoney = '{$deal.min_loan_money}';
+			query.loantype = '{$deal.loantype}';
+			query.rate = '{$deal.rate}';
+			query.repay_time = '{$deal.repay_time}';
+			query.repay_time_type = '{$deal.repay_time_type}';
+			query.money = $.trim($(this).val());
+			query.user_loan_manage_fee = '{$deal.user_loan_manage_fee}';
+			if(bid_calculate) bid_calculate.abort(); //终止之前所有的未结束的ajax请求，然后重新开始新的请求  
+			bid_calculate = $.ajax({
+				url:'{url x="index" r="ajax#bid_calculate"}',
+				data:query,
+				type:"post",
+				dataType:"text",
+				success:function(result){
+					$(".J_u_money_sy").html(result);
+				}
+			});
+		});
+		
+		{if $deal.ips_bill_no neq ""}
+		checkIpsBalance(0,{$user_info.id},function(result){
+			if(result.pErrCode=="0000"){
+				$(".J_u_money_0").html(result.pBalance+"<span class='f_red '>[绑]</span>");
+			}
+		});
+		{/if}
+
+	});
+</script>
+{include file="inc/footer.html"}

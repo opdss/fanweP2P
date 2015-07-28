@@ -1,0 +1,13 @@
+{include file="inc/header.html"} 
+<div class="blank"></div>
+<div class="short f_l">
+	{include file="inc/cate_tree.html"}
+	<div class="blank"></div>
+		{insert name='load_sale_list' cate_id=$cate_id} {* 动态载入销售排行 *}
+</div>
+<div class="long f_r">
+	{insert name='load_rec_goods' r=$rtype} {* 动态产品列表 *}
+</div>
+<div class="blank"></div>
+
+{include file="inc/footer.html"}

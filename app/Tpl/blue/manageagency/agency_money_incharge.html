@@ -1,0 +1,168 @@
+<style type="text/css">
+	.ke-toolbar td{ padding:0}
+	.none_border{ margin-left:0!important}
+	.ke-container{ width:auto!important}
+</style>
+	
+		<div class="tabbox clearfix">
+        	<div class="tab {if $ACTION_NAME eq 'index'}cur{/if}">
+				<a href="{url x="index" r="agency_money#index"}">{$LANG.UC_LOGS}</a>
+			</div>
+			<div  class="tab {if $ACTION_NAME eq 'incharge'}cur{/if}">
+				<a href="{url x="index" r="agency_money#incharge"}">{$LANG.UC_MONEY_INCHARGE}</a>
+			</div>
+			<div  class="tab {if $ACTION_NAME eq 'incharge_log'}cur{/if}">
+				<a href="{url x="index" r="agency_money#incharge_log"}">{$LANG.UC_MONEY_INCHARGE_LOG}</a>
+			</div>
+			<div  class="tab {if $ACTION_NAME eq 'bank'}cur{/if}">
+				<a href="{url x="index" value="agency_money#bank"}">{$LANG.UC_CARRY}</a>
+			</div>
+			<div  class="tab {if $ACTION_NAME eq 'carry_log'}cur{/if}">
+				<a href="{url x="index" value="agency_money#carry_log"}">提现日志</a>
+			</div>
+		</div>
+		<div class="u_incharge uc_box bdd bt0 clearfix ">
+			<div class="prompt">
+				<p><i></i>所有投标保证金将由第三方平台托管。</p>
+				<p><i></i>即时充值所产生的转账费用，以100元为上限，按转账金额0.5%，由第三方平台收取。</p>
+				<p><i></i>请注意您的银行卡充值限制，以免造成不便。 <br> <i></i>如果充值金额没有及时到账，请和客服联系。</p>
+			</div>
+			<div class="blank1"></div>
+			
+			<div  class="uc-table">
+				<form name="incharge_form" id="incharge_form" action="{url x="index" r="agency#incharge_done"}" method="post" />			
+					<div class="sect cf">			
+						<div class="bdl clearfix">
+						
+							
+							<div class="way clearfix">
+								<div  class=" f_l w90">充值方式：</div>
+								<div class="f_l" style="*padding-top:8px">
+									<label class="f_l ui-radiobox" rel="common_check_ol_bl_pay"><input type="radio" name="check_ol_bl_pay" checked="checked" />第三方托管</label>
+								</div>
+							</div>
+							
+							<div class="m_number clearfix">				        	        	
+					        	<div class=" f_l w90" style="float:left;">充值{$LANG.PRICE_AMOUNT}：</div>
+								<input type="text" class="f-input ui-textbox f_l w100" id="money" name="money" />&nbsp;元
+							</div>
+							
+							<div class="J_online">
+								
+								
+								
+								<div id="J_ips_pay" class="clearfix" style="text-align: left;">
+									<div class="f_l  w90">充值接口：</div>		
+									<div class="f_l bankbox" style="width:720px">		
+									loading...
+									</div>
+								</div>
+
+								<div class="pay_btn">
+									<input type="submit" id="incharge_done" value="确定{$LANG.DO_INCHARGE}" class="sub_btn">
+								</div>
+							</div>
+						</div>	
+							
+					</div><!--end sect-->
+				</form>
+			</div>				
+		</div>
+<script type="text/javascript">
+	var payType = 1;
+	ajaxGetBankList();
+	$(document).ready(function(){
+		$("#incharge_done").click(function(){
+			if(!($("input[name='money']").val()!='' && !isNaN($("input[name='money']").val())&&$("input[name='money']").val()>0))			
+			{
+				$.showErr("{$LANG.PLEASE_INPUT_CORRECT_INCHARGE}",function(){
+					$("input[name='money']").focus();
+				});
+				return false;
+			}
+			else if(!$("input[name='payment']:checked").val())
+			{
+				$.showErr("{$LANG.PLEASE_SELECT_PAYMENT}");
+				return false;
+			}
+			
+			if(payType==1){
+				window.location.href = APP_ROOT+"/index.php?ctl=collocation&act=DoDpTrade&user_type=1&user_id={$manageagency_info.id}&pTrdBnkCode="+$("input[name='payment']:checked").val()+"&pTrdAmt="+$("input[name='money']").val()+$("input[name='money_incharge_files']").val();
+				return false;
+			}
+			return true;
+		});
+	});
+	
+	function ajaxGetBankList(){
+		if($.trim($("#J_ips_pay .bankbox").html())=="loading..."){
+			$.ajax({
+				url:APP_ROOT + "/index.php?ctl=collocation&act=GetBankList",
+				dataType:"json",
+				success:function(result){
+					if(result.pErrCode=="0000")
+					{
+						var html="";
+						$.each(result.BankList,function(i,data){
+							html += '<label class="f_l ui-radiobox payment_ips " rel="common_payment" style="background:none"><input type="radio" name="payment" value="'+data.id+'">&nbsp;'+data.name+ " : " +data.sub_name+'</label>';
+						});
+						$("#J_ips_pay .bankbox").html(html);
+						init_ui_radiobox();
+					}
+					else{
+						$.showErr(result.pErrMsg);
+					}
+				},
+				error:function(){
+					$.showErr("请求数据失败");
+				}
+			});
+		}
+	}
+	
+	
+	function upd_file(obj,file_id,uid)
+	{	
+		$("input[name='"+file_id+"']").bind("change",function(){			
+			$(obj).hide();
+			$(obj).parent().find(".fileuploading").removeClass("hide");
+			$(obj).parent().find(".fileuploading").removeClass("show");
+			$(obj).parent().find(".fileuploading").addClass("show");
+			  $.ajaxFileUpload
+			   (
+				   {
+					    url:APP_ROOT+'/index.php?ctl=uc_money&act=money_upload&uid='+uid,
+					    secureuri:false,
+					    fileElementId:file_id,
+					    dataType: 'json',
+					    success: function (data, status)
+					    {
+					   		$(obj).show();
+					   		$(obj).parent().find(".fileuploading").removeClass("hide");
+							$(obj).parent().find(".fileuploading").removeClass("show");
+							$(obj).parent().find(".fileuploading").addClass("hide");
+					   		if(data.status==1)
+					   		{
+					   			document.getElementById("money_incharge").src = data.middle_url+"?r="+Math.random();
+					   		}
+					   		else
+					   		{
+					   			$.showErr(data.msg);
+					   		}
+					   		
+					    },
+					    error: function (data, status, e)
+					    {
+							$.showErr(data.responseText);;
+					    	$(obj).show();
+					    	$(obj).parent().find(".fileuploading").removeClass("hide");
+							$(obj).parent().find(".fileuploading").removeClass("show");
+							$(obj).parent().find(".fileuploading").addClass("hide");
+					    }
+				   }
+			   );
+			  $("input[name='"+file_id+"']").unbind("change");
+		});	
+	}
+
+</script>

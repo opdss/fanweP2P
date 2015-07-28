@@ -1,0 +1,166 @@
+<div class="tabbox ">
+	<div class="tab cur">我是借入者</div>
+</div>
+<div class="bdd bddf bt0">
+	
+	<div class="p10 ">
+		<div class="blank10"></div>
+		<div class="cf pt5 pb5 pl5 pr5">
+			<form action="{$APP_ROOT}" method="post" name="J_calculate_form" id="J_calculate_form">
+			<div class="p5" style="width:800px;line-height:40px">
+	            <div class="clearfix">
+	                <div class="f_l w400">
+	                	<span class="f_l">借款金额：</span><input type="text" id="borrowAmount" name="borrowamount" class="f-input ui-textbox f_l mr5">元
+	                </div>
+	                <div class="f_l w400">
+	                	 <span class="f_l">年&nbsp;&nbsp;利&nbsp;&nbsp;率：</span><input type="text" id="apr" name="apr" class="f-input ui-textbox f_l mr5">%
+	                </div>
+					<div class="blank20"></div>
+	                 <div class="f_l w230" >
+	                	 <span class="f_l"> 借款期限：</span><input type="text" id="repayTime" name="repaytime" class="f-input ui-textbox f_l w140">
+	               	 </div>
+					<div class="f_l  w170">
+						<select class="ui-select w50 select-w50" name="repaytimetype" id="repaytimetype">
+							<option value="1">月</option>
+	                        <option value="0">天</option>
+	                    </select>
+	                </div>
+	                <div class="f_l  w400">
+	                	<span class="f_l">还款方式：</span>
+						<select name="borrowpay" id="borrowpay" class="f_l ui-select w180 select-w180">
+							{foreach from="$loantype_list" item="loantype"}
+	                        <option value="{$loantype.key}" rel="{$loantype.repay_time_type_str}">{$loantype.name}</option>
+							{/foreach}
+	                    </select>
+	                </div>
+					<div class="blank20"></div>
+					<div class="f_l f-select-box w400">
+	                	<span class="f_l">等&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</span>
+						<select  name="level" id="level" class="f_l  ui-select w80 select-w80">
+							{foreach from="$level_list" item="level"}
+	                        <option value="{$level.id}">{$level.name}</option>
+							{/foreach}
+	                    </select>
+	                </div>
+					 <div class="f_l w400">
+	                	 <span class="f_l"> 逾期天数：</span><input type="text" value="0" id="impose_day" name="impose_day" class="f-input ui-textbox f_l mr5">天/每期
+	                </div>
+	            </div>
+				<div class="blank10"></div>
+	            <div class="clearfix">
+	                <div class="" style="margin:0;width:400px">
+	                    <label class="ui-checkbox" rel="agreement"><input type="checkbox" name="isshow" value="1" checked="checked" id="isShow">&nbsp;&nbsp;显示还款时间表</label>&nbsp;&nbsp;&nbsp;
+	               		<label id="J_inrepayshow" class="ui-checkbox" rel="agreement"><input type="checkbox" name="inrepayshow" value="1" checked="checked" id="isShow">&nbsp;&nbsp;显示提前还款罚息表</label>
+				    </div>
+	                <div style="padding:10px 0 0 0">
+	                    <button class="sub_btn" id="J_saveSettingBnt" type="button">
+	                    	开始计算
+	                    </button>
+						<span style="color: red" id="T_error"></span>
+	                </div>
+	            </div>
+	        </div>
+			</form>
+		</div>
+		<div class="blank20"></div>
+		
+	</div>
+</div>
+
+<div id="J_calculate_Result"></div>
+
+<script type="text/javascript">
+	
+	jQuery(function(){
+		
+		$("#repaytimetype").change(function(){
+			var seleted = -1;
+			var p_rel = $(this).val();
+			var select_rel = $("#borrowpay option[value='"+$("#borrowpay").val()+"']").attr("rel");
+			var select_rel_str = select_rel.split(",");
+			for(var i=0;i<select_rel_str.length;i++){
+				if(seleted == -1 && parseInt(select_rel_str[i]) == parseInt(p_rel)){
+					seleted = 0;
+				}
+			}
+			
+			if(seleted == -1){
+				$("#borrowpay option").each(function(){
+					var rel = $(this).attr("rel");
+					var rel_str = rel.split(",");
+					for(var i=0;i<rel_str.length;i++){
+						if(seleted == -1 && parseInt(rel_str[i]) == parseInt(p_rel)){
+							$("#borrowpay").val($(this).val());
+							seleted = parseInt(rel_str[i]);
+						}
+					}
+				});
+			}
+			
+			if($(this).val()==0){
+				$("#J_inrepayshow").hide();
+			}
+			else{
+				$("#J_inrepayshow").show();
+			}
+			
+			$("#borrowpay").ui_select({refresh:true});
+		});
+		
+		$("#borrowpay").change(function(){
+			var val = $(this).val();
+			var rel = $(this).find("option[value='"+val+"']").attr("rel");
+			var rel_str = rel.split(",");
+			var has_day = 0;
+			for(var i=0;i<rel_str.length;i++){
+				if(has_day==0 && parseInt(rel_str[i]) == 0){
+					has_day = 1;
+				}
+			}
+			
+			if(has_day==0){
+				$("#repaytimetype").val(1);
+			}
+			if($("#repaytimetype").val()==0){
+				$("#J_inrepayshow").hide();
+			}
+			else{
+				$("#J_inrepayshow").show();
+			}
+			$("#repaytimetype").ui_select({refresh:true});
+		});
+		
+		$("#J_saveSettingBnt").click(function(){
+			$("#borrowpay-box .dropdown").addClass("hide");
+			$("#T_error").html("");
+			if($.trim($("#borrowAmount").val())=="" || $("#borrowAmount").val()%1 !=0){
+				$("#T_error").html("借款金额必须为正整数!");
+				return false;
+			}
+			if($.trim($("#apr").val())=="" || isNaN($.trim($("#apr").val()))){
+				$("#T_error").html("年利率必须为数字类型!");
+				return false;
+			}
+			if($.trim($("#repayTime").val())=="" || isNaN($.trim($("#repayTime").val()))){
+				$("#T_error").html("月份格必须为数字类型!");
+				return false;
+			}
+			if($.trim($("#repayTime").val())>120){
+				$("#T_error").html("月份必须在120以内!");
+				return false;
+			}
+			var query = $("#J_calculate_form").serialize();
+			$.ajax({
+				url:APP_ROOT + "/index.php?ctl=tool&act=ajax_calculate",
+				data:query,
+				type:"post",
+				success:function(result){
+					$("#J_calculate_Result").html(result);
+					return false;
+				}
+			});
+			return false;
+		});
+	});
+
+</script>

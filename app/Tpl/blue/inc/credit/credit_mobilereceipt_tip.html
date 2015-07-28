@@ -1,0 +1,27 @@
+<p class="lh24">
+    <a href="#mobileDiv" id="mobileGuy" class="f_blue">如何办理手机详单</a>
+</p>
+<div class="blank5"></div>
+<div class="hide" id="mobileGuyTemp">
+	<div class="clearfix bddf">
+        <div class="gray_title f14 pl10">
+        	 如何办理手机详单
+        </div>
+         <div class="f_dgray" style="padding: 5px 12px;">
+            <div style="padding:5px 0" class="f14">
+                <div>
+                	前往最近的手机运营商营业厅，提供手机服务密码或机主身份证明即可打印。
+                </div>
+            </div>
+    	</div>
+	</div>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#mobileGuy").click(function(){
+			var html = $("#mobileGuyTemp").html();
+			$.weeboxs.open(html, {boxid:'ctemp_box',contentType:'text',showButton:true, showCancel:false, showOk:false,title:"",width:550,height:92,type:'wee'});
+		});
+		
+	});
+</script>

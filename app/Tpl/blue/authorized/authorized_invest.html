@@ -1,0 +1,54 @@
+
+	<div class="tabbox clearfix">
+		<div class="tab cur"><a href="{url x="index" r="uc_invest"}">{$page_title}</a></div>
+	</div>
+	<div class="uc_box bdd bt0 clearfix">
+			{if $list}
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc_table">
+				<tbody>
+					<tr  border="0">
+						<th>贷款名</th>
+						<th style="width:20%">投资人</th>
+						<th style="width:12%">我的投标金额</th>
+						<th style="width:16%">利率</th>
+                        <th style="width:16%">期限</th>
+						<th style="width:10%">状态</th>
+						<th style="width:15%"></th>
+					</tr>
+					{foreach from=$list item="item" key=key}
+					<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+						<td align="left">
+							<div class="pl10">
+							<a href="{url x="index" r="deal" p="id=$item.id"}">
+	                       		<a href="{url x="index" r="deal" p="id=$item.id"}">{$item.name}</a>
+	                   	 	</a>
+							</div>
+						</td>
+						<td>
+	                    	{$item.user_name}
+						</td>
+						<td>
+							{function name="format_price" v="$item.u_load_money"}
+						</td>
+						<td>
+	                        {function name="number_format" v="$item.rate" f="2"}%
+						</td>
+						<td>
+							{$item.repay_time}{if $item.repay_time_type eq 0}天{else}个月{/if} 
+						</td>
+						<td>
+								{$item.status_format}
+						</td>
+                        <td>
+                        	<a href="{url x="index" r="authorized#refdetail" p="u_id=$item.u_id&id=$item.id&load_id=$item.load_id"}" class="f_red">查看</a>
+							
+						</td>
+					</tr>
+					{/foreach}
+				</tbody>
+			</table>
+			<div class="pages">{$pages}</div>
+			{else}	
+			<div align="center" style="padding:20px 0">暂无记录</div>
+			{/if}
+		</div>

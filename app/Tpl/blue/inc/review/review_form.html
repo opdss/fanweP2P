@@ -1,0 +1,80 @@
+<?php
+$this->_var['dpjs'][] = $this->_var['TMPL_REAL']."/js/review.js";
+$this->_var['cpdpjs'][] = $this->_var['TMPL_REAL']."/js/review.js";
+?>
+<script type="text/javascript" src="{function name="parse_script" v="$dpjs" c="$cpdpjs"}"></script>
+<form name="review_form" id="review_form">
+<div class="review_form_box pub_box wb" style="padding:0px;">
+	<div class="form_title">发表点评</div>
+	<p class="dp_bar">
+        <span class="title"><span class="em">* </span>总体评价：</span>
+        <span>
+        	<span class="starsBar">
+        		<span class="frontBk_red">
+					<input type="hidden" value="0" name="dp_point">
+				</span>
+			</span>
+		</span>
+        <span class="score_tips" id="score_tips"><span>点击星星为商家打分，最高5颗星</span></span>
+        <span class="error_tips" id="dp_point_tips" style="display:none;">请为商家评分</span>
+     </p>
+	 
+	 {foreach from=$store_info.point_group item=group}
+	 <p class="dp_bar dp_sub_bar" id="group_{$group.id}">
+          <span class="title"><span class="em">* </span>{$group.name}：</span>
+		  <span class="data_bar">
+		  	<span class="data_bar_width">
+			<input type="hidden" value="0" name="dp_point_group[{$group.id}]" class="f-input" />
+			</span>          	
+		  </span>
+		  <span class="data_bar_tags"></span>
+          <span class="error_tips"  style="display:none;">请为{$group.name}打分</span>
+    </p>
+	{/foreach}
+	
+	<p class="dp_bar">
+          <span class="title"><span class="em">* </span>标题：</span>
+		  <span>
+		  	<input type="text" name="dp_title" size="50" maxlength="50" class="f-input" />
+		  </span>
+          <span><span class="em none">* </span>人均：</span>
+		  <span>
+		  	<input type="text" name="avg_price" class="f-input" size="5" />
+		   </span>
+    </p>
+	
+	{foreach from=$store_info.dp_tag_group item=group}
+	<p class="dp_bar tag_bar">
+     	<label class="title"><span class="em none">* </span>{$group.name}：</label>
+        <input type="text" class="f-input tag_text" name="dp_tags[{$group.id}]"  />
+        <span class="tag_notice">多个标签请用空格分开</span>
+        <span class="tag_tips">
+        	{foreach from=$group.preset_tags item=tag}
+			{if $tag !=""}
+	          <a href="javascript:void(0);" onclick="set_tag(this);">{$tag}</a>
+			  {/if}
+			{/foreach}
+       </span>
+   </p>
+   {/foreach}
+	
+	<div class="dp_bar">
+          <span class="title f_l" style="display:inline-block;"><span class="em">* </span>内容：</span>
+		  {function name="show_topic_form" text_name="content" width="600px" height="80px" is_img="0" is_topic="0" is_event="0" id="main_topic_form_textarea" show_btn="0" show_tag="0"}				
+    </div>	
+	{if app_conf("VERIFY_IMAGE") eq 1}
+	<div class="verify_row" style="padding-left:90px">								
+	<input type="text" value="" class="f-input" name="verify" />	
+	<img src="{$APP_ROOT}/verify.php?rand={function name="rand"}" onclick="this.src='{$APP_ROOT}/verify.php?rand='+ Math.random();" title="看不清楚？换一张" />			
+	</div>	
+	<div class="blank"></div>
+	{/if}
+	<p style="padding-left:30px">
+		<input type="hidden" name="supplier_location_id" value="{$store_info.id}" />
+		<input type="hidden" name="deal_cate_id" value="{$store_info.deal_cate_id}" />
+        <button type="button" class="comment_btn" id="comment_btn">提交点评</button>
+    </p>
+	<div class="blank"></div>
+</div>
+</form>
+

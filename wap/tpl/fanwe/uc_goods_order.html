@@ -1,0 +1,105 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_goods_order.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--我的兑换-->
+<ul class="uc_goods_order">
+	{foreach from=$data.order_info item=item key=key}
+	<li>
+		{if $item.order_status eq 0 || $item.order_status eq 2 || $item.order_status eq 3}
+		<h5 class="clearfix n">
+			<span class="order_nun f_l">订单号:{$item.order_sn}</span>
+			<span class="order_time f_r">{$item.ex_time}</span>
+		</h5>
+		{/if}
+		{if $item.order_status eq 1}
+		<h5 class="clearfix y">
+			<span class="order_nun f_l">订单号:{$item.order_sn}</span>
+			<span class="order_time f_r">{$item.ex_time}</span>
+		</h5>
+		{/if}
+		<div class="order_content clearfix">
+			<div class="img_bor"><img src="./images/show_img0.png"/></div>
+			<div class="content">
+				<h6>{$item.goods_name}</h6>
+				<dl>
+					<dd>
+						<span class="name">商品数量</span>{$item.number}
+						<span class="name">所需积分</span>{$item.total_score}
+					</dd>
+					<dd>
+						<!-- <span class="name">商品属性</span>{$item.attr_format} -->
+						<span class="name">订单状态</span>
+						{if $item.order_status eq 1}
+							<span class="c_3b95d3">{$item.order_status_format}</span>
+						{else}
+							<span class="c_ff4a4a">{$item.order_status_format}</span>
+						{/if}
+						 
+					</dd>
+					{if $item.order_status eq 1}
+						<dd><span class="name">快递单号</span>{$item.delivery_sn}</dd>
+						<dd><span class="name">发货时间</span>{$item.delivery_time}</dd>
+						<dd><span class="name">收货地址</span>{$item.delivery_addr}</dd>
+						<dd><span class="name">收获电话</span>{$item.delivery_tel}</dd>
+						<dd><span class="name">收获人</span>{$item.delivery_name}</dd>
+					{/if}
+				</dl>
+			</div>
+			{if $item.order_status eq 1}
+			<div class="tc c_3b95d3 Arrow-but-down" style=" font-size:20px; line-height:20px;"><i class="fa fa-angle-down"></i></div>
+			<div class="tc c_3b95d3 Arrow-but-up" style=" font-size:20px; line-height:20px; display:none;"><i class="fa fa-angle-up"></i></div>
+		   {/if}
+		</div>
+	</li>
+	{/foreach}
+	<!--
+	<li>
+		<h5 class="clearfix y">
+			<span class="order_nun f_l">订单号:2015031800000000</span>
+			<span class="order_time f_r">2015-03-18&nbsp;14:14:14</span>
+		</h5>
+		<div class="order_content clearfix">
+			<div class="img_bor"><img src="./images/show_img0.png"/></div>
+			<div class="content">
+				<h6>罗莱儿童配件罗莱儿童配件罗莱儿童配件罗莱儿童配件罗莱儿童配件罗莱儿童配件</h6>
+				<dl>
+					<dd>
+						<span class="name">商品数量</span>1
+						<span class="name">所需积分</span>1000
+					</dd>
+					<dd>
+						<span class="name">商品属性</span>1.5米&nbsp;红色
+						<span class="name">订单状态</span>
+						<span class="c_3b95d3">已发货</span> 
+					</dd>
+					<dd><span class="name">快递单号</span>20150318</dd>
+					<dd><span class="name">发货时间</span>2015-03-18 &nbsp; 23:59:59</dd>
+					<dd><span class="name">收货地址</span>福建省福州市台江区群升国际E区111</dd>
+					<dd><span class="name">收获电话</span>15960595555</dd>
+					<dd><span class="name">收获人</span>朱小姐</dd>
+			</dl>
+			</div>
+			<div class="tc c_3b95d3 Arrow-but-down" style=" font-size:20px; line-height:20px;"><i class="fa fa-angle-down"></i></div>
+			<div class="tc c_3b95d3 Arrow-but-up" style=" font-size:20px; line-height:20px; display:none;"><i class="fa fa-angle-up"></i></div>
+		</div>
+	</li>
+	-->
+</ul>
+<script>
+	$(document).ready(function(){
+		$(".Arrow-but-up").click(function(){
+			$(this).siblings(".content").height(90);
+			$(this).siblings(".Arrow-but-down").show();
+			$(this).hide();
+		});
+		$(".Arrow-but-down").click(function(){
+			$(this).siblings(".content").height('auto');
+			$(this).siblings(".Arrow-but-up").show();
+			$(this).hide();
+		});
+	});
+</script>
+{include file="./inc/footer.html"}

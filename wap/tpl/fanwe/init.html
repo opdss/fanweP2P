@@ -1,0 +1,131 @@
+{include file="./inc/header.html"}	
+<?php
+			$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/init.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />	
+
+<!--网站主页-->
+<div class="wrap init">
+	<div class="swipe"><!--这里是头部广告图位置，是否轮播-->
+        <ul id="slider">
+        	{foreach from=$data.index_list.adv_list item=adv key=k}
+				<li><a href="{$adv.data}"><img src="{$adv.img}"  alt=""/></a></li>
+			{/foreach}
+            
+        </ul>
+		
+        <div id="pagenavi">
+        	{foreach from=$data.index_list.adv_list item="adv" key="key"}
+           	 <a href="javascript:void(0);" {if $key==0}class="active"{/if} ></a>
+			{/foreach}      
+        </div>
+		<!--这是轮播对应的按钮-->
+		
+        <div class="blank"></div>
+    </div><!--swipe end-->
+	
+    <div class="category mainborder">
+        <ul class="cate-menu">
+        <li>
+            <a href="{wap_url a="index" r="deals"}" class="menu1" onclick="clickResponse(this)" res="1">
+                <span class="menu1-icon"><span><i class="fa fa-paper-plane"></i></span></span>
+                <span class="cate-name">我要投资</span>
+            </a>
+        </li>
+        
+        <li>
+            <a href="{wap_url a="index" r="transfer"}" class="menu1" onclick="clickResponse(this)" res="1">
+                <span class="menu1-icon"><span><i class="fa fa-gavel"></i></span></span>
+                <span class="cate-name">债权转让</span>
+            </a>
+        </li>
+        <li>
+            <a href="{wap_url a="index" r="article_list"}" class="menu1" onclick="clickResponse(this)" res="1">
+                <span class="menu1-icon"><span><i class="fa fa-th-large"></i></span></span>
+                <span class="cate-name">展示文章</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{wap_url a="index" r="integral_mall"}" class="menu1" onclick="clickResponse(this)" res="1">
+                <span class="menu1-icon"><span><i class="fa fa-trophy"></i></span></span>
+                <span class="cate-name">积分商城</span>
+            </a>
+        </li>
+
+        </ul>
+        <div class="blank"></div>
+    </div>
+
+	{foreach from=$data.index_list.deal_list item="deal" } 
+	    <div class="mainblok mainborder">
+	    	<a href="{wap_url a="index" r="deal" p="id=$deal.id"}">
+	        <div class="index_tit {if $deal.deal_status eq 1}Headerbackground{else}gray{/if}">
+	            <span class="State ">
+					{if $deal.deal_status eq 0}等待材料{/if}
+					{if $deal.deal_status eq 1}进行中{/if}
+					{if $deal.deal_status eq 2}满标{/if}
+					{if $deal.deal_status eq 3}流标{/if}
+					{if $deal.deal_status eq 4}还款中{/if}
+					{if $deal.deal_status eq 5}已还清{/if}
+				</span>
+	            <span class="verticalline"></span>
+	            <span class="sub_name">{$deal.sub_name}</span>
+			</div>
+	        <div class="index_content">
+	            <div class="content_list">
+	                <span>{$deal.borrow_amount_format}</span>
+	                <span>金额</span>
+	            </div>
+	            <div class="content_list">
+	                <span class="specialfont">{$deal.rate}%</span>
+	                <span>年利率</span>
+	            </div>
+	            <div class="content_list">
+	                <span>{$deal.repay_time}月</span>
+	                <span>期限</span>
+	            </div>
+	            <div class="content_list">
+	            <div class="content_pic">
+	                <h1>{$deal.progress_point}</h1>
+	                <div class="content_pic_1" style="height:{$deal.progress_point}%;">
+	                <span></span>
+	                </div>
+	            </div>
+	            </div>
+	        <div class="blank"></div>    
+	        </div>
+			</a>
+	    </div>		
+	{/foreach}
+	
+
+    <div class="mainblok mainborder">
+        <div class="Statistics mainborder" style="border:none;">
+            <span>累计成交额</span>
+            <span class="num_size blue">{$data.virtual_money_1}</span>
+            <span>（万元）</span>
+        </div>
+        <div class="Statistics mainborder">
+            <span>累计创造收益</span>
+            <span class="num_size yellow">{$data.virtual_money_2}</span>
+            <span>（万元）</span>            
+        </div>
+        <div class="Statistics mainborder">
+            <span>本息保证金</span>
+            <span class="num_size green">{$data.virtual_money_3}</span>
+            <span>（万元）</span>
+        </div>
+        <div class="blank"></div>  
+    </div>
+</div>
+<script type="text/javascript" src="{$TMPL}/js/init.js"></script>
+
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

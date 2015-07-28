@@ -1,0 +1,119 @@
+{include file="inc/header.html"}
+	<div class="blank"></div>
+	<div class="big_left_uc uc_user_info f_l">
+		<div class="cont homeBg">
+            <div class="blank5"></div>
+            <div class="clearfix lh22" style="height: 22px;vertical-align: middle">
+                <div class="f_r">
+					<img src="{$TMPL}/images/about_credit.png" alt="" style="cursor: pointer" onclick="javascript:window.location.href='{url x="index" r="space#level" p="id=$space_user.id"}'">
+				</div>
+                <div class="f_blue f14 b tc">
+                    <span>{$space_user.user_name} 的个人信息</span>
+                </div>
+            </div>
+            <div class="pt5 pb5" style="border-bottom:1px solid #D8DFEA;"></div>
+
+            <div class="clearfix mt10 mb15 ml20">
+                <div class="f_l pr30" style="width:132px;">
+                    <div>
+                    	<img class="img_b" src="{function name="get_user_avatar" uid="$space_user.id" type="big"}" width="128px" height="128px" alt="{$space_user.user_name}" title="{$space_user.user_name}">
+                    </div>
+                    <div class="pl20" style="padding-top: 2px">
+                            <div class="lh24 u_icons follow">
+                            	{if $space_user.focused eq 1}
+									已关注此用户
+								{else}	
+									<a href="javascript:;" onclick="focus_user({$space_user.id},this);">{$LANG.FOCUS_THEY}</a>
+								{/if}	
+                            </div>
+							
+							<div class="u_icons reportGuy J_reportGuy" id="J_reportGuy_{$space_user.id}" dataid="{$space_user.id}">
+								<a href="###">举报此人</a>
+							</div>
+                            <div class="lh24 u_icons send_msg J_send_msg" dataid="{$space_user.id}">
+                                <a href="#znxDiv" id="znx">站内信</a>
+                            </div>
+                    </div>
+                </div>
+                <div class="f_l f_dgray" style="width:500px">
+                    <div class="lh24" style="height:24px;">
+                        <div class="f_l" style="width:70px;">
+						用户名：
+                        </div>
+                        <div class="f_l">
+                        	{$space_user.user_name}
+                        </div>
+                    </div>
+                    <div style="height:24px; line-height:24px">
+                        <div class="f_l" style="width:70px;">
+						注册时间：
+                        </div>
+                        <div class="f_l">
+                            {function name="to_date" v=$space_user.create_time f="Y-m-d"}
+                        </div>
+                    </div>
+                    <div style="height:24px; line-height:24px">
+                        <div class="f_l" style="width:70px;">
+						所在地：
+                        </div>
+                        <div class="f_l">{$space_user.user_location}</div>
+                    </div>
+                    <div style="height:24px; line-height:24px">
+                        <div class="f_l" style="width:70px;">
+						角色：
+                        </div>
+                        <div class="f_l">
+                        	{$space_user.group_name}{if $space_user.is_borrow_in gt 0} 借入者{/if} {if $space_user.is_borrow_out gt 0} 借出者{/if} 
+						</div>
+                    </div>
+                    <div style="height:24px; line-height:24px">
+                        <div class="f_l" style="width:70px;">
+						个人统计：
+                        </div>
+                        <div class="f_l">
+                            {$user_statics.deal_count} 条借款记录，{$user_statics.load_count}条投标记录
+                        </div>
+                    </div>
+                    <div style="height:24px; line-height:24px">
+                    </div>
+                </div>
+                <div class="r" style="display:none;width:260px;">
+                    <div class="layout-box">
+                        <div class="top">
+                            <b class="cor-l"></b>
+                            <b class="cor-r"></b>
+                        </div>
+                        <div class="cont" style="height:145px; ">
+                            <h3>个人描述</h3>
+                            <p>
+                                
+                            </p>
+                        </div>
+                        <div class="bt">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+		<div class="blank"></div>
+        <div class="uc_r_bl">
+            <div class="list_title clearfix">
+                <div {if $ACTION_NAME eq 'index'}class="cur"{/if}><a href="{url x="index"r="space#index" p="id=$space_user.id"}">{$LANG.SPACE_HOME}</a></div>
+                <div {if $ACTION_NAME eq 'focus'}class="cur"{/if}><a href="{url x="index"r="space#focus" p="id=$space_user.id"}">{$LANG.SPACE_FOCUS}</a></div>
+                <div {if $ACTION_NAME eq 'focustopic'}class="cur"{/if}><a href="{url x="index"r="space#focustopic" p="id=$space_user.id"}">{$LANG.SPACE_FOCUSTOPIC}</a></div>
+                <div {if $ACTION_NAME eq 'deal'}class="cur"{/if}><a href="{url x="index"r="space#deal" p="id=$space_user.id"}">{$LANG.SPACE_DEAL}</a></div>
+                <div {if $ACTION_NAME eq 'lend'}class="cur"{/if}><a href="{url x="index"r="space#lend" p="id=$space_user.id"}">{$LANG.SPACE_LEND}</a></div>
+            </div>
+            <div class="uc_r_bl_box clearfix p10">{$list_html}</div>
+        </div>
+       
+	</div>
+	
+	<div class="right_uc f_r">
+		{insert name="space_right"}
+	</div>
+	
+	<div class="blank"></div>
+
+{include file="inc/footer.html"}

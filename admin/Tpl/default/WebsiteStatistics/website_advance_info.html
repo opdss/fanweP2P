@@ -1,0 +1,87 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<script type="text/javascript">	
+	function export_csv_advance_info()
+	{
+		var inputs = $(".search_row").find("input");
+		var selects = $(".search_row").find("select");
+		var param = '';
+		for(i=0;i<inputs.length;i++)
+		{
+			if(inputs[i].name!='m'&&inputs[i].name!='a')
+			param += "&"+inputs[i].name+"="+$(inputs[i]).val();
+		}
+		for(i=0;i<selects.length;i++)
+		{
+			param += "&"+selects[i].name+"="+$(selects[i]).val();
+		}
+		var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_csv_advance_info";
+		location.href = url+param;
+	}
+	
+</script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">垫付明细</div>
+<div class="blank5"></div>
+
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		
+		贷款名称：<input type="text" class="textbox" name="name" value="{:trim($_REQUEST['name'])}" style="width:100px;" />
+		管理员：<input type="text" class="textbox" name="adm_name" value="{:trim($_REQUEST['adm_name'])}" style="width:100px;" />
+		担保机构:
+		
+		<select name="agency_id">
+			<option value="0" <if condition="intval($_REQUEST['agency_id']) eq 0">selected="selected"</if>>{%ALL}</option>
+			<foreach name="agency_list" item="agency_item">
+				<option value="{$agency_item.id}" <if condition="intval($_REQUEST['agency_id']) eq $agency_item['id']">selected="selected"</if>>{$agency_item.name}</option>
+			</foreach>
+		</select>
+		<div class="blank5"></div>
+		代还时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" style="width:130px" />
+		<input type="button" class="button" id="btn_begin_time" value="{%SELECT_TIME}" onclick="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" />	
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" style="width:130px" />
+		<input type="button" class="button" id="btn_end_time" value="{%SELECT_TIME}" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" />	
+		
+		<input type="hidden" value="WebsiteStatistics" name="m" />
+		<input type="hidden" value="website_advance_info" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+    	<input type="button" class="button" value="{%EXPORT}" onclick="export_csv_advance_info();" />
+	</form>
+</div>		
+<php>
+	function get_deal_url($name,$id){
+		return '<a href="'.__ROOT__.'/index.php?ctl=deal&id='.$id.'" target="_blank">'.$name.'</a>';
+	}
+</php>							
+<div class="blank5"></div>
+		
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	
+	datasource="list" 
+	show="代还时间:代还时间
+		,贷款名称|get_deal_url=$deal['deal_id']:贷款名称
+		,第几期:第几期
+		,管理员:管理员
+		,担保机构:担保机构
+		,代还本息|format_price:代还本息
+		,代还管理费|format_price:代还管理费
+		,代还罚息|format_price:代还罚息
+		,代还多少逾期管理费|format_price:代还多少逾期管理费
+		"/>
+			
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+
+</div>
+
+<include file="Public:footer" />

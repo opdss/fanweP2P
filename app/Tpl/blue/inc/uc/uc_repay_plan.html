@@ -1,0 +1,104 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+
+
+<script type="text/javascript">
+jQuery(function(){
+	$("input#time").datepicker({showAnim:'fadeIn'});
+	$("form#search-form").submit(function(){
+		var val = $("input#time").val();
+		$("input[name='time']").val(val.replace(/-/g,""));
+	});
+});
+</script>
+
+
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index"r="uc_deal#borrowed"}">{$page_title}</a></div>
+</div>
+
+<div class="uc_box bdd bt0 clearfix">
+		
+	<form name="search" id="search-form" action="{url x="index" r="uc_repay_plan"}" method="get">  		
+		<div class="f_l">
+			贷款名称：<input class="f-input ui-textbox w100" name="deal_name" type="text" value="{$deal_name}">
+			<input name="ctl"  type="hidden" value="uc_repay_plan">
+			还款日：<input class="f-input ui-textbox w100 f_input" id="time" type="text" value="{$time}">
+			<input type="hidden" name="time" type="text" value="" />
+			<button class="true_btn select_btn" type="submit">搜索</button>
+		</div>
+		
+		<div class="sub_nav f_r pt5">
+			<span {if $status eq 4} class="act"{/if}><a href="{url x="shop" r="uc_repay_plan" p="stauts=4"}">全部</a></span>
+			<span {if $status eq 1} class="act"{/if}><a href="{url x="shop" r="uc_repay_plan"  p="stauts=1"}">待还款</a></span>
+			<span {if $status eq 2} class="act"{/if}><a href="{url x="shop" r="uc_repay_plan"  p="stauts=2"}">已还款</a></span>
+			<span {if $status eq 3} class="act"{/if}><a href="{url x="shop" r="uc_repay_plan" p="stauts=3"}">近期还款</a></span>
+		</div>
+	</form>
+	
+	<div class="blank0"></div>
+	{if $list}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+		<tbody>
+			<tr border="0">
+				<th class="tl pl10">贷款名称</th>
+				<th style="width:10%">第几期</th>
+				<th style="width:15%">待收款</th>
+				<th style="width:12%">利息管理费</th>
+				<th style="width:12%">预期收益</th>
+				<th style="width:12%">实际收益</th>
+				<th style="width:10%">还款日</th>
+				<th style="width:10%">还款状态</th>
+			</tr>
+
+			{foreach from="$list" item="item" key=key}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+				<td class="tl pl10">
+					<a href="{url x="index" r="deal" p="id=$item.deal_id"}" class="f_blue" target="_blank">{$item.name}</a>
+				</td>
+				<td>
+					{$item.l_key_index}
+				</td>
+				<td>
+					{$item.repay_money_format}
+				</td>
+				<td>
+					{$item.manage_interest_money_format} 
+				</td>
+				<td>
+					{$item.interest_money_format} 
+				</td>
+				<td>
+					{if $item.has_repay eq 1}	{$item.shiji_money} {else} 0 {/if}
+				</td>
+				<td>
+					{$item.repay_date}     
+				</td>
+				<td>
+					{$item.status_format} 
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="pages">{$pages}</div>
+	{else}	
+	<div align="center" style="padding:20px 0">暂无记录</div>
+	{/if}
+	<div class="blank"></div>
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	

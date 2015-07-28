@@ -1,0 +1,67 @@
+
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index" r="authorized#invite"}">推广链接</a></div>
+</div>
+<div class="uc_box bdd bt0">
+	<div class="referer_box">
+		<div class="item referer_number">
+			<span>推荐好友总数</span>
+			{$referral_user}
+		</div>
+	</div>	
+	<div class="blank"></div>
+	<div class="uc-table">
+		<div id="referrals" class="pl30">
+				<div class="im refers">
+					
+						<h4>手机号码推荐：</h4>
+						<textarea type="text"  onclick="this.select()" class="f-text f_l ui-textarea mr5" id="share-copy-text-0" style="width:500px; height:60px">我朋友推荐我一个非常不错的理财方式，年化18.2%，多重安全保障！我试过了，很快就能回款，挺安全的，你也试试吧！{$share_url_mobile}</textarea>
+						<input type="button" class="formbutton f_l" id="share-copy-button-0" value="{$LANG.COPY}内容">
+						<div class="blank"></div>
+						<h4>用户名推荐 ：</h4>
+						<textarea type="text"  onclick="this.select()" class="f-text f_l ui-textarea mr5" id="share-copy-text-1" style="width:500px; height:60px">我朋友推荐我一个非常不错的理财方式，年化18.2%，多重安全保障！我试过了，很快就能回款，挺安全的，你也试试吧！{$share_url_username}</textarea>
+						<input type="button" class="formbutton f_l" id="share-copy-button-1" value="{$LANG.COPY}内容">
+				
+				</div>
+		</div>
+		<div class="blank"></div>
+	</div><!--end uc-table-->
+</div>
+<script type="text/javascript" src="{$TMPL}/js/utils/ZeroClipboard.js"></script>
+<script type="text/javascript">
+	var client = new ZeroClipboard( $('#share-copy-button-0') );
+
+	  client.on( 'load', function(client) {
+	  
+	    client.on( 'datarequested', function(client) {
+	      client.setText($('#share-copy-text-0').val());
+	    } );
+	
+	    client.on( 'complete', function(client, args) {
+	      alert(LANG.JS_COPY_SUCCESS);
+	    } );
+	  });
+	  
+	  client.on( 'wrongflash noflash', function() {
+	  		ZeroClipboard.destroy();
+	  });
+	
+	var client1 = new ZeroClipboard( $('#share-copy-button-1') );
+
+	  client1.on( 'load', function(client1) {
+	  
+	    client1.on( 'datarequested', function(client1) {
+	      client.setText($('#share-copy-text-1').val());
+	    });
+	
+	    client1.on( 'complete', function(client1, args) {
+	      alert(LANG.JS_COPY_SUCCESS);
+	    });
+	  });
+	
+	  client1.on( 'wrongflash noflash', function() {
+	    ZeroClipboard.destroy();
+	  });
+		
+	
+</script>

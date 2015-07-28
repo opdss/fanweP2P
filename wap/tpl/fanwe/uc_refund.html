@@ -1,0 +1,108 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_refund.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--尝还贷款列表-->
+<div class="repayment">
+    <div class="Menubox">
+        <ul>
+            <li id="one1"  	{if $data.status eq 0}class="hover"{/if} ><a href="{wap_url a="index" r="uc_refund" p="status=0"}">还款列表</a></li>
+            <li id="one2"   {if $data.status eq 1}class="hover"{/if}><a  href="{wap_url a="index" r="uc_refund" p="status=1"}">已还清借款</a></li>
+            <li></li>
+        </ul>
+    </div>
+    
+<div class="Contentbox">
+{if $data.status eq 0}
+		{if $data.item.0.deal_status eq 4} 
+		     <div id="con_one_1" class="hover repayment_con">
+		     
+		            {foreach from=$data.item item="item"}
+		            <div class="repayment_blok">
+		                <div class="invest_tit gray">
+		                    <a href="">{$item.name}</a> 
+		                </div>
+		                <div class="index_content">
+		                    <div class="index_content1">
+		                    <ul>
+		                        <li>借款金额<span>{$item.borrow_amount_format}</span></li>
+		                        <li>年利率<span class="orange">{$item.rate_foramt}%</span></li>
+		                         <li>期限<span>{$item.repay_time}个月</span></li>
+		                         <li>月还金额<span>{$item.true_month_repay_money_format}</span></li>
+		                        <li>罚息<span>{$item.need_money}</span></li>
+		                       
+		                        <li></li>
+		                    </ul>
+		                    <div class="blank"></div> 
+		                    </div>
+		
+		                    <div class="index_content2">
+		                    <div class="con2_bd">
+		                        <div class="index_Rep_time">下还款日  {$item.next_repay_time_format}</div>
+		                        
+		                        <div class="btn_preRepayment a_fixed">
+		                        <a href="{wap_url a="index" r="uc_inrepay_refund" p="id=$item.id"}">提前还款</a>
+		                        </div>
+		                        <div class="btn_Repayment a_fixed">
+		                        <a href="{wap_url a="index" r="uc_quick_refund" p="id=$item.id"}">还款</a>
+		                        </div>
+		                        <div class="blank"></div> 
+		                    </div>
+		                    </div>   
+		                </div>
+		            </div>
+		            {/foreach}	
+				   	
+			</div>
+{else}
+    <div class="no_data_block">
+    	暂无数据
+    </div>
+{/if}
+{/if}
+<!----------------------------------------------------------------------------还款列表-->	
+{if $data.status eq 1}
+{if $data.item.0.deal_status eq 5} 
+     <div id="con_one_2" class="repaymeet_con" >
+           <div class="repaymeet_blok">
+                <ul>
+          	     {foreach from=$data.item item="item"}
+          	     
+                    <li>
+                    <a href="{wap_url a="index" r="uc_refund_detail" p="id=$item.id" }">
+                        <div class="rep_fl">
+                            <h1>{$item.name}</h1>
+                            <span class="rep_fl_time">
+                            <i class="fa fa-clock-o"></i>{$item.publish_time_format}</span>
+                            <span class="rep_fl_rate">年利率{$item.rate_foramt_w}</span>
+                            <span class="rep_fl_term">期限{$item.repay_time}个月</span>
+                        </div>
+                        <div class="rep_fr">
+                            <h2>{$item.borrow_amount_format}</h2>
+                            <span>金额</span>
+                        </div>
+                        <div class="blank"></div>
+                    </a> 
+                    </li>
+                          {/foreach}    
+                </ul>
+            </div>
+ 		</div>
+{else}
+<div class="no_data_block">
+    	暂无数据
+    </div>
+{/if}
+{/if}
+<!----------------------------------------------------------------------------已还款列表-->	
+    </div>
+</div>	
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

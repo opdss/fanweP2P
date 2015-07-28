@@ -1,0 +1,102 @@
+{// 引入标签库 }
+<tagLib name="html" />
+
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript">
+	$("select[name='vip_type']").change(function(){
+		if($(this).val()==1){
+			$("#guarantor_margin_amt_box").show();
+			$("#guarantor_amt_box").hide();
+		}
+		else if($(this).val()==2)
+		{
+			$("#guarantor_margin_amt_box").hide();
+			$("#guarantor_amt_box").show();
+		}
+		else{
+			$("#guarantor_margin_amt_box").hide();
+			$("#guarantor_amt_box").hide();
+		}
+	});
+</script>
+<div class="main">
+<div class="main_title">专项客服</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">会员名称</td>
+		<td class="item_input">
+			{$vo.user_id|get_user_name}
+			
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">VIP等级</td>
+		<td class="item_input">
+			{$voty.vip_grade}
+			
+		</td>
+	</tr>`
+	
+	<tr>
+		<td class="item_title">VIP专员客服</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="sc_name" value="{$vo.sc_name}" style="width:180px;" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">电话</td>
+		<td class="item_input">
+			<input type="text" class="textbox" style="width:180px;" name="tel" value="{$vo.tel}" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">QQ</td>
+		<td class="item_input">
+			<input type="text" class="textbox" style="width:180px;" name="qq" value="{$vo.qq}" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">电子邮箱</td>
+		<td class="item_input">
+			<input type="text" class="textbox" style="width:180px;" name="email" value="{$vo.email}" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">备注说明</td>
+		<td class="item_input">
+			<textarea id="note" name="note"  class="textbox" style="width:400px;height:80px" >{$vo.note}</textarea>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="VipPrivilege" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update_sc_service" />
+			
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	</if>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>

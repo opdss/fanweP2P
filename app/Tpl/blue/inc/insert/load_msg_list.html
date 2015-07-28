@@ -1,0 +1,14 @@
+<div class="inc">
+		<div class="inc_top">{$page_title}</div>
+		<div class="inc_main pd10">
+			{if $message_type_list}
+			<div class="sub_nav">					
+						{foreach from=$message_type_list item=type_item}
+						<span {if $type_item.current eq 1}class="act"{/if}><a href="<?PHP echo url("shop","msg#".$this->_var['type_item']['type_name']);?>">{$type_item.show_name}</a></span>
+						{/foreach}								
+			</div>
+			{/if}			
+			{include file="inc/message_form.html"}	
+		</div><!--end inc_main-->		
+		<div class="inc_foot"></div>
+</div>

@@ -1,0 +1,145 @@
+{include file="debit/debit_header.html"} 
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/debit_order_sure.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+
+<style>
+	.red{ color:red;}
+</style>
+<div class="order_sure wrap">
+    	<div class="border0">
+    		<form action="{url r="debit" p="debit_deal#save_deal"}" method="post" id="form1">
+    		<div class="p-lr20">
+    			<h3>认证信息</h3>
+				<div class="Prompt_block">首次下单，需上门签订合同，支付宝信息需与认证信息一致!</div>
+			    <h3>支付宝信息</h3>
+				<ul class="zhifubao_info">
+				<span class="Prompt">真实姓名需跟支付宝账号实名认证一致</span><!--这个提示信息，看你怎么foreach-->
+				<li>
+					<span class="name">真实姓名:</span>
+					<span  class="text">{$u_info.real_name}</span>
+					<span class="Prompt">真实姓名需跟支付宝账号实名认证一致</span><!--这个提示信息，看你怎么foreach-->
+				</li>
+				<li>
+					<span class="name">支付宝账号:</span>
+					<span  class="text">{$u_info.u_alipay}</span>
+				</li>
+				<li>
+					<span class="name">学校名称:</span>
+					<span  class="text"><input name="university" class="f-input ui-textbox normal" value="{$u_info.university}" id="settings-university"/></span><span class="red">*</span>
+				</li>
+				<li>
+					<span class="name">宿舍地址:</span>
+					<span  class="text"><input name="address" class="f-input ui-textbox normal" value="{$u_info.address}" id="address"/></span><span class="red">*</span>
+				</li>
+				<li>
+					<span class="name">电话号码:</span>
+					<span  class="text"><input name="mobile" class="f-input ui-textbox normal" value="{$u_info.mobile}" id="mobile"/></span><span class="red">*</span>
+				</li>
+			</ul>
+			<h3>商品信息</h3>
+			<table style=" width:100%;" class="table_bor">
+					  <tr class="table_th">
+						    <th width="20%">商品</th>
+						    <th width="20%">价格</th>
+							<th width="10%">分期数</th>
+						    <th width="42%">月供</th>
+							<th width="8%"></th>
+					  </tr>
+					  
+					   <tr class="table_td">
+						    <td>{$view.deal_loan_type}{$view.debit_money}元</td>
+						    <td class="tc">{$view.debit_money}元</td>
+							<td class="tc">{$view.repay_time}个月</td>
+						    <td class="tc">本金:{function name='format_price' value='$view.stages_money'}元 + 服务费:{$view.fee}元 = {$view.guarantor_amt}元</td>
+							<td ><a href="{url r="debit"}" class="c_3479c7">返回修改</a></td>
+					  </tr>
+			</table> 
+			<div class="Total_price">
+				<p>
+					<sapn class="name">商品总价:</sapn>
+				    <span class="price">{$view.debit_money}元</span>	
+				</p>
+				<p class="Explanation">(本金::{function name='format_price' value='$view.stages_money'}元 + 服务费{$view.fee}元)×{$view.repay_time}期</p>
+			</div>
+    		</div>
+    		<div class="Submit_block clearfix">
+            	<input type="hidden" name="debit_money" id="debit_money" value="{$view.debit_money}"/>
+                <input type="hidden" name="type" id="type" value="{$view.type}"/>
+                <input type="hidden" name="repaytime" id="repaytime" value="{$view.repay_time}"/>
+                <input type="hidden" name="t" id="t" value="publish"/>
+				<button class="f_r" id="deal_submit" type="submit">提交订单</button>
+				<div  class="f_r Total">
+					总计分期金额:
+					<span class="price">{$view.debit_money}元</span>
+				</div>
+                <div  class="f_l p-lr20">
+					推荐码:
+					<span ><input name='work_id' type="text"/></span>
+                    <span class='red'>填写推荐码，账单立减{$view.first_relief}元！</span>
+				</div>
+			</div>
+			</form>
+    	</div>
+</div>
+<div class="blank20"></div>
+
+<div id="proSchool" class="provinceSchool">
+    <div class="title"><span>已选择:</span></div>
+    <div class="proSelect">
+        <select></select>
+        <span>选择您的所在学校</span>
+        <input type="text" />
+    </div>
+    <div class="schoolList">
+        <ul></ul>
+    </div>
+    <div class="button">
+        <span flag='0'>取消</span>
+    </div>
+</div>
+
+<script>
+	$("#deal_submit").click(
+		function(){
+			if($.trim($("#settings-university").val())=="")
+			{
+				$.showErr("请选择学校");
+			}
+			if($.trim($("#address").val())=="")
+			{
+				$.showErr("请填写地址");
+			}
+			if($.trim($("#mobile").val())=="")
+			{
+				$.showErr("请填写电话");
+			}
+			if($.trim($("#debit_money").val())=="" || $.trim($("#type").val()) == "" || $.trim($("#repaytime").val()) == "" || $.trim($("#t").val()) == "")
+			{
+				$.showErr("请返回重新选择白条");
+			}
+			var query = $("#form1").serialize();
+			
+			$.ajax({
+				url: '{url x="debit" r="debit_deal#savedebit" p="is_ajax=1&t=public"}',
+				data:query,
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					if(result.status==1){
+						$.showSuccess(result.info,function(){location.href=result.jump});
+						
+						return false;
+					}
+					else{
+						$.showErr(result.info);
+						return false;
+					}
+				}
+			});
+			
+			return false;			
+	});
+</script>
+{include file="debit/debit_footer.html"}

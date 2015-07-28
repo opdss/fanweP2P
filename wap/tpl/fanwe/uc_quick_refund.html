@@ -1,0 +1,185 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_quick_refund.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--偿还贷款 ==>还款列表 ===>还款-->
+<div class="uc_quick_refund">
+	<div class="head">
+		<h5 class="clearfix">
+			<span class="f_l">{$data.deal.name}</span>
+			<a class="f_r" href="{wap_url a="index" r="deal_contract" p="id=$data.deal.id"}" >查看电子协议</a>
+		</h5>
+		<ul class="clearfix info_list">
+			<li>
+				<span>借款金额</span>
+				<span>{$data.deal.load_money_format}</span>
+			</li>
+			<li>
+				<span>年利率</span>
+				<span class="specialfont">{$data.deal.rate_foramt_w}</span>
+			</li>
+			<li>
+				<span>期限</span>
+				<span>{$data.deal.repay_time}{if $data.deal.repay_time_type eq 0}天{else}个月{/if}</span>
+			</li>
+			<li>
+				<span>已还本息</span>
+				<span>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.deal.repay_money f=2}</span>
+			</li>
+			<li>
+				<span>待还本息</span>
+				<span>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.deal.need_remain_repay_money f=2}</span>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="content detail_content">
+		<h6>还款记录<a hre="#" class="specialfont">(温馨提示：还款应遵循先借先还的准则)</a></h6>
+		<dl>
+			{foreach from=$data.loan_list item="item" name="loan_list"}
+			<a href="{wap_url a="index" r="uc_quick_refund_detail" p="id=$data.deal.id&l_key=$item.l_key"}" >
+			<dd>
+				<div class="list_bor">
+					<div class="h clearfix">
+						<span class="Installments">第 {$item.l_key_index} 期</span>
+						<div class="bor clearfix">
+							<span class="Repayment_date f_r tr">{$item.repay_day_format}</span>
+						</div>
+						
+					</div>
+					<div class="p">
+							<div class="check_but">
+								<!-- //has_repay：1：已还款;0:未还款 -->
+								<!-- //status 1提前,2准时还款，3逾期还款 4严重逾期 5部分还款 6还款中 -->
+								
+									{if $item.has_repay eq 0 && $item.flag == 1}
+									<input id="l_key" type="hidden" value="{$item.l_key}" />
+									<input name="status" checked="checked" type="checkbox" value="{$item.i_key}" class="mt"/>
+									{/if}
+						</div>
+						<div class="bor clearfix">
+							    <div class="child">已还总额{$item.month_has_repay_money_all_format}</div>
+								<div class="child">待还总额{$item.month_need_all_repay_money_format}</div>
+								<div class="child">待还本息{$item.month_repay_money_format}</div>
+								<div class="child">管理费{$item.month_manage_money_format}</div>
+								<div class="child">逾期/违约金{$item.impose_all_money_format}</div>
+								<div class="child">状态 &nbsp;
+								 
+								{if $item.has_repay eq 1 }
+								{if $item.status eq 4}
+								<span class="c_ff4a4a">{$item.status_format}</span>
+								{else}
+								{$item.status_format}
+								{/if}
+								{else}
+								<span class="c_aad421">
+								{$item.status_format}
+								</span>
+								{/if}
+								</div>
+					     </div>
+					</div>
+				</div>
+			</dd>
+			</a>
+				{/foreach}
+		</dl>
+	</div>
+	
+	<div class="clearfix pay_block">
+		<div class="total f_l">
+			<p class="specialfont">
+				{foreach from=$data.loan_list item="items" name="loan_lists"}
+				{if $items.has_repay eq 0 && $items.flag == 1}
+					{$items.month_need_all_repay_money_format}
+				{/if}
+				{/foreach}
+			</p>
+			<span>合计还款</span>
+		</div>
+		<div class="detail_foot f_r">
+			
+			<input id="deal_id" type="hidden" value="{$data.deal.id}" />
+            <div  class="I_Investment">确认还款</div>
+			<div class="lookdetail"><a href="{wap_url a="index" r="uc_incharge"}">充值</a></div>
+		</div>
+	</div>
+	
+</div>
+
+
+<div class="float_block Object_0" style="display:none;" ><!--这是密码域块-->
+	<div class="float_background"></div>
+	<div class="float_content">
+		<div class="set_pw_block">
+			<h5>请输入密码<div class="close_but"><i class="fa fa-close"></i></div></h5>
+			<div class="blank10"></div>
+			<div class="pw_block">
+				<input type="password" class="pw_text" id="paypassword" name="paypassword">
+			</div>
+			<p>还未设置？<a href="{wap_url a="index" r="reset_pay_pwd"}" >点这里</a></p>
+			<div class="detail_foot">
+				    <div class="lookdetail">
+				    	<input id="deal_id" type="hidden" value="{$data.deal.id}" />
+            			<div id="submitt">
+				    	确认支付
+						</div>
+						</div>
+				    <div class="I_Investment"><a href="">取消支付</a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{include file="./inc/footer.html"}
+
+<script>
+	$(document).ready(function(){
+		var height=$("body").height();
+		
+		$(".integral_mall_nav").height(height);
+		$(".float_background").height(height);
+          
+        $(".fa-close").click(function(){
+        	$(this).parents(".float_block").hide();
+        });  
+
+          $(".I_Investment").click(function(){
+          	$(".Object_0").show();
+          });
+                   
+
+	});
+</script>
+	
+<script type="text/javascript">
+
+$("#submitt").click(function(){
+		var ajaxurl = '{wap_url a="index" r="uc_do_quick_refund"}';
+		var deal_id =  $.trim($("#deal_id").val());
+		var paypassword =  $.trim($("#paypassword").val());
+		var query = new Object();
+		query.ids = $.trim($("#l_key").val());
+		query.id = $.trim($("#deal_id").val());
+		query.paypassword = $.trim($("#paypassword").val());
+		
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.show_err);
+					window.location.href = '{wap_url a="index" r="uc_quick_refund"}&id='+deal_id;
+			}
+		
+		});
+		  
+		$(this).parents(".float_block").hide();
+	});
+</script>	
+
+

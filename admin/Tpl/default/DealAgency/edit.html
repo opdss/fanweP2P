@@ -1,0 +1,140 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{%EDIT} <a href="{:u("DealAgency/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">机构名称:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="user_name" value="{$vo.user_name}" /></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">缩略名:</td>
+		<td class="item_input"><input type="text" class="textbox" name="short_name" value="{$vo.short_name}" /></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">登录密码:</td>
+		<td class="item_input"><input type="password" class="textbox" name="user_pwd" value="" /></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">确认密码:</td>
+		<td class="item_input"><input type="password" class="textbox" name="cfguser_pwd" value="" /></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">地址:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="address" value="{$vo.address}" /></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">担保方介绍:</td>
+		<td class="item_input"><textarea class="textarea" name="brief" style="heigth:200px;width:500px" >{$vo.brief}</textarea></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">头部:</td>
+		<td class="item_input">
+			<html:editor id="header" name="header" type="KINDEDITOR" content="{$vo.header}" style=" height:150px;width:750px;" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">公司概况:</td>
+		<td class="item_input"><textarea class="textarea" name="company_brief" style="heigth:200px;width:500px">{$vo.company_brief}</textarea></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">发展史:</td>
+		<td class="item_input">
+			<html:editor id="history" name="history" type="KINDEDITOR" content="{$vo.history}" style=" height:150px;width:750px;" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">内容:</td>
+		<td class="item_input">
+			<html:editor id="content" name="content" type="KINDEDITOR" content="{$vo.content}" style=" height:350px;width:750px;" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%IS_EFFECT}:</td>
+		<td class="item_input">
+			<lable>{%IS_EFFECT_1}<input type="radio" name="is_effect" value="1" <if condition="$vo['is_effect'] eq 1">checked="checked"</if> /></lable>
+			<lable>{%IS_EFFECT_0}<input type="radio" name="is_effect" value="0" <if condition="$vo['is_effect'] eq 0">checked="checked"</if> /></lable>
+		</td>
+	</tr>
+
+	
+	<tr>
+		<td class="item_title">{%SORT}:</td>
+		<td class="item_input"><input type="text" class="textbox" name="sort" value="{$vo.sort}" /></td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_ACCT_TYPE}:</td>
+		<td class="item_input">
+			<lable>{%P_ACCT_TYPE_0}<input type="radio" name="acct_type" value="0" g="acct_type" <if condition="$vo['acct_type'] eq 0">checked="checked"</if> /></lable>
+			<lable>{%P_ACCT_TYPE_1}<input type="radio" name="acct_type" value="1" g="acct_type" <if condition="$vo['acct_type'] eq 1">checked="checked"</if> /></lable>
+		</td>
+	</tr>
+    
+	<tr>
+		<td colspan=2 class="item_title" style="text-align:center">以下资料同步第三方资金管理使用（同步完后不能修改）</td>
+	</tr>
+    <tr class=" ">
+		<td class="item_title">ips个人帐户:</td>
+		<td class="item_input"><input type="text" class="textbox  <if condition="$vo['ips_acct_no'] neq ''">readonly</if>" name="ips_acct_no" value="{$vo.ips_acct_no}" <if condition="$vo['ips_acct_no'] neq ''">readonly="readonly"</if> /></td>
+	</tr>
+    <tr class=" ">
+		<td class="item_title">由IPS颁发的商户号:</td>
+		<td class="item_input"><input type="text" class="textbox  <if condition="$vo['ips_mer_code'] neq ''">readonly</if>" name="ips_mer_code" value="{$vo.ips_mer_code}" <if condition="$vo['ips_mer_code'] neq ''">readonly="readonly"</if> /></td>
+	</tr>
+	<tr class=" ">
+		<td class="item_title">姓名:</td>
+		<td class="item_input"><input type="text" class="textbox  <if condition="$vo['real_name'] neq ''">readonly</if>" name="real_name" value="{$vo.real_name}" <if condition="$vo['real_name'] neq ''">readonly="readonly"</if> /></td>
+	</tr>
+	
+	<tr class=" ">
+		<td class="item_title">身份证:</td>
+		<td class="item_input"><input type="text" class="textbox  <if condition="$vo['idno'] neq ''">readonly</if>" name="idno" value="{$vo.idno}" <if condition="$vo['idno'] neq ''">readonly="readonly"</if> /></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">手机:</td>
+		<td class="item_input"><input type="text" class="textbox  <if condition="$vo['mobile'] neq ''">readonly</if>" name="mobile" value="{$vo.mobile}" <if condition="$vo['mobile'] neq ''">readonly="readonly"</if> /></td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">邮箱:</td>
+		<td class="item_input"><input type="text" class="textbox  <if condition="$vo['email'] neq ''">readonly</if>" name="email" value="{$vo.email}" <if condition="$vo['email'] neq ''">readonly="readonly"</if> /></td>
+	</tr>
+	<tr>
+		<td colspan=2 class="item_title"></td>
+	</tr>
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="DealAgency" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%EDIT}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<include file="Public:footer" />

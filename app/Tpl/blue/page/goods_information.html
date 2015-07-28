@@ -1,0 +1,75 @@
+{include file="inc/header.html"}
+<script type="text/javascript">
+var sum_score = {$goods.score};
+var has_stock = {$has_stock};
+var user_can_buy_number = {$goods.user_can_buy_number};
+{if $goods.goods_type_id gt 0 && $has_stock gt 0}
+var json_attr_stock  =  {$json_attr_stock};
+{else}
+var json_attr_stock = null;
+{/if}
+</script>
+
+<adv adv_id="我要理财列表页顶部广告" />
+<div class="ur_here"><a href="{url x="index" r="index"}">首页</a> > <a href="{url x="index" r="score"}">积分商城</a></div>
+	<div id="content" class="clearfix">
+		<div class="bdd bddf p20 clearfix">
+				
+			<div class="goods_image">
+				<img src="{function name="get_spec_image" v="$goods.img" w="365" h="275"}" width="365" height="275" id="img" border="0" />
+			</div>
+			
+			<div class="goods_text">
+				<div class="home pl20">
+					<span class="goods_name">{$goods.name}</span>
+					<form id="J_score_goods_form">
+						<div class="row clearfix">
+							<div class="row-t">所属类别：</div>
+							<div class="row-bx">{$goods.cate_name}</div>
+						</div>
+						<div class="row clearfix">
+							<div class="row-t">所需积分：</div>
+							<div class="row-bx"><span class="jf bd score">{if $goods.score gt 0}{$goods.score}{else}0{/if}</span>/分</div>
+						</div>
+						<div class="row clearfix">
+							<div class="row-t">兑换人数：</div>
+							<div class="row-bx">{if $goods.invented_number gt 0}{$goods.invented_number}{else}0{/if}人</div>
+						</div>
+						<div class="row clearfix">
+							<div class="row-t">剩余数量：</div>
+							<div class="row-bx"><span id="stock_number">{$goods.max_bought_format}</span>/份</div>
+						</div>
+						<div class="row clearfix">
+							<div class="row-t">兑换数量：</div>
+							<div class="row-bx"><input id="number" class="f-input ui-textbox w50 tc" type="text" value="1">&nbsp;份</div>
+						</div>
+						<div id="sku">
+							{foreach from="$goods_type_attr" item="item" key=key}
+								<div class="blank"></div>
+								<div class="rows">
+									<div class="t f_l" rel="{$item.name}">选择{$item.name}:</div>
+									{foreach from="$item.list" item="items" key=key}
+									<label for="{$items.id}"  class="Other_Property Property" title="选此项，所需积分加{$items.score}">{$items.name}<input class="mt" id="{$items.id}" type="radio" rel="{$items.score}" attrstr="{$items.name}" value="{$items.id}" name="attr[{$items.goods_type_attr_id}]"></label>
+									{/foreach}
+								</div>
+							{/foreach}
+						</div> 
+					</form>
+				</div>
+				<div class="blank"></div>
+				<div class="submit-box">
+					<input class="true_btn exchange_btn" type="button" onclick="doexchange({$goods.id},{$goods.is_delivery},{$goods.max_bought_format},{$goods.user_can_buy_number});" value="立 即 兑 换" />
+				</div>
+			</div>
+		</div>
+		<div class="blank20"></div>
+		<div class="tabbox">
+			<div class="tab cur">商品详情</div>
+		</div>
+		<div class="bdd bddf bt0 clearfix p20 lh30">
+			{$goods.description}
+		</div>
+	</div>
+</div>
+
+{include file="inc/footer.html"}

@@ -1,0 +1,22 @@
+.uc_goods_order{  margin-bottom:15px; }
+.uc_goods_order li{border-radius:5px; overflow:hidden;  font-size:12px; line-height:30px; margin:0 10px; margin-top:15px; }
+.uc_goods_order li h5{padding:0 10px;line-height:40px;font-size:14px; font-weight:600; border-radius:5px 5px 0 0;}
+.uc_goods_order li .y{ background:@main_color; color:#fff;   }
+.uc_goods_order li .n{ background:none; color:#878787; border:1px solid #cbcbcb; background:#f4f2f3;}
+.uc_goods_order li .order_content .img_bor img{ width:100%; height:100%;}
+.uc_goods_order li .order_content .img_bor{ border: 1px solid #cbcbcb;overflow: hidden;width: 80px;height: 80px;padding: 3px;float: left;margin-left: -100px;}
+.uc_goods_order li .order_content{ padding: 10px;padding-left: 110px; border:1px solid #cbcbcb; border-top:none;border-radius:0 0 5px 5px; background:#fff;}
+.uc_goods_order li .order_content .name{ padding-right:5px; display:inline-block; width:48px;}
+.uc_goods_order li .order_content .content h6{white-space: nowrap;overflow: hidden;text-overflow: ellipsis; font-weight:600; font-size:13px;}
+
+.uc_goods_order li .order_content .content{ overflow:hidden; height:90px;}
+
+
+
+
+
+
+
+
+
+

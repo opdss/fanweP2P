@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" /> 
+<meta http-equiv="Cache-control" content="no-cache" />
+<title>{if $page_title}{$page_title} - {/if}{if $show_site_titile eq 1}{function name='app_conf' value='SHOP_SEO_TITLE'} - {/if}{$site_info.SHOP_TITLE}</title>
+<meta name="keywords" content="{if $page_keyword}{$page_keyword}{/if}{$site_info.SHOP_KEYWORD}" />
+<meta name="description" content="{if $page_description}{$page_description}{/if}{$site_info.SHOP_DESCRIPTION}" />
+<?php
+$this->_var['mobile_index_css'][] = $this->_var['TMPL_REAL']."/css/mobile_index.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$mobile_index_css"}" />
+</head>
+<body>
+
+<div class="main">
+	<div class="content">
+		<div class="mtitle">
+		  &nbsp;<b>贷款信息</b>
+		</div>
+
+		<div class="jklb">
+		<ul>
+			<li>{$deal.color_name}</li>
+			<li>
+				<span class="label">借贷编号</span>
+				<span class="dbox">{$deal.id}</span>
+			</li>
+			<li>
+				<span class="label">借款金额</span>
+				<span class="dbox"><span class="f_red">
+				{$deal.borrow_amount_format}
+				
+				</span></span>
+			</li>
+			<li>
+				<span class="label">风险等级：</span>
+				<span class="dbox"><span class="f_green">
+				{if $deal.rish_rank eq 0}
+				低
+				{elseif $deal.rish_rank eq 1}
+				中
+				{elseif $deal.rish_rank eq 2}
+				高
+				{/if}
+				</span></span>
+			</li>
+			<li>
+				<span class="label">借款年利率</span>
+				<span class="dbox"><span class="f_red">{$deal.rate_foramt}%</span></span>
+			</li>
+		
+			<li>
+				<span class="label">借款期限</span>
+				<span class="dbox">{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</span>
+			</li>
+
+			<li>
+				<span class="label">最低投标金额</span>
+				<span class="dbox">{$deal.min_loan_money}元</span>
+			</li>
+			{if $deal.loantype neq 2}
+			<li>
+				<span class="label">还款周期</span>
+				<span class="dbox">按月还款</span>
+			</li>
+			{/if}
+			<li>
+				<span class="label">还款方式</span>
+				<span class="dbox">{function name="loantypename" v="$deal.loantype"}</span>
+			</li>
+			<li>
+				<span class="label">借款用途</span>
+				<span class="dbox">{$deal.type_info.name}</span>
+			</li>
+			<li>
+				<span class="label">{$LANG.TIME_LEFT}</span>
+				<span class="dbox">
+					{if $deal.deal_status neq 1}
+					0天0时0分
+					{else}
+					{$deal.remain_time_format}
+					{/if}
+				</span>
+			</li>
+			{if $deal.loantype neq 2}
+			<li>
+				<span class="label">提前还款费率</span>
+				<span class="dbox"><span class="f_red">{function name="app_conf" v="COMPENSATE_FEE"}%</span></span>
+			</li>
+			{/if}
+			<li>
+				<span class="label">担保范围</span>
+				<span class="dbox"> {if $deal.warrant eq 1}本金{elseif $deal.warrant eq 2}本金及利息{else}无{/if}</span>
+			</li>
+		
+			<li>
+				<span class="label">状态</span>
+				<span class="dbox">
+					{if $deal.is_delete eq 2}
+						未发布
+					{elseif $deal.is_wait eq 1}
+						待发布
+					{elseif $deal.deal_status eq 5}
+						已还完
+					{elseif $deal.deal_status eq 4}
+						还款中
+					{elseif $deal.deal_status eq 0}
+						等待材料
+					{elseif $deal.deal_status eq 1 && $deal.remain_time gt 0}
+						招标中
+					{elseif $deal.deal_status eq 2}
+						已满标
+					{elseif $deal.deal_status eq 3 || $deal.remain_time lte 0}
+						流标
+					{/if}</span>
+			</li>
+				
+		</ul>
+		</div>
+
+<div style="height:15px; overflow:hidden; clear:both;"></div>
+		
+		<div class="box-hd">
+			<span >借入者基本信息</span>
+		</div>
+		<div class="jklb">
+		<ul>
+			<li>
+				<span class="label">信用等级</span>
+				<span class="dbox">
+					<img src="{$TMPL}/images/{$u_info.point_level}.png" align="absmiddle" alt="{$u_info.point_level}" title="{$u_info.point_level}">
+					（{$u_info.point}分）
+				</span>
+			</li>
+		
+		
+			<li>
+				<span class="label">信用额度</span>
+				<span class="dbox">{function name="format_price" v=$u_info.quota}</span>
+			</li>
+			
+    	    {if $u_info.sex gte 0}
+			<li>
+			 <span class="label">性别</span>
+		     <span class="dbox">
+			     {if $u_info.idcardpassed eq 1}
+			     <font>
+			     {/if}
+			     {if $u_info.sex eq 1}男{else}女{/if}
+			     {if $u_info.idcardpassed eq 1}
+			     </font>{/if}
+		     </span>
+        	</li>
+			{/if}
+			
+
+			<li>
+				<span class="label">年龄</span>
+				<span class="dbox">{if $u_info.idcardpassed eq 1}<font><?php echo to_date(get_gmtime(),"Y")-$this->_var['u_info']['byear'];?></font>{else}<?php echo to_date(get_gmtime(),"Y")-$this->_var['u_info']['byear'];?>{/if}</span>
+			</li>
+			
+
+			<li>
+				<span class="label">是否结婚</span>
+				<span class="dbox">{if $u_info.marrypassed eq 1}<font>{$u_info.marriage}</span>{else}{$u_info.marriage}{/if}</span>
+			</li>
+			
+			
+			<li><span class="label">工作城市</span>
+				<span class="dbox">
+					{if $u_info.residencepassed eq 1}<font>{$u_info.region_province}&nbsp;{$u_info.region_city}</span>{else}{$u_info.region_province}&nbsp;{$u_info.region_city}{/if} {if $expire.residencepassed_expire}（过期）{/if}
+				</span>
+			</li>
+			
+			<li><span class="label">公司行业</span>
+				<span class="dbox">
+					{if $u_info.workpassed eq 1}<font>{$u_info.workinfo.officetype}</font>{else}{$u_info.workinfo.officetype}{/if}{if $expire.workpassed_expire}（过期）{/if}
+				</span>
+			</li>
+			
+			{if $deal.voffice eq 1}
+			<li>
+				<span class="label">公司名称</span>
+				<span class="dbox">{if $u_info.workpassed eq 1}<font>{$u_info.workinfo.office}</font>{else}{$u_info.workinfo.office}{/if}</span>
+			</li>
+			{/if}
+			
+			<li>
+				<span class="label">公司规模</span>
+				<span class="dbox">{if $u_info.workpassed eq 1}<font>{$u_info.workinfo.officecale}人</font>{else}{$u_info.workinfo.officecale}{/if}</span>
+			</li>
+			
+			{if $deal.vposition eq 1}
+			<li>
+				<span class="label">职位</span>
+				<span class="dbox">{if $u_info.workpassed eq 1}<font>{$u_info.workinfo.position}</font>{else}{$u_info.workinfo.position}{/if}</span>
+			</li>
+			{/if}
+			
+			<li>
+				<span class="label">工作收入</span>
+				<span class="dbox">{if $u_info.incomepassed eq 1}<font>{$u_info.workinfo.salary}</font>{else}{$u_info.workinfo.salary}{/if}{if $expire.incomepassed_expire}（过期）{/if}</span>
+			</li>
+			
+			<li>
+				<span class="label">现单位工作时间</span>
+				<span class="dbox">{$u_info.workinfo.workyears}</span>
+			</li>
+			
+			<li>
+				<span class="label">有无购房</span>
+				<span class="dbox">{if $u_info.hashouse eq 1}
+		 			{if $u_info.housepassed eq 1}
+		 			<font>有</font>
+		 			{else}
+		 				有
+		 			{/if}
+		 	   {else}无{/if}
+		 	   </span>
+			</li>
+		</ul>
+		</div>
+		
+		<!-- 借贷款记录 -->
+		
+		<div style="clear: both;"></div>
+		<div class="box-hd">
+			<span >信贷借款记录</span>
+		</div>
+	
+		<div class="jkjl">
+		<ul>
+			<li >
+				<span class="label f_gray">
+					<i class="dot"></i>
+					发布借款笔数
+				</span>
+				<span class="dbox">{$user_statics.deal_count}</span>
+			</li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					成功借款笔数
+				</span>
+				<span class="dbox">{$user_statics.success_deal_count}</span>
+			</li>
+			
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					还清笔数
+				</span>
+				<span class="dbox">{$user_statics.repay_deal_count}</span>
+			</li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					逾期次数
+				</span>
+				<span class="dbox">{$user_statics.yuqi_count}</span>
+			</li>
+			
+		    <li>
+		    	<span class="label f_gray">
+		    		<i class="dot"></i>
+		    		严重逾期次数
+		    	</span>
+		    	<span class="dbox">{$user_statics.yz_yuqi_count}</span>
+		    </li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					共计借入
+				</span>
+				<span class="dbox">{function name="format_price" v="$user_statics.borrow_amount"}</span>
+			</li>
+		    <li>
+		    	<span class="label f_gray">
+		    		<i class="dot"></i>
+		    		待还本息
+		    	</span>
+				<span class="dbox">{function name="format_price" v="$user_statics.need_repay_amount"}</span>
+			</li>
+		    <li>
+		    	<span class="label f_gray">
+		    		<i class="dot"></i>
+		    		逾期金额
+		    	</span>
+				<span class="dbox">{function name="format_price" v="$user_statics.yuqi_amount"}</span>
+			</li>
+		    <li>
+		    	<span class="label f_gray">
+		    		<i class="dot"></i>
+		    		共计借出
+		    	</span>
+				<span class="dbox">{function name="format_price" v="$user_statics.load_money"}</span>
+			</li>
+		    <li class="nbt">
+		    	<span class="label f_gray">
+		    		<i class="dot"></i>
+		    		待收本息
+		    	</span>
+				<span class="dbox">{function name="format_price" v="$user_statics.load_wait_repay_money"}</span>
+			</li>
+		    
+		</ul>
+		</div>
+		
+	</div>
+	<div style="clear: both;"></div>
+	
+	
+	
+	
+	<div class="content">
+		<div class="mtitle">
+		
+		  &nbsp;<b>审核记录</b>
+		</div>
+		<div style="height:15px; overflow:hidden; clear:both;"></div>
+		<div class="shjl" >
+		<ul>
+			<li class="hd">
+				<span class="item tl">审核项目</span>
+				<span class="item">状态</span>
+				<span class="item">通过时间</span>
+			</li>
+			
+			
+			{if $u_info.idcardpassed eq 1 || ($u_info.idcardpassed eq 0 && $credit_file.credit_identificationscanning.file_list)}
+			<li>
+				<span class="item tl">
+					身份证认证
+				</span>
+				<span class="item">
+					{if $u_info.idcardpassed eq 1}
+	                <img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">
+					{if $u_info.idcardpassed eq 1}
+	                {function name="to_date" v="$u_info.idcardpassed_time" f="Y-m-d"}
+					{/if}
+				</span>
+			</li>
+			{/if}
+			
+			
+			{if $u_info.workpassed eq 1 || ($u_info.workpassed eq 0 && $credit_file.credit_contact.file_list)}
+			<li>
+				<span class="item tl">
+					工作认证
+				</span>
+				<span class="item">
+					{if $u_info.workpassed eq 1}
+			   		{if $expire.workpassed_expire}
+					已过期
+					{else}
+                	<img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{/if}
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">
+					{if !$expire.workpassed_expire}
+	            	{if $u_info.workpassed eq 1}
+	                {function name="to_date" v="$u_info.workpassed_time" f="Y-m-d"}
+					{/if}
+					{/if}
+				</span>
+			</li>
+			{/if}
+			
+			{if $u_info.creditpassed eq 1 || ($u_info.creditpassed eq 0 && $credit_file.credit_credit.file_list)}
+			<li>
+				<span class="item tl">
+					信用报告
+				</span>
+				<span class="item">
+					{if $u_info.creditpassed eq 1}
+					{if $expire.creditpassed_expire}
+					已过期
+					{else}
+              		<img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{/if}
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">
+					{if !$expire.creditpassed_expire}
+	            	{if $u_info.creditpassed eq 1}
+	                {function name="to_date" v="$u_info.creditpassed_time" f="Y-m-d"}
+					{/if}
+					{/if}
+				</span>
+			</li>
+			{/if}
+			
+			{if $u_info.incomepassed eq 1 || ($u_info.incomepassed eq 0 && $credit_file.credit_incomeduty.file_list)}
+			<li>
+				<span class="item tl">
+					收入认证
+				</span>
+				<span class="item">
+					{if $u_info.incomepassed eq 1}
+					{if $expire.incomepassed_expire}
+					已过期
+					{else}
+               		<img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{/if}
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">
+					{if !$expire.incomepassed_expire}
+	             	{if $u_info.incomepassed eq 1}
+	                {function name="to_date" v="$u_info.incomepassed_time" f="Y-m-d"}
+				    {/if}
+					{/if}
+				</span>
+			</li>
+			{/if}
+			
+			
+			{if $u_info.housepassed eq 1 || ($u_info.housepassed eq 0 && $credit_file.credit_house.file_list)}
+			<li>
+			
+				<span class="item tl">
+					房产认证
+				</span>
+				<span class="item">
+					{if $u_info.housepassed eq 1}
+	                <img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">
+				   {if $u_info.housepassed eq 1}
+	               {function name="to_date" v="$u_info.housepassed_time" f="Y-m-d"}
+				   {/if}
+			   </span>
+			{/if}
+		
+			{if $u_info.carpassed eq 1 || ($u_info.carpassed eq 0 && $credit_file.credit_car.file_list)}
+			<li>
+				<span class="item tl">
+					购车证明
+				</span>
+				<span class="item">{if $u_info.carpassed eq 1}
+	                <img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">
+					{if $u_info.carpassed eq 1}
+	            	{function name="to_date" v="$u_info.carpassed_time" f="Y-m-d"}
+					{/if}
+				</span>
+			</li>
+			{/if}
+			 
+			{if $u_info.marrypassed eq 1 || ($u_info.marrypassed eq 0 && $credit_file.credit_marriage.file_list)}
+			<li>
+				<span class="item tl">
+					结婚认证
+				</span>
+				<span class="item">
+					{if $u_info.marrypassed eq 1}
+	                <img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">
+					{if $u_info.marrypassed eq 1}
+	            	{function name="to_date" v="$u_info.marrypassed_time" f="Y-m-d"}
+					{/if}
+				</span>
+			</li>			
+			{/if}	
+				
+			{if $u_info.edupassed eq 1 || ($u_info.edupassed eq 0 && $credit_file.credit_graducation.file_list)}
+			<li>
+				<span class="item tl">
+					学历认证
+				</span>
+				<span class="item">
+					{if $u_info.edupassed eq 1}
+					 <img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">
+					{if $u_info.edupassed eq 1}
+	            	{function name="to_date" v="$u_info.edupassed_time" f="Y-m-d"}
+					{/if}
+				</span>
+			</li>
+			{/if}
+			
+			{if $u_info.skillpassed eq 1 || ($u_info.skillpassed eq 0 && $credit_file.credit_titles.file_list)}
+			<li>
+				<span class="item tl">技术职称认证</span>
+				<span class="item">
+					{if $u_info.skillpassed eq 1}
+					<img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">
+					{if $u_info.skillpassed eq 1}
+	            	{function name="to_date" v="$u_info.skillpassed_time" f="Y-m-d"}
+					{/if}
+				</span>
+			</li>
+			{/if}
+			
+			{if $u_info.videopassed eq 1 || ($u_info.videopassed eq 0 && $u_info.has_send_video eq 1)}
+			<li>
+				<span class="item tl">
+					视频认证
+				</span>
+				<span class="item">
+					{if $u_info.videopassed eq 1}
+					 <img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">{if $u_info.videopassed eq 1}
+            	{function name="to_date" v="$u_info.videopassed_time" f="Y-m-d"}
+				{/if}</span>
+			</li>
+			{/if}
+			
+			{if $u_info.mobiletruepassed eq 1 || ($u_info.mobiletruepassed eq 0 && $credit_file.credit_mobilereceipt.file_list)}
+			<li>
+				<span class="item tl">
+					手机实名认证
+				</span>
+				<span class="item">
+					{if $u_info.mobiletruepassed eq 1}
+					 <img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">
+					{if $u_info.mobiletruepassed eq 1}
+	            	{function name="to_date" v="$u_info.mobiletruepassed_time" f="Y-m-d"}
+					{/if}
+				</span>
+			</li>
+			{/if}
+			
+			
+			{if $u_info.residencepassed eq 1 || ($u_info.residencepassed eq 0 && $credit_file.credit_residence.file_list)}
+			<li>
+				<span class="item tl">居住地证明</span>
+				<span class="item">
+					{if $u_info.residencepassed eq 1}
+					{if $expire.residencepassed_expire}
+					已过期
+					{else}
+				 	<img src="{$TMPL}/images/answer_success.jpg" alt="通过">
+					{/if}
+					{else}
+					资料已上传，待审核
+					{/if}
+				</span>
+				<span class="item">
+					{if !$expire.residencepassed_expire}
+	            	{if $u_info.residencepassed eq 1}
+	            	{function name="to_date" v="$u_info.residencepassed_time" f="Y-m-d"}
+					{/if}
+					{/if}
+				</span>
+			</li>
+			{/if}
+			
+			{if $u_info.info_down}
+			<li>
+			<span class="item tl">
+				会员资料下载
+			</span>
+			<span class="item">
+				<img src="{$TMPL}/images/answer_success.jpg" alt="有">
+			</span>
+			<span class="item">
+				<a href="{$u_info.info_down}">下载查看</a>
+			</span>
+			</li>
+			{/if}
+			
+			{if $deal.agency_id gt 0}
+			<li>
+				<span class="item tl">
+					<a href="{url x="index" r="agency" p="id=$deal.agency_id"}">机构担保--{$deal.agency_info.name}</a>
+				</span>
+				<span class="item">
+					<img src="{$TMPL}/images/answer_success.jpg" alt="有">
+				</span>
+				<span class="item">
+					&nbsp;
+				</span>
+			</li>
+			{/if}
+			
+			
+		</ul>
+		</div>
+	</div>
+	<div style="clear: both;"></div>
+	
+	<div class="content">
+		<div class="mtitle" >
+		  <b>投资记录</b>
+		</div>
+		<div class="tzjl">
+		<ul>
+			
+						
+			{foreach from="$load_list" item="load"}
+			<li>
+				<span class="label">
+					{function name="utf_substr" v="$load.user_name"}</s> 
+				</span>
+				<span class="dbox">
+					<span class="f_red">{function name="format_price" v="$load.money"}</span>
+					<br>
+					<span class="time">
+						{function name="to_date" v="$load.create_time" f="Y-m-d"}
+						{function name="to_date" v="$load.create_time" f="H:i"}
+					</span>
+				</span>
+			
+			</li>
+			{/foreach}
+			
+			
+		</ul>
+		</div>
+	</div>
+	<div style="clear: both;"></div>
+	
+	
+	<div class="content">
+		
+		<div class="mtitle">
+		  <b>担保公司</b>
+		</div>
+		{if $deal.agency_id gt 0}
+		<div class="jrzxyxx">
+		{$deal.agency_info.brief}</div>
+		{/if}
+	</div>
+	<div style="clear: both;"></div>
+	
+</div>
+
+</body>
+</html>

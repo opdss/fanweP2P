@@ -1,0 +1,109 @@
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="">信用额度列表</a></div> 
+	<a class="sub_btn f_r mt5 mr15 lh34" id="J_quota_add">申请</a>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+		<div class="sub_nav">
+			<span {if $status==0}class="act"{/if}><a href="{url x="index" r="uc_quota#index"}">全部</a></span>
+			<span {if $status==3}class="act"{/if}><a href="{url x="index" r="uc_quota#index" p="status=3"}">未审核</a></span>
+			<span {if $status==1}class="act"{/if}><a href="{url x="index" r="uc_quota#index" p="status=1"}">已通过</a></span>
+			<span {if $status==2}class="act"{/if}><a href="{url x="index" r="uc_quota#index" p="status=2"}">未通过</a></span>
+		</div>
+		
+		{if $list}
+		    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+		        <tbody>
+		            <tr border="0">
+		                <th style="width:10%">编号</th>
+		                <th style="width:15%">申请金额</th>
+		                <th style="width:15%">推荐人</th>
+		                <th style="width:15%">申请时间</th>
+		                <th style="width:15%">状态</th>
+		                <th style="width:15%">审核时间</th>
+		                <th style="width:15%">操作</th>
+		            </tr>
+		           
+		           {foreach from=$list item="item" key=key name="quota"}
+		            <tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.quota.last}style="border-bottom:0"{/if}">
+		                <td class="tc">
+		                  {$item.id}   
+		                </td>
+		                <td class="tc">
+		                  {$item.money}
+		                </td>
+		                <td class="tc">
+		                  {$item.referraler}
+		                </td>
+		                <td class="tc">
+		                  {$item.create_time_format}
+		                </td>
+		                <td class="tc">
+		                  {$item.status_format}
+		                </td>
+		                <td class="tc">
+		                {if $item.op_time }
+		                  {$item.op_time_format}
+		                  {else}
+		                  -
+		                  {/if}
+		                </td>
+		                <td class="tc">
+		                {if $item.status eq 0}
+		             		  <a href="javascript:void(0);" class="J_delete_quota" dataid="{$item.id}">删除</a>
+		             	{else}	     
+		             		 -
+		             	{/if}
+		                </td>
+		            </tr>
+		            {/foreach}
+		            
+		        </tbody>
+		    </table>
+		    <div class="pages">{$pages}</div>
+			{else}
+			<div class="tc p15">暂无记录</div>
+		   {/if}
+</div>
+
+<script type="text/javascript">
+jQuery(function(){
+	$("#J_quota_add").click(function(){
+		var ajaxurl = '{url x="index" r="uc_quota#add_quota"}';
+		$.weeboxs.open(
+				ajaxurl,{
+					contentType:'ajax',
+					showButton:false,
+					title:"申请信用额度",
+					width:560,
+					type:'wee'
+					});
+	});
+	
+	$(".J_delete_quota").click(function(){
+		$.showCfm("是否删除",function(){
+			var query = new Object();
+			query.quota_id = $(this).attr("dataid");
+			$.ajax({
+				url:'{url x="index" r="uc_quota#do_delete_quota"}',
+				data:query,
+				type:"post",
+				dataType:"json",
+				success:function(ajaxobj){
+					if(ajaxobj.status==1){
+						$.showSuccess(ajaxobj.info,function(){
+							window.location.reload();
+						});
+					}
+					else{
+						$.showErr(ajaxobj.info);
+					}
+				}
+				,error:function(){
+					$.showErr("请求数据失败!");
+				}
+			});
+		});
+	});
+	
+})
+</script>

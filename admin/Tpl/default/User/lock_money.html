@@ -1,0 +1,61 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<script type="text/javascript">
+	function check_incharge_form()
+	{
+		if($("input[name='lock_money']").val()!=''&&isNaN($("input[name='lock_money']").val()))
+		{
+			alert("输入的冻结资金有误");
+			return false;
+		}
+		if(parseFloat($("input[name='lock_money']").val()) > 0 && parseFloat($("input[name='lock_money']").val())>parseFloat({$user_info.money}))
+		{
+			alert("输入的冻结资金不得大于账户余额");
+			return false;
+		}
+		
+		if(parseFloat($("input[name='lock_money']").val()) < 0 && parseFloat($("input[name='lock_money']").val())<-parseFloat({$user_info.lock_money}))
+		{
+			alert("输入的解冻资金不得大于已冻结的资金");
+			return false;
+		}
+	}
+</script>
+<div class="main">
+<div class="main_title">{$user_info.user_name} 账户余额:{$user_info.money|format_price} 冻结金额:{$user_info.lock_money|format_price}</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data" onsubmit="return check_incharge_form();">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">冻结资金:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="lock_money" />
+		<span class='tip_span'>[正数为增加冻结资金，负数为减少冻结资金]</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%INCHARGE_MSG}:</td>
+		<td class="item_input"><input type="text" class="textbox" name="msg" style="width:400px;" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$user_info.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="User" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="modify_account" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>

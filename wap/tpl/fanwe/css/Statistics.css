@@ -1,0 +1,11 @@
+.Statistics_data{ background:#fff; border-bottom:1px solid #cbcbcb;border-top:1px solid #cbcbcb; padding:5px 10px; overflow:hidden;}
+.Statistics_data ul li{ width:50%;  float:left; font-size:16px; line-height:25px; f color:#878787; text-align:center;}
+.Statistics_data ul li .data{ color:#ff9000;}
+.Statistics_block{ background:#fff; border:1px solid @main_color; border-radius:5px; overflow:hidden; color:#878787; text-align:center; line-height:35px; font-size:13px; margin:0 10px;}
+.Statistics_block h5{ border-bottom:1px solid @main_color;  line-height:40px; font-size:14px; font-weight: 600;}
+.Statistics_block .data .left_data{ float:left; width:40%; background:@main_color; font-size:13px;}
+.Statistics_block .data .right_data{ float:left; width:60%; background:#fff;}
+.Statistics_block .data .left_data ul li{ color:#fff; border-bottom:1px solid #fff;}
+.Statistics_block .data .left_data ul li:last-child{ border-bottom:none}
+.Statistics_block .data .right_data ul li{ border-bottom:1px solid @main_color;}
+.Statistics_block .data .right_data ul li:last-child{ border-bottom:none}

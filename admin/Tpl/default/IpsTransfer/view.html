@@ -1,0 +1,123 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/user_edit.js' />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__ROOT__/system/region.js' />
+<div class="main">
+<div class="main_title">{%EDIT} <a href="{:u("IpsTransfer/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+    <tr>
+		<td class="item_title">{%ID}:</td>
+		<td class="item_input">
+			{$ips_info.id}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_NAME}:</td>
+		<td class="item_input">
+			{$ips_info.name}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%REF_DATA}:</td>
+		<td class="item_input">
+			{$ips_info.ref_data}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MER_CODE}:</td>
+		<td class="item_input">
+			{$ips_info.pMerCode}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MER_BILL_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pMerBillNo}
+		</td>
+	</tr>       
+    <tr>
+		<td class="item_title">{%P_BID_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pBidNo}
+		</td>
+    </tr>
+    <tr>
+		<td class="item_title">{%P_MER_DATE}:</td>
+		<td class="item_input">
+			{$ips_info.pDate}
+		</td>
+    </tr>
+	<tr>
+		<td class="item_title">{%P_TRANSFER_TYPE}:</td>
+		<td class="item_input">
+			{$ips_info.pTransferType}
+		</td>
+    </tr>       
+	<tr>
+		<td class="item_title">{%P_TRANSFER_MODE}:</td>
+		<td class="item_input">
+			{$ips_info.pTransferMode}
+		</td>
+    </tr>
+    <tr>
+		<td class="item_title">{%P_MEMO_1}:</td>
+		<td class="item_input">
+			{$ips_info.pMemo1}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MEMO_2}:</td>
+		<td class="item_input">
+			{$ips_info.pMemo2}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_MEMO_3}:</td>
+		<td class="item_input">
+			{$ips_info.pMemo3}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_IPS_BILL_NO}:</td>
+		<td class="item_input">
+			{$ips_info.pIpsBillNo}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_IPS_TIME}:</td>
+		<td class="item_input">
+			{$ips_info.pIpsTime}
+		</td>
+	</tr>
+    <tr>
+		<td class="item_title">{%P_TRANSFER_USERNAME}:</td>
+		<td class="item_input">
+			{$ips_info.user_name}
+		</td>
+	</tr>
+</table>
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<a href="{:u("IpsTransfer/index")}" class="button">{%BACK_LIST}</a>
+			</td>
+		</tr>
+		<tr> 
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 	 
+</div>
+<include file="Public:footer" />

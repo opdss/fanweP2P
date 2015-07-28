@@ -1,0 +1,36 @@
+{if $cancel}
+<form name="opform" action="{url x="index" r="op#submit"}">
+取消操作
+<div class="blank"></div>
+<div class="btn_row tc">
+	<input type="hidden" name="m_name" value="{$m_name}" />
+	<input type="hidden" name="a_name" value="{$a_name}" />
+	<input type="hidden" name="id" value="{$id}" />
+	<input type="button" onclick="do_submit_opform();" name="send" class="topic_form_button" value="确定">
+	<input type="button" onclick="close_pop();" name="cancel" class="topic_form_button" value="取消">
+</div>
+</form>
+{else}
+<form name="opform" action="{url x="index" r="op#submit"}">
+<div class="topic_pub_form">
+	请输入理由
+	<div class="blank"></div>
+	<textarea style="width:505px; height:80px;" id="reason" name="reason" class="f-textarea pubform"></textarea>
+	{if get_op_change_show($m_name,$a_name) neq ''}
+	<div class="blank"></div>
+	<select name="op_change">
+		<option value="0">不变动用户资金，积分或经验</option>
+		<option value="1">{function name="get_op_change_show" m=$m_name a=$a_name}</option>
+	</select>
+	{/if}
+	<input type="hidden" name="m_name" value="{$m_name}" />
+	<input type="hidden" name="a_name" value="{$a_name}" />
+	<input type="hidden" name="id" value="{$id}" />
+</div>
+<div class="blank"></div>
+<div class="btn_row tc">
+	<input type="button" onclick="do_submit_opform();" name="send" class="topic_form_button" value="确定">
+	<input type="button" onclick="close_pop();" name="cancel" class="topic_form_button" value="取消">
+</div>
+</form>
+{/if}

@@ -1,0 +1,47 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+function get_message_group_btn($id)
+{
+	$type_item = M("MessageType")->getById($id);
+	if($type_item['is_fix']==0)
+	{
+		return "<a href='".u("MessageType/foreverdelete",array("id"=>$id))."'>".l("FOREVERDEL")."</a>";
+	}
+	else
+	{
+	return '';
+	}
+}	
+function get_type_link($type_name,$rel_table)
+{
+	return "<a href='".u("Message/index",array('rel_table'=>$rel_table))."&'>".$type_name."</a>";
+}
+</PHP>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+	<input type="button" class="button" value="{%FOREVERDEL}" onclick="foreverdel();" />
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="typeitem" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,type_name:{%TYPE_NAME}
+	,show_name|get_type_link=$typeitem['type_name']:{%SHOW_NAME}
+	,sort|get_sort=$typeitem['id']:{%SORT}
+	,is_effect|get_message_is_effect:{%ONLY_USER_SEE}" 
+	actionlist="edit:{%EDIT},id|get_message_group_btn" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

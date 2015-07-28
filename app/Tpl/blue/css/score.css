@@ -1,0 +1,23 @@
+.goods_item {height: 330px;	 width: 265px; background-color: #fff; border: 1px solid #ddd; margin-right: 10px; margin-bottom:10px; float:left; padding:8px}
+.goods_item .tit {height: 50px; line-height:20px;display: block;overflow:hidden; }
+.goods_item .desc {height: 20px; line-height:20px; display: block; padding-bottom:10px }
+.goods_item .true_btn{ height:36px; display:block; line-height:36px; margin:0 auto}
+
+
+.goods_image{width: 365px; height: 275px; float: left; border:1px solid #ddd; padding:8px}
+.goods_text{ width: 770px; float: right;}
+.goods_text .row{ padding:3px 0; line-height:32px}
+.goods_text .row .row-t{ float:left; width:90px}
+.goods_text .row .row-bx{ float:left;}
+.submit-box {padding-left: 110px; }
+.goods_name {font-size: 18px; font-weight: bolder; color: #000;}
+
+.exchange_btn {font-size: 18px;height: 47px; line-height: 47px;  width:187px;  } 
+
+#sku .rows .t{ float:left; width:90px; height:40px; line-height:40px}
+#sku .Property{
+	float:left;  height:36px; margin-right:10px;color:#000; line-height:36px;
+}
+#sku .Other_Property{border:1px solid #b8b7bd;padding: 1px 12px; }
+#sku .this_Property{ border:2px solid #0697da; padding: 0 11px; background:url(../images/this_Property.png) no-repeat right bottom;}
+#sku input{ width:0px; height:0px; display:none;}

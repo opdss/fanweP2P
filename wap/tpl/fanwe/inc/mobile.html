@@ -1,0 +1,329 @@
+<div class="pro_detail">
+        <div class="mainblok mainborder">
+            <div class="pro_detail_tit">
+                <span><i class="fa fa-newspaper-o"></i></span>
+                借入者信用信息
+            </div>
+            <div class="detail_article">
+                <p>{$data.deal.agency_info.company_brief}</p>
+            </div>
+            <div class="detail_list">
+                <div class="detail_list_tit"><span></span> 基本信息</div>
+
+                <div class="basic_ifm">
+                    <ul>
+                        <li><label>融资方</label><span>{$data.u_info.real_name}</span></li>
+                        <li><label>性别</label><span>{if $data.u_info.sex gt 0}{if $data.u_info.sex eq 1}男{else}女{/if}{else}未知{/if}</span></li>
+                        <li><label>年龄</label><span><?php echo to_date(get_gmtime(),"Y")- $this->_var['data']['u_info']['byear'];?> </span></li> 
+                        <li><label>是否结婚</label><span>{$data.u_info.marriage}</span></li>
+                        <li><label>工作城市</label><span>{$data.u_info.region_province}&nbsp;&nbsp;{$data.u_info.region_city}</span></li>
+                        <li><label>公司行业</label><span>{$data.u_info.workinfo.officedomain}</span></li>
+                        <li><label>公司规模</label><span>{$data.u_info.workinfo.officecale}</span></li>
+                        <li><label>工作收入</label><span>{$data.u_info.workinfo.salary}</span></li>
+                        <li><label>学历</label><span>{$data.u_info.graduation}</span></li>
+                        <li><label>有无购房</label><span>{if $data.u_info.hashouse eq 1}{if $data.u_info.housepassed eq 1}<font>有</font>{else}有{/if}{else}无{/if}</span></li>
+		 			</ul>
+                </div>
+            </div>
+            <div class="detail_list">
+                <div class="detail_list_tit"><span></span>信贷借款记录</div>
+                <div class="basic_ifm">
+                    <ul class="Borrow_record">
+                        <li><label>发布借款笔数</label><span>{$data.user_statics.deal_count}</span></li>
+                        <li><label>成功借款笔数</label><span>{$data.user_statics.success_deal_count}</span></li>
+                        <li><label>还清笔数</label><span>{$data.user_statics.repay_deal_count}</span></li>
+                        <li><label>逾期次数</label><span>{$data.user_statics.yuqi_count}</span></li>
+                        <li><label>共计借入</label><span>{function name="format_price" v="$data.user_statics.borrow_amount"}</span></li>
+                        <li><label>待还本息</label><span>{function name="format_price" v="$data. user_statics.need_repay_amount"}</span></li>
+                        <li><label>逾期金额</label><span>{function name="format_price" v="$data.user_statics.yuqi_amount"}</span></li>
+                        <li><label>共计借出</label><span>{function name="format_price" v="$data.user_statics.load_money"}</span></li>
+                        <li><label>待收本息</label><span>{function name="format_price" v="$data.user_statics.load_wait_repay_money"}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div><!--mainblok——end--> 
+
+        <div class="mainblok mainborder">
+            <div class="pro_detail_tit">
+                <span><i class="fa fa-newspaper-o"></i></span>
+                审核记录
+            </div>
+            <div class="detail_list">
+            <div class="audit_records_tit">
+                <ul>
+                    <li>审核项目</li>
+                    <li>状态</li>
+                    <li>通过时间</li>
+                </ul> 
+                <div class="blank"></div>
+            </div>
+            <div class="audit_records">
+          		
+          		{if $data.u_info.idcardpassed eq 1 || ($data.u_info.idcardpassed eq 0 && $data.credit_file.credit_identificationscanning.file_list)}
+                <ul>
+                    <li>身份证认证</li>
+                    <li>{if $data.u_info.idcardpassed eq 1}<span class="Tick"><i class="fa fa-check"></i></span>{else}资料已上传，待审核{/if}</li>
+                    <li>{if $data.u_info.idcardpassed eq 1}{function name="to_date" v="$data.u_info.idcardpassed_time" f="Y-m-d"}{/if}&nbsp;</li>
+                </ul> 
+                {/if}
+                
+                {if $data.u_info.workpassed eq 1 || ($data.u_info.workpassed eq 0 && $data.credit_file.credit_contact.file_list)}
+                <ul>
+                    <li>工作认证</li>
+                    <li>
+                    {if $data.u_info.workpassed eq 1}
+			   		{if $data.expire.workpassed_expire}
+					已过期
+					{else}<span class="Tick"><i class="fa fa-check"></i></span>{/if}
+					{else}
+					资料已上传，待审核
+					{/if}</li>
+                    <li>
+                    {if !$data.expire.workpassed_expire}
+	            	{if $data.u_info.workpassed eq 1}
+	                {function name="to_date" v="$data.u_info.workpassed_time" f="Y-m-d"}
+					{/if}{/if}&nbsp;</li>
+                </ul>
+                {/if}
+                
+                {if $data.u_info.creditpassed eq 1 || ($data.u_info.creditpassed eq 0 && $data.credit_file.credit_credit.file_list)}
+                <ul>
+                    <li>信用报告</li>
+                    <li>{if $data.u_info.creditpassed eq 1}
+					{if $data.expire.creditpassed_expire}
+					已过期
+					{else}<span class="Tick"><i class="fa fa-check"></i></span>{/if}
+					{else}
+					资料已上传，待审核
+					{/if}</li>
+                    <li>{if !$data.expire.creditpassed_expire}
+	            	{if $data.u_info.creditpassed eq 1}
+	                {function name="to_date" v="$data.u_info.creditpassed_time" f="Y-m-d"}
+					{/if}
+					{/if}&nbsp;</li>
+                </ul>
+                {/if}
+         <!-- xsz -->       
+                {if $data.u_info.incomepassed eq 1 || ($data.u_info.incomepassed eq 0 && $data.credit_file.credit_incomeduty.file_list)}
+                <ul>
+                    <li>收入认证</li>
+                    <li>{if $data.u_info.incomepassed eq 1}
+					{if $data.expire.incomepassed_expire}
+					已过期
+					{else}<span class="Tick"><i class="fa fa-check"></i></span>{/if}
+					{else}
+					资料已上传，待审核
+					{/if}</li>
+                    <li>{if !$data.expire.incomepassed_expire}
+	             	{if $data.u_info.incomepassed eq 1}
+	                {function name="to_date" v="$data.u_info.incomepassed_time" f="Y-m-d"}
+				    {/if}
+					{/if}&nbsp;</li>
+                </ul>
+                {/if}
+                
+                {if $data.u_info.housepassed eq 1 || ($data.u_info.housepassed eq 0 && $data.credit_file.credit_house.file_list)}
+                <ul>
+                    <li>房产认证</li>
+                    <li>{if $data.u_info.housepassed eq 1}<span class="Tick"><i class="fa fa-check"></i></span>{else}
+					资料已上传，待审核
+					{/if}</li>
+                    <li> {if $data.u_info.housepassed eq 1}
+	               {function name="to_date" v="$data.u_info.housepassed_time" f="Y-m-d"}
+				   {/if}&nbsp;</li>
+                </ul>
+                 {/if}
+                 
+                {if $data.u_info.carpassed eq 1 || ($data.u_info.carpassed eq 0 && $data.credit_file.credit_car.file_list)}
+                <ul>
+                    <li>购车证明</li>
+                    <li>{if $data.u_info.carpassed eq 1}<span class="Tick"><i class="fa fa-check"></i></span>{else}
+					资料已上传，待审核
+					{/if}</li>
+                    <li>	{if $data.u_info.carpassed eq 1}
+	            	{function name="to_date" v="$data.u_info.carpassed_time" f="Y-m-d"}
+					{/if}&nbsp;</li>
+                </ul>
+                {/if}
+                
+                {if $data.u_info.marrypassed eq 1 || ($data.u_info.marrypassed eq 0 && $data.credit_file.credit_marriage.file_list)}
+                <ul>
+                    <li>结婚认证</li>
+                    <li>{if $data.u_info.marrypassed eq 1}<span class="Tick"><i class="fa fa-check"></i></span>{else}
+					资料已上传，待审核
+					{/if}</li>
+                    <li>{if $data.u_info.marrypassed eq 1}
+	            	{function name="to_date" v="$data.u_info.marrypassed_time" f="Y-m-d"}
+					{/if}&nbsp;</li>
+                </ul>
+                {/if}
+                
+                {if $data.u_info.edupassed eq 1 || ($data.u_info.edupassed eq 0 && $data.credit_file.credit_graducation.file_list)}
+                <ul>
+                    <li>学历认证</li>
+                    <li>{if $data.u_info.edupassed eq 1}<span class="Tick"><i class="fa fa-check"></i></span>{else}
+					资料已上传，待审核
+					{/if}</li>
+                    <li>{if $data.u_info.edupassed eq 1}
+	            	{function name="to_date" v="$data.u_info.edupassed_time" f="Y-m-d"}
+					{/if}&nbsp;</li>
+                </ul>
+                {/if}
+                
+                {if $data.u_info.skillpassed eq 1 || ($data.u_info.skillpassed eq 0 && $data.credit_file.credit_titles.file_list)}
+                <ul>
+                    <li>技术职称认证</li>
+                    <li>{if $data.u_info.skillpassed eq 1}<span class="Tick"><i class="fa fa-check"></i></span>{else}
+					资料已上传，待审核
+					{/if}</li>
+                    <li>{if $data.u_info.skillpassed eq 1}
+	            	{function name="to_date" v="$data.u_info.skillpassed_time" f="Y-m-d"}
+					{/if}&nbsp;</li>
+                </ul>
+                 {/if}
+                 
+                 {if $data.u_info.videopassed eq 1 || ($data.u_info.videopassed eq 0 && $data.u_info.has_send_video eq 1)}
+                <ul>
+                    <li>视频认证通过</li>
+                    <li>{if $u_info.videopassed eq 1}<span class="Tick"><i class="fa fa-check"></i></span>{else}
+					资料已上传，待审核
+					{/if}</li>
+                    <li>{if $u_info.videopassed eq 1}
+            	{function name="to_date" v="$data.u_info.videopassed_time" f="Y-m-d"}
+				{/if}&nbsp;</li>
+                </ul>
+                 {/if}
+                
+                {if $data.u_info.mobiletruepassed eq 1 || ($data.u_info.mobiletruepassed eq 0 && $data.credit_file.credit_mobilereceipt.file_list)}
+                <ul>
+                    <li>手机实名认证</li>
+                    <li>{if $data.u_info.mobiletruepassed eq 1}<span class="Tick"><i class="fa fa-check"></i></span>{else}
+					资料已上传，待审核
+					{/if}</li>
+                    <li>{if $data.u_info.mobiletruepassed eq 1}
+	            	{function name="to_date" v="$data.u_info.mobiletruepassed_time" f="Y-m-d"}
+					{/if}&nbsp;</li>
+                </ul>
+                {/if}   
+                
+                {if $data.u_info.residencepassed eq 1 || ($data.u_info.residencepassed eq 0 && $data.credit_file.credit_residence.file_list)}
+                <ul>
+                    <li>居住地证明</li>
+                    <li>{if $data.u_info.residencepassed eq 1}
+					{if $data.expire.residencepassed_expire}
+					已过期
+					{else}<span class="Tick"><i class="fa fa-check"></i></span>{/if}
+					{else}
+					资料已上传，待审核
+					{/if}</li>
+                    <li>{if !$data.expire.residencepassed_expire}
+	            	{if $data.u_info.residencepassed eq 1}
+	            	{function name="to_date" v="$data.u_info.residencepassed_time" f="Y-m-d"}
+					{/if}
+					{/if}&nbsp;</li>
+                </ul>
+                {/if}
+                
+                {if $data.u_info.info_down}
+                <ul>
+                    <li>会员资料下载</li>
+                    <li><span class="Tick"><i class="fa fa-check"></i></span></li>
+                    <li><a href="{$u_info.info_down}">下载查看</a>&nbsp;</li>
+                </ul>
+                {/if}
+                <div class="blank"></div>              
+            </div>
+            </div>
+        </div><!--mainblok——end--> 
+
+        <div class="mainblok mainborder">
+            <div class="pro_detail_tit">
+                <span><i class="fa fa-newspaper-o"></i></span>
+                投资记录
+            </div>
+            <div class="detail_list">
+                <div class="investment_records">
+                  {foreach from="$data.load_list" item="load"}
+                    <ul>
+                        <li>{function name="utf_substr" v="$load.user_name"}</li>
+                        <li>
+                            <h1>{function name="format_price" v="$load.money"}</h1>
+                            <span>{function name="to_date" v="$load.create_time" f="Y-m-d"}
+						{function name="to_date" v="$load.create_time" f="H:i"}</span>
+                        </li>
+                        <li class="blank"></li>
+                    </ul>
+                    
+                  {/foreach}
+                </div>
+            </div>
+        </div><!--mainblok——end--> 
+
+        <div class="mainblok mainborder">
+            <div class="pro_detail_tit">
+                <span><i class="fa fa-newspaper-o"></i></span>
+                留言列表
+            </div>
+            <div class="detail_list sxpd5">
+        
+           {foreach from="$data.message" item="load"}
+            <div class="message_list">
+                <h2>{$load.user_name} &nbsp;&nbsp; {function name="to_date" v="$load.create_time" f="Y-m-d"}</h2>
+                <span>【{$load.title}】:{$load.content}</span>
+            </div>
+           {/foreach}
+            
+
+            </div>
+        </div><!--mainblok——end--> 
+
+    </div>
+<div class="pro_detail_foot leave_word btn_leave_word">
+留言
+</div>
+<div class="Leave_Word">
+<div class="Leave_Word_block">	
+		 <input type="hidden" id="title" value="留言板">
+		 <textarea id="content" name="content"></textarea> 
+</div>
+<div class="lish_but clearfix">
+		 	<div class="abolish  lish">取消</div>
+		 	<input type="hidden" id="deal_id" value="{$data.deal.id}">
+			<div id="add_msg" class="publish  lish ">发表</div>
+</div>
+</div>
+<script>
+	$(document).ready(function(){
+		$(".leave_word").click(function(){
+			$(".Leave_Word").toggle();
+			$(".btn_leave_word").hide();
+			
+		});
+		$(".abolish").click(function(){
+			$(".Leave_Word").hide();
+			$(".btn_leave_word").show();
+		});
+	});
+	
+	$("#add_msg").click(function(){
+		var ajaxurl = '{wap_url a="index" r="msg"}';
+		var deal_id =  $.trim($("#deal_id").val());
+		var query = new Object();
+		query.deal_id = $.trim($("#deal_id").val());
+		query.title = $.trim($("#title").val());
+		query.content = $.trim($("#content").val());
+		
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.show_err);
+				window.location.href = '{wap_url a="index" r="deal_mobile"}&id='+deal_id;
+			}
+		});
+	});
+</script>
+

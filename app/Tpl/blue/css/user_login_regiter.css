@@ -1,0 +1,61 @@
+.wrap{ width:1000px; overflow:hidden;}
+.header{
+	border:none
+}
+.header .main_bars{background: url(../images/head_bg.png) repeat-x 0 bottom #fff; }
+.no-nav-text {
+	line-height: 40px;
+	height: 40px;
+	font-size: 25px;
+	border-left: 1px solid #CCC;
+	padding-left: 20px;
+	margin-top: 25px;
+	color: #aaa;
+	float:left;
+	margin-left:15px
+}
+
+.regstep {	
+    margin: 30px auto;
+    width: 700px;
+   
+}
+.regstep_t{
+	_width: 746px;
+	_height:81px;
+	_background: url("../images/regstep_t.png") center 0 no-repeat;
+}
+
+
+
+.has_account{ padding-top:60px; width:285px}
+
+.login_l {
+	background: url(../images/login_l.png) no-repeat;
+	height: 390px;
+	overflow: hidden;
+	width: 600px;
+	float: left;
+}
+
+.user_login_bar .app_login_box{width: 287px;}
+
+.user_login_bar .app_login_box h3 {
+	display: inline-block;
+	float: left;
+	font-size: 12px;
+	color: #afafaf;
+	font-weight: normal;
+	padding-right: 8px;
+}
+
+.user_inc_top {
+	margin: 0 15px;
+	padding: 25px 0 15px 25px;
+	border-bottom: 1px solid #E7E7E7;
+	font-size: 24px;
+	color: #666;
+	font-family: "\5FAE\8F6F\96C5\9ED1","\9ED1\4F53";
+}
+
+

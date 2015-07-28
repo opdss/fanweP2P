@@ -1,0 +1,64 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<php>
+	
+	function get_vip_grade($vip_grade)
+    {
+    	return M("VipType")->where(" id=".$vip_grade)->getField("vip_grade");
+    }
+	
+</php>
+<div class="main">
+<div class="main_title">VIP客服表</div>
+<div class="blank5"></div>
+<input type="button" class="button" value="{%DEL}" onclick="del();" />
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">
+		VIP等级：
+		<select name="vip_grade">
+			<option value="-1" <if condition="intval($_REQUEST['vip_grade']) eq -1 || intval($_REQUEST['vip_grade']) eq '' ">selected="selected"</if>>{%ALL}</option>
+			<foreach name="vip_list" item="vip_item">
+				<option value="{$vip_item.id}" <if condition="$_REQUEST['vip_grade'] eq $vip_item['id']">selected="selected"</if>>{$vip_item.vip_grade}</option>
+			</foreach>
+			</select>	
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		
+		VIP客服专员：<input type="text" class="textbox" name="sc_name" value="{:trim($_REQUEST['sc_name'])}" style="width:100px;" />
+		
+		<input type="hidden" value="VipPrivilege" name="m" />
+		<input type="hidden" value="vip_sc_service" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		<!---<input type="button" class="button" value="{%EXPORT}" onclick="export_csv();" />--->
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="user" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,user_id|get_user_name:{%USER_NAME}
+	,vip_grade|get_vip_grade:VIP等级
+	,sc_name:VIP客服专员
+	,tel:电话
+	,qq:QQ
+	,email:电子邮箱
+	" 
+	actionlist="edit:{%EDIT}, del:{%DEL}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

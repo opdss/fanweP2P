@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php if ($this->_var['page_title']): ?><?php echo $this->_var['page_title']; ?> - <?php endif; ?><?php if ($this->_var['show_site_titile'] == 1): ?><?php 
+$k = array (
+  'name' => 'app_conf',
+  'value' => 'SHOP_SEO_TITLE',
+);
+echo $k['name']($k['value']);
+?> - <?php endif; ?><?php echo $this->_var['site_info']['SHOP_TITLE']; ?></title>
+<link rel="icon" href="favicon.ico" type="/image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico" type="/image/x-icon" />
+<meta name="keywords" content="<?php if ($this->_var['page_keyword']): ?><?php echo $this->_var['page_keyword']; ?><?php endif; ?><?php echo $this->_var['site_info']['SHOP_KEYWORD']; ?>" />
+<meta name="description" content="<?php if ($this->_var['page_description']): ?><?php echo $this->_var['page_description']; ?><?php endif; ?><?php echo $this->_var['site_info']['SHOP_DESCRIPTION']; ?>" />
+<?php echo $this->fetch('inc/common/load_css_js.html'); ?>
+</head>
+
+<body>
+<?php if ($this->_var['vote']): ?>
+<a id="vote" href="<?php
+echo parse_url_tag("u:index|vote|"."".""); 
+?>" target="_blank"></a>
+<?php endif; ?>
+<div class="header" id="header">
+   <?php echo $this->fetch('inc/common/load_top.html'); ?>
+	<div class="main_bars">
+		<div class="main_bar wrap">	
+			<div class="logo mr15">
+				<a class="link f_l" href="<?php echo $this->_var['APP_ROOT']; ?>/">
+					<?php
+						$this->_var['logo_image'] = app_conf("SHOP_LOGO");
+					?>
+					<?php 
+$k = array (
+  'name' => 'load_page_png',
+  'v' => $this->_var['logo_image'],
+);
+echo $k['name']($k['v']);
+?>
+				</a>
+			</div>     
+			<!--<?php if ($this->_var['MODULE_NAME'] <> 'user' && $this->_var['MODULE_NAME'] <> 'manageagency' && $this->_var['MODULE_NAME'] <> 'authorized' && $this->_var['MODULE_NAME'] <> 'agency_money'): ?>加载菜单-->
+			<ul class="main_nav">
+				<?php $_from = $this->_var['nav_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'nav_item');if (count($_from)):
+    foreach ($_from AS $this->_var['nav_item']):
+?>
+					<li class="<?php if ($this->_var['nav_item']['current'] == 1): ?>current<?php endif; ?> <?php if (count ( $this->_var['nav_item']['sub_nav'] ) > 0): ?>jcur<?php endif; ?> ml5 bdr3 pr" rel='<?php echo $this->_var['nav_item']['id']; ?>'>
+						<a href="<?php echo $this->_var['nav_item']['url']; ?>" target="<?php if ($this->_var['nav_item']['blank'] == 1): ?>_blank<?php endif; ?>" <?php if (count ( $this->_var['nav_item']['sub_nav'] ) > 0): ?>class="pr20"<?php endif; ?>><?php echo $this->_var['nav_item']['name']; ?> <?php if ($this->_var['nav_item']['sub_nav']): ?><i class="iconfont">&#xe61c;</i><?php endif; ?></a>
+						<?php if ($this->_var['nav_item']['sub_nav']): ?>
+                        <div class="sub_main_nav ps hide">
+						<?php $_from = $this->_var['nav_item']['sub_nav']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'sub_item');if (count($_from)):
+    foreach ($_from AS $this->_var['sub_item']):
+?>
+							<a href="<?php echo $this->_var['sub_item']['url']; ?>" <?php if ($this->_var['sub_item']['current'] == 1): ?>class="current"<?php endif; ?> target="<?php if ($this->_var['sub_item']['blank'] == 1): ?>_blank<?php endif; ?>"><?php echo $this->_var['sub_item']['name']; ?></a>
+						<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+						</div>
+						<?php endif; ?>
+					</li>
+				<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+			</ul>
+			<!--加载菜单END<?php else: ?>-->
+			 <?php echo $this->fetch('inc/common/load_other_nav.html'); ?>
+			<!--<?php endif; ?>-->
+		</div>
+	</div>
+</div>
+<!--<?php if ($this->_var['MODULE_NAME'] == 'index'): ?>-->
+<?php 
+$k = array (
+  'name' => 'load_user_tip_index',
+);
+echo $this->_hash . $k['name'] . '|' . base64_encode(serialize($k)) . $this->_hash;
+?>
+<div id="main_adv_box" class="main_adv_box f_l">
+	<div id="main_adv_img" class="main_adv_img">
+		<span rel="1"><adv adv_id="首页广告位1" /></span>
+		<span rel="2"><adv adv_id="首页广告位2" /></span>
+		<span rel="3"><adv adv_id="首页广告位3" /></span>
+		<span rel="4"><adv adv_id="首页广告位4" /></span>	
+		<span rel="5"><adv adv_id="首页广告位5" /></span>					
+	</div>
+	<div id="main_adv_ctl" class="main_adv_ctl">
+		<ul>
+			<li rel="1">1</li>
+			<li rel="2">2</li>
+			<li rel="3">3</li>
+			<li rel="4">4</li>
+			<li rel="5">5</li>
+		</ul>
+	</div>
+</div>
+<div class="blank0"></div>
+<div class="showcase">
+	<div class="wrap">
+		<div class="caseblok">
+			<span>已撮合融资</span>
+			<em><?php echo $this->_var['VIRTUAL_MONEY_1_FORMAT']; ?>元</em>
+		</div>
+		<div class="caseblok">
+			<span>累计成交笔数</span>
+			<em><?php echo $this->_var['stats']['deal_total_count']; ?>笔</em>
+		</div>
+		<div class="caseblok">
+			<span>为客户赚取收益</span>
+			<em><?php echo $this->_var['VIRTUAL_MONEY_2_FORMAT']; ?>元</em>
+		</div>
+		<div class="caseblok">
+		<div class="back_img back_img_3"></div>
+    		<span>风险准备金</span>
+			<em><?php echo $this->_var['VIRTUAL_MONEY_3_FORMAT']; ?>元</em>
+    	</div>
+	</div>
+</div>
+<!--<?php endif; ?>-->
+<div class="wrap">

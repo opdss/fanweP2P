@@ -1,0 +1,76 @@
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index" r="manageagency#agencydeal"}">{$page_title}</a></div>
+</div>
+
+<div class="uc_box clearfix">
+	{if $list}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+		<tbody>
+			<tr  border="0">
+				<th class="tl pl10">借款标题</th>
+				<th style="width:12%">借款金额</th>
+				<th style="width:10%">年率</th>
+				<th style="width:15%">借款进度</th>
+				<th style="width:10%">借款期限</th>
+				<th style="width:12%">担保收益</th>
+				<th style="width:10%">操作</th>
+			</tr>
+			{foreach from=$list item="item" key=key}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+				<td class="tl pl10">
+					<a href="{url x="index" r="deal" p="id=$item.id"}">
+                   		<a href="{url x="index" r="deal" p="id=$item.id"}">{$item.name}</a>
+               	 	</a>
+				</td>
+				<td>
+					{$item.borrow_amount_format}
+				</td>
+				<td>
+                    {function name="number_format" v="$item.rate" f="2"}%
+				</td>
+				<td>
+					<div class="progressvar">
+							{if  $item.deal_status gte 4}
+							<div class="progress w100 mt13">
+								<span class="pr bdr3" style="width:100%;">
+									<img class="ps" title="100%" src="{$TMPL}/images/progressqiu.png" />
+								</span>
+							</div>
+							<div class="progresscon f_blue">100%</div>
+							{else}
+							<div class="progress w100 mt13">
+								<span class="pr bdr3" title="{function name="round" v=$item.progress_point f=3}%" style="width:{function name="round" v=$item.progress_point f=2}%;">
+									<img class="ps" src="{$TMPL}/images/progressqiu.png" />
+								</span>
+							</div>
+							<div class="progresscon f_blue">{function name="round" v=$item.progress_point f=2}%</div>
+							{/if}
+					</div>							
+				</td>
+				<td>
+					{$item.repay_time}{if $item.repay_time_type eq 0}天{else}个月{/if}
+				</td>
+				<td>
+					{function name="format_price" item="$item.guarantor_pro_fit_amt"}
+				</td>
+				<td>
+					<a href="javascript:void(0);" dataid="{$item.id}" class="J_doAgency f_blue">操作</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="pages">{$pages}</div>
+	{else}	
+	<div align="center" style="padding:20px 0">暂无记录</div>
+	{/if}
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$(".J_doAgency").click(function(){
+			var id = $(this).attr("dataid");
+			var ajaxurl = APP_ROOT+"/index.php?ctl=manageagency&act=manage_agency_status&id="+id;
+			$.weeboxs.open(ajaxurl,{contentType:'ajax',showButton:false,title:"担保操作",width:420,height:200,type:'wee'});
+		});
+	});
+</script>

@@ -1,0 +1,200 @@
+
+.Menubox{
+	padding: 15px 13px;
+	
+}
+.Menubox ul{
+	width: 100%;
+	display: block;
+	height:30px;
+	border:1px solid #3b95d3;
+	border-radius: 5px;
+	background:#fff;
+}
+.Menubox ul li{
+	display: inline-block;
+	width: 50%;
+	float: left;
+	text-align: center;
+	line-height: 30px;
+	color: #3b95d3;
+	font-size: 15px;
+}
+.Menubox ul li.hover{
+	display: inline-block;
+	width: 50%;
+	float: left;
+	text-align: center;
+	line-height: 30px;
+	background: #3b95d3;
+	color: #fff;
+	font-size: 15px;
+}
+.Menubox ul li a{
+	display:block;
+}
+.Menubox ul li.hover a{
+	color:#fff;
+}
+.Menubox ul li:last-child{
+	display: block;
+height: 0px;
+line-height:0px;
+clear: both;
+visibility: hidden;
+font-size: 0px;
+padding: 0px;
+margin: 0px;
+
+}
+
+.Contentbox{
+
+}
+.repayment_con{
+	padding: 0px 15px;
+}
+.invest_tit {
+height: 30px;
+width: 100%;
+border: none;
+font-size: 13px;
+color: #277eba;
+border-top-left-radius: 3px;
+border-top-right-radius: 3px;
+padding: 0 20px;
+line-height:30px; 
+
+border-bottom: 2px solid #e1e0e1;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.invest_tit a{
+	color: #277eba;
+}
+.repayment_blok{
+	margin-bottom:15px;
+	border: 1px solid #cacaca;
+	background: #fff;
+	width: 100%;
+	border-radius: 3px;
+}
+.repayment_blok:last-child{
+    margin-bottom:0px;
+}
+.orange{
+	color: #ff4e00
+}
+.index_content1 {
+	display: block;
+	padding: 10px 0;
+}
+
+.index_content1 ul li{
+	padding:5px 8px;
+	float: left;
+	color: #989898;
+	font-size: 12px;
+	white-space:nowrap; 
+	line-height: 16px;
+}
+.index_content1 ul li span{
+	padding-left:3px;
+}
+.index_content2{
+	padding: 0 10px;
+}
+.con2_bd{
+	width: 100%;
+	border-top: 1px dashed #cacaca;
+	padding: 8px 0;
+}
+.con2_bd a{
+	color: #fff;
+}
+.index_Rep_time{
+	float: left;
+	line-height: 25px;
+	font-size: 11px;
+	color: #989898;
+}
+.btn_Repayment{
+	float: right;
+	width: 75px;
+	height: 25px;
+	line-height: 25px;
+	background: #ff6600;
+	color: #fff;
+	text-align: center;
+	margin-right: 10px;
+	border-radius: 3px;
+}
+.btn_preRepayment{
+	float: right;
+	width: 75px;
+	height: 25px;
+	line-height: 25px;
+	background: #3b95d3;
+	color: #fff;
+	text-align: center;
+	border-radius: 3px;
+}
+
+
+
+
+.repaymeet_blok ul{
+
+}
+.repaymeet_blok ul li{
+	padding: 8px 15px;
+	background: #fff;
+	border-bottom: 1px solid #cacaca;
+}
+
+.rep_fl{
+	float: left;
+
+}
+.rep_fl h1{
+	font-size: 16px;
+	color: #4f4f4f;
+	line-height: 25px;
+}
+.rep_fl span{
+	color: #999999;
+}
+.rep_fl .rep_fl_time{
+	display: block;
+	font-size: 13px;
+	line-height: 18px;
+}
+.rep_fl .rep_fl_rate{
+	display: inline-block;
+	margin-right: 20px;
+	font-size: 14px;
+	line-height: 18px;
+	
+}
+
+.rep_fl .rep_fl_term{
+	display: inline-block;
+	font-size: 14px;
+	line-height: 18px;
+}
+
+.rep_fr{
+	float: right;
+	text-align: right;
+	padding-top: 13px;
+}
+.rep_fr h2{
+	font-size: 16px;
+	color: #ff6000;
+	
+}
+.rep_fr span{
+	color: #929292;
+	font-size: 14px;
+}

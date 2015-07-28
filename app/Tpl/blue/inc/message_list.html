@@ -1,0 +1,89 @@
+{* 留言列表 *}
+<ul>
+	{foreach from=$message_list item=message_item key=key}
+		<li class="message-row" id="thread_{$message_item.id}" name="thread_{$message_item.id}" style="position:relative;">
+		<table class="msg_row">
+				<tr>
+					<td style="width:75px; text-align:left; margin-right:5px;">
+						<div class="avatar_middle">
+						{function name="show_avatar" uid=$message_item.user_id  type="middle" }
+						</div>													
+					</td>
+					<td>
+						<div class="item bdd p20 bdr5" style="overflow:hidden; ">
+						<div class="clearfix">
+							<span class="f_l f_blue" >								
+							{function name="get_user_name" value=$message_item.user_id} 
+								<span style="font-size:12px; color:#999;">
+								{$LANG.SUPPLIER_COMMENT_SAY}：
+								</span>
+							</span>
+							{if $user_auth['msg']['del']}
+							<div class="f_r">
+							&nbsp;&nbsp;<a href="javascript:void(0);" onclick="op_msg_del({$message_item.id});">删除</a>
+							</div>
+							{/if}
+							<span class="f_r pl20">
+								<i class="iconfont">&#xe628;</i>
+								{function name='to_date' v='$message_item.create_time'}
+							</span>
+						</div>
+						
+						<div class="blank1"></div>
+						<p class="text pl20 pt5 pb5">
+							{function name="nl2br" value=$message_item.content}
+						</p>
+						<div class="subcomment">
+							{if $message_item.admin_reply neq ''}
+								<div class="clearfix comment bt1 pt10 pb10">
+									<div class="avatar_middle f_l" style="width:75px">
+										<img src="public/avatar/noavatar_middle.gif">
+									</div>
+									<div class="subc f_l">
+										<div class="clearfix">
+											<span class="f_l"><a href="###">管理员</a>{$LANG.SUPPLIER_COMMENT_SAY}：</span>
+											<span class="f_r pl20">
+												{function name='to_date' v='$message_item.update_time'}
+											</span>
+										</div>
+										<div class="pl20 pt5 pb5">
+										{function name="nl2br" value=$message_item.admin_reply}
+										</div>
+									</div>
+								</div>
+							{/if}
+							{foreach from=$message_item.sub item="sub_message"}
+							<div class="clearfix comment bt1 pt10 pb10">
+								<div class="avatar_middle f_l" style="width:75px">
+									{function name="show_avatar" uid=$sub_message.user_id  type="middle" }
+								</div>
+								<div class="subc f_l">
+									<div class="clearfix">
+										<span class="f_l">{function name="get_user_name" value=$sub_message.user_id} {$LANG.SUPPLIER_COMMENT_SAY}：</span>
+										<span class="f_r pl20">
+											<i></i>
+											{function name='to_date' v='$sub_message.create_time'}
+										</span>
+									</div>
+									<div class="pl20 pt5 pb5">
+									{function name="nl2br" value=$sub_message.content}
+									</div>
+								</div>
+							</div>
+							{/foreach}
+						</div>
+						{if $deal.user_id eq $user_info.id}
+						<p style="float:right;"><a href="###" dealid="{$rel_id}" dataid="{$message_item.id}" class="J_comment_reply btn_blue f_white lh40 tc bdr5 w80" style="display:block; height:40px; ">回复</a></p>
+						{/if}		
+					</div>
+					</td>
+				</tr>
+			</table>
+			<i style="background:url({$TMPL}/images/liuyan_icon.gif) no-repeat; display:block; height:18px; left:75px; position:absolute; top:34px; width:8px;"></i>
+		</li>
+	{/foreach}							
+</ul>
+{* 留言列表 *}
+
+<div class="blank"></div>							
+<div class="pages">{$pages}</div>	

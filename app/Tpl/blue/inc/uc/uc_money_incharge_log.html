@@ -1,0 +1,57 @@
+<div class="tabbox clearfix">
+	<div class="tab ">
+		<a href="{url x="index" r="uc_money#incharge"}">{$LANG.UC_MONEY_INCHARGE}</a>
+	</div>
+	<div class="tab cur">
+		<a href="{url x="index" r="uc_money#incharge_log"}">{$LANG.UC_MONEY_INCHARGE_LOG}</a>
+	</div>
+</div>
+<div class="uc_box ">
+	<div class="sub_nav">
+			<span {if $is_paid eq '0'}class="act"{/if}><a href="{url x="index" r="uc_money#incharge_log" p="is_paid=0"}">未支付</a></span>
+			<span {if $is_paid eq '1'}class="act"{/if}><a href="{url x="index" r="uc_money#incharge_log" p="is_paid=1"}">已支付</a></span>
+	</div>
+	<div class=" clearfix ">
+		<table width="100%;" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+			<tr>
+				<th class="tl pl15 w140">支付单号</th>
+				<th style="width:15%">应付金额</th>
+				<th style="width:10%">下单时间</th>
+				<th style="width:10%">付款时间</th>
+				<th style="width:13%">付款方式</th>
+				<th >付款单备注</th>
+				<th style="width:8%">是否已支付</th>
+			</tr>
+			<!-- {$LANG.INCHARGE_SN} /{$LANG.INCHARGE_MONEY}/{$LANG.PAYMENT_FEE}/{$LANG.PAYMENT_INFO}/{$LANG.PAYMENT_STATUS}/{$LANG.PAYMENT_GEN_TIME}/{$LANG.PAYMENT_PAID_TIME}/{$LANG.OPERATION}/-->
+			{foreach from=$list item=item key=key}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+				<td class="tl pl15">
+					{$item.notice_sn}
+				</td>
+				
+				<td >
+					{$item.money_format}
+				</td>
+				<td >
+					{$item.create_time_format}
+				</td>
+				<td >
+					{$item.pay_time_format}
+				</td>
+				
+				<td >
+					{$item.name}&nbsp;
+				</td>
+				<td class="lh28">
+					{$item.memo}&nbsp;
+				</td>
+				
+				<td >
+					{$item.is_paid_format}
+				</td>
+			</tr>
+			{/foreach}
+		</table>
+		<div class="pages">{$pages}</div>			
+	</div>
+</div>

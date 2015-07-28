@@ -1,0 +1,102 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<div class="main">
+<div class="main_title">{$credit.user_id|get_user_name}</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{$credit_type.type_name}:</td>
+		<td class="item_input" id="passedBox">
+			<select name="passed">
+				<option value="0" <if condition="$credit['passed'] eq 0">selected="selected"</if>>未审核</option>
+				<option value="1" <if condition="$credit['passed'] eq 1">selected="selected"</if>>审核通过</option>
+				<option value="2" <if condition="$credit['passed'] eq 2">selected="selected"</if>>审核失败</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">原因:</td>
+		<td class="item_input"><textarea type="text" id="msgarea" disabled="disabled" class="textbox" name="msg" style="width:400px;height:100px" >{$credit.msg}</textarea>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$credit.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Credit" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="modify_passed" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">认证资料:</td>
+		<td class="item_input">
+			<if condition="$credit['type'] eq 'credit_identificationscanning'">
+			姓名:{$user_info.real_name}<br>
+			身份证号码:{$user_info.idno}&nbsp;<a href="javascript:void(0)" onclick="checkidcrad('{$user_info.idno}')">查证</a><br>
+			籍贯:{$user_info.n_province}&nbsp;{$user_info.n_city}<br>
+			户口所在地:{$user_info.province}&nbsp;{$user_info.city}<br>
+			出生日期：{$user_info.byear}-{$user_info.bmonth}-{$user_info.bday}<br>
+			性别:<if condition="$user_info['sex'] eq 0">女<else/>男</if><br>
+			</if>
+			<if condition="$credit['type'] eq 'credit_car'">
+			汽车品牌:{$user_info.car_brand}<br/>
+			购车年份:{$user_info.car_year}<br/>
+			车牌号码:{$user_info.car_number}<br/>
+			</if>
+			<if condition="$credit['type'] eq 'credit_graducation'">
+			最高学历:{$user_info.graduation}<br/>
+			入学年份:{$user_info.graduatedyear}<br/>
+			毕业院校:{$user_info.university}<br/>
+			12位在线验证码:{$user_info.edu_validcode}<br/>
+			<div>
+				点击 <a href="http://www.chsi.com.cn/xlcx/" target="_blank">网上学历查询</a>。
+            </div>
+			</if>
+			<if condition="$credit['type'] eq 'credit_videoauth'">
+				<if condition="$user_info['has_send_video'] eq 1"><span class="tip_span">资料已上传到邮箱:{:C('REPLY_ADDRESS')}</span></if>
+			</if>
+			<if condition="$credit['type'] eq 'credit_mobilereceipt'">
+			手机号码:{$user_info.mobile}<br>
+			</if>
+			<if condition="$credit['type'] eq 'credit_residence'">
+			居住地址:{$user_info.address}<br>
+			</if>
+			<if condition="$credit['type'] eq 'credit_contact'">
+			工作资料:<a href="javascript:user_work({$user_info.id});">工作资料</a><br>
+			</if>
+			<foreach name="credit.file_list" item="item">
+				<a href="{$item}" target="_blank"><img src="{$item}" border="0" width="370"></a>
+				<div class="blank5"></div>
+			</foreach>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#passedBox select").change(function(){
+			if($(this).val()=="2"){
+				$("#msgarea").attr("disabled",false);
+			}
+			else{
+				$("#msgarea").attr("disabled",true);
+			}
+		});
+	});
+</script>

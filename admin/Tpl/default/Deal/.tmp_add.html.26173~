@@ -1,0 +1,450 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/conf.js' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<load href='__TMPL__Common/js/deal.js' />
+<load href='__TMPL__Common/js/colorpicker.js' />
+<load href='__TMPL__Common/style/colorpicker.css' />
+<script type="text/javascript">
+	window.onload = function()
+	{
+		init_dealform();
+	}
+</script>
+<div class="main">
+<div class="main_title">{%ADD} <a href="{:u("Deal/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<div class="button_row">
+	<input type="button" class="button conf_btn" rel="1" value="{%DEAL_BASE_INFO}" />&nbsp;
+	<input type="button" class="button conf_btn" rel="2" value="{%SEO_CONFIG}" />&nbsp;	
+</div>
+<div class="blank5"></div>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">颜色:</td>
+		<td class="item_input">
+			<input type="text" name="titlecolor" class="textbox" maxlength="6" size="6" id="colorpickerField" value="" />
+			<span class="tip_span">不填即为默认颜色</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">借款编号:</td>
+		<td class="item_input">
+			<input type="text" name="deal_sn" class="textbox" value="{$deal_sn}" />
+			<span class="tip_span">此处编号用于合同处，不得重复</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_NAME}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="name" style="width:500px;" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_SUB_NAME}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="sub_name" /> <span class='tip_span'>[{%DEAL_SUB_NAME_TIP}]</span></td>
+	</tr>
+	<tr>
+		<td class="item_title">会员ID:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="user_id" /> 
+	</tr>
+	
+	<!-- xsz -->
+	<tr>
+		<td class="item_title">认证资料显示:</td>
+		<td id="view_user_img_box">
+		</td>
+	</tr>
+
+	
+	<tr>
+		<td class="item_title">所在城市:</td>
+		<td class="item_input" id="citys_box">
+			
+			<foreach name="citys" item="city"   >
+				<if condition="$city['pid'] eq 0">
+					<div class="item">
+						<div class="bcity f_l">
+							<input name="city_id[]"  type="checkbox" value="{$city.id}" >
+							{$city.name}
+						 	：
+					 	</div>
+					 	<div class="scity f_l">
+					 	<foreach name="citys" item="citya">
+						 	<if condition="$city['id'] eq $citya['pid']">
+								 <input  type="checkbox" name="city_id[]" value="{$citya.id}" >
+								 {$citya.name} 
+							</if>
+						</foreach>
+						</div>
+					</div>
+					<div class="blank5"></div>
+				</if>
+			</foreach>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%CATE_TREE}:</td>
+		<td class="item_input">	
+		<select name="cate_id" class="require">
+			<option value="0">=={%NO_SELECT_CATE}==</option>
+			<foreach name="deal_cate_tree" item="cate_item">
+				<option value="{$cate_item.id}">{$cate_item.title_show}</option>
+			</foreach>
+		</select>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td class="item_title">担保机构:</td>
+		<td class="item_input">
+		<select name="agency_id">
+			<option value="0">=={%NO_SELECT_AGENCY}==</option>
+			<foreach name="deal_agency" item="agency_item">
+				<option value="{$agency_item.id}"><if condition="$agency_item['short_name'] neq ''">{$agency_item.short_name}<else/>{$agency_item.name}</if></option>
+			</foreach>
+		</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">担保范围:</td>
+		<td class="item_input">
+		<select name="warrant">
+			<option value="0">无</option>
+			<option value="1">本金</option>
+			<option value="2">本金及利息</option>
+		</select>
+		</td>
+	</tr>
+	
+	<tr id="guarantor_margin_amt_box" style="display:none">
+		<td class="item_title">担保保证金[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="guarantor_margin_amt" value="0.00" />
+			<span class="tip_span">冻结担保人的金额，需要提前存钱</span>
+		</td>
+	</tr>
+	
+	<tr id="guarantor_amt_box" style="display:none">
+		<td class="item_title">担保金额[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="guarantor_amt" value="0.00" />
+			<a href="__ROOT__/index.php?ctl=tool" target="_blank">理财计算器</a>
+		</td>
+	</tr>
+	
+	<tr id="guarantor_pro_fit_amt_box" style="display:none">
+		<td class="item_title">担保收益[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="guarantor_pro_fit_amt" value="0.00" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%DEAL_ICON}:</td>
+		<td class="item_input">
+			<html:imgUpload name = 'icon' id='icon' />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%TYPE_TREE}:</td>
+		<td class="item_input">
+		<select name="type_id">
+			<option value="0">=={%NO_SELECT_TYPE}==</option>
+			<foreach name="deal_type_tree" item="type_item">
+				<option value="{$type_item.id}">{$type_item.name}</option>
+			</foreach>
+		</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">还款方式:</td>
+		<td class="item_input">
+			<select name="loantype">
+				<foreach name="loantype_list" item="loantype">
+				<option value="{$loantype.key}" rel="{$loantype.repay_time_type_str}">{$loantype.sub_name}</option>
+				</foreach>
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%BORROW_AMOUNT}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="borrow_amount" value="0.00" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">借款保证金[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require " name="guarantees_amt"  value="0.00"  />
+			<span class="tip_span">冻结借款人的金额，需要提前存钱</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">投标类型:</td>
+		<td class="item_input">
+			<select name="uloadtype">
+				<option value=0>按金额</option>
+				<option value=1>按份额</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr class="uloadtype_0">
+		<td class="item_title">{%MIN_LOAN_MONEY}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="min_loan_money" value="0"/>
+		</td>
+	</tr>
+	
+	<tr class="uloadtype_0">
+		<td class="item_title">{%MAX_LOAN_MONEY}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="max_loan_money"  value="0" />
+			<span class="tip_span">0为不限制</span>
+		</td>
+	</tr>
+	
+	<tr class="uloadtype_1" style="display:none">
+		<td class="item_title">分成多少份:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="portion" value="0"/>
+		</td>
+	</tr>
+	
+	<tr class="uloadtype_1" style="display:none">
+		<td class="item_title">最高买多少份:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="max_portion"  value="0" />
+			<span class="tip_span">0为不限制</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%REPAY_TIME}:</td>
+		<td class="item_input">
+			<input type="text" id="repay_time" class="textbox require" SIZE="5"  name="repay_time" value="3" />
+			<select id="repay_time_type" name="repay_time_type">
+				<option value="0">天</option>
+				<option value="1" selected="selected">月</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%RATE}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" SIZE="5" name="rate"  value=""  />%
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">筹标期限:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" SIZE="5" name="enddate" value="{$vo.enddate}"  /> 天
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">成交服务费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="services_fee" value=""  />%
+			<span class="tip_span">按发布时的会员等级</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">借款者管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="manage_fee" value="{:app_conf("MANAGE_FEE")}"  />%
+			<span class="tip_span">管理费 = 本金总额×管理费率 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">投资者管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="user_loan_manage_fee" value="{:app_conf("USER_LOAN_MANAGE_FEE")}"  />%
+			<span class="tip_span">管理费 = 投资总额×管理费率 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">普通逾期管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="manage_impose_fee_day1" value="{:app_conf("MANAGE_IMPOSE_FEE_DAY1")}"  />%
+			<span class="tip_span">逾期管理费总额 = 逾期本息总额×对应逾期管理费率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">严重逾期管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="manage_impose_fee_day2" value="{:app_conf("MANAGE_IMPOSE_FEE_DAY2")}"  />%
+			<span class="tip_span">逾期管理费总额 = 逾期本息总额×对应逾期管理费率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">普通逾期罚息:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="impose_fee_day1" value="{:app_conf("IMPOSE_FEE_DAY1")}"  />%
+			<span class="tip_span">罚息总额 = 逾期本息总额×对应罚息利率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">严重逾期罚息:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="impose_fee_day2" value="{:app_conf("IMPOSE_FEE_DAY2")}"  />%
+			<span class="tip_span">罚息总额 = 逾期本息总额×对应罚息利率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">债权转让管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="user_load_transfer_fee" value="{:app_conf("USER_LOAD_TRANSFER_FEE")}"  />%
+			<span class="tip_span">管理费 = 转让金额×管理费率 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">提前还款补偿:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="compensate_fee" value="{:app_conf("COMPENSATE_FEE")}"  />%
+			<span class="tip_span">补偿金额 = 剩余本金×补偿利率 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">投资人返利:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="user_bid_rebate" value="{:app_conf("USER_BID_REBATE")}"  />%
+			<span class="tip_span">返利金额=投标金额×返利百分比【需满标】</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">申请延期:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="generation_position" value="100"  />%
+			<span class="tip_span">当还款金额大于或等于设置的额度，借款人如果资金不够，可申请延期还款，延期还款就是平台代其还此借款。借款人未还部分由平台跟借款人协商。</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%DEAL_DESCRIPTION}:</td>
+		<td class="item_input">
+			 <html:editor id="description" name="description" style="width:500px;height:200px" type="KINDEDITOR" content="" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">风险等级:</td>
+		<td class="item_input">
+			<select name="risk_rank">
+				<option value="0">低</option>
+				<option value="1">中</option>
+				<option value="2">高</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">风险控制:</td>
+		<td class="item_input">
+			 <html:editor id="risk_security" name="risk_security" style="width:500px;height:200px" type="KINDEDITOR" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">借款状态:</td>
+		<td class="item_input">
+			<label>{%DEAL_STATUS_0}<input type="radio" name="deal_status" value="0" checked="checked" /></label>
+			<label>{%DEAL_STATUS_1}<input type="radio" name="deal_status" value="1" /></label>
+			<label>{%DEAL_STATUS_3}<input type="radio" name="deal_status" value="3" /></label>
+		</td>
+	</tr>
+	<tr id="start_time_box" style="display:none">
+		<td class="item_title">开始时间:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="start_time" value="" id="start_time"  onfocus="this.blur(); return showCalendar('start_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_start_time');" />
+			<input type="button" class="button" id="btn_start_time" value="{%SELECT_TIME}" onclick="return showCalendar('start_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_start_time');" />
+			<input type="button" class="button" value="{%CLEAR_TIME}" onclick="$('#start_time').val('');" />		
+			如有同步：时间只能是当天或者前一天 
+		</td>
+	</tr>
+	<tr id="bad_time_box" style="display:none">
+		<td class="item_title">{%DEAL_STATUS_3}时间:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="bad_time" id="bad_time" value="" onfocus="this.blur(); return showCalendar('bad_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_bad_time');" />
+			<input type="button" class="button" id="btn_bad_time" value="{%SELECT_TIME}" onclick="return showCalendar('bad_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_bad_time');" />
+			<input type="button" class="button" value="{%CLEAR_TIME}" onclick="$('#bad_time').val('');" />	
+		</td>
+	</tr>
+	<tr id="bad_info_box" style="display:none">
+		<td class="item_title">{%DEAL_STATUS_3}原因:</td>
+		<td class="item_input">
+			<textarea type="text" class="textbox" name="bad_msg" id="bad_msg" value="" rows="3" cols="50"></textarea>
+		</td>
+	</tr>
+	<!--<tr>
+		<td class="item_title">{%IS_EFFECT}:</td>
+		<td class="item_input">
+			<lable>{%IS_EFFECT_1}<input type="radio" name="is_effect" value="1" checked="checked" /></lable>
+			<lable>{%IS_EFFECT_0}<input type="radio" name="is_effect" value="0" /></lable>
+		</td>
+	</tr>-->
+	<tr>
+		<td class="item_title">{%SORT}:</td>
+		<td class="item_input"><input type="text" class="textbox" name="sort" value="{$new_sort}" /></td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="2">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_SEO_TITLE}:</td>
+		<td class="item_input"><textarea class="textarea" name="seo_title" ></textarea></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_SEO_KEYWORD}:</td>
+		<td class="item_input"><textarea class="textarea" name="seo_keyword" ></textarea></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_SEO_DESCRIPTION}:</td>
+		<td class="item_input"><textarea class="textarea" name="seo_description" ></textarea></td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Deal" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="insert" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%ADD}" />
+			<input type="reset" class="button" value="{%RESET}" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 	 
+</form>
+</>
+<include file="Public:footer" />

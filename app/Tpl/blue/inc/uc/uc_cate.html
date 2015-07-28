@@ -1,0 +1,160 @@
+<div id="uc_cate">
+	<a class="home {if $MODULE_NAME eq 'uc_center' &&$ACTION_NAME neq 'setweibo'}home_cur{/if}" href="{url x="index" r="uc_center"}" title="{$LANG.UC_CENTER}">
+		<i class="iconfont">&#xe602;</i>
+		我的{function name="app_conf" v="SHOP_TITLE"}
+	</a>
+	<div class="blank10"></div>
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe608;</i>资金管理
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body" style="display:none;">
+		<ul class="menu">
+			<li class="{if $MODULE_NAME eq 'uc_money' && ($ACTION_NAME == "incharge" || $ACTION_NAME == "incharge_log")}act{/if}" ><a class="uc_cate" href="{url x="index" r="uc_money#incharge"}" title="充值">充值</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_money' && ($ACTION_NAME == "carry" || $ACTION_NAME == "carry_log")}act{/if}" ><a class="uc_cate" href="{url x="index" r="uc_money#bank"}" title="提现">提现</a></li>
+            <li class="{if $MODULE_NAME eq 'uc_money' && $ACTION_NAME == "bank"}act{/if}" ><a class="uc_cate" href="{url x="index" r="uc_money#bank"}" title="银行卡列表">银行卡列表</a></li> 
+			<li class="last {if $MODULE_NAME eq 'uc_money' && $ACTION_NAME == "index"}act{/if}" ><a class="uc_cate" href="{url x="index" r="uc_money"}" title="资金日志">资金日志</a></li>
+		</ul>
+	</div>
+	{if (int)app_conf("OPEN_IPS") gt 0}
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe629;</i>托管对账
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body" style="display:none;">
+		<ul class="menu">
+        	<li class="{if $MODULE_NAME eq 'uc_ips' && $ACTION_NAME == "create"}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_ips#create"}" title="标的登记">标的登记</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_ips' && $ACTION_NAME == "recharge"}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_ips#recharge"}" title="充值">充值日志</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_ips' && $ACTION_NAME == "transfer"}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_ips#transfer"}" title="提现">提现日志</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_ips' && $ACTION_NAME == "creditor"}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_ips#creditor"}" title="投标记录">投标记录</a></li>			
+			<li class="{if $MODULE_NAME eq 'uc_ips' && $ACTION_NAME == "repayment" || $ACTION_NAME == "repayment_view" }act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_ips#repayment"}" title="还款单">还款单</a></li>	
+            <li class="{if $MODULE_NAME eq 'uc_ips' && $ACTION_NAME == "receivedpayment" }act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_ips#receivedpayment"}" title="回款单">回款单</a></li>	
+			<li class="{if $MODULE_NAME eq 'uc_ips' && $ACTION_NAME == "fullscale" || $ACTION_NAME == "fullscale_view" }act{/if}" > <a class="uc_cate"  href="{url x="index" r="uc_ips#fullscale"}" title="满标放款">满标放款</a></li>
+			<li class="last {if $MODULE_NAME eq 'uc_ips' && $ACTION_NAME == "ips_transfer" || $ACTION_NAME == "ips_transfer_view" }act{/if}" > <a class="uc_cate"  href="{url x="index" r="uc_ips#ips_transfer"}" title="债权转让">债权转让</a></li>
+		</ul>
+	</div>
+	{/if}
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe606;</i>投资管理
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body" style="display:none;">
+		<ul class="menu">
+			<li class="{if $MODULE_NAME eq 'uc_invest'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_invest"}" title="{$LANG.UC_INVEST}">{$LANG.UC_INVEST}</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_repay_plan'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_repay_plan"}" title="{$LANG.UC_REPAY_PLAN}">{$LANG.UC_REPAY_PLAN}</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_transfer'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_transfer"}" title="{$LANG.UC_TRANSFER}">{$LANG.UC_TRANSFER}</a></li>			
+			<li class="{if $MODULE_NAME eq 'uc_collect'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_collect"}" title="{$LANG.UC_COLLECT}">{$LANG.UC_COLLECT}</a></li>	
+			<li class="last {if $MODULE_NAME eq 'uc_earnings'}act{/if}" > <a class="uc_cate"  href="{url x="index" r="uc_earnings"}" title="{$LANG.UC_EARNINGS}">{$LANG.UC_EARNINGS}</a></li>
+			{if app_conf("OPEN_AUTOBID") eq 1}<li class="{if $MODULE_NAME eq 'uc_autobid'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_autobid"}" title="{$LANG.UC_AUTO_BID}">{$LANG.UC_AUTO_BID}</a></li>{/if}
+		</ul>
+	</div>
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe604;</i>借款管理
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body" style="display:none;">
+		<ul class="menu">
+			<li class="{if $MODULE_NAME eq 'uc_deal' && ($ACTION_NAME eq 'refund' || $ACTION_NAME eq 'quick_refund' || $ACTION_NAME eq 'inrepay_refund')}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_deal#refund"}" title="{$LANG.UC_DEAL_REFUND}">{$LANG.UC_DEAL_REFUND}</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_deal' && $ACTION_NAME eq 'borrowed'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_deal#borrowed"}" title="{$LANG.UC_DEAL_BORROWED}">{$LANG.UC_DEAL_BORROWED}</a></li>
+			<li class="last {if $MODULE_NAME eq 'uc_deal' && $ACTION_NAME eq 'borrow_stat'}act{/if}" > <a class="uc_cate"  href="{url x="index" r="uc_deal#borrow_stat"}" title="{$LANG.UC_DEAL_BORROW_STAT}">{$LANG.UC_DEAL_BORROW_STAT}</a></li>
+		</ul>
+		
+	</div>
+	
+	
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe614;</i>账户管理
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body" style="display:none;">
+		<ul class="menu">
+			<li class="{if $MODULE_NAME eq 'uc_account' && ($ACTION_NAME eq 'index'||$ACTION_NAME eq 'work') }act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_account"}" title="{$LANG.UC_ACCOUNT}">{$LANG.UC_ACCOUNT}</a></li>
+			{if $user_info.user_type eq 1}
+			<li class="{if $MODULE_NAME eq 'uc_company'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_company"}" title="{$LANG.UC_COMPANY}">{$LANG.UC_COMPANY}</a></li>
+			{/if}
+			<li class="{if $MODULE_NAME eq 'uc_credit'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_credit"}" title="{$LANG.UC_CREDIT}">{$LANG.UC_CREDIT}</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_account' && $ACTION_NAME eq 'security'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_account#security"}" title="{$LANG.UC_SECURITY}">{$LANG.UC_SECURITY}</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_center' &&$ACTION_NAME eq 'setweibo'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_center#setweibo"}" title="{$LANG.UC_SETWEIBO}">{$LANG.UC_SETWEIBO}</a></li>
+			{if app_conf("OPEN_QUOTA") eq 1}
+			<li class="{if $MODULE_NAME eq 'uc_deal_quota' && $ACTION_NAME eq 'index'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_deal_quota#index"}" title="授信额度申请">授信额度申请</a></li>
+         	{/if}
+         	{if app_conf("OPEN_POINT") eq 1}
+         	<li class="{if $MODULE_NAME eq 'uc_quota' && $ACTION_NAME eq 'index'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_quota#index"}" title="申请信用额度">申请信用额度</a></li>	
+ 		    {/if}
+		</ul>
+	</div>
+	
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe600;</i>VIP专享
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body" style="display:none;">
+		<ul class="menu">
+			<li class="{if $MODULE_NAME eq 'uc_vip_setting' && ($ACTION_NAME eq 'index'||$ACTION_NAME eq 'work') }act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_vip_setting"}" title="我的级别">我的级别</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_given_record' && $ACTION_NAME eq 'index'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_given_record"}"  title="节日福利">节日福利</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_gift_record' &&$ACTION_NAME eq 'index'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_gift_record"}"   title="投资奖励">投资奖励</a></li>
+			<li class="{if $MODULE_NAME eq 'uc_score_exchange'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_score_exchange#record"}"  title="我的积分">我的积分</a></li>
+			<li class="last {if $MODULE_NAME eq 'uc_goods_order' && $ACTION_NAME eq 'index'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_goods_order"}"  title="积分兑换列表">兑换商品</a></li>
+		</ul>
+	</div>
+	
+	{if app_conf("INVITE_REFERRALS") eq 1}
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe62a;</i>推荐奖励
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body" style="display:none;">
+		<ul class="menu">
+			<li class="{if $MODULE_NAME eq 'uc_invite' && ACTION_NAME neq 'reward' }act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_invite"}" title="{$LANG.UC_INVITE}">{$LANG.UC_INVITE}</a></li>
+			<li class="last {if $MODULE_NAME eq 'uc_invite' && ACTION_NAME eq 'reward' }act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_invite#reward"}" title="奖励记录">奖励记录</a></li>
+		</ul>
+	</div>
+	{/if}
+	
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe62b;</i>互动设置
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body" style="display:none;">
+		<ul class="menu">
+			<li class="{if $MODULE_NAME eq 'uc_msg' &&$ACTION_NAME neq 'setting'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_msg"}" title="{$LANG.UC_MSG}">{$LANG.UC_MSG}</a></li>
+			<li class="last {if $MODULE_NAME eq 'uc_msg' &&$ACTION_NAME eq 'setting'}act{/if}" > <a class="uc_cate" href="{url x="index" r="uc_msg#setting"}" title="{$LANG.UC_MSG_SETTING}">{$LANG.UC_MSG_SETTING}</a></li>	
+		</ul>
+	</div>
+			
+     
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#uc_cate li.act").parent().parent().prev(".hd").addClass("hd_cur");
+	$("#uc_cate li.act").parent().parent().show();
+	/* 滑动/展开 */
+	$("#uc_cate .hd").click(function(){
+		$(this).next(".c_body").slideToggle();
+	});
+});
+</script>

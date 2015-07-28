@@ -1,0 +1,41 @@
+{if $user_info}
+	<span class="li li_no" id="J_account">
+		<span class="f14">您好，</span><a href="{url x="shop" r="uc_center"}">{$user_info.user_name}</a>
+		<ul class="ui-nav-dropdown ui-nav-dropdown-account">
+        	<li class="ui-nav-dropdown-angle" style="_top: -13px;"><span></span></li>
+		   	<li class="ui-nav-dropdown-item">
+			   	<a href="{url x="index" r="uc_msg"}" class="rrd-dimgray ">
+			   	<i class="iconfont pm {if $msg_count gt 0}new_pm {/if}">&#xe630;</i>
+				 {$LANG.MSG_COUNT}{if $msg_count>0}({$msg_count}){/if}</a>
+		   	</li>
+			<li class="ui-nav-dropdown-separator"></li>
+          	<li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="{url x="index" r="uc_money#incharge"}">充值</a></li>
+          	<li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="{url x="index" r="uc_money#bank"}">提现</a></li>
+          	<li class="ui-nav-dropdown-separator"></li>
+          	<li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="{url x="index" r="uc_money"}">资金管理</a></li>
+          	<li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="{url x="index" r="uc_invest"}">投资管理</a></li>
+          	<li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="{url x="index" r="uc_deal#refund"}">借款管理</a></li>
+          	<li class="ui-nav-dropdown-separator"></li>
+          	<li class="ui-nav-dropdown-item"><a class="rrd-dimgray" href="{url x="shop" r="user#loginout"}">退出</a></li>
+        </ul>
+	</span>
+	<script type="text/javascript">
+	var acc_menu_hide = null;
+	var hide_menu = null;
+	jQuery(function(){
+		$("#J_account").hover(function(){
+			clearTimeout(acc_menu_hide);
+			$(this).addClass("li_hover");
+		},function(){
+			var obj = $(this);
+			hide_menu = function(){
+				obj.removeClass("li_hover");
+			}
+			acc_menu_hide = setTimeout(hide_menu,100);
+		});
+	});
+	</script>
+{else}
+	<span class="li"><a href="{url x="index" u="user#login" }" class="f_yellow">立即{$LANG.LOGIN}</a></span>
+	<span class="li"><a href="{url x="index" u="user#register" }" class="f_blue">{$LANG.FREE_REGISTER}</a></span>
+{/if}

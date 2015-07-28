@@ -1,0 +1,71 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<php>
+	function get_demotion_status($status){
+		if($status==1)
+		return "已恢复等级";
+		else
+		return "降级中";
+	}
+	
+	function get_original_vip_id($original_vip_id)
+    {
+    	return M("VipType")->where(" id=".$original_vip_id)->getField("vip_grade");
+    }
+	
+	function get_now_vip_id($now_vip_id)
+    {
+    	return M("VipType")->where(" id=".$now_vip_id)->getField("vip_grade");
+    }
+	
+</php>
+<div class="main">
+<div class="main_title">VIP降级记录表</div>
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		降级时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d', false, false, 'begin_time');" style="width:130px" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" style="width:130px" />
+		
+		<input type="hidden" value="VipPrivilege" name="m" />
+		<input type="hidden" value="vip_demotion_record" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		<!---<input type="button" class="button" value="{%EXPORT}" onclick="export_csv();" />--->
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="user" 
+	checkbox="true" 
+	action="" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,user_id|get_user_name_real:{%USER_NAME}
+	,original_vip_id|get_original_vip_id:VIP原等级
+	,now_vip_id|get_now_vip_id:VIP现有等级
+	,causes:降级原因
+	,start_date:降级开始日期
+	,eresume_date:预计恢复日期
+	,status|get_demotion_status:状态
+	" 
+	/> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

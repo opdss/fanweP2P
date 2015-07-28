@@ -1,0 +1,54 @@
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/debit_order_list.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+  <div class="order_list">
+      <ul>
+      	  {foreach from=$deal_list  item=item}
+          <li>
+              <h5 class="clearfix">
+                  <span class="f_l">订单编号:{$item.id}</span>
+                  <span class="f_r">{function name="to_date" v="$item.create_time"}</span>
+              </h5>
+              <div class="content">
+                  <table style=" width:100%;">
+                      <tr>
+                          <td style=" width:70%;">
+                              <div class="Remark">
+                                  <p>商品：<span class="blue">{$item.name}</span></p>
+                                  
+                                  <p class="gray">备注：{$item.description}</p>
+                              </div>
+                              
+                              <table class="second_table">
+                                  <tr>
+                                      <th>商品价格</th>
+                                      <th>首付</th>
+                                      <th>月供</th>
+                                      <th>分期数</th>
+                                  </tr>
+                                  <tr>
+                                      <td>{$item.borrow_amount}元</td>
+                                      <td>{function name="number_format" v="$item.true_month_repay_money" p="2"}元</td>
+                                      <td>{function name="number_format" v="$item.true_month_repay_money" p="2"}元</td>
+                                      <td>{$item.repay_time}个月</td>
+                                  </tr>
+                              </table>
+  
+                          </td>
+                          <td style=" width:15%;border-left:1px #cbcbcb  solid;border-right:1px #cbcbcb  solid;">
+                              <a href="{url x="debit" r="debit_uc_center#order_detail" p="id=$item.id"}" class="blue">订单详情</a>
+                          </td>
+                          <td style=" width:15%;">
+                              <span class="orange">
+                              		{$item.deal_status}
+                              </span>
+                          </td>
+                      </tr>
+                  </table>
+              </div>
+          </li>
+          {/foreach}
+      </ul>
+  </div>
+    {$pages}

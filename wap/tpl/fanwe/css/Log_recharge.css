@@ -1,0 +1,12 @@
+
+/*2015-03-16*/
+/*充值日志*/
+    .new_p-m{ margin:14px 11px; border:1px solid @main_color; background:#fff; border-radius:5px; overflow:hidden;}
+	.Journal_table{ width:100%;}
+	.Journal_table th{ text-align:center; line-height:30px; font-size:15px; color:#fff; background:@main_color; border-right:1px solid #fff;}	
+	.Journal_table th:last-child{ border-right:none;}
+	.Journal_table td{ text-align:center; line-height:30px; font-size:11px; color:#878787; border-right:1px solid @main_color;border-bottom:1px solid @main_color;}
+	.Journal_table td:last-child{ border-right:none;}
+	.Journal_table tr:last-child td{border-bottom:none}
+	
+.new-but-block .but-block .but_sure a{ color:#fff;}

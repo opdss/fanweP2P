@@ -1,0 +1,69 @@
+</div>
+<div class="foot">
+    <div class="c_465568 p-tb20">
+    	<div class="wrap clearfix ">
+    		<div class="f_l">
+    			<ul>
+    				<li class="info_one">
+    					<h3>关于我们</h3>
+						<ul class="info_two">
+							<li><a href="#" class="article">领白条介绍</a></li>
+							<li><a href="#" class="article">团队简介</a></li>
+							<li><a href="#" class="article">联系我们</a></li>
+                            <li><a href="#" class="article">加入我们</a></li>
+						</ul>
+					</li>
+					<li class="info_one">
+    					<h3>如何领白条</h3>
+						<ul class="info_two">
+							<li><a href="#" class="article">什么人可以领</a></li>
+							<li><a href="#" class="article">白条可以分期</a></li>
+                            <li><a href="#" class="article">白条额度说明</a></li>
+                            <li><a href="#" class="article">需要哪些审核资料</a></li>
+                            <li><a href="#" class="article">白条领取步骤</a></li>
+						</ul>
+					</li>
+					<li class="info_one">
+    					<h3>如何还款</h3>
+						<ul class="info_two">
+							<li><a href="#" class="article">还款步骤</a></li>
+							<li><a href="#" class="article">还款提醒</a></li>
+							<li><a href="#" class="article">提前还款</a></li>
+						</ul>
+					</li>
+					<li class="info_one">
+    					<h3>注意事项</h3>
+						<ul class="info_two">
+							<li><a href="#" class="article">联系方式变更</a></li>
+							<li><a href="#" class="article">及时还款</a></li>
+							<li><a href="#" class="article">账单说明</a></li>
+						</ul>
+					</li>
+    			</ul>
+    		</div>
+			<div class="f_r tr">
+				<p style=" font-size:16px; color:#fff; margin-bottom:10px; font-weight:600; line-height:16px;">客服热线</p>
+				<p style=" font-size:22px; color:#fff; margin-bottom:10px; font-weight:900; line-height:22px;">{function name="app_conf" value="SHOP_TEL"}</p>
+			    <p style=" font-size:12px; color:#8693a3; margin-bottom:18px; font-weight:400;">工作时间 {function name="app_conf" value="ONLINE_TIME"} </p>
+                {foreach from="$online_qq" item="qq"}
+                	<a target="_blank" class="inline_kefu" href="http://wpa.qq.com/msgrd?v=3&uin={$qq.qq}&site=qq&menu=yes"></a>
+               	<br/><br/>
+                {/foreach}
+			</div>
+    	</div>
+    </div>
+	<div class="c_black">
+		<div class="wrap">
+			<div  style=" text-align:center; line-height:50px; color:#646776;">
+            	{function name="app_conf" value="SHOP_FOOTER"}
+                {function name="app_conf" value="ICP_LICENSE"}
+                {function name="app_conf" value="COUNT_CODE"}
+			</div>
+		</div>
+	</div>
+</div>
+{if $online_qq}
+	{include file="inc/kefu.html"}
+{/if}
+</body>
+</html>

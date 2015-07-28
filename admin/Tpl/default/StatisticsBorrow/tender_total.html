@@ -1,0 +1,76 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<script type="text/javascript">
+	
+	function total_info(){
+		location.href = ROOT + '?m=StatisticsBorrow&a=tender_total_info';
+	}
+</script>
+<script type="text/javascript">	
+	function export_csv_total()
+	{
+		var query = $("#search_form").serialize();
+		query = query.replace("&m=StatisticsBorrow","");
+		query = query.replace("&a=tender_total","");
+		var url= ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=export_csv_total"+"&"+query;
+		location.href = url;
+	}
+	
+</script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">借出总统计</div>
+<div class="blank5"></div>
+	
+	
+	<form name="search" id = "search_form"  action="__APP__" method="get">	
+		<input type="button" class="button" value="查看所有投资人" onclick="total_info()" />	
+		预计回款时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" style="width:130px" />
+		<input type="button" class="button" id="btn_begin_time" value="{%SELECT_TIME}" onclick="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_begin_time');" />	
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" style="width:130px" />
+		<input type="button" class="button" id="btn_end_time" value="{%SELECT_TIME}" onclick="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_end_time');" />
+		
+		<input type="hidden" value="StatisticsBorrow" name="m" />
+		<input type="hidden" value="tender_total" name="a" />
+		
+		<input type="submit" class="button" value="搜索" />
+		<input type="button" class="button" value="{%EXPORT}" onclick="export_csv_total();" />
+	</form>
+	
+	
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+	
+	
+	
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	datasource="list" 
+	show="投资人数:投资人数
+		,成功投资金额|format_price:成功投资金额
+		,奖励总额|format_price:奖励总额
+		,待收总额|format_price:待收总额
+		,待收本金总额|format_price:待收本金总额
+		,待收利润总额|format_price:待收利润总额
+		,已收总额|format_price:已收总额
+		,已收本金总额|format_price:已收本金总额
+		,已收利润总额|format_price:已收利润总额
+		,提前还款罚息总额|format_price:提前还款罚息总额
+		,逾期还款罚金总额|format_price:逾期还款罚金总额
+		"/> 
+					
+	
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+
+</div>
+
+<include file="Public:footer" />

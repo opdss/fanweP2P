@@ -1,0 +1,60 @@
+<div class="p10">
+	担保保证金：{function name="format_price" item="$deal.guarantor_margin_amt"} <span class="f_red">冻结担保人的金额，需要提前存钱</span>
+	<div class="blank"></div>
+	担保金额：{function name="format_price" item="$deal.guarantor_amt"}
+	<div class="blank"></div>
+	担保收益:{function name="format_price" item="$deal.guarantor_pro_fit_amt"}
+</div>
+<div class="blank"></div>
+<div class="tc">
+	<input type="button" class="formbutton J_agreebutton" dataid="{$deal.id}" value="同意担保" />
+	<input type="button" class="formgraybutton J_noagreebutton" dataid="{$deal.id}" value="拒绝担保" />
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$(".J_agreebutton").unbind("click");
+		$(".J_agreebutton").click(function(){
+			var id =$(this).attr("dataid");
+			var ajaxurl = APP_ROOT+"/index.php?ctl=manageagency&act=agency_status&id="+id+"&status=0";
+			$.showCfm("确认担保吗？",function(){
+				$.ajax({
+					url:ajaxurl,
+					dataType:"json",
+					success:function(result){
+						if(result.status == 1){
+							window.location.reload();
+						}
+						else{
+							$.showError(result.info);
+						}
+					},
+					error:function(){
+						$.showError("发生错误");
+					}
+				});
+			});
+		});
+		$(".J_noagreebutton").unbind("click");
+		$(".J_noagreebutton").click(function(){
+			var id =$(this).attr("dataid");
+			var ajaxurl = APP_ROOT+"/index.php?ctl=manageagency&act=agency_status&id="+id+"&status=2";
+			$.showCfm("拒绝担保吗？",function(){
+				$.ajax({
+					url:ajaxurl,
+					dataType:"json",
+					success:function(result){
+						if(result.status == 1){
+							window.location.reload();
+						}
+						else{
+							$.showError(result.info);
+						}
+					},
+					error:function(){
+						$.showError("发生错误");
+					}
+				});
+			});
+		});
+	});
+</script>

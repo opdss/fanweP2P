@@ -1,0 +1,38 @@
+<div class="dot"></div>
+<div class="blank5"></div>
+<div class="clearfix credit_upload">
+	<div class="field">
+        <label><span class="f_red b">*</span>汽车品牌：</label>
+        <span><input type="text" class="f-input ui-textbox" name="carbrand" value="{$user_info.car_brand}" id="carBrand"></span>
+    </div>
+	<div class="blank"></div>
+	<div class="field">
+        <label><span class="f_red b">*</span>购车年份：</label>
+        <span>
+            <select id="carYear" class="f_l ui-select w80 select-w80" height="300" name="caryear">
+            	<?php
+				$y= to_date(get_gmtime(),"Y");
+				for($i=$y; $i>=$y-22 ;$i--){
+				?>
+				<option value="<?php echo $i; ?>" <?php if($i==intval($this->_var['user_info']['car_year'])): ?>selected="selected"<?php endif; ?>><?php echo $i; ?></option>
+				<?php } ?>
+			</select>
+        </span>
+    </div>
+	<div class="blank"></div>
+	<div class="field">
+        <label><span class="f_red b">*</span>车牌号码：</label>
+        <span><input type="text" class="f-input ui-textbox" name="carnumber" value="{$user_info.car_number}" id="carNumber"></span>
+    </div>
+	<div class="blank"></div>
+	<div class="field">
+        <label><span class="f_red b">*</span>有无车贷：</label>
+        <span>
+        	<select id="carloan" class="f_l ui-select w80 select-w80" name="carloan">
+        		<option value="0" {if $user_info.carloan eq 0}selected="selected"{/if}>无</option>
+				<option value="1" {if $user_info.carloan eq 1}selected="selected"{/if}>有</option>
+        	</select>
+		</span>
+    </div>
+</div>
+<div class="blank"></div>

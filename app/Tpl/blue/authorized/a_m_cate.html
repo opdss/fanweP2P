@@ -1,0 +1,55 @@
+<div id="uc_cate">
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe614;</i>机构中心
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body">
+		<ul class="menu">
+			<li class="{if $MODULE_NAME eq 'authorized' &&$ACTION_NAME eq 'account'}act{/if}" ><a class="uc_cate" href="{url x="index" r="authorized#account"}" title="账户资料">账户资料</a></li>
+			<li class="{if $MODULE_NAME eq 'authorized' &&$ACTION_NAME eq 'security'}act{/if}" ><a class="uc_cate" href="{url x="index" r="authorized#security"}" title="安全设置">安全设置</a></li>
+            <li class="{if $MODULE_NAME eq 'authorized' &&$ACTION_NAME eq 'invite' }act{/if}" > <a class="uc_cate" href="{url x="index" r="authorized#invite"}" title="推广链接">推广链接</a></li>
+        </ul>
+	</div>
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe62a</i>我开发的客户
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body">
+		<ul class="menu">
+        	<li class="{if $MODULE_NAME eq 'authorized' && $ACTION_NAME eq 'customer' }act{/if}" > <a class="uc_cate" href="{url x="index" r="authorized#customer"}" title="已审核客户名单">已审核客户名单</a></li>
+			<li class="{if $MODULE_NAME eq 'authorized' && $ACTION_NAME eq 'customer_not' }act{/if}" > <a class="uc_cate" href="{url x="index" r="authorized#customer_not"}" title="未审核客户名单">未审核客户名单</a></li>
+            <li class="{if $MODULE_NAME eq 'authorized' && ($ACTION_NAME eq 'invest' || $ACTION_NAME eq 'refdetail')}act{/if}" > <a class="uc_cate" href="{url x="index" r="authorized#invest"}" title="客户投资列表">客户投资列表</a></li>
+			<li class="{if $MODULE_NAME eq 'authorized' && ($ACTION_NAME eq 'loan' || $ACTION_NAME eq 'deal_refdetail')}act{/if}" > <a class="uc_cate" href="{url x="index" r="authorized#loan"}" title="客户借款列表">客户借款列表</a></li>
+		</ul>
+	</div>
+	<div class="hd">
+		<span class="t">
+			<i class="iconfont">&#xe606;</i>我的返佣
+		</span>
+		<i class="iconfont r">&#xe62e;</i>
+		<i class="iconfont d">&#xe62c;</i>
+	</div>
+	<div class="c_body">
+		<ul class="menu">
+			<li class="{if $MODULE_NAME eq 'authorized' && $ACTION_NAME eq 'commission' }act{/if}" > <a class="uc_cate" href="{url x="index" r="authorized#commission"}" title="我的返佣">我的返佣</a></li>
+            <li class="{if $MODULE_NAME eq 'authorized' && ($ACTION_NAME eq 'cash' || $ACTION_NAME eq 'bank' || $ACTION_NAME eq 'carry' || $ACTION_NAME eq 'carry_log')}act{/if}" ><a class="uc_cate" href="{url x="index" r="authorized#cash"}" title="返佣提现">返佣提现</a></li>
+			
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#uc_cate li.act").parent().parent().prev(".hd").addClass("hd_cur");
+	$("#uc_cate li.act").parent().parent().show();
+	/* 滑动/展开 */
+	$("#uc_cate .hd").click(function(){
+		$(this).next(".c_body").slideToggle();
+	});
+});
+</script>

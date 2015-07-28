@@ -1,0 +1,116 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/integral_mall.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--积分商城-->
+<ul class="integral_nav_0">
+	<li class="type_0">所有类别</li>
+	<li class="type_1">积分范围</li>
+</ul>
+<div class="blank15"></div>
+
+<div class="integral_nav_1">
+	<table style=" width:100%;">
+	<tr>
+		{foreach from="$data.sort_url" item="sorts" key=key}
+		<th {if $sorts.id eq $data.sort} class="y"{/if} ><a href="{wap_url a="index" r="integral_mall" p="status=$sorts.url"}">{$sorts.name}</a></th>
+		{/foreach}
+	</tr>
+</table>
+</div>
+
+<div class="blank15"></div>
+<div>
+	<ul class="integral_goods">
+		{foreach from="$data.goods_list" item="goods"  name="goods"  key=key}
+		<li>
+			<a href="{wap_url a="index" r="goods_information" p="id=$goods.id"}" >
+			<div class="left_img"><img src="/{$goods.img}" /></div>
+		    <div class="right_p">
+		    	<h5>{$goods.name}</h5>
+				<p >所需积分：<span class="c_ff4a4a">{$goods.score}</span>分</p>
+				<p>购买人数：
+				{if $goods.invented_number gt 0}
+				{$goods.invented_number}
+				{else}
+				0
+				{/if}人
+				</p>
+		    </div>
+		    </a>
+		</li>
+		{/foreach}
+	</ul>
+</div>
+<div class="blank15"></div>
+
+
+	
+<div class="float_block Object_0" style="display:none;">
+	<div class="float_background"></div>
+	<div class="integral_mall_nav">
+		<h5>所有类别<span class="close">关闭</span></h5>
+		<div class="b_blank"></div>
+		<ul>
+			{foreach from="$data.cates_url" item="cates" key=key}
+			<li {if $cates.id eq $data.cates} class="y"{/if}>
+				<a href="{wap_url a="index" r="integral_mall" p="status=$cates.url"}">
+				<span class="name f_l">{$cates.name}</span>
+				<span class="ico f_r"><i class="fa fa-check"></i></span>
+				</a>
+			</li>
+			{/foreach}
+		</ul>
+		</div>
+	</div>
+
+	<div class="float_block Object_1" style="display:none;">
+	<div class="float_background"></div>
+	<div class="integral_mall_nav">
+		<h5>积分范围<span class="close">关闭</span></h5>
+		<div class="b_blank"></div>
+		<ul>
+			{foreach from="$data.integral_url" item="integral" key=key}
+			<li {if $integral.id eq $data.integral} class="y"{/if}>
+				<a href="{wap_url a="index" r="integral_mall" p="status=$integral.url"}">
+				<span class="name f_l">{$integral.name}</span>
+				<span class="ico f_r"><i class="fa fa-check"></i></span>
+			</a>
+			</li>
+			{/foreach}
+		</ul>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function(){
+			var height=$("body").height();
+			
+			$(".integral_mall_nav").height(height);
+			$(".float_background").height(height);
+              
+
+            $(".close").click(function(){
+            	$(this).parents(".float_block").hide();
+            });  
+
+                
+
+                $('.integral_nav_0 li').each(function() 
+			        { 
+			            $(this).click( 
+			            function() 
+			            { 
+			                var iIndex = $('.integral_nav_0 li').index($(this)); 
+			                var Object_iIndex='.Object_'+iIndex;
+			                $(Object_iIndex).show();
+			            }); 
+			        }) 
+  
+     
+
+		});
+	</script>
+{include file="./inc/footer.html"}

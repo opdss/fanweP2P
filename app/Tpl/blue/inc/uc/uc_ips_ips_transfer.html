@@ -1,0 +1,110 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+
+<script type="text/javascript">
+jQuery(function(){
+	$("input#end_time").datepicker({showAnim:'fadeIn'});
+	$("input#start_time").datepicker({showAnim:'fadeIn'});
+	$("form#search-form").submit(function(){
+		var val1 = $("input#end_time").val();
+		$("input[name='end_time']").val(val1);
+		var val2 = $("input#start_time").val();
+		$("input[name='start_time']").val(val2);
+	});
+});
+</script>
+
+
+<div class="tabbox">
+	<div class="tab cur"><a href="{url x="index"r="uc_ips#ips_transfer"}">{$page_title}</a></div>
+</div>
+
+<div class="uc_box bdd bt0 clearfix">
+		
+	<form name="search" id="search-form" action="{url x="index" r="uc_ips#ips_transfer"}" method="get">  	
+    		
+		<div class="sub_nav">
+        	<input type="hidden" name="ctl" value="uc_ips"/>
+            <input type="hidden" name="act" value="ips_transfer"/>
+            
+			转让日期：<input class="f-input ui-textbox w100" id="start_time" type="text" value="{$start_time}">
+			<input type="hidden" name="start_time" type="text" value="" />
+            至
+            <input class="f-input ui-textbox w100" id="end_time" type="text" value="{$end_time}">
+			<input type="hidden" name="end_time" type="text" value="" />
+			<button class="true_btn select_btn" type="submit">搜索</button>
+		</div>
+	</form>
+	<div class="blank0"></div>
+	{if $list}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+		<tbody>
+			<tr border="0">
+				<th style="width:10%">标的号</th>
+				<th class="tl">贷款名称</th>
+                <th style="width:6%">转让者</th>
+                <th style="width:6%">承接人</th>
+                <th style="width:10%">剩余本金</th>
+                <th style="width:8%">剩余利息</th>
+                <th style="width:10%">转让金额</th>
+                <th style="width:8%">受让收益</th>
+                <th style="width:10%">承接时间</th>
+                <th style="width:6%">借款人</th>
+                <th style="width:6%">操作</th>
+			</tr>
+
+			{foreach from="$list" item="item" key=key}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+				<td>
+					{$item.pBidNo} 
+				</td>
+				<td class="tl">
+					{function name="msubstr" v="$item.name" b=0 e=13}
+				</td>
+				<td> 
+					{$item.user_name}
+				</td>
+                <td> 
+					{$item.t_user_name}
+				</td>
+                <td>
+					{$item.left_benjin_format}
+				</td>
+                <td>
+					{$item.left_lixi_format}
+				</td>
+                <td>
+					{$item.transfer_amount_format}
+				</td>
+                <td>
+					{$item.transfer_income_format}
+				</td>
+                <td>
+					{$item.pDate} 
+				</td>
+                <td>
+					{$item.b_user_name}
+				</td>
+                <td>
+                	{if $item.ips_status == 1}
+                    	<a href="{url x="index" r="collocation#Transfer" p="pTransferType=4&ref_data=$item.id&deal_id=$item.deal_id"}">确认转账</a>
+					{else}
+                    	<a href="{url x="index" r="uc_ips#ips_transfer_view" p="id=$item.id"}" >明细</a>
+                    {/if}
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="pages">{$pages}</div>
+	{else}	
+	<div align="center" style="padding:20px 0">暂无记录</div>
+	{/if}
+	<div class="blank"></div>
+</div>

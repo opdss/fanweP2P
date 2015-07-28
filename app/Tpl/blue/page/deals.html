@@ -1,0 +1,253 @@
+{include file="inc/header.html"}
+	<adv adv_id="我要理财列表页顶部广告" />
+	<div class="ur_here"><a href="{url x="index" r="index"}">首页</a> > <a href="{url x="index" r="deals"}">投资列表</a></div>
+	<div id="content" class="clearfix">
+		<div class="f_l filterbox w820">
+			<div class="bddf bdd" id="deallist" name="deallist">
+				
+				<div class="propAttrs clearfix pr {if $scity_id neq 0 || $deal_status neq 0 || $level neq 0 || $interest neq 0 || $lefttime neq 0}v{/if}" id="search_condition" {if $scity_id eq 0 && $deal_status eq 0 && $level eq 0 && $interest eq 0 && $lefttime eq 0}style="height:180px"{/if}>
+					<a href="javascript:void(0);" class="j_more f_blue ps" style="bottom:10px;right:10px;z-index:10;">更多筛选</a>
+		            <form action="{url x="index" r="deals" p="cid=$cid"}" method="post" id="searchByConditionForm">
+		                
+						{if $cate_list_url}
+						<div class="attr">
+		                    <div class="attrKey">认证标识：</div>
+		                    <div class="attrValues">
+								<ul class="av-collapse" id="dashboard">
+									{foreach from =$cate_list_url item="cates" key=key}
+									<li >
+										<a href="{$cates.url}#deallist" {if $cates.id eq $cate_id}class="cur"{/if}>{$cates.name}</a>
+									</li>
+									{/foreach}								
+								</ul>
+		                    </div>
+		                </div>
+						{/if}
+						{if $city_urls}
+						 <div class="attr">
+							<div class="attrKey">区域列表：</div>
+							<div class="attrValues">
+								<ul class="av-collapse" name="city" id="city">
+									{foreach from="$city_urls" item="city" key=key}
+		                            <li><a href="{$city.url}#deallist"  {if $city.id eq $city_id} class="cur" {/if}>{$city.name}</a></li>
+									{/foreach}
+		                        </ul>
+		                    </div>
+		                </div>
+						{/if}
+						{if $sub_citys}
+						<div class="attr">
+							<div class="attrKey">城市列表：</div>
+							<div class="attrValues">
+								<ul class="av-collapse" name="city" id="city">
+									{foreach from="$sub_citys" item="scity" key=key}
+		                            <li><a href="{$scity.url}#deallist"  {if $scity.id eq $scity_id} class="cur" {/if}>{$scity.name}</a></li>
+									{/foreach}
+		                        </ul>
+		                    </div>
+		                </div>
+						{/if}
+						
+						
+						<div class="attr">
+							<div class="attrKey">借款期限：</div>
+							<div class="attrValues">
+								<ul class="av-collapse" name="interest" id="months">
+									{foreach from="$months_type_url" item="months" key=key}
+		                            <li><a href="{$months.url}#deallist" {if $key eq $months_type}class="cur"{/if}>{$months.name}</a></li>
+									{/foreach}
+		                        </ul>
+		                    </div>
+		                </div>
+						<div class="attr">
+		                    <div class="attrKey">借款状态：</div>
+							
+		                    <div class="attrValues">
+								<ul class="av-collapse" id="dashboard">
+									{foreach from =$deal_status_url item="status"}
+									<li >
+										<a href="{$status.url}#deallist" {if $status.key eq $deal_status}class="cur"{/if}>{$status.name}</a>
+									</li>
+									{/foreach}
+																				
+								</ul>
+		                    </div>
+		                </div>
+						
+						<div class="attr">
+		                    <div class="attrKey">信誉等级：</div>
+		                    <div class="attrValues">
+								<ul class="av-collapse" name="level" id="level">
+									{foreach from =$level_list_url item="ilevel" key=key}
+								   <li>
+									   <a href="{$ilevel.url}#deallist" {if $level eq $ilevel.id}class="cur"{/if}>{$ilevel.name}{if $key neq 0}以上{/if}</a>
+								   </li>
+								   {/foreach}
+								</ul>
+							</div>
+		                </div>
+						<div class="attr">
+		                    <div class="attrKey">回馈利率：</div>
+		                    <div class="attrValues">
+								<ul class="av-collapse" name="interest" id="interest">
+		                           {foreach from =$interest_url item="iinterest" key=key}
+								   <li>
+									   <a href="{$iinterest.url}#deallist" {if $interest eq $iinterest.interest}class="cur"{/if}>{$iinterest.name}{if $key neq 0}以上{/if}</a>
+								   </li>
+								   {/foreach}
+		                        </ul>
+		                    </div>
+		                </div>
+						
+						<div class="attr">
+		                    <div class="attrKey">剩余时间：</div>
+		                    <div class="attrValues">
+								<ul class="av-collapse" name="lefttime" id="lefttime">
+		                            {foreach from =$lefttime_url item="ilefttime" key=key}
+								   <li>
+									   <a href="{$ilefttime.url}#deallist" {if $lefttime eq $ilefttime.lefttime}class="cur"{/if}>{$ilefttime.name}{if $key neq 0}以内{/if}</a>
+								   </li>
+								   {/foreach}
+		                        </ul>
+		                    </div>
+		                </div>
+		                
+		               
+		                
+		            </form>
+		        </div>
+			</div>
+			<div class="blank0"></div>
+		</div>
+
+		<div class="f_r creditschool">
+			<div class="cs_tit f18">信贷学堂</div>
+			<div class="cs_con pt10">
+				<ul>
+					{insert name="artile_list" datakey="creditschool" cate="信贷学堂" limit="6" tpl="inc/insert_article_list/creditschool.html"}
+				</ul>
+			</div>
+		</div>
+		<div class="blank0"></div>
+	</div>
+	<div class="blank20"></div>
+</div>
+
+<div class="tabbox clearfix" style="border:none;border-bottom:1px solid #ddd">
+	<div class="wrap">
+		<div class="tab cur" >投资列表</div>
+		<div class="tab" onclick="window.location.href='{url x="index" r="transfer"}'">债权转让</div>
+		<div class="f_r calt">
+			<a href="{url x="index" r="tool"}" class="f_r">理财计算器</a>
+			<i class="iconfont f_blue" class="f_r">&#xe622;</i>
+		</div>
+	</div>
+</div>
+
+<div class="bddf">
+	<div class="blank20"></div>
+	<div class="wrap">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="deal_list_table">
+			<tbody>
+				<trborder="0">
+					<th class="tl pl10">借款标题</th>
+					<th class="tc w140">借款金额</th>
+					<th class="tc w130">年利率</th>
+					<th class="tc w120">借款期限</th>
+					<th class="tc w140">还款方式</th>
+					<th class="tc w230">借款进度</th>
+					<th class="tc w110">状态</th>
+				</tr>
+				{if $deal_list}
+				{foreach from=$deal_list item="deal" key=key name="deal"}
+				<tr class="item {if $key mod 2 eq 1}item_1{/if}">
+					<td class="tl pl10">
+						<img class="f_l" src="{$TMPL}/images/{$deal.user.point_level}.png" align="absmiddle" title="{$deal.user.point_level}" alt="{$deal.user.point_level}" height="30" />
+						<div class="f_l deal-name w280 pl10">
+							<a href="{$deal.url}" class="f18" title="{$deal.name}">{$deal.color_name}</a>
+						</div>
+					</td>
+					<td class="tc">
+						<span class="f18">{$deal.borrow_amount_format}</span>
+					</td>
+					<td class="tc">
+						<span class="f_red f18">{$deal.rate}%{if $deal.user_bid_rebate gt 0}<span class="f14" title="投资返利:{$deal.user_bid_rebate}%">+{$deal.user_bid_rebate}%</span>{/if}</span>
+					</td>
+					<td class="tc">
+						<span class="f18">{$deal.repay_time}</span>{if $deal.repay_time_type eq 0}天{else}个月{/if}
+					</td>
+					<td class="tc w130">{function name="loantypename" v="$deal.loantype" type=0}</td>
+					<td>	
+						<div class="progressvar w180">
+							{if  $deal.deal_status gte 4}
+							<div class="progress w130 mt12">
+								<span class="pr bdr3" style="width:100%;">
+									<img class="ps" title="100%" src="{$TMPL}/images/progressqiu.png" />
+								</span>
+							</div>
+							<div class="progresscon f_blue">100%</div>
+							{else}
+							<div class="progress w130 mt12">
+								<span class="pr bdr3" title="{function name="round" v=$deal.progress_point f=3}%" style="width:{function name="round" v=$deal.progress_point f=2}%;">
+									<img class="ps" src="{$TMPL}/images/progressqiu.png" />
+								</span>
+							</div>
+							<div class="progresscon f_blue">{function name="round" v=$deal.progress_point f=2}%</div>
+							{/if}
+						</div>
+					</td>
+					<td class="tc listbtn">
+						<a href="{$deal.url}">
+							{if $deal.is_delete eq 2}
+								<span class="btn_gray f_white">待发布</span>
+							{elseif $deal.is_wait eq 1}
+								<span class="btn_gray f_white">未开始</span>
+							{elseif $deal.deal_status eq 5}
+								<span class="btn_green f_white">还款完毕</span>
+							{elseif $deal.deal_status eq 4}
+								<span class="btn_green f_white">还款中</span>
+							{elseif $deal.deal_status eq 0}
+								<span class="btn_gray f_white">{if $deal.need_credit eq 0}等待审核{else}等待材料{/if}</span>
+							{elseif $deal.deal_status eq 1 && $deal.remain_time gt 0}
+								<span class="btn_blue f_white">马上投标</span>
+							{elseif $deal.deal_status eq 2}
+								<span class="btn_yellow f_white">已满标</span>
+							{elseif $deal.deal_status eq 3}
+								<span class="btn_gray f_white">已流标</span>
+							{elseif $deal.deal_status eq 1 && $deal.remain_time lte 0}
+								<span class="btn_gray f_white">已过期</span>
+							{/if}
+						</a>
+					</td>
+				</tr>
+				{/foreach}
+				{else}
+				<tr><td colspan="7">没有数据</td></tr>
+				{/if}
+			</tbody>
+		</table>
+		<div class="blank20"></div>
+		<div class="pages">{$pages}</div>
+		<div class="blank20"></div>
+	</div>
+</div>
+<div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#search_condition .j_more").click(function(){
+			if(!$("#search_condition").hasClass("v")){
+				$("#search_condition").animate({height:"270px"});
+				$(".creditschool").animate({height:"260px"});
+				$("#search_condition").addClass("v");
+				$(".j_more").text("收起");
+			}
+			else{
+				$("#search_condition").animate({height:"180px"});
+				$(".creditschool").animate({height:"170px"});
+				$("#search_condition").removeClass("v");
+				$(".j_more").text("更多筛选");
+			}
+		});
+	});
+</script>
+{include file="inc/footer.html"}

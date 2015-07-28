@@ -1,0 +1,164 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/Repayment.css";		
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--回款详情-->
+
+<div class="blank15"></div>
+<div class="Repayment_block_0 r-b">
+	 {foreach from=$data.user_load_ids item="user_load" name="user_load" key=key} 
+	<h5 class="clearfix">
+			<span class="f_l">{$data.deal.name}</span>
+			<a class="f_r" href="{wap_url a="index" r="deal_contract" p="id=$data.deal.id"}">查看电子协议</a>
+	</h5>
+	
+	<table>
+		<tr>
+			<td class="name">借款金额：</td>
+			<td>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$user_load.money f=2}</td>
+		</tr>
+		<tr>
+			<td class="name">年利率：</td>
+			<td class="specialfont ">{$data.deal.rate_foramt_w}</td>
+		</tr>
+		<tr>
+			<td class="name">期限：</td>
+			<td>{$data.deal.repay_time}{if $data.deal.repay_time_type eq 0}天{else}个月{/if}</td>
+		</tr>
+		<tr>
+			<td class="name">已还本息：</td>
+			<td>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$user_load.repay_money f=2}</td>
+		</tr>
+		<tr>
+			<td class="name">管理费：</td>
+			<td>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$user_load.manage_fee f=2}</td>
+		</tr>
+		<tr>
+			<td class="name">利息管理费：</td>
+			<td>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$user_load.manage_interest_money f=2}</td>
+		</tr>
+		<tr>
+			<td class="name">逾期/违约：</td>
+			<td>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$user_load.impose_money f=2}</td>
+		</tr>
+		<tr>
+			<td class="name">还款方式：</td>
+			<td>{function name="loantypename" v="$deal.loantype"}</td>
+		</tr>
+	</table>
+
+</div>
+<div class="blank15"></div>
+<div class="Repayment_block_1">
+	<div class="left_h">
+		<ul>
+			<li>期数</li>
+			<li>还款日</li>
+			<li>实际还款日</li>
+			<li>已收回本息</li>
+			<li>管理费</li>
+			<li>利息管理费</li>
+			<li>逾期/违约金</li>
+			<li>预期收益</li>
+			<li>实际收益</li>
+			<li>状态</li>
+		</ul>
+	</div>
+	<div class="r_content_list">
+		<ul>
+			{foreach from=$user_load.load item=loan key=key name="loans"}
+			<li>
+				<dl>
+					<dd>第{$loan.l_key_index}期</dd>
+					<dd>
+					{if $deal.loantype eq 0 || $deal.loantype eq 1 || $smarty.foreach.loans.last}
+                	{function name="to_date" v=$loan.repay_day f="Y-m-d"}
+					{else}
+					&nbsp;
+					{/if}
+					</dd>
+					<dd>{function name="to_date" v=$loan.true_repay_time f="Y-m-d"}&nbsp;</dd>
+					<dd>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$loan.month_repay_money f=2}&nbsp;</dd>
+					<dd>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$loan.manage_money f=2}&nbsp;</dd>
+					<dd>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$loan.manage_interest_money f=2}&nbsp;</dd>
+					<dd>{function name="app_conf" v="CURRENCY_UNIT"}{if $loan.impose_money neq 0}{function name="number_format" v=$loan.impose_money f=2}{else}0.00{/if}&nbsp;</dd>
+					<dd>{$loan.yuqi_money}&nbsp;</dd>
+					<dd>{$loan.real_money}&nbsp;</dd>
+					<dd>{$loan.status_format}&nbsp;</dd>
+				</dl>
+			</li>
+			{/foreach}
+		</ul>
+		<div class="pre"><i class="fa fa-chevron-left"></i></div>
+		<div class="next"><i class="fa fa-chevron-right"></i></div>
+	</div>
+</div>
+<div class="blank15"></div>
+<div class="Repayment_block_2 r-b">
+	<h5>因借款者在<span class="c_ff4a4a">2015-03-03</span>提前还款，故计算方式改变</h5>
+	<table>
+		<tr>
+			<td class="name">管理费：</td>
+			<td class="c_ff4a4a">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$user_load.manage_fee f=2}</td>
+		</tr>
+		<tr>
+			<td class="name">利息管理费：</td>
+			<td class="c_ff4a4a">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$user_load.manage_interest_money f=2}</td>
+		</tr>
+		<tr>
+			<td class="name">逾期/违约：</td>
+			<td class="c_ff4a4a">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$user_load.impose_money f=2}</td>
+		</tr>
+		<tr>
+			<td class="name">本息还款：</td>
+			<td class="c_ff4a4a">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$user_load.repay_money f=2}</td>
+		</tr>
+	</table>
+</div>
+{/foreach}	
+<script>
+	$(document).ready(function(){
+		var x=$(".Repayment_block_1 .r_content_list").width();
+		var y=x*0.33;
+		var length=$(".Repayment_block_1 .r_content_list ul li").length*(y+1);
+		var length_0=$(".Repayment_block_1 .r_content_list ul li").length;
+		var img=$(".Repayment_block_1 .r_content_list ul");
+
+		
+		$(".Repayment_block_1 .r_content_list ul li").width(y);
+		$(".Repayment_block_1 .r_content_list ul").width(length);
+
+
+		
+		if (length_0>3) 
+		{
+             $(".Repayment_block_1 .r_content_list .pre").show();
+			 $(".Repayment_block_1 .r_content_list .next").show();
+
+             $(".Repayment_block_1 .r_content_list .pre").click(function()
+             {
+             	img.animate({'margin-left':-y},function()           
+                  {
+                   img.find('li').eq(0).appendTo(img);      
+                   img.css({'margin-left':0});              
+                   });
+             });
+
+              $(".Repayment_block_1 .r_content_list .next").click(function()
+             {
+             	img.find('li:last').prependTo(img);                
+		        img.css({'margin-left':-y});                       
+		        img.animate({'margin-left':0});  
+             });
+		}
+		else
+		{
+			$(".Repayment_block_1 .r_content_list .pre").hide();
+			$(".Repayment_block_1 .r_content_list .next").hide();
+		};
+	});
+</script>
+
+{include file="./inc/footer.html"}

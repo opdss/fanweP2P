@@ -1,0 +1,259 @@
+<div id="deal-intro" class="bdd bddf">
+	<div class="deal-lf">
+		<div class="hd">
+			<h3>
+				<div class="lt f_l">
+					<span class="f_l"><a href="{$deal.url}">{$deal.color_name}</a></span>
+					<span class="cate f_l pl5">
+						<img src="{$deal.cate_info.icon}" width="24" height="24" />
+						{$deal.cate_info.name}
+					</span>
+				</div>
+				<div class="rt f_r f_red">
+					借款编号#{$deal.deal_sn}
+				</div>
+			</h3>
+		</div>
+		<div class="bd pt15 pl20 pr20 pb20">
+			<div class="bd_lf">
+				<div class="listbox">
+					<div class="listcon">
+						<h6>年利率</h6>
+						<span><em class="f_red">{$deal.rate} %{if $deal.user_bid_rebate gt 0}<span class="f14" title="投资返利:{$deal.user_bid_rebate}%">+{$deal.user_bid_rebate}%</span>{/if}</em></span>
+					</div>
+					<div class="listcon">
+						<h6>投资期限</h6>
+						<span><em>{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}</em></span>
+					</div>
+					<div class="listcon">
+						<h6>还款方式</h6>
+						<span><em>{function name="loantypename" v="$deal.loantype" type=0}</em></span>
+					</div>
+					<div class="listcon last">
+						<h6>项目金额（元）</h6>
+						<span><em>{$deal.borrow_amount_format}</em></span>
+					</div>
+					<div class="blank0"></div>
+				</div>
+				<div class="blank20"></div>
+				<ul class="itembox">
+					<li>
+						<span class="t">发标时间</span>
+						<span>{function name="to_date" v=$deal.start_time f="Y-m-d"} {function name="to_date" v=$deal.start_time f="H:i"}</span>
+					</li>
+					<li>
+						<span class="t">担保范围</span>
+						<span>{if $deal.warrant eq 1}本金{elseif $deal.warrant eq 2}本金及利息{else}无{/if}</span>
+					</li>
+					{if $deal.uloadtype eq 1}
+					<li>
+						<span class="t">最大认购</span>
+						<span>{$deal.max_portion}</span> 份
+					</li>
+					{else}
+					<li>
+						<span class="t">单笔最大额</span>
+						{if $deal.max_loan_money eq 0}无限制{else}&yen;<em>{function name="number_format" v=$deal.max_loan_money f=2}</em>{/if} 
+					</li>
+					{/if}
+					
+					<li>
+						<span class="t">借款用途</span>
+						<span>{$deal.type_info.name}</span>
+					</li>
+					
+					{if $deal.loantype eq 1 || $deal.loantype eq 2 }
+					<li>
+						<span class="t">到期需还本金</span>
+						<span class="f_red">{$deal.borrow_amount_format}</span>
+					</li>
+					{/if}
+					
+					<li>
+						<span class="t">提前还款费率</span>
+						<span>{$deal.compensate_fee}%</span>
+					</li>
+					
+					<li>
+						{if $deal.loantype eq 2 || $deal.repay_time_type eq 0}
+							<span class="t">到期利息</span>
+							<span class="f_red">{$deal.month_repay_money_format}</span>
+						{else}
+							<span class="t">月还{if $deal.loantype eq 0}本{else}利{/if}息</span>
+							<span class="f_red">{$deal.month_repay_money_format}</span>
+						{/if}
+					</li>
+					
+					
+					<li class="dsjbox">
+						<span class="t">{if $deal.is_wait}开始{else}剩余{/if}时间</span>
+						<div class="J_left_time dsj" id="dsj" rel="{if $deal.deal_status eq 1 && $deal.remain_time gt 0}{$deal.remain_time}{else}0{/if}">
+							<span class="s day">--</span>
+							<!--<span class="l">天</span>-->
+							<span class="s hour">--</span>
+							<span class="l">时</span>
+							<span class="s min">--</span>
+							<span class="l">分</span>
+							<span class="s sec">--</span>
+							<span class="l">秒</span>
+						</div>
+					</li>
+					
+					<li>
+						<span class="t">投标人数</span>
+						{function name="count" v="$load_list"}
+					</li>
+					{if $ACTION_NAME neq 'preview'}
+					<li id="addFav">
+						{if $deal.is_faved gt 0}
+						已关注
+						{else}
+						<a href="javascript:;" id="addFavLink" onclick="collect_deal(this,'{$deal.id}',fav_result);" class="f_red">关注此标</a>
+						{/if}
+					</li>
+					{/if}
+				</ul>
+			</div>
+			
+			
+			<div class="bd_rt f_r pr15">
+			 	{if $deal.is_delete eq 2}
+					<img src="{$TMPL}/images/not_publish.png" alt="" width="137px" height="110px">
+				{elseif $deal.is_wait eq 1}
+					<img src="{$TMPL}/images/wait_load.png" alt="" width="137px" height="110px">
+				{elseif $deal.deal_status eq 5}
+					<img src="{$TMPL}/images/load_done.png" alt="" width="137px" height="110px">
+				{elseif $deal.deal_status eq 4}
+					<img src="{$TMPL}/images/load_in_progress.png" alt="" width="137px" height="110px">
+				{elseif $deal.deal_status eq 0}
+					<img src="{$TMPL}/images/loan_writeM.png" alt="" width="137px" height="110px">
+				{elseif $deal.deal_status eq 1 && $deal.remain_time gt 0}
+					<img src="{$TMPL}/images/load.png" alt="" width="137px" height="110px">
+				{elseif $deal.deal_status eq 2}
+					<img src="{$TMPL}/images/load_full.png" alt="" width="137px" height="110px">
+				{elseif $deal.deal_status eq 3 || $deal.remain_time lte 0}
+					<img src="{$TMPL}/images/load_fail.png" alt="" width="137px" height="110px">
+				{/if}
+			</div>
+			<div class="blank0"></div>
+		</div>
+	</div>
+	<div class="deal-rf">
+		<div class="f_l">完成</div>
+		<div class=" f_blue f_r">{if  $deal.deal_status gte 4}100{else}{function name="round" v=$deal.progress_point f=2}%{/if}</div>
+		<div class="blank5"></div>
+		{if  $deal.deal_status gte 4}
+		<div class="progressB bdr3 w130 ">
+			<span class="pr bdr3" title="100%" style="width:100%;">
+				<img class="ps" src="{$TMPL}/images/progressBqiu.png" />
+			</span>
+		</div>
+		{else}
+		<div class="progressB bdr3 ">
+			<span class="pr bdr3"  title="{function name="round" v=$deal.progress_point f=3}%" style="width:{function name="round" v=$deal.progress_point f=2}%;">
+				<img class="ps" src="{$TMPL}/images/progressBqiu.png" />
+			</span>
+		</div>
+		{/if}
+		<div class="blank5"></div>
+		<div class="moneybox">
+			<ul>
+				<li>
+					<span class="t">账户余额</span>
+					{if $user_info}
+						<span class="J_u_money_0">{function name="format_price" v="$user_info.money"}</span>
+						<a href="{url x="index" r="uc_money#incharge"}" target=_blank class="recharge">充值</a>
+					{else}
+					<a href="javascript:void(0);" onclick="ajax_login();" >请登录查看</a>
+					{/if}
+				</li>
+				<li>
+					<span class="t">项目可投{if $deal.uloadtype eq 0}金额{else}份数{/if}</span>
+					<span>{if $deal.uloadtype eq 0}{$deal.need_money}{else}{$deal.need_portion}{/if}</span>
+				</li>
+				
+				{if $deal.uloadtype eq 1}
+				<li>
+					<span class="t">最小认购金额</span>
+					<span>{$deal.min_loan_money_format}</span>
+				</li>
+				{else}
+				<li>
+					<span class="t">最小认购金额</span>
+					&yen;<em>{if $deal.min_loan_money eq 0}{function name="app_conf" v="DEAL_BID_MULTIPLE"}{else}{function name="number_format" v=$deal.min_loan_money f=2}{/if}</em>
+				</li>
+				{/if}
+				
+				<li>
+     	     		<span class="t">已认购</span>
+					{if $deal.uloadtype eq 1}
+					<span>{$deal.buy_portion}笔</span>
+					{else}
+					<span>{function name="format_price" v=$deal.load_money" f=2}</span>
+					{/if}
+				</li>
+				
+			</ul>
+		</div>
+		
+		<div class="blank10"></div>
+			{if $user_info}
+			{if $deal.deal_status eq 1 && $deal.remain_time gt 0}
+			<div class="touzbox pr {if $deal.uloadtype eq 1}c_number-box{/if}">
+				{if $deal.uloadtype eq 1}
+					<a href="javascript:void(0);" class="c_number " rel="-">-</a>
+					<input class="f-input ui-textbox tc w50 f_l"  autocomplete="off" name="bid_money" id="J_BIDMONEY" value="1" />
+					<a href="javascript:void(0);" class="c_number "  rel="+">+</a>&nbsp;份,收益：<span class="J_u_money_sy f_red">0.00</span>
+					<div class="blank10"></div>
+				{else}
+					<input class="f-input ui-textbox w230" holder="请输入投资金额"  autocomplete="off" name="bid_money" id="J_BIDMONEY" />
+					<input type="hidden" name="id" value="{$deal.id}" />
+					<span class="unit ps">元</span>
+					<div class="blank5"></div>
+					收益：<span class="J_u_money_sy f_red">0.00</span>
+					<div class="blank0"></div>
+				{/if}
+				<input type="button" class="btn_blue f18 b f_white w240 lh38  bdr3" id="tz_link" value="立即投资" />
+			</div>
+			{/if}
+			{else}
+			<div class="touz-login tc f18 b"><a href="javascript:void(0);" onclick="ajax_login();" class="f_blue">您还没登录，请点击登录</a></div>
+			{/if}
+	</div>
+	<div class="blank0"></div>
+</div>
+<script type="text/javascript">
+	var leftTimeActInv = null;
+	jQuery(function(){
+		leftTimeAct();
+	});
+	function leftTimeAct(){
+		clearTimeout(leftTimeActInv);
+		$(".J_left_time").each(function(){
+			var leftTime = parseInt($(this).attr("rel"));
+			if(leftTime > 0)
+			{
+				/*var day  =  parseInt(leftTime / 24 /3600);
+				var hour = parseInt((leftTime % (24 *3600)) / 3600);*/
+				var hour = parseInt(leftTime / 3600);
+				var min = parseInt((leftTime % 3600) / 60);
+				var sec = parseInt((leftTime % 3600) % 60);
+				/*$(this).find(".day").html((day<10?"0"+day:day));*/
+				$(this).find(".day").hide();
+				$(this).find(".hour").html((hour<10?"0"+hour:hour));
+				$(this).find(".min").html((min<10?"0"+min:min));
+				$(this).find(".sec").html((sec<10?"0"+sec:sec));
+				leftTime--;
+				$(this).attr("rel",leftTime);
+			}
+			else{
+				$(this).css("background","none");
+				$(this).html('时间已结束');
+			}
+		});
+		
+		leftTimeActInv = setTimeout(function(){
+			leftTimeAct();
+		},1000);
+	}
+</script>

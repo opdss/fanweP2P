@@ -1,0 +1,144 @@
+{// 引入标签库 }
+
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<script type="text/javascript">
+function address(user_id)
+{
+	location.href = ROOT + '?m=User&a=address&id='+user_id;
+}
+</script>
+<php>
+	function get_user_group($group_id)
+	{
+		$group_name = M("UserGroup")->where("id=".$group_id)->getField("name");
+		if($group_name)
+		{
+			return $group_name;
+		}
+		else
+		{
+			return l("NO_GROUP");
+		}
+	}
+	function get_user_level($id)
+	{
+		$level_name = M("UserLevel")->where("id=".$id)->getField("name");
+		if($level_name)
+		{
+			return $level_name;
+		}
+		else
+		{
+			return "<span style='color:red'>无</span>";
+		}
+	}
+	function get_referrals_name($user_id)
+	{
+		$user_name = M("User")->where("id=".$user_id)->getField("user_name");
+		if($user_name)
+		return $user_name;
+		else
+			return '无';
+	}
+	
+
+	
+	function ips_status($ips_acct_no){
+		if($ips_acct_no==""){
+			return "未同步";
+		}
+		else{
+			return "已同步";
+		}
+	}
+	function user_type_status($type){
+		if($type==1){
+			return "企业";
+		}
+		else{
+			return "普通";
+		}
+	}
+	function user_company($id,$user){
+		if($user['user_type']==1){
+			return "<a href='javascript:user_company(".$id.");'>公司</a>&nbsp;";
+		}
+	}
+	function get_is_black($tag,$id){
+		if($tag)
+		{
+			return "<span class='is_black' data='".$tag."' onclick='set_black(".$id.",this);'>是</span>";
+		}
+		else
+		{
+			return "<span class='is_black' data='".$tag."' onclick='set_black(".$id.",this);'>否</span>";
+		}
+	}
+</php>
+<div class="main">
+<div class="main_title">{:L(MODULE_NAME."_".ACTION_NAME)}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<if condition="ACTION_NAME eq 'index' || ACTION_NAME eq 'company_index'"><input type="button" class="button" value="{%ADD}" onclick="add();" /></if>
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		{%USER_EMAIL}：<input type="text" class="textbox" name="email" value="{:trim($_REQUEST['email'])}" style="width:100px;" />
+		{%USER_MOBILE}：<input type="text" class="textbox" name="mobile" value="{:trim($_REQUEST['mobile'])}" style="width:100px;" />
+		模糊查询:<input type="checkbox" name="is_mohu" value="1" <if condition="intval($_REQUEST['is_mohu']) eq 1">checked="checked"</if> />
+		{%REFERRALS_NAME}：<input type="text" class="textbox" name="pid_name" value="{:trim($_REQUEST['pid_name'])}" style="width:100px;" />
+		{%USER_GROUP}: 
+		<select name="group_id">
+				<option value="0" <if condition="intval($_REQUEST['group_id']) eq 0">selected="selected"</if>>{%ALL}</option>
+				<foreach name="group_list" item="group_item">
+					<option value="{$group_item.id}" <if condition="intval($_REQUEST['group_id']) eq $group_item['id']">selected="selected"</if>>{$group_item.name}</option>
+				</foreach>
+		</select>
+		<if condition="ACTION_NAME eq 'index' or ACTION_NAME eq 'company_index'">
+		<select name="is_effect">
+				<option value="-1" <if condition="$_REQUEST['is_effect'] eq -1 || $_REQUEST['is_effect'] eq ''">selected="selected"</if>>{%ALL}</option>
+				<option value="1" <if condition="intval($_REQUEST['is_effect']) eq 1">selected="selected"</if>>有效</option>
+				<option value="0" <if condition="intval($_REQUEST['is_effect']) eq 0 && isset($_REQUEST['is_effect'])">selected="selected"</if>>无效</option>
+				
+		</select>
+		</if>
+		<div class="blank5"></div>
+		注册时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d %H:%M:%S', false, false, 'begin_time');" style="width:130px" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d %H:%M:%S', false, false, 'end_time');" style="width:130px" />
+		
+		<input type="hidden" name="user_type" value="<if condition="ACTION_NAME eq 'index' or ACTION_NAME eq 'register'">0<else/>1</if>" />
+		<input type="hidden" value="User" name="m" />
+		<input type="hidden" value="<php>echo ACTION_NAME;</php>" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+    	<input type="button" class="button" value="{%EXPORT}" onclick="export_csv();" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="user" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,user_name:会员:edit,email:邮箱,mobile:手机,money|format_price:余额,lock_money:冻结,point:信用,quota|format_price:额度,level_id|get_user_level:等级,pid|get_referrals_name:{%REFERRALS_USER},is_effect|get_is_effect=$user['id']:{%IS_EFFECT},is_black|get_is_black=$user['id']:黑名单,ips_acct_no|ips_status:第三方" 
+	actionlist="edit:{%EDIT}, del:{%DEL},address:收货地址,id|user_company=$user,user_work:{%USER_WORK_SHORT}, user_passed:{%USER_PASSED_SHORT},account_detail:{%USER_ACCOUNT_DETAIL_SHORT},info_down:资料,view_info:资料展示,bank_manage:银行卡,load_manage:投标记录" actionwidth="150px" actionidx="3" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

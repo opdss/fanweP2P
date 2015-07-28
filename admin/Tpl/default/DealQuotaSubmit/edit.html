@@ -1,0 +1,546 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/conf.js' />
+<load href='__TMPL__Common/js/colorpicker.js' />
+<load href='__TMPL__Common/style/colorpicker.css' />
+<style>
+.tgpoint{
+	display:none;
+}
+</style>
+<div class="main">
+<div class="main_title">{$vo.user_id|get_user_name}的授信额度申请&nbsp;&nbsp;<a href="{:U("DealQuotaSubmit/index",array("status"=>$_REQUEST['status']))}">返回</a></div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button conf_btn" rel="1" value="{%DEAL_BASE_INFO}" />&nbsp;
+	<input type="button" class="button conf_btn" rel="2" value="相关参数" />&nbsp;	
+</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">颜色:</td>
+		<td class="item_input">
+			<input type="text" <if condition="$vo['titlecolor'] neq ''">style="background:#{$vo.titlecolor}"</if> name="titlecolor" class="textbox" maxlength="6" size="6" id="colorpickerField" value="{$vo.titlecolor}" />
+			<span class="tip_span">不填即为默认颜色</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">贷款名称:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="name" style="width:500px;" value="{$vo.name}">
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">简短名称:</td>
+		<td class="item_input">
+			<input type="text" class="textbox " name="sub_name" value="{$vo.sub_name}"> <span class='tip_span'>[{%DEAL_SUB_NAME_TIP}]</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">会员:</td>
+		<td class="item_input">
+			{:get_user_name($vo['user_id'])} <a href="__APP__?m=User&a=passed&id={$vo.user_id}" target="_blank">资料认证</a>
+			<input type="hidden" name="user_id" value="{$vo.user_id}"/>            
+		</td>
+		
+	</tr>
+	<!-- xsz -->
+	<tr>
+		<td class="item_title">认证资料显示:</td>
+		<td>
+			<if condition="$old_imgdata_str">
+	            <foreach name="old_imgdata_str" item="img_item">
+					<p style="float:left">
+					<input style=" margin-top: 12px;"  type="checkbox" name="key[]" <if condition="isset($vo['view_info'][$img_item['key']])">checked="checked"</if> value="{$img_item.key}">
+					<a href='{$img_item.img}' target="_blank" title="{$img_item.name}"><img width="35" height="35" style="float:left; border:#ccc solid 1px; margin-left:5px;" id="{$img_item.name}" src="{$img_item.img}"></a>
+					</p>
+				</foreach>
+            </if>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">所在城市:</td>
+		<td class="item_input" id="citys_box">
+			<foreach name="citys" item="city"   >
+				<if condition="$city['pid'] eq 0">
+					<div class="item">
+						<div class="bcity f_l">
+							<input name="city_id[]"  type="checkbox" value="{$city.id}" <if condition="$city['is_selected'] eq 1">checked="checked"</if>>
+							{$city.name}
+						 	：
+					 	</div>
+					 	<div class="scity f_l">
+					 	<foreach name="citys" item="citya">
+						 	<if condition="$city['id'] eq $citya['pid']">
+								 <input  type="checkbox" name="city_id[]" value="{$citya.id}" <if condition="$citya['is_selected'] eq 1">checked="checked"</if> >
+								 {$citya.name} 
+							</if>
+						</foreach>
+						</div>
+					</div>
+					<div class="blank5"></div>
+				</if>
+			</foreach>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%CATE_TREE}:</td>
+		<td class="item_input">
+		<select name="cate_id">
+			<option value="0">=={%NO_SELECT_CATE}==</option>
+			<foreach name="deal_cate_tree" item="cate_item">
+				<option value="{$cate_item.id}" <if condition="$vo['cate_id'] eq $cate_item['id']">selected="selected"</if>>{$cate_item.title_show}</option>
+			</foreach>
+		</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">担保机构:</td>
+		<td class="item_input">
+			
+			<select name="agency_id">
+				<option value="0">=={%NO_SELECT_AGENCY}==</option>
+				<foreach name="deal_agency" item="agency_item">
+					<option value="{$agency_item.id}" <if condition="$vo['agency_id'] eq $agency_item['id']">selected="selected"</if>><if condition="$agency_item['short_name'] neq ''">{$agency_item.short_name}<else/>{$agency_item.name}</if></option>
+				</foreach>
+			</select>
+			
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">担保范围:</td>
+		<td class="item_input">
+			<select name="warrant">
+				<option value="0" <if condition="$vo['warrant'] eq 0">selected="selected"</if>>无</option>
+				<option value="1" <if condition="$vo['warrant'] eq 1">selected="selected"</if>>本金</option>
+				<option value="2" <if condition="$vo['warrant'] eq 2">selected="selected"</if>>本金及利息</option>
+			</select>
+		</td>
+	</tr>
+	<tr id="guarantor_margin_amt_box" <if condition="$vo['warrant'] eq 0">style="display:none"</if>>
+		<td class="item_title">担保保证金[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox " name="guarantor_margin_amt" value="{$vo.guarantor_margin_amt}" />
+			<if condition="$vo['mer_guarantor_bill_no'] neq ''">已解冻：{$vo.un_guarantor_real_freezen_amt|format_price}&nbsp;</if><span class="tip_span">冻结担保人的金额，需要提前存钱</span>
+		</td>
+	</tr>
+	<tr id="guarantor_amt_box" <if condition="$vo['warrant'] eq 0">style="display:none"</if>>
+		<td class="item_title">担保金额[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="guarantor_amt" value="{$vo.guarantor_amt}" />
+			<a href="__ROOT__/index.php?ctl=tool" target="_blank">理财计算器</a>
+		</td>
+	</tr>
+	<tr id="guarantor_pro_fit_amt_box" <if condition="$vo['warrant'] eq 0">style="display:none"</if>>
+		<td class="item_title">担保收益[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="guarantor_pro_fit_amt" value="{$vo.guarantor_pro_fit_amt}" />
+			<if condition="$vo['mer_guarantor_bill_no'] neq ''">实际担保收益：{$vo.guarantor_real_fit_amt|format_price}</if>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_ICON}:</td>
+		<td class="item_input">
+			<html:imgUpload name = 'icon' id='icon' value='$vo.icon' />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%TYPE_TREE}:</td>
+		<td class="item_input">
+		<select name="type_id">
+			<foreach name="deal_type_tree" item="type_item">
+				<option value="{$type_item.id}" <if condition="$type_item['id'] eq $vo['type_id']">selected="selected"</if>>{$type_item.name}</option>
+			</foreach>
+		</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">借款合同范本:</td>
+		<td class="item_input">
+			<select name="contract_id">
+				<option value="0">==选择合同范本==</option>
+				<foreach name="contract_list" item="contract">
+				<option value="{$contract.id}" <if condition="$vo['contract_id'] eq $contract['id']">selected="selected"</if>>{$contract.title}</option>
+				</foreach>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">转让合同范本:</td>
+		<td class="item_input">
+			<select name="tcontract_id">
+				<option value="0">==选择合同范本==</option>
+				<foreach name="contract_list" item="contract">
+				<option value="{$contract.id}" <if condition="$vo['tcontract_id'] eq $contract['id']">selected="selected"</if>>{$contract.title}</option>
+				</foreach>
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%BORROW_AMOUNT}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require "  <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> name="borrow_amount"  value="{$vo.borrow_amount}"  />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">借款保证金[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox " name="guarantees_amt"  value="{$vo.guarantees_amt}"  />
+			<if condition="$vo['mer_bill_no'] neq ''">已解冻：{$vo.un_real_freezen_amt|format_price}&nbsp;</if><span class="tip_span">冻结借款人的金额，需要提前存钱</span>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td class="item_title">{%DEAL_DESCRIPTION}:</td>
+		<td class="item_input">
+			 <html:editor id="description" name="description" style="width:500px;height:200px" type="KINDEDITOR" content="{$vo.description}" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">风险等级:</td>
+		<td class="item_input">
+			<select name="risk_rank">
+				<option value="0" <if condition="$vo['risk_rank'] eq 0">selected="selected"</if>>低</option>
+				<option value="1" <if condition="$vo['risk_rank'] eq 1">selected="selected"</if>>中</option>
+				<option value="2" <if condition="$vo['risk_rank'] eq 2">selected="selected"</if>>高</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">风险控制:</td>
+		<td class="item_input">
+			 <html:editor id="risk_security" name="risk_security" style="width:500px;height:200px" type="KINDEDITOR" content="{$vo.risk_security}" />
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+
+	
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="2">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">成交服务费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="services_fee" value="{$vo.services_fee}"  />%
+			<span class="tip_span">按发布时的会员等级</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">借款者获得积分:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="score" value="{$vo.score}"  />
+			【非信用积分】
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">借款者管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="manage_fee" value="{$vo.manage_fee}"  />%
+			<span class="tip_span">管理费 = 本金总额×管理费率 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">投资者管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="user_loan_manage_fee" value="{$vo.user_loan_manage_fee}"  />%
+			<span class="tip_span">管理费 = 投资总额×管理费率 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">投资者利息管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="user_loan_interest_manage_fee" value="{$vo.user_loan_interest_manage_fee}""  />%
+			<span class="tip_span">管理费 = 实际得到的利息×管理费率 0即不收取</span>(如果是VIP会员将从VIP会员配置里读取)
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">普通逾期管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="manage_impose_fee_day1" value="{$vo.manage_impose_fee_day1}"  />%
+			<span class="tip_span">逾期管理费总额 = 逾期本息总额×对应逾期管理费率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">严重逾期管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="manage_impose_fee_day2" value="{$vo.manage_impose_fee_day2}"  />%
+			<span class="tip_span">逾期管理费总额 = 逾期本息总额×对应逾期管理费率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">普通逾期罚息:</td>
+		<td class="item_input">
+			<input type="text" class="textbox " SIZE="5" name="impose_fee_day1" value="{$vo.impose_fee_day1}"  />%
+			<span class="tip_span">逾期管理费总额 = 逾期本息总额×对应逾期管理费率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">严重逾期罚息:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="impose_fee_day2" value="{$vo.impose_fee_day2}"  />%
+			<span class="tip_span">逾期管理费总额 = 逾期本息总额×对应逾期管理费率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">债权转让管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="user_load_transfer_fee" value="{$vo.user_load_transfer_fee}"  />%
+			<span class="tip_span">管理费 = 转让金额×管理费率 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">提前还款补偿:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="compensate_fee" value="{$vo.compensate_fee}"  />%
+			<span class="tip_span">补偿金额 = 剩余本金×补偿利率 0即不收取</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">投资人返利:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="user_bid_rebate" value="{$vo.user_bid_rebate}"  />%
+			<span class="tip_span">返利金额=投标金额×返利百分比【需满标】</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">投资返还积分比率:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="user_bid_score_fee" value="{$vo.user_bid_score_fee}"  />%
+			<span class="tip_span">投标返还积分 = 投标金额 ×返还比率【需满标】</span>(如果是VIP会员将从VIP会员配置里读取)【非信用积分】
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">申请延期:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="generation_position" value="{$vo.generation_position}"  />%
+			<span class="tip_span">当还款金额大于或等于设置的额度，借款人如果资金不够，可申请延期还款，延期还款就是平台代其还此借款。借款人未还部分由平台跟借款人协商。</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">合同附件:</td>
+		<td class="item_input">
+			 <html:editor id="attachment" name="attachment" style="width:500px;height:200px" type="KINDEDITOR" content="{$vo.attachment}" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">转让合同附件:</td>
+		<td class="item_input">
+			 <html:editor id="tattachment" name="tattachment" style="width:500px;height:200px" type="KINDEDITOR" content="{$vo.tattachment}" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+<div class="blank5"></div>
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">默认有效:</td>
+		<td class="item_input">
+			<select name="is_effect">
+				<option value="0" <if condition="$vo['is_effect'] eq 0">selected="selected"</if>>否</option>
+				<option value="1" <if condition="$vo['is_effect'] eq 1">selected="selected"</if>>是</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">处理结果</td>
+		<td class="item_input" id="QuotaStatusBox">
+			<select name="status" class = "f_l">
+				<option value="0" <if condition="$vo['status'] eq 0">selected="selected"</if>>{%QUOTA_STATUS_0}</option>
+				<option value="1" <if condition="$vo['status'] eq 1">selected="selected"</if>>{%QUOTA_STATUS_1}</option>
+				<option value="2" <if condition="$vo['status'] eq 2">selected="selected"</if>>{%QUOTA_STATUS_2}</option>
+			</select>
+			<div class="f_l point tgpoint" style="margin-left:20px;">信用额度：<input type="text" name="point" value="0" /></div>
+		</td>
+		
+	</tr>
+	
+	<tr>
+		<td class="item_title">原因:</td>
+		<td class="item_input"><textarea id="msgarea" disabled="true" class="textbox" name="bad_msg" style="width:400px;height:80px" >{$vo.bad_msg}</textarea>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">操作备注</td>
+		<td class="item_input">
+			<textarea id="note" name="op_memo"  class="textbox" style="width:400px;height:80px" >{$vo.note}</textarea>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="DealQuotaSubmit" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+</form>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		<if condition="$vo.status eq 1">
+			$("select[name='cate_id']").addClass("require");
+			$("input[name='sub_name']").addClass("require");
+			$("input[name='guarantees_amt']").addClass("require");
+			$("input[name='enddate']").addClass("require");
+			$("input[name='rate']").addClass("require");
+			$("select[name='contract_id']").addClass("require");
+			$("select[name='tcontract_id']").addClass("require");
+		</if>
+		$('#colorpickerField').ColorPicker({
+			onSubmit: function(hsb, hex, rgb, el) {
+				$(el).val(hex);
+				$(el).ColorPickerHide();
+				if(hex!=""){
+					$(el).css({"background":"#"+hex});
+				}
+				else{
+					$(el).css({"background":"#FFFFFF"});
+					$(el).val("");
+				}
+			},
+			onBeforeShow: function () {
+				$(this).ColorPickerSetColor(this.value);
+				if(this.value!=""){
+					$(this).css({"background":"#"+this.value});
+				}
+				else{
+					$(this).css({"background":"#FFFFFF"});
+					$(this).val("");
+				}
+			}
+		})
+		.bind('keyup', function(){
+			$(this).ColorPickerSetColor(this.value);
+			if(this.value!=""){
+				$(this).css({"background":"#"+this.value});
+			}
+			else{
+				$(this).css({"background":"#FFFFFF"});
+				$(this).val("");
+			}
+		});
+		
+		$('#colorpickerField').blur(function(){
+			
+			if($(this).val()!=""){
+				$(this).css({"background":"#"+this.value});
+			}
+			else{
+				$(this).css({"background":"#FFFFFF"});
+			}
+		});
+		
+		$("#citys_box .item .bcity input").click(function(){
+			var obj = $(this);
+			if(obj.attr("checked") == true ||　obj.attr("checked") == "checked"){
+				obj.parent().parent().find(".scity input").attr("checked","checked");
+			}
+			else{
+				obj.parent().parent().find(".scity input").attr("checked","");
+			}
+		});
+		
+		$("select[name='agency_id']").change(function(){
+			if($(this).val()==0){
+				$("select[name='warrant']").val(0);
+				$("#guarantor_margin_amt_box").hide();
+				$("#guarantor_amt_box").hide();
+				$("#guarantor_pro_fit_amt_box").hide();
+			}
+		});
+		
+		$("select[name='warrant']").change(function(){
+			if($(this).val()!=0){
+				$("#guarantor_margin_amt_box").show();
+				$("#guarantor_amt_box").show();
+				$("#guarantor_pro_fit_amt_box").show();
+			}
+			else{
+				$("#guarantor_margin_amt_box").hide();
+				$("#guarantor_amt_box").hide();
+				$("#guarantor_pro_fit_amt_box").hide();
+			}
+		});
+		$("#QuotaStatusBox select").change(function(){
+			if($(this).val()=="2"){
+				$("#msgarea").attr("disabled",false);
+			}
+			else{
+				$("#msgarea").attr("disabled",true);
+			}
+			if($(this).val()=="1"){
+				$("input[name='point']").addClass("textbox require");
+				$(".point").removeClass("tgpoint");
+				$("#point").attr("disabled",false);
+			}
+			else{
+				$("input[name='point']").removeClass("tgpoint textbox require");
+				$(".point").addClass("tgpoint");
+				$("#point").attr("disabled",true);
+			}
+			$("select[name='cate_id']").removeClass("require");
+			$("input[name='sub_name']").removeClass("require");
+			$("input[name='guarantees_amt']").removeClass("require");
+			$("input[name='enddate']").removeClass("require");
+			$("input[name='rate']").removeClass("require");
+			$("select[name='contract_id']").removeClass("require");
+			$("select[name='tcontract_id']").removeClass("require");
+			if($(this).val()=="1"){
+				$("select[name='cate_id']").addClass("require");
+				$("input[name='sub_name']").addClass("require");
+				$("input[name='guarantees_amt']").addClass("require");
+				$("input[name='enddate']").addClass("require");
+				$("input[name='rate']").addClass("require");
+				$("select[name='contract_id']").addClass("require");
+				$("select[name='tcontract_id']").addClass("require");
+			}
+		});
+	});
+</script>

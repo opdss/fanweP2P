@@ -1,0 +1,55 @@
+<script type="text/javascript">
+function swsubmit()
+{
+	
+	if($("#cityname_box").css("display")=='none')
+	{
+		$("#cityname_box").show();
+		$("#citylist_box").hide();
+		$("#switchbtn").html(LANG.JS_SELEST_LIST);
+	}
+	else
+	{
+		$("#citylist_box").show();
+		$("#cityname_box").hide();
+		$("#switchbtn").html(LANG.JS_OTHER_CITY);
+	}
+}
+
+</script>
+							<p class="welcome-notice">
+							{$deal_city.description}							
+							</p>
+							<div class="enter-address">
+								<div class="enter-address-c">
+									<form method="post" action="{url x="tuan" r="subscribe#addmail"}" id="enter-address-form">
+										<div class="mail">
+											<label>{$LANG.MAIL_ADDRESS}：</label>
+											<input type="text" size="20" value="{$user_info.email}" class="f-input f-mail" name="email" id="enter-address-mail">
+											<span class="tip">{$LANG.MAIL_ADDRESS_TIP}</span> </div>
+										<div class="city">
+											<label id="enter-address-city-label">{$LANG.SELECT_YOUR_CITY}：</label>
+											
+											<span style="display: none;" id="cityname_box">
+												<input type="text" name="othercity" class="f-input">
+											</span>
+											
+											<span id="citylist_box">
+											<select class="f-city" name="cityid">
+											{foreach from=$deal_city_list item=deal_city_item}
+											<option value="{$deal_city_item.id}" {if $deal_city_item.id eq $deal_city.id}selected="selected"{/if}>{$deal_city_item.name}</option>
+											{/foreach}
+											</select>
+											</span>
+											
+											<input type="text" style="display: none;" value="" class="f-input f-cityname" name="cityname" autocomplete="off" id="enter-address-city">
+											&nbsp;&nbsp;
+											<input type="submit" value="{$LANG.SUBSCRIBE}" class="formbutton" id="enter-address-commit">
+											<br>
+											<span style="color: rgb(255, 51, 0); text-decoration: underline; cursor: pointer;" onclick="swsubmit()" id="switchbtn" class="tip">{$LANG.OTHER_CITY}</span>
+											</div>
+									</form>
+								</div>
+								<div class="clear"></div>
+							</div>
+													

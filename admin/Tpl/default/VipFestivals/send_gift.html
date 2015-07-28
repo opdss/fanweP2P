@@ -1,0 +1,109 @@
+{// 引入标签库 }
+<tagLib name="html" />
+
+<div class="main">
+<div class="main_title">节日礼品发放</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">节日名称</td>
+		<td class="item_input">
+			{$vo.name}
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">节日时间</td>
+		<td class="item_input">
+			{$vo.holiday_date}
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">礼品类型</td>
+		<td class="item_input">
+			积分			
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">积分值:</td>
+		<td class="item_input">
+			<table class="form">
+				<tr>
+					<td>VIP等级</td>
+					<td>积分值</td>
+				</tr>
+				<foreach name="vip_score" item="vslist_item">
+				<tr>
+					<td>{$vslist_item.vip_grade}</td>
+					<td>{$vslist_item.holiday_score} </td>
+				</tr>
+				</foreach>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">数量</td>
+		<td class="item_input">
+			<input type="text" class="textbox" style="width:100px;" name="number" value="{$vo.number}" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">发放状态</td>
+		<td class="item_input" >
+				<select name="is_send" <if condition="$vo['is_send'] eq 1">disabled="disabled"</if>>
+				<option value="1" <if condition="$vo['is_send'] eq 1">selected="selected"</if>>已发放</option>
+				<option value="0" <if condition="$vo['is_send'] eq 0">selected="selected"</if>>未发放</option>
+				</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">备注</td>
+		<td class="item_input">
+			<textarea id="brief" name="brief"  class="textbox" style="width:400px;height:80px" >{$vog.brief}</textarea>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="VipFestivals" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="send_update_gift" />
+			
+			<!--隐藏元素-->
+			<if condition="$vog['send_state'] eq 1">
+			<else />
+				<input type="submit" class="button" value="{%OK}" />
+			</if>
+			
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	</if>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#QuotaStatusBox select").change(function(){
+			if($(this).val()=="2"){
+				$("#msgarea").attr("disabled",false);
+			}
+			else{
+				$("#msgarea").attr("disabled",true);
+			}
+		});
+	});
+</script>

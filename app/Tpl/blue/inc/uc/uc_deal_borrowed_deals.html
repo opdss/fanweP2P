@@ -1,0 +1,125 @@
+{if $deal_list}
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+<tbody>
+    <tr border="0">
+        <th class="tl pl10">借款标题</th>
+        <th style="width:12%">金额</th>
+        <th style="width:10%">年利率</th>
+        <th style="width:10%">期限</th>
+        <th style="width:15%">完成度</th>
+        <th style="width:15%">发布日期</th>
+        <th style="width:12%">状态</th> 
+    </tr>
+    {foreach from=$deal_list item="deal" key=key name="deal"}
+    <tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+        <td  class="tl pl10">
+        	<div class="pl10">
+            <a href=" {if $deal.is_delete eq 2 || $deal.is_delete eq 3}{url x="index" r="borrow#stepone"}{else}{$deal.url}{/if}">{$deal.name}</a>
+			</div>
+        </td>
+        <td>
+            {$deal.borrow_amount_format}
+        </td>
+        <td>
+            {function name="number_format" v="$deal.rate" f="2"}%
+        </td>
+        <td>
+            {$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}
+        </td>
+        <td>
+            <div class="progressvar">
+					{if  $deal.deal_status gte 4}
+					<div class="progress w100 mt13">
+						<span class="pr bdr3" style="width:100%;">
+							<img class="ps" title="100%" src="{$TMPL}/images/progressqiu.png" />
+						</span>
+					</div>
+					<div class="progresscon f_blue">100%</div>
+					{else}
+					<div class="progress w100 mt13">
+						<span class="pr bdr3" title="{function name="round" v=$deal.progress_point f=3}%" style="width:{function name="round" v=$deal.progress_point f=2}%;">
+							<img class="ps" src="{$TMPL}/images/progressqiu.png" />
+						</span>
+					</div>
+					<div class="progresscon f_blue">{function name="round" v=$deal.progress_point f=2}%</div>
+					{/if}
+			</div>
+        </td>
+        <td class="lh28">
+            {if $deal.publish_wait eq 1 || $deal.publish_wait eq 0}
+            <div class="tc">
+                {function name="to_date" v="$deal.create_time" f="Y-m-d"}
+            </div>
+            <div class="tc">
+                 {function name="to_date" v="$deal.create_time" f="H:i"}
+            </div>
+            {else}
+            <div class="tc">
+                {function name="to_date" v="$deal.start_time" f="Y-m-d"}
+            </div>
+            <div class="tc">
+                 {function name="to_date" v="$deal.start_time" f="H:i"}
+            </div>
+            {/if}
+        </td>
+        <td class="listbtn">
+           
+            {if $deal.is_delete eq 2}
+			<a href="{url x="index" r="borrow#stepone"}" class="f_blue">草稿</a>
+			&nbsp;
+			<a href="{url x="index" r="uc_deal#removesave" p="id=$deal.id"}" class="f_blue j_remove">删除</a>
+			{elseif $deal.is_delete eq 3}
+			<a href="{url x="index" r="borrow#stepone"}" class="f_blue">审核失败</a>
+            {elseif $deal.publish_wait gt 0}
+			<a href="{url x="index" r="borrow#stepone"}" class="f_blue">等待审核</a>
+            {else}
+                {if $deal.deal_status eq 5}
+				<span class="btn_green f_white">还款完毕</span>
+                {elseif $deal.deal_status eq 0}
+				<span class="btn_grenn f_blue">{if $deal.need_credit eq 0}等待审核{else}等待材料{/if}</span>
+                {elseif $deal.deal_status eq 2}
+				<span class="btn_yellow f_white">满标</span>
+                {elseif $deal.deal_status eq 4}
+				<a href="{url x="index" r="uc_deal#quick_refund" p="id=$deal.id"}"><span class="btn_green f_white">还款中</span></a>
+                {elseif $deal.deal_status eq 1 && $deal.remain_time gt 0}
+				<span class="btn_blue f_white">筹款中</span>
+                {elseif $deal.deal_status eq 3}
+				<span class="btn_gray f_white">流标</span>
+				{elseif $deal.deal_status eq 1 && $deal.remain_time lte 0}
+				<span class="btn_gray f_white">已过期</span>
+                {/if}
+            {/if}
+            </span>
+        </td>
+    </tr>
+    {/foreach}
+</tbody>
+</table>
+<div class="pages">{$pages}</div>
+{else}
+<div class="tc p15">暂无记录</div>
+{/if}
+<div class="blank15"></div>
+<script type="text/javascript">
+$(function(){
+	$(".j_remove").click(function(){
+		var obj = $(this);
+		$.showCfm("确认删除吗？",function(){
+			var ajaxurl = obj.attr("href");
+			$.ajax({
+				url:ajaxurl,
+				data:"is_ajax=1",
+				type:"post",
+				dataType:"json",
+				success:function(result){
+					if(result.status==1)
+						obj.parent().parent().remove();
+					else
+						$.showErr(result.info);
+				}
+			});
+		});
+		return false;
+	});
+})  
+</script>

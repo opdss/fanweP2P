@@ -1,0 +1,30 @@
+{include file="inc/header.html"} 
+{if $stay eq 0}
+<meta http-equiv="refresh" content="3;URL={$jump}" />
+{/if}
+<div class="msg_box success_box mt10 mb10">
+							<h2>
+								<div class="icon"><i></i></div>
+								<span class="tip">{$LANG.SUCCESS_TITLE}</span>
+							</h2>
+						
+							<div class="notice">
+								<p>
+								{if $integrate_result}
+								{$integrate_result}
+								{/if}
+								{$msg}	
+								</p>
+								<p>
+									{if $stay eq 0}
+									{function name="sprintf" format=$LANG.JUMP_TIP value=$jump}
+									{/if}
+								</p>
+							</div>
+
+
+</div>
+</div>						
+<div style="background:#f2f2f2; padding:30px;">
+	{function name="app_conf" value="SHOP_FOOTER"} 
+</div>

@@ -1,0 +1,19 @@
+.content_list:nth-child(1)
+{
+	width:25%;
+}
+.content_list:nth-child(2)
+{
+	width:20%;
+}
+.content_list:nth-child(3)
+{
+	width:20%;
+}
+.content_list:nth-child(4)
+{
+	width:35%;
+}
+.content_list:nth-child(4) span:nth-child(1){
+	padding-top:5px;
+}

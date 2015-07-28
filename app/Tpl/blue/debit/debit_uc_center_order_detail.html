@@ -1,0 +1,133 @@
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/debit_uc_my_order.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<h3 class="Total_h3">订单信息</h3>
+<p class="l24">订单编号:{$deal.id}</p>
+<p class="l24">下单时间:{function name="to_date" v="$deal.create_time"}</p>
+<div class="blank45"></div>
+<div class="Total_border_0"></div>
+<h3 class="Total_h3">订单流程</h3>
+<div class="order_Process ">
+    <ul>
+        <li class="Process_0"></li><!--是否选中状态，区别在于Process_类-->
+        <li class="Process_{if $deal.deal_status>=0}1{/if}"></li>
+        <li class="Process_{if $deal.deal_status>=1}2{/if}"></li>
+        <li class="Process_{if $deal.deal_status>=4}3{/if}"></li>
+        <li class="Process_{if $deal.deal_status>=4}4{/if}"></li>
+    </ul>
+</div>
+<div class="Total_border_0"></div>
+{if $deal.deal_status>=4 && $deal.loans_pic}
+	<div class="In_advance_block clearfix" style="margin:5px 0 5px 0;">
+    	<a onclick='return showImg();' class='f_l but1' href="javascript:void(0);" style="padding:5px;">查看放款凭证</a>
+    </div>
+	<div class="Total_border_0"></div>
+{/if}
+{if $deal.deal_status>=4}
+<h3 class="Total_h3">还款账单</h3>
+<table class="bill_list" id="refundTab">
+    <tr>
+        <th class="p-l10">期数</th>
+        <th>最晚还款时间</th>
+        <th>账单金额</th>
+        <th>滞纳金</th>
+        
+        <th>应还款金额</th>
+        <th>还款时间</th>
+        <th>还款状态</th>
+    </tr>
+    {foreach from=$loan_list item=loan key=key}
+    <tr>
+        <td class="p-l10">{$loan.l_key_index}</td>
+        <td>{$loan.repay_day_format}</td>
+        <td>{$loan.month_repay_money_format}</td>
+        <td>{$loan.impose_all_money_format}</td>
+        
+        <td>{$loan.month_need_all_repay_money_format}</td>
+        <td>{if $loan.true_repay_time}{function name="to_date" v="$loan.true_repay_time"}{/if}</td>
+        <td>
+        	{if $loan.has_repay eq 1 || $loan.month_need_all_repay_money eq 0}
+                &nbsp;
+                {if $loan.month_need_all_repay_money eq 0}
+                	{$loan.status_format}
+                	<input type="checkbox" name="periodNumberNo" checked="checked" value="{$key}" style="display:none;" />
+                {/if}
+            {else}
+            	<?php ++$idx;?>
+                <?php if($idx>1 || $this->_var['loan']['status']==6 ):?>
+                	{$loan.status_format}
+                <?php ;else: ?>
+                	<a href="#" id="J_repay_borrow_money" class="but0">还款</a>
+                <?php endif;?>
+            	<input style="display:none;" type="checkbox" name="periodNumber" <?php if($idx==1):?>checked="checked" <?php endif;?> <?php if($idx>1 || $this->_var['loan']['status']==6 ):?>disabled="disabled"<?php endif;?> idx="<?php echo $idx;?>" value="{$loan.l_key}" onclick="getMustPaymoneyTotal();">
+            {/if}
+            <input type="hidden" class="unrepaidInput" id="{$deal_id}-{$loan.l_key}" value="{function name="round" v=$loan.month_need_all_repay_money f=2}">
+            
+        </td>
+    </tr>
+    {/foreach}
+</table>
+{if $deal.deal_status neq 5}
+<div class="In_advance_block clearfix">
+    <span class="f_l">剩余期数：{$deal.left_repay_count} * 每期金额：{$deal.month_repay_money_format} + 违约金：￥0.00 + 服务费：{$deal.month_manage_money_format} = {$deal.true_month_repay_money_format}</span>
+    {if !$deal.exceed_the_time && $deal.ips_bill_no eq ''}
+    	<a class="f_r but1" onclick="$.showCfm('提前还款会将借款一次性清，并计算违约金！',function(){window.location.href='{url x="debit" r="debit_deal#inrepay_refund" p="id=$deal.id"}'});">提前还款</a>
+    {/if}
+</div>
+{/if}
+{/if}
+</div>
+<script>
+	var is_repay_lock = false;
+	function showImg()
+	{
+		$.weeboxs.open("<div id='load_img' style='text-align:center;'><img src='{$deal.loans_pic}' style='width:100%'/></div>", {contentType:'text',showCancel: false,title:"放款凭证",width:600,height:400});
+	}
+	$(function(){
+		$("#J_repay_borrow_money").click(function(){	
+			
+			if(confirm("您确定要还款吗？")){
+				if(is_repay_lock){
+					$.showErr("正在处理中，请稍后!");
+					return false;
+				}
+				$("#payTip").show();
+				is_repay_lock = true;
+				var query = new Object();
+				query.ids = "";
+				{if $deal.loantype eq 2}
+				$("#refundTab input[name='periodNumberNo']:checked").each(function(){
+					query.ids += $(this).val()+",";
+				});
+				{/if}
+				$("#refundTab input[name='periodNumber']:checked").each(function(){
+					query.ids += $(this).val()+",";
+				});
+				query.ids = query.ids.substr(0,query.ids.length - 1);
+				query.paypassword = FW_Password($("#J_PAYPASSWORD").val());
+				$.ajax({
+					url:APP_ROOT + "/index.php?ctl=debit_deal&act=repay_borrow_money&id={$deal.id}",
+					data:query,
+					type:"post",
+					dataType:"json",
+					success:function(result){
+						is_repay_lock = false;
+						$("#payTip").hide();
+						if(result.status==1){
+							$.showSuccess(result.info,function(){
+								window.location.href = '{url x="debit" r="debit_uc_center#order"}';
+							});
+						}
+						else if(result.status==2){
+							window.location.href = result.jump;
+						}
+						else{
+							$.showErr(result.info);
+						}
+					}
+				});
+			}
+		});	
+	});
+</script>

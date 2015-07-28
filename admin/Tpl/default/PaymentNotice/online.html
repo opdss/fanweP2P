@@ -1,0 +1,78 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+<PHP>
+	function get_is_paid($status)
+	{
+		if($status == 0)
+		return l("NO");
+		else
+		return l("YES");
+	}
+	function get_update($id)
+	{
+		if(M("PaymentNotice")->where("id=".$id)->getField("is_paid")==0)
+		return "<a href='javascript:void(0);' onclick='update(".$id.");'>".l("ORDER_PAID_INCHARGE")."</a>&nbsp;";
+	}
+</PHP>
+<script type="text/javascript">
+	function update(id)
+	{
+		$.weeboxs.open(ROOT+"?"+VAR_MODULE+"=PaymentNotice&"+VAR_ACTION+"=gathering&id="+id, {contentType:'ajax',showButton:false,title:"确认收款",width:600,height:300});
+		//location.href = ROOT+"?"+VAR_MODULE+"=PaymentNotice&"+VAR_ACTION+"=update&id="+id;
+	}
+</script>
+<div class="main">
+<div class="main_title">{%PAYMENTNOTICE_ONLINE}</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		创建时间 ：
+		<input type="text" class="textbox" name="start_time" id="start_time" value="{:trim($_REQUEST['start_time'])}" onfocus="return showCalendar('start_time', '%Y-%m-%d', false, false, 'start_time');" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" />
+		<div class="blank5"></div>
+		
+		{%PAYMENT_NOTICE_SN}：<input type="text" class="textbox" name="notice_sn" value="{:trim($_REQUEST['notice_sn'])}" />
+	
+		支付状态
+		<select name="is_paid">
+			<option value="-1" <if condition="intval($_REQUEST['is_paid']) eq -1 || !isset($_REQUEST['is_paid'])">selected="selected"</if>>{%ALL}</option>
+			<option value="0" <if condition="intval($_REQUEST['is_paid']) eq 0 && isset($_REQUEST['is_paid'])">selected="selected"</if>>未支付</option>
+			<option value="1" <if condition="intval($_REQUEST['is_paid']) eq 1">selected="selected"</if>>已支付</option>
+		</select>			
+		<input type="hidden" value="PaymentNotice" name="m" />
+		<input type="hidden" value="online" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="payment_notice" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,notice_sn:{%PAYMENT_NOTICE_SN}
+	,create_time|to_date:{%CREATE_TIME}
+	,pay_time|to_date:{%PAY_TIME}
+	,is_paid|get_is_paid:{%IS_PAID}
+	,user_id|get_user_name:{%USER_NAME}
+	,money|format_price:{%PAYMENT_MONEY}
+	,outer_notice_sn:银行流水号
+	,bank_id:银行账户
+	,memo:{%PAYMENT_MEMO}" 
+	actionlist="id|get_update" /> 
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

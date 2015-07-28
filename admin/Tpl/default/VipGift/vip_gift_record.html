@@ -1,0 +1,110 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/js/user.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<php>
+	function get_gift_status($status){
+		if($status==1)
+		return "已发放";
+		else
+		return "未发放";
+	}
+	
+	function get_deal_url($deal_id){
+		$name=M("Deal")->where(" id=".$deal_id)->getField("name");
+		return '<a href="'.__ROOT__.'/index.php?ctl=deal&id='.$deal_id.'" target="_blank">'.$name.'</a>';
+	}
+	
+	function get_gift_type($gift_type){
+		if($gift_type==1){
+			return "红包";
+		}elseif($gift_type==2){
+			return "收益率";
+		}elseif($gift_type==3){
+			return "积分";
+		}elseif($gift_type==4){
+			return "礼品";
+		}
+	}
+	
+	function get_gift_value($id,$gift){
+		if($gift['gift_type']==1){
+			return $gift['gift_value']." 元";
+		}elseif($gift['gift_type']==2){
+			if($gift['reward_money']!=0){
+				return $gift['gift_value']."% (金额".$gift['reward_money']." 元)";
+			}else{
+				$reward_money=M("DealLoadRepay")->where(" load_id=".$gift['load_id'])->getField("reward_money");
+				if($reward_money!=0){
+					return $gift['gift_value']."% (金额".$reward_money." 元)";
+				}else{
+					return $gift['gift_value']."%";
+				}
+				
+			}
+			
+		}elseif($gift['gift_type']==3){
+			return $gift['gift_value']." 积分";
+		}elseif($gift['gift_type']==4){
+			$name=M("VipGift")->where(" id=".$gift['gift_value'])->getField("name");
+			return $name;
+		}
+	}
+	
+	
+</php>
+<div class="main">
+<div class="main_title">奖励发放列表</div>
+<div class="blank5"></div>
+
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		标题：<input type="text" class="textbox" name="name" value="{:trim($_REQUEST['name'])}" style="width:100px;" />
+		奖励类别：
+		<select name="gift_type" >
+			<option value="-1" <if condition="intval($_REQUEST['gift_type']) eq -1 || intval($_REQUEST['gift_type']) eq '' ">selected="selected"</if>>{%ALL}</option>
+			<option value="1" <if condition="intval($_REQUEST['gift_type']) eq 1">selected="selected"</if>>红包</option>
+			<option value="2" <if condition="intval($_REQUEST['gift_type']) eq 2">selected="selected"</if>>收益率</option>
+			<option value="3" <if condition="intval($_REQUEST['gift_type']) eq 3">selected="selected"</if>>积分</option>
+			<option value="4" <if condition="intval($_REQUEST['gift_type']) eq 4">selected="selected"</if>>礼品</option>
+		</select>
+		发放时间：
+		<input type="text" class="textbox" name="begin_time" id="begin_time" value="{:trim($_REQUEST['begin_time'])}" onfocus="return showCalendar('begin_time', '%Y-%m-%d', false, false, 'begin_time');" style="width:130px" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" style="width:130px" />
+		
+		<input type="hidden" value="VipGift" name="m" />
+		<input type="hidden" value="vip_gift_record" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		<input type="button" class="button" value="{%EXPORT}" onclick="export_csv();" />
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="gift" 
+	checkbox="true" 
+	action="" 
+	datasource="list" 
+	show="id:{%ID}|50px
+	,deal_id|get_deal_url=$item['deal_id']:标题
+	,user_id|get_user_name_real:{%USER_NAME}
+	,gift_type|get_gift_type:收益类型
+	,id|get_gift_value=$gift:收益值
+	,status|get_gift_status:发放状态
+	,release_date:发放时间
+	"/> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

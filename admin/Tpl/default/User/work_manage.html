@@ -1,0 +1,40 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<load href='__TMPL__Common/js/user.js' />
+
+<php>
+	function modify_work($id){
+		return '<a href="javascript:user_work('.$id.')">编辑</a>';
+	}
+</php>
+<div class="main">
+	<div class="main_title">{:strim($_REQUEST['user_name'])}{:L(MODULE_NAME."_".ACTION_NAME)}</div>
+	<div class="blank5"></div>
+	<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:strim($_REQUEST['user_name'])}" style="width:100px;" />
+		
+		<input type="hidden" value="User" name="m" />
+		<input type="hidden" value="<php>echo ACTION_NAME;</php>" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="bank" 
+	action="true" 
+	datasource="list" 
+	show="user_id:{%ID}|50px,user_id|get_user_name_real:会员名,office:单位名称,jobtype:职业状态,officetype:公司类别,officedomain:公司行业,officecale:公司规模,position:职位,salary:月收入" 
+	actionlist="user_id|modify_work" 
+	actionwidth="100px"/> 
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

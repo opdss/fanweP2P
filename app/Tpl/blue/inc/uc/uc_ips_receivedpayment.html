@@ -1,0 +1,89 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+
+<script type="text/javascript">
+jQuery(function(){
+	$("input#end_time").datepicker({showAnim:'fadeIn'});
+	$("input#start_time").datepicker({showAnim:'fadeIn'});
+	$("form#search-form").submit(function(){
+		var val1 = $("input#end_time").val();
+		$("input[name='end_time']").val(val1);
+		var val2 = $("input#start_time").val();
+		$("input[name='start_time']").val(val2);
+	});
+});
+</script>
+<div class="tabbox">
+	<div class="tab cur"><a href="{url x="index" r="uc_ips#receivedpayment"}">{$page_title}</a></div>
+</div>
+
+<div class="uc_box bdd bt0 clearfix">
+	{if $list}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+		<tbody>
+			<tr border="0">
+           	 	<th>标号</th>
+            	<th>贷款名称</th>
+                <th>还款日</th>
+                <th>实际还款日</th>
+                <th>已收本息</th>
+                <th>管理费</th>
+                <th>利息管理费</th>
+                <th>逾期/违约金</th>
+                <th>状态</th>
+			</tr>
+
+			{foreach from="$list" item="item" key=key}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+				<td >
+					{$item.deal_id}
+				</td>
+                <td >
+                	{function name="msubstr" v=$item.deal_name b=0 e=13}
+				</td>
+                <td>
+                	{function name="to_date" v=$item.repay_time f="Y-m-d"}
+				</td>
+                <td>
+                	{function name="to_date" v=$item.true_repay_time f="Y-m-d"}
+				</td>
+                <td>
+                	{function name="number_format" v=$item.repay_money f=2}
+				</td>
+				<td>
+                	{function name="number_format" v=$item.true_manage_money f=2}
+				</td>
+                <td>
+					{function name="number_format" v=$item.true_manage_interest_money f=2}
+				</td>
+                <td>
+					{function name="number_format" v=$item.impose_money f=2}
+				</td>
+                <td>
+					{$item.status}
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="pages">{$pages}</div>
+	{else}	
+	<div align="center" style="padding:20px 0">暂无记录</div>
+	{/if}
+	<div class="blank"></div>
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	

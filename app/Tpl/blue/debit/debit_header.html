@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{if $page_title}{$page_title} - {/if}{if $show_site_titile eq 1}{function name='app_conf' value='SHOP_SEO_TITLE'} - {/if}{$site_info.SHOP_TITLE}</title>
+<link rel="icon" href="favicon.ico" type="/image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico" type="/image/x-icon" />
+<meta name="keywords" content="{if $page_keyword}{$page_keyword}{/if}{$site_info.SHOP_KEYWORD}" />
+<meta name="description" content="{if $page_description}{$page_description}{/if}{$site_info.SHOP_DESCRIPTION}" />
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/debit_style.css";
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/debit_index.css";
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/weebox.css";
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/btn.css";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery-1.8.3.min.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/debit_style.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.bgiframe.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.weebox.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.pngfix.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/des.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/kefu.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/fanwe_utils/fanweUI.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/script.js";
+$this->_var['pagejs'][] = $this->_var['TMPL_REAL']."/js/utils/debit_school.js";
+$this->_var['cpagejs'][] = $this->_var['TMPL_REAL']."/js/script.js";
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/kefu.css"
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<script type="text/javascript">
+var APP_ROOT = '{$APP_ROOT}';;
+var LOADER_IMG = '{$TMPL}/images/lazy_loading.gif';
+var ERROR_IMG = '{$TMPL}/images/image_err.gif';
+var TMPL = '{$TMPL}';
+var send_span = {function name="app_conf" v="SEND_SPAN"}000;
+{if app_conf("APP_MSG_SENDER_OPEN") eq 1 && $DEAL_MSG_COUNT > 0}
+var to_send_msg = true;
+{else}
+var to_send_msg = false;
+{/if}
+var __LOGIN_KEY = "{insert name="get_login_key"}";
+var __HASH_KEY__ = "{insert name="get_hash_key"}";
+</script>
+<script type="text/javascript" src="{$APP_ROOT}/public/runtime/app/lang.js"></script>
+<script type="text/javascript" src="{function name="parse_script" v="$pagejs" c="$cpagejs"}"></script>
+
+<!--[if lt IE 10]>
+<script type="text/javascript" src="{$TMPL}/js/PIE.js"></script>
+<![endif]-->
+<script language="javascript">
+$(function() {
+    if (window.PIE) {
+        $('.rounded').each(function() {
+            PIE.attach(this);
+        });
+    }
+	$(".article").click(function(){
+		location.href = '{url x="debit" r="debit_article#index"}&title='+encodeURI($(this).html());
+	});
+});
+</script>
+<!--[if IE 6]>
+	<script src="{$TMPL}/js/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>
+	DD_belatedPNG.fix('#uc_cate .c_hds , .safety_step ul li , .conf_refund , .uc_r_bl_box .field .passed.yes'); 
+	</script>
+<![endif]-->
+</head>
+
+<body>
+<!--白条头部-->
+<div class="header c_black">
+	<div class="wrap clearfix header_c">
+		<div class="f_l">
+			<span style="letter-spacing:1px;">欢迎访问领白条</span>
+		</div>
+		<div class="f_r">
+            {insert name="load_debit_user_tip"} 
+		</div>
+	</div>
+	
+</div>
+	<div class="c_white p-tb30">
+		<div class="wrap clearfix">
+			<div class=" f_l  clearfix">
+				<div class="f_l">
+					<a href="{url x="debit" r="index"}">
+						<img src="{$TMPL}/images/debit/logo_img.png"/>
+					</a>
+				</div>
+				<div class="f_l  clearfix">
+					<ul class="navbar">
+						<li><a href="{url x="debit" r="index"}">首页</a></li>
+						<li><a href="#" class="article">怎么样领</a></li>
+						<li><a href="#" class="article">白条说明</a></li>
+						<li><a href="#" class="article">关于我们</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class=" f_r">
+				<a href="{url x="debit" r="debit_uc_center"}" class="my_ico">我的领白条</a>
+			</div>
+		</div>
+	</div>
+<!--白条头部结束-->
+<div>

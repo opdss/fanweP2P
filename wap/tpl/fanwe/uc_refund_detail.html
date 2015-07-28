@@ -1,0 +1,153 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_refund_mobile.css";
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_quick_refund.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--已还款详情-->
+<div class="uc_quick_refund">
+	<div class="head">
+		<h5 class="clearfix">
+			<span class="f_l">{$data.deal.name}</span>
+			<a class="f_r" href="{wap_url a="index" r="deal_contract" p="id=$data.deal.id"}">查看电子协议</a>
+		</h5>
+		<ul class="clearfix info_list">
+			<li>
+				<span>借款金额</span>
+				<span>{$data.deal.load_money_format}</span>
+			</li>
+			<li>
+				<span>成交服务费</span>
+				<span class="specialfont">{$data.transaction_money_format}</span>
+			</li>
+			<li>
+				<span>年利率</span>
+				<span class="specialfont">{$data.deal.rate_foramt_w}</span>
+			</li>
+			<li>
+				<span>期限</span>
+				<span>{$data.deal.repay_time}个月</span>
+			</li>
+			<li>
+				<span>已还本息</span>
+				<span>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.deal.repay_money f=2}</span>
+			</li>
+			<li>
+				<span>管理费</span>
+				<span>￥{function name="number_format" v=$data.manage_fee f=2}</span>
+			</li>
+			{if $data.impose_money neq 0}
+			<li>
+				<span>逾期/违约</span>
+				<span>￥{function name="number_format" v=$data.impose_money f=2}</span>
+			</li>
+			{/if}
+			{if $data.manage_impose_fee neq 0}
+			<li>
+				<span>逾期/违约[管]</span>
+				<span class="f_red">￥{function name="number_format" v=$data.manage_impose_fee f=2}</span>
+			</li>
+			{/if}
+			<li>
+				<span>还款方式</span>
+				<span class="f_red">{function name="loantypename" v="$data.deal.loantype"}</span>
+			</li>
+		</ul>
+	</div>
+	<div class="content detail_content">
+		<h6>还款记录<a hre="#" class="specialfont">(温馨提示：还款应遵循先借先还的准则)</a></h6>
+		
+		<dl>
+			{foreach  from= $data.loan_list item="item"}
+			
+			<dd>
+				<a href="{wap_url a="index" r="uc_quick_refund_detail" p="id=$data.deal.id&l_key=$item.l_key"}" >
+				<div class="list_bor">
+					<div class="h clearfix">
+						<span class="Installments">第 {$item.l_key_index} 期</span>
+						<div class="bor clearfix">
+							<span class="Actual_Repayment f_r">实际还款日&nbsp;<span {if $item.status gt 1} class="c_ff4a4a" {/if}>{$item.true_repay_time_format}</span></span>
+							<span class="Repayment_date f_r">还款日&nbsp;{$item.repay_time_format}</span>
+						</div>
+						
+					</div>
+					<div class="p">
+						<div class="bor clearfix">
+							    <div class="child">借款管理费{$item.manage_money_format}</div>
+								 <div class="child">逾期/违约管理费{$item.manage_impose_money_format}</div>
+								<div class="child">已还本息{$item.repay_money_format}</div>
+								<div class="child">逾期/违约金{$item.impose_money_format}</div>
+								<div class="child">状态 &nbsp;
+								 
+								{if $item.status eq 1}
+								<span class="c_3b95d3">
+								{elseif $item.status eq 2}
+								<span class="c_ff4a4a">
+								{elseif $item.status eq 3}
+								<span class="c_ff4a4a">
+								{else}
+								<span class="c_3b95d3">
+								{/if}
+								{$item.status_format}
+								</span>
+								</div>
+						</div>
+					</div>
+				</div>
+				</a>
+			</dd>
+			
+			{/foreach}
+			
+		</dl>
+	</div>
+	
+	<div class="clearfix pay_block">
+			<table>
+				<tr class="money">
+					<td>￥{function name="number_format" v=$data.manage_fee f=2}</td>
+					<td>￥{function name="number_format" v=$data.impose_money f=2}</td>
+					<td>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$data.deal.repay_money f=2}</td>
+				</tr>
+				<tr class="name">
+					<td>管理费</td>
+					<td>逾期/违约金</td>
+					<td>本息还款</td>
+				</tr>
+			</table>
+		</div>
+	
+</div>
+{include file="./inc/footer.html"}
+
+
+
+<script >
+/**
+ * @param {Object} obj
+ * @param {Object} deal_id
+ * @param {Object} l_key
+
+function viewLoanItem(obj,deal_id,l_key){
+	if($(obj).hasClass("hide")){
+		$(obj).removeClass("hide");
+	}
+	else{
+		$(obj).addClass("hide");
+	}
+	if($.trim($(obj+" div").html()) == "" || $.trim($(obj+" div").html()) == "loading..."){
+		getLoanItem(obj,deal_id,l_key,1);
+	}
+}
+
+function getLoanItem(obj,deal_id,l_key,p){
+	var query = new Object();
+	url:  get_user_load_item
+	query.deal_id = deal_id;
+	query.l_key = l_key;
+	query.obj = obj;
+	
+} */
+</script>
+

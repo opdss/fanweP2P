@@ -1,0 +1,49 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_money_log.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--账户日志-->
+<div class="uc_money_log">
+	<ul>
+		{foreach from=$data.item item="item"}
+		<li class="uc_money_log_list ">
+			<div class="clearfix">
+					<div class="f_l type">
+						<h4>{$item.log_info}</h4>
+						<p>
+							{$item.log_time_format} 
+						</p>
+					</div>
+					<div class="f_r money">
+						<div class="f_r freeze">
+							<div class="freeze_son">
+							<span>{$item.lock_money}</span>
+							<p>冻结/提现</p>
+							</div>
+						</div>
+						<div class="f_r  balance">
+							<div class="balance_son">
+							<span class="specialfont">{$item.money}</span>
+							<p>金额</p>
+							</div>
+						</div>
+						
+					</div>	
+			</div>
+			</li>
+		{/foreach} 
+	</ul>
+</div>
+<div class="detail_foot">
+    <div class="lookdetail"><a href="{wap_url a="index" r="uc_incharge"}">充值</a></div>
+    <div class="I_Investment"><a href="{wap_url a="index" r="uc_bank"}">提现</a></div>
+</div>
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

@@ -1,0 +1,113 @@
+{if $is_ajax eq 0}
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index" r="manageagency#mobile"}">{$LANG.UC_MOBILE}</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+{/if}
+		<div class="tip-h clearfix">
+			<div class="lh22 f14" style="padding:50px 0 20px 102px;">
+				{if $manageagency_info.mobilepassed eq 0}
+                <p>尚未绑定手机号</p>
+				<div class="blank1"></div>
+                <p>若您希望绑定手机号，请输入以下信息：</p>
+				{elseif !$authorized_info.mobilepassed && $authorized_info.mobile!=""}
+                <p>手机未验证：{function name="hideMobile" v=$authorized_info.mobile}</p>
+				<div class="blank1"></div>
+                <p>若您希望绑定手机号，请输入以下信息：</p>
+				{else}
+                <p>已绑定手机号：{function name="hideMobile" v=$manageagency_info.mobile}</p>
+                <div class="blank1"></div>
+				<p>若您希望重新绑定其他手机号，请输入以下信息：</p>
+				{/if}
+            </div>
+			<form method="post" name="bind_mobile" id="j_bind_mobile">
+			<table width="470" border="0" style="margin:0 auto;">
+                <tbody>
+            	{if $manageagency_info.mobile neq ''}
+                <tr>
+                    <td width="70">
+                        <div align="left" class="f14">原手机：</div>
+                    </td>
+                    <td>
+                        <input id="oldphone" name="old_phone" class="f-input">
+                    </td>
+                   
+                </tr>
+				{/if}
+                <tr>
+                    <td width="70">
+                        <div align="left" class="f14">手机号：</div>
+                    </td>
+                    <td>
+                        <input id="J_Vphone" name="phone" class="f-input ui-textbox">
+                    </td>
+                    <td height="35" colspan="2" class="f_gray">
+                        <input type="button" id="reveiveActiveCode" class="btn_blue f_white lh26  reveiveActiveCode" value="{$LANG.DO_SEND}{$LANG.MOBILE_VERIFY_CODE}" onclick="sendUnitPhoneCode(this,'#J_Vphone');">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div align="left" class="f14"> {$LANG.VERIFY_CODE}：</div>
+                    </td>
+                    <td>
+                        <input name="validateCode" id="validateCode" class="f-input ui-textbox">
+                    </td>
+                    <td class="f_gray f14" style="padding-left:10px; width:200px">请输入您获取的手机验证码</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <div style="margin-top:20px;">
+                            <input type="submit" name="submit" value="{$LANG.SUBMIT_FORM}" class="sub_btn">
+                        </div>
+                    </td>
+                </tr>
+            	</tbody>
+			</table>
+		</form>
+		</div>
+	{if $is_ajax eq 0}
+	
+</div>
+{/if}
+
+<script type="text/javascript">
+	jQuery(function(){
+		$("#j_bind_mobile").unbind('submit');
+		$("#j_bind_mobile").bind("submit",function(){	
+			var query = new Object();
+			query.ctl = 'ajax';
+			query.act = 'check_unit_verify_code';
+			query.mobile = $("#J_Vphone").val();
+			query.verify = $("#validateCode").val();
+			if($("#oldphone").length > 0){
+				query.old_mobile = $("#oldphone").val();
+			}
+			query.ajax = 1;
+			$.ajax({
+				url : APP_ROOT+"/index.php",
+				data:query,
+				type:"post",
+				dataType:"json",
+				success: function(obj){
+					if(obj.status)
+					{			
+						$.showSuccess(obj.info,function(){
+							window.location.reload();
+						});
+					}
+					else
+						$.showErr(obj.info);
+				},
+				error:function(ajaxobj)
+				{
+					/*if(ajaxobj.responseText!='')
+					alert(ajaxobj.responseText);*/
+				}
+			});
+			return false;
+		});
+	});
+	
+	
+</script>

@@ -1,0 +1,9 @@
+.uc_account_log{ margin:0 10px; border:1px solid @main_color; border-radius:7px; overflow:hidden;}
+.uc_account_log table{ font-size:13px; line-height:30px;  width:100%; color:#878787;}
+.uc_account_log table th{ background:@main_color;  color:#fff; border-right:1px solid #fff;}
+.uc_account_log table tr:first-child th:first-child{ border-radius:5px 0px 0 0;}
+.uc_account_log table tr:first-child th:last-child{ border-radius:0px 5px 0 0; border:none}
+.uc_account_log table tr td{ background:#fff; font-size:11px; text-align:center; line-height:35px; border:1px solid @main_color; border-top:none;}
+.uc_account_log table tr:last-child td{ border-bottom:none}
+.uc_account_log table tr td:first-child{ border-left:none}
+

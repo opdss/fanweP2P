@@ -1,0 +1,37 @@
+<div class="list">
+	<div class="list_title clearfix">
+		<div {if $ACTION_NAME eq 'index'}class="cur"{/if}><a href="{url x="shop" r="uc_voucher#index"}">{$LANG.UC_VOUCHER}</a></div>
+		<div {if $ACTION_NAME eq 'exchange'}class="cur"{/if}><a href="{url x="shop" r="uc_voucher#exchange"}">{$LANG.UC_VOUCHER_EXCHARGE}</a></div>
+	</div>
+	<div class="list_cont">
+		<div class="i_deal_list clearfix">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+				<tr border="0" style="background-color:#00bef0; color:#fff; height:34px;">
+					<th>{$LANG.VOUCHER_INFO}</th>
+					<th style="width:20%">{$LANG.VOUCHER_TIME}</th>
+					<th style="width:20%">{$LANG.VOUCHER_USE_LIMIT}</th>
+					<th style="width:20%">{$LANG.VOUCHER_USE_COUNT}</th>
+				</tr>
+				{foreach from=$list item=voucher key=key}
+				<tr {if $key mod 2 eq  0}class="alt"{/if}>
+					<td style="text-align:left;padding-left:10px">
+						{$LANG.VOUCHER_NAME}：{$voucher.name}<br />
+						{$LANG.VOUCHER_MONEY}：{function name="format_price" value=$voucher.money}<br />
+						{$LANG.VOUCHER_SN}：{$voucher.sn}
+						{if $voucher.password}
+						<br />{$LANG.VOUCHER_PASSWORD}：{$voucher.password}
+						{/if}
+					</td>
+					<td>{if $voucher.begin_time eq 0}无限{else}{function name="to_date" value=$voucher.begin_time}{/if} {if $voucher.end_time eq 0}{else}{$LANG.TO} {function name="to_date" value=$voucher.end_time}{/if} </td>
+					<td>{$voucher.use_limit}</td>
+					<td style="padding-right:10px">{$voucher.use_count}</td>
+				</tr>
+				{/foreach}
+				</tbody>
+			</table>
+			<div class="pages">{$pages}</div>
+		</div>
+	</div>
+	<div class="inc_foot"></div>
+</div>

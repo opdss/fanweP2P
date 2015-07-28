@@ -1,0 +1,26 @@
+.register_nav_list{ height:35px;  position: relative; }
+.register_nav_list ul{padding-left:90px;}
+.register_nav_list li{  float:left; border:1px solid #ccc;  height:34px; line-height:34px;  padding:0 22px; margin-right:10px; cursor:pointer; z-index:2; position:relative;}
+.register_nav_list .y{border-bottom:1px solid #fff;color:#ff3300;}
+
+.border_0{ border-bottom:1px solid #ccc; height:0px; width:100%; font-size:0px; line-height:0px; position:absolute; top:35px; left:0px;}
+
+.r-content .tr{ display:block; padding-left:94px; padding-bottom:30px; _width:343px; *height:44px;}
+.r-content .tr .name{ width:94px; display:block; float:left; margin-left:-94px; height:44px; line-height:44px; color:#000; text-align:right;}
+.r-content .tr .inp{ width:292px; height:42px; border:1px solid #ccc;  padding-left:42px; position:relative;}
+.r-content .tr .inp .ico{ position: absolute; top:0px; left:0px; width:42px; height:42px; background:url(../images/debit/r-ico-bg.png) no-repeat;}
+.r-content .tr .user_name .ico{ background-position:0px 0px;}
+.r-content .tr .user_phone .ico{ background-position:0px -123px;}
+.r-content .tr .user_phone_Verification .ico{ background-position:0px -244px;}
+.r-content .tr .user_password .ico{ background-position:0px -368px;}
+.r-content .tr .user_password-confirm .ico{ background-position:0px -492px;}
+.r-content .tr .inp .Prompt{line-height:42px; color:#a9a9a9;  display:block; position:absolute; top:0px; left:42px;}
+.r-content .tr .inp input{ border:none; width:100%; height:42px; line-height:42px;outline: medium none;}
+.r-content .tr  .sendsms_button{ height:44px; width:138px;border:1px solid #ccc; line-height:44px; background:#eee; color:#666;outline: medium none;}
+.r-content .submit_block { padding-left:94px;}
+.r-content .Provision { padding-left:94px; line-height:17px; font-size:13px; padding-bottom:14px;}
+.r-content .submit_block .submit{ width:336px; height:42px; line-height:42px; text-align:center; border-radius:3px; background:#ff3f44; color:#fff; font-size:14px; border:none}
+
+.r-content .tr .Error{}
+.r-content .tr .Error .form_err{height:30px; position:absolute; top:44px; left:0px; width:336px; line-height:30px; color:red; text-align:left; padding-left: 30px; font-size: 11px; background: url(../images/debit/ico_0.png) no-repeat 6px 6px;}
+.r-content .tr .Error .form_success{height:30px; position:absolute; top:44px; left:0px;  line-height:30px; color:#56ad0a; text-align:left; padding-left: 30px; font-size: 11px; background: url(../images/debit/ico_1.png) no-repeat 6px 6px;}

@@ -1,0 +1,170 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="noindex, nofollow">
+<style type="text/css">
+.header{ background:url(deal_mail/mail_hd.gif) repeat-x; height:110px; padding:10px;}
+.icon_box{ border:#ccc solid 1px;padding: 15px; width: 200px ;margin:0 10px 0 0;}
+.icon_box img{border: 1px solid #A6A7A3;background: white;padding: 1px;margin-top: 2px;}
+.item_table{ width:485px;border:1px solid #ccc}
+.deal_title{height: 38px;line-height: 38px;border-bottom: 1px dotted #B9B9B9;width:463px;margin:0px 1px}
+.deal_info_1,.deal_info_2{ font-size:12px; color:#5C5B5B;line-height: 2em;}
+.deal_info_1{height: 36px;line-height: 36px;border-bottom: 1px dotted #B9B9B9;margin:0px 1px}
+.sp_table{ border:#cccccc solid 1px; background:#fffce5; width:213px; margin:10px;}
+.ref_table{ border:#cccccc solid 1px; background:#fffce5; width:213px; margin:10px;}
+.deal_intro{  border:#cccccc solid 1px; margin:10px 0; width:740px;}
+.contact{  border:#cccccc solid 1px; margin:10px 0; width:740px;}
+.deal_intro td,.contact td{ padding:10px;}
+.block{ width:740px; overflow:hidden;}
+.f_red{color:#FF4E00}
+.deal_info_item{ display:inline-block; line-height:26px; height:26px;width:145px}
+</style> 
+</head>
+<body style="padding: 0px; margin: 0px; font-size:12px;" bgcolor="#ffffff">
+<div class="block">
+<div class="header">
+<table width="100%">
+<tr>
+<td width="150"> <a href="{function name="get_domain"}{$APP_ROOT}" 
+ title="{function name="app_conf" value="SHOP_TITLE"}"><img alt="{function name="app_conf" value="SHOP_TITLE"}" 
+src="{function name="app_conf" value="SHOP_LOGO"}" style="border: 0px none;" 
+></a> </td><!--logo box-->
+<td style="text-align:right;"> {$deal_rs.0.send_date}   </td><!--date-->
+</tr>
+</table>
+</div><!--end header-->
+{foreach from=$deal_rs item=deal}
+<table width="100%">
+<tr>
+<td valign="top">
+	<table class="icon_box">
+    	<tr>
+        	<td style="width:30px;">
+				<a href="{$deal.url}" title="{$deal.name}"><img alt="{$deal.name}" src="{$deal.icon}" style="border: medium none;" title="{$deal.name}" width="196" height="196"></a>
+			</td>
+        </tr>
+	</table>
+</td><!--deal img-->
+
+<td valign="top">
+	  <table class="item_table">
+	  	<tr>
+	  		<td>
+	  			<table class="deal_title" width="463px">
+				  	<tr>
+				  		<td height="38px">
+						&nbsp;<a  href="{$deal.url}" style="text-decoration: none; font-size: 14px; font-weight: bold; color:#333333; " title="{$deal.name}">{$deal.name}</a>
+						</td>
+						<td style="color:#A2A2A2;font-size: 12px;text-align:right;">
+							借贷编号：{$deal.id}&nbsp;&nbsp;
+						</td>
+	  				</tr>
+				</table>
+			</td>
+	  	</tr>
+    	<tr>
+            <td>
+            	<table class="deal_info_1" width="463px">
+				  	<tr>
+				  		<td style="text-align:left;">
+							借款金额： {$deal.borrow_amount_format}
+				  		</td>
+				  		<td width="120px" style="text-align:center;">
+			            	<a href="{$deal.url}" title="{$deal.name}"><img alt="{$deal.name}" src="deal_mail/mail-tpl-view.gif" style="border: medium none;" width="111" height="34"></a>
+						</td>
+	  				</tr>
+					<tr>
+						<td>
+							借款年利率：<span class="f_red">{$deal.rate_foramt}%</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;借款期限：{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}个月{/if}
+						</td>
+						<td style="text-align:center;">
+							最低投标金额{$deal.min_loan_money}元
+						</td>
+					</tr>
+				</table>
+            </td>
+        </tr>
+		
+		<tr>
+            <td>
+            	<table class="deal_info_2" width="463px">
+				  	<tr>
+				  		<td style="text-align:left;">
+							{if $deal.loantype neq 2}
+								<span class="deal_info_item">
+								还款周期：按月还款
+								</span>
+							{/if}
+							<span class="deal_info_item">还款方式：{function name="loantypename" v="$deal.loantype"}</span>
+							<span class="deal_info_item">借款用途：{$deal.type_info.name}{$deal.type_info}</span>
+				  		</td>
+	  				</tr>
+					<tr>
+						<td>
+							<span class="deal_info_item">
+							剩余时间：
+							{if $deal.deal_status neq 1}
+							0天0时0分
+							{else}
+							{$deal.remain_time_format}
+							{/if}
+							</span>
+							{if $deal.loantype neq 2}
+							<span class="deal_info_item">提前还款费率：<span class="f_red">{function name="app_conf" v="COMPENSATE_FEE"}%</span></span>
+							{/if}
+							<span class="deal_info_item">
+							担保范围： {if $deal.warrant eq 1}本金{elseif $deal.warrant eq 2}本金及利息{else}无{/if}
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="deal_info_item">
+							{if $deal.loantype eq 2}
+							到期利息：<span class="f_red">{$deal.month_repay_money_format}</span>
+							{else}
+								月还{if $deal.loantype eq 0}本{else}利{/if}息：<span class="f_red">{$deal.month_repay_money_format}</span>
+							{/if}
+							</span>
+							<span class="deal_info_item">
+							{if $deal.loantype eq 1 || $deal.loantype eq 2 }
+								到期需还本金：<span class="f_red">{$deal.borrow_amount_format}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							{/if}
+							</span>
+						</td>
+					</tr>
+				</table>
+            </td>
+        </tr>
+    </table><!--btn table-->
+</td>
+
+</tr>
+</table>{*第一行关于图片与价格信息*}
+
+{if count($deal_rs) eq 1}
+<table class="deal_intro" >{*第二行关于团购简介*}
+<tr>
+<td>
+<h3 style="font-size: 16px; color:#000000;">借款详情介绍</h3> <br />
+<span style="font-size:14px; ">{$deal.description}</span> <br /><br />
+<a href="{$deal.url}" alt="查看更多">
+<img style="border: medium none;" src="deal_mail/mail-tpl-more.gif" alt="查看更多" width="168" height="31">
+</a>
+</td>
+</tr>
+</table>{*第二行关于团购简介*}
+{/if}
+{/foreach}
+<table class="contact">
+<tr>
+        <td>
+        电子邮箱:<a href="mailto:{function name="app_conf" value="REPLY_ADDRESS"}">{function name="app_conf" value="REPLY_ADDRESS"}</a> 
+        客服电话:{function name="app_conf" value="SHOP_TEL"}
+  		<span style="font-weight: normal; font-size: 12px;">{function name="app_conf" value="ONLINE_TIME"}</span>
+		</td>
+</tr>
+</table>
+</div> <!--end block-->
+</body>
+</html>

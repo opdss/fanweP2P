@@ -1,0 +1,140 @@
+{include file="inc/header.html"} 
+<script type="text/javascript" src="{$TMPL}/js/store.js"></script>
+<script type="text/javascript" src="{$TMPL}/js/review.js"></script>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/review.css" /><tr></tr>
+<link rel="stylesheet" type="text/css" href="{$TMPL}/css/review_form.css" />
+<script type="text/javascript">
+	var is_order_show = false
+</script>
+	<div class="blank"></div>
+	<div class="blank"></div>
+	<div class="long f_l">
+	
+	<!--review_info-->
+	<div class="review_item review_detail">
+			<div class="review_point review_header">
+				
+				<div class="review_title">{$store_info.name}的评价</div>
+					<span class="point_title">总评：</span> <span class="point_result">{$review_item.point_lang}</span>
+					{foreach from=$review_item.group_point item=group}
+					<span class="point_title">{$group.name}：</span> <span class="point_result">{$group.point}</span>
+					{/foreach}
+					{if $review_item.avg_price gt 0}
+					<span class="point_title">人均：</span> <span class="point_result">￥{function name="round" val=$review_item.avg_price p=2}</span>
+					{/if}
+					
+					{if $review_item.is_best}
+					<span class="is_best_ico"></span>
+					{/if}
+					{if $review_item.reply_count gt 50}
+					<span class="is_hot_ico"></span>
+					{/if}
+			</div>
+			<div class="blank0"></div>
+			<div class="hd detail_hd">
+				{function name="show_avatar" uid=$review_item.user_id  type="small" }
+				<div class="user_name">
+				{function name="get_user_name" value=$review_item.user_id} 
+				</div>
+			</div>
+			<div class="review_content detail_content">
+				
+				
+				<div class="review_title">
+					{if $review_item.title neq ""}
+					<a href="{url x="store" x="review#detail" p="id=$review_item.id"}" title="{$review_item.title}">{$review_item.title}</a>
+					{/if}
+					{if $review_item.from_data neq ''}
+					<a href="{$review_item.rel_url}" target="_blank" style="font-size:12px; font-weight:normal; font-family:arial;">[查看{$review_item.rel_name}]</a>
+					{/if}
+				</div>
+								
+				<?php echo decode_topic(nl2br(msubstr($this->_var['review_item']['content'],0,500))); ?>
+				<div class="blank"></div>
+				
+				{foreach from=$review_item.imgs item=img}
+				<div class="imgbox">
+					<img src="{$img.image}"  />
+					<div class="blank"></div>
+					{$img.brief}
+				</div>		
+				{/foreach}	
+				<div class="blank"></div>
+				
+				
+				<div class="store_tag_info">
+				{foreach from=$review_item.group_tag item=group}
+					<div class="tag_info_item">
+					{$group.name}：
+					{foreach from=$group.tags_arr item=tag_item}
+					<a href="{$tag_item.url}" target="_blank">{$tag_item.name}</a>&nbsp;&nbsp;
+					{/foreach}
+					</div>
+				{/foreach}
+				</div>
+				
+				
+				<div class="blank"></div>
+				
+			</div>
+			
+			<div style="padding:0px 10px;">
+				<div class="review_date" style="width:735px;">				
+					<!-- JiaThis Button BEGIN -->
+					<span id="ckepop" class="f_r">
+						<span class="jiathis_txt">分享到：</span>
+						<a class="jiathis_button_qzone"></a>
+						<a class="jiathis_button_tsina"></a>
+						<a class="jiathis_button_tqq"></a>
+						<a class="jiathis_button_renren"></a>
+						<a class="jiathis_button_kaixin001"></a>
+						<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+					</span>
+					<script type="text/javascript" src="http://v2.jiathis.com/code/jia.js" charset="utf-8"></script>
+					<!-- JiaThis Button END -->
+					<span class="f_l" style="color:#ccc;">
+					{$review_item.user_name} 在 {$review_item.create_time_format} 发表了点评
+					</span>
+					<div class="blank0"></div>
+				</div>
+				<div class="blank"></div>
+				<div class="response">
+					<span>这篇点评怎么样？</span>
+					<p class="response-good"><a onclick="$.Vote_Flower(this,'good_count',{$review_item.id},'有用','dp',DpVoteUpdate);" href="javascript:void(0);">有用</a><b>({$review_item.good_count})</b></p>
+					<p class="response-bad"><a onclick="$.Vote_Flower(this,'bad_count',{$review_item.id},'没用','dp',DpVoteUpdate);" href="javascript:void(0);">没用</a><b>({$review_item.bad_count})</b></p>
+				
+					<div class="funcbox">
+						{if $user_auth[dp][setbest]}<a href="javascript:void(0);" onclick="op_dp_setbest({$review_item.id});">推荐</a> | {/if}
+						{if $user_auth[dp][del]}<a href="javascript:void(0);" onclick="op_dp_del({$review_item.id});">删除</a> | {/if}
+						<a href="{url x="store" x="review#detail" p="id=$review_item.id"}#reply">回应 ({$review_item.reply_count}) </a>
+					</div>
+				</div>
+			</div>
+			<div class="blank"></div>
+	
+	</div>
+
+	<div id="reply"></div>
+	{include file="inc/review/reply_box.html"}
+	<div class="blank"></div>
+	<div id="sign_list" class="wb p15 bdc">
+		{$review_list_html}
+	</div>
+	</div>
+	<div class="short f_r">
+		{include file="inc/side_supplier_info.html"}
+	</div>
+	<div class="blank"></div>
+
+<script type="text/javascript">
+
+function DpVoteUpdate(obj,result)
+{
+	if(result.status)
+	$(obj).parent().find("b").html("("+result.message+")");
+	else
+	$.showErr(result.message);
+}
+
+</script>
+{include file="inc/footer.html"}

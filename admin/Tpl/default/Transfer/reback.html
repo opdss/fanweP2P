@@ -1,0 +1,85 @@
+{// 引入标签库 }
+<form action="__APP__" method="post" onsubmit="return check_reback();">
+<div class="main">
+
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="3">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">{%DEAL_NAME}:</td>
+		<td class="item_input">
+		<span title="{$transfer.deal_name}">{$transfer.deal_name}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">转让者:</td>
+		<td class="item_input">
+		<span>{$transfer.user.user_name}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">剩余利息/本金:</td>
+		<td class="item_input">
+		<span>{$transfer.left_lixi_format}  /  {$transfer.left_benjin_format}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">剩余期数:</td>
+		<td class="item_input">
+		<span>{$transfer.how_much_month}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">转让价:</td>
+		<td class="item_input">
+		<span>{$transfer.transfer_amount_format}</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title" style="width:200px;">撤销原因:</td>
+		<td class="item_input">
+		<span><textarea name="msg" id="j_msg" style="width:400px;height:100px" ></textarea></span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+<div class="blank5"></div>
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title"></td>
+		<td class="item_input">
+		<!--隐藏元素-->
+		<input type="hidden" name="id" value="{$transfer.id}" />
+		<input type="hidden" name="{:conf("VAR_MODULE")}" value="Transfer" />
+		<input type="hidden" name="{:conf("VAR_ACTION")}" value="do_reback" />
+		<!--隐藏元素-->
+		<input type="submit" class="button" value="确认撤销" />
+		<input type="button" class="button" id="J_reback_cancel" value="取消撤销" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+</div>
+</form>
+<script type="text/javascript">
+	jQuery(function(){
+		$("#J_reback_cancel").click(function(){
+			$.weeboxs.close();
+		});
+	});
+	function check_reback(){
+		if($.trim($("#j_msg").val())==""){
+			alert("请输入撤销原因");
+			return false;
+		}
+	}
+</script>

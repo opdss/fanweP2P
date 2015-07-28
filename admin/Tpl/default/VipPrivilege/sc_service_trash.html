@@ -1,0 +1,32 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<php>
+	function get_vip_grade($vip_grade)
+    {
+    	return M("VipType")->where(" id=".$vip_grade)->getField("vip_grade");
+    }
+	
+</php>
+<div class="main">
+<div class="main_title">VIP客服列表</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%FOREVERDEL}" onclick="foreverdel();" />
+	<input type="button" class="button" value="{%RESTORE}" onclick="restore();" />
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="vip" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,user_id|get_user_name:{%USER_NAME},vip_grade|get_vip_grade:VIP等级,sc_name:VIP客服专员" 
+	actionlist="foreverdel:{%FOREVERDEL},restore:{%RESTORE}" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

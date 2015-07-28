@@ -1,0 +1,26 @@
+.order_list ul li{ border:1px #cbcbcb  solid; margin-bottom: 20px;}
+.order_list ul li h5{ line-height:36px;  height: 36px; padding: 0 12px; border-bottom:1px #cbcbcb  solid; border-top:2px #cbcbcb  solid; font-weight: 100;}
+.order_list ul li .content{ text-align: center;}
+.order_list ul li .content table th{ text-align: center;}
+.order_list ul li .content .Remark{  text-align:left; line-height:24px; padding: 10px 8px;}
+.order_list ul li .content .second_table{ width: 100%; color: #545454;}
+.order_list ul li .content .second_table th{ line-height: 30px; background: #f1f1f1;border-top:1px #cbcbcb  solid;border-bottom:1px #cbcbcb  solid;}
+.order_list ul li .content .second_table td{ line-height:39px;} 
+.order_list ul li .content .blue{ color: #3478c7;}
+.order_list ul li .content .orange{ color: #ff9900;}
+.gray{ color: #999;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

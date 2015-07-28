@@ -1,0 +1,29 @@
+1 
+在alipay.config.php 中填写
+//合作身份者id，以2088开头的16位纯数字
+$alipay_config['partner']		= '2088021065868546';
+
+//安全检验码，以数字和字母组成的32位字符
+//如果签名方式设置为“MD5”时，请设置该参数
+$alipay_config['key']			= 'wclt7rfzqv068ilvrduz9sdn9315vw57';
+//签名方式 不需修改
+$alipay_config['sign_type']    = 'MD5';
+
+2
+在alipayapi.php 修改
+//服务器异步通知页面路径
+$notify_url = "http://www.fishtuan.net/alipay_web/notify_url.php";
+//需http://格式的完整路径，不允许加?id=123这类自定义参数
+
+//页面跳转同步通知页面路径
+$call_back_url = "http://www.fishtuan.net/alipay_web/call_back_url.php";
+修改为对应的网址
+
+3
+在php.ini中开启curl模块
+
+extension=php_curl.dll 去掉前面的';'
+
+然后重新启动服务器
+
+4

@@ -1,0 +1,68 @@
+<div class="tabbox clearfix">
+	<div class="tab"><a href="{url x="index" r="uc_msg#index"}">{$LANG.UC_NOTICE}</a></div>
+	<div class="tab cur"><a href="{url x="index" r="uc_msg#index" p="mtype=private"}">{$LANG.UC_PRIVATE_MSG}</a></div>
+</div>
+<div class="uc_box bdd bt0">
+	<div class="pl10 pt10 pb10"><a href="{url x="index" r="uc_msg#index" p="mtype=private"}" class="f_blue">返回所有私信</a> > 我与{$dest_user_name}共有{$count}封交流信件</div>
+	<form name="pm_list">
+		<table style="width:100%" cellspacing="0" cellpadding="0" border="0" class="uc-table" >
+			{foreach from=$msg_list item=pm key=key}
+			<tr class="pm_row {if $key mod 2 eq 0}pm_row_1{/if}">
+				<td width=50 class="pl10">
+					{if $pm.system_msg_id eq 0}
+						{if $pm.to_user_id eq $user_info.id}
+						{function name="show_avatar" v=$pm.from_user_id t="small"}
+						{/if}
+						{if $pm.from_user_id eq $user_info.id}
+						{function name="show_avatar" v=$pm.to_user_id t="small"}
+						{/if}
+					{/if}{*头像*}
+				</td>
+				<td class="tl  pl10 lh20 pt10 pb10">
+					{if $pm.type eq 0 and $pm.is_read eq 0}<span class="new_pm"></span>{/if}
+					{if $pm.system_msg_id neq 0}{$LANG.SYSTEM_PM}:
+					{$pm.title}
+					{/if}
+					{if $pm.system_msg_id eq 0}		
+						{if $pm.from_user_id eq $user_info.id}{$LANG.I}{else}{function name="get_user_name" v=$pm.from_user_id s="0"}{/if}
+						{$LANG.SAYTO}
+						{if $pm.to_user_id eq $user_info.id}{$LANG.I}{else}{function name="get_user_name" v=$pm.to_user_id s="0"}{/if}
+						{$LANG.SAY}：				
+					{/if}
+					<br />				
+					{function name="nl2br" v=$pm.content}					
+				</td>
+				<td class="w100 tr">	
+					<div class="clearfix tr"><input type="checkbox" value="{$pm.id}" name="id[]"/>删除</div>	
+					{function name="pass_date" v=$pm.create_time}
+				</td>
+			</tr>				
+			{/foreach}
+		</table>
+		</form>
+		<div class="pt10" style="float:right">
+		{$LANG.SELECT_ALL}<input type="checkbox" name="checkall" />
+		</div>
+		<div style="float: right; text-align: right; width: 100%;">
+			<input type="button" value="{$LANG.DELETE}" name="del_pm" class="remove_msg_btn" />
+		</div>				
+		<div class="blank"></div>
+		
+		<div class="pages">{$pages}</div>
+		
+		<div class="blank20"></div>
+		
+			<input type="hidden" value="{$dest_user_name}" name="user_name" />
+			<div class="field" style="width:700px;">
+				<label>{$LANG.CONTENT}</label>
+				<textarea class="f-text ui-textarea" style="width:450px; height:100px;" cols="10" name="content"></textarea>
+			</div>
+			<div class="blank10"></div>	
+			<div class="field">		
+				<label></label>	
+				<input type="button" value="{$LANG.DO_SEND}" name="commit" id="settings-submit" class="sub_btn" onclick="do_reply_pm();" />
+			</div>
+		
+			<div class="blank"></div>	
+				
+</div>

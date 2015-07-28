@@ -1,0 +1,46 @@
+<?php
+$this->_var['ujs'][] = $this->_var['TMPL_REAL']."/js/page_js/u.js";
+$this->_var['cujs'][] = $this->_var['TMPL_REAL']."/js/page_js/u.js";
+?>
+<script type="text/javascript">
+function closeWeeboxs(){
+	$.weeboxs.close();
+}
+</script>
+<script type="text/javascript" src="{function name="parse_script" v="$ujs" c="$cujs"}"></script>
+<div class="tabbox clearfix">
+	<div><a href="{url x="index"r="authorized#loan" p="status=0"}">客户借款列表</a></div>
+	<div class="tab cur"><a href="###">还款列表</a></div> 
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	
+    <!--第几期，借款人，借款管理费，预期佣金，实际佣金，状态（待还、已还、已转、坏账），还款日-->
+		<table class="data_table" id="refundTab" cellspacing="1" width="100%">
+            <tr>
+            	<th>第几期</th>
+                <th width="10%">借款人</th>
+                <th width="12%">借款管理费</th>
+                <th>预期佣金</th>
+                <th width="10%">实际佣金</th>
+                <th width="12%">状态</th>
+                <th width="10%">还款日</th>
+            </tr>
+			<?php $idx=0;?>
+			{foreach from=$loan_list item=loan key=key name="loans"}
+          	<tr>
+            	<td>{$loan.ll_key}</td>
+                <td>
+                	{$loan.user_name}
+				</td>
+                <td>{$loan.manage_money_format}</td>
+                <td>{$loan.manage_money_rebate_format}</td>
+                <td>{$loan.true_manage_money_rebate_format}</td>
+                <td >{$loan.status_format}</td>
+                <td >
+					{$loan.repay_time_format}
+				</td>
+            </tr>
+			{/foreach}
+        </table>
+		
+</div>

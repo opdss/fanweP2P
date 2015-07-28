@@ -1,0 +1,83 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{$order_info.order_sn} {%ORDER_INCHARGE}</div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=4 class="topTd"></td>
+	</tr>
+
+	<tr>
+		<td class="item_title">{%ORDER_SN}:</td>
+		<td class="item_input">{$order_info.order_sn}</td>
+		<td class="item_title">{%ORDER_CREATE_TIME}:</td>
+		<td class="item_input">{$order_info.create_time|to_date}</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%ORDER_TOTAL_PRICE}:</td>
+		<td colspan=3>
+			{%ORDER_DEAL_TOTAL_PRICE}：{$result.total_price|format_price}
+			<if condition="$result['delivery_fee'] gt 0">
+				+ {%DELIVERY_FEE}：{$result.delivery_fee|format_price}
+			</if>
+			<if condition="$result['paid_account_money'] gt 0">
+				- {%ACCOUNT_PAID_AMOUNT}：{$result.paid_account_money|format_price}
+			</if>
+			<if condition="$result['paid_ecv_money'] gt 0">
+				- {%ACCOUNT_ECV_AMOUNT}：{$result.paid_ecv_money|format_price}
+			</if>
+			<if condition="$result['user_discount'] gt 0">
+				- {%ACCOUNT_DISCOUNT_PRICE}：{$result.user_discount|format_price}
+			</if>
+			=
+			{$result.pay_price|format_price}
+		</td>		
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%PAYMENT_METHOD}:</td>
+		<td class="item_input">
+			<select name="payment_id">
+				<foreach name="payment_list" item="payment_item">
+					<option value="{$payment_item.id}">{$payment_item.name} 
+					<if condition="$payment_item['fee_amount'] gt 0">[手续费] 
+						<if condition="$payment_item['fee_type'] eq 0">
+						{$payment_item.fee_amount|format_price}
+						<else />
+						<PHP>
+							echo ($payment_item['fee_amount'] * 100)."%";
+						</PHP>
+						</if>
+					</if>
+					</option>
+				</foreach>
+			</select>
+		</td>
+		<td class="item_title">{%USRE_ACCOUNT_MONEY}:</td>
+		<td class="item_input">{$user_money|format_price}</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%ORDER_INCHARGE_MEMO}</td>
+		<td colspan=3><textarea class="textarea" name="memo" ></textarea></td>
+	</tr>
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td colspan=3>
+			<input type="hidden" name="order_id" value="{$order_info.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="DealOrder" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="do_incharge" />
+			<input type="submit" class="button" value="{%CONFIRM_INCHARGE}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=4 class="bottomTd"></td>
+	</tr>
+</table>
+</form>
+
+</div>
+<include file="Public:footer" />

@@ -1,0 +1,75 @@
+{if $topic_list}
+<div class="topic-list pr20 pl20">
+	{foreach from=$topic_list item=item key=key}
+		<div class="item bbd pt10 pb10 clearfix">
+			<div class="f_l">
+				{if $item.type eq 'focus'}
+					{if $user_info.id eq $item.user_id}
+					我
+					{else}
+					<a href="{url x="index" r="space" p="id=$item.user_id"}">{$item.user_name}</a>
+					{/if}
+					开始关注
+					{if $user_info.id eq $item.fav_id}
+					我
+					{else}
+					{function name="get_user_name" value=$item.fav_id}
+					{/if}
+					了。
+				{elseif $item.type eq 'message' || $item.type eq 'deal_message'}
+					{if $user_info.id eq $item.user_id}
+					我
+					{else}
+					<a href="{url x="index" r="space" p="id=$item.user_id"}">{$item.user_name}</a>
+					{/if}
+					在{if $user_info.id eq $item.deal.user_id}我{else}{function name="get_user_name" value=$item.deal.user_id}{/if} 发布的 <a href="{$item.deal.url}">{$item.deal.name}</a> 留了言。
+				{elseif $item.type eq 'transfer_message'}
+					{if $user_info.id eq $item.user_id}
+					我
+					{else}
+					<a href="{url x="index" r="space" p="id=$item.user_id"}">{$item.user_name}</a>
+					{/if}
+					在{if $user_info.id eq $item.transfer.user_id}我{else}{function name="get_user_name" value=$item.transfer.user_id}{/if} 发布的债券转让 <a href="{$item.transfer.url}">{$item.transfer.deal_name}</a> 留了言。
+				{elseif $item.type eq 'message_reply' || $item.type eq 'deal_message_reply'}
+					{if $user_info.id eq $item.user_id}
+					我
+					{else}
+					<a href="{url x="index" r="space" p="id=$item.user_id"}">{$item.user_name}</a>
+					{/if}
+					回复了
+					{if $user_info.id eq $item.l_user_id}我{else}{function name="get_user_name" value=$item.l_user_id}{/if} 的 <a href="{$item.deal.url}">{$item.deal.name}</a> 中的留言。
+				{elseif $item.type eq 'transfer_message_reply'}
+					{if $user_info.id eq $item.user_id}
+					我
+					{else}
+					<a href="{url x="index" r="space" p="id=$item.user_id"}">{$item.user_name}</a>
+					{/if}
+					回复了
+					{if $user_info.id eq $item.l_user_id}我{else}{function name="get_user_name" value=$item.l_user_id}{/if} 的债券转让 <a href="{$item.transfer.url}">{$item.transfer.deal_name}</a> 中的留言。
+				{elseif $item.type eq 'deal_collect'}
+					{if $user_info.id eq $item.user_id}
+					我
+					{else}
+					<a href="{url x="index" r="space" p="id=$item.user_id"}">{$item.user_name}</a>
+					{/if}
+					关注了
+					{if $user_info.id eq $item.deal.user_id}我{else}{function name="get_user_name" value=$item.deal.user_id}{/if} 发布的 <a href="{$item.deal.url}">{$item.deal.name}</a> 。
+				{elseif $item.type eq 'deal_bad'}
+					{if $user_info.id eq $item.user_id}
+					我
+					{else}
+					<a href="{url x="index" r="space" p="id=$item.user_id"}">{$item.user_name}</a>
+					{/if}
+					发布的 <a href="{$item.deal.url}">{$item.deal.name}</a> 已流标。
+				{/if}
+			</div>
+			<div class="f_r f_dgray"><?php echo to_date($this->_var['item']['create_time'],"Y-m-d H:i"); ?></div>
+		</div>
+	{/foreach}
+</div>
+
+<div class="blank"></div>							
+<div class="pages">{$pages}</div>
+{else}
+<div class="tc p15">暂无记录</div>
+{/if}

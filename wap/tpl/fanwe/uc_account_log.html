@@ -1,0 +1,70 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_account_log.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--账户日志-->
+
+<div>
+	<div class="blank15"></div>
+	<div class="choose">
+		<table>
+			<tr>
+				<th {if $data.status eq 0}class="y"{/if}><a href="{wap_url a="index" r="uc_account_log" p="status=0"}">资金日志</a></th>
+				<th {if $data.status eq 1}class="y"{/if}><a  href="{wap_url a="index" r="uc_account_log" p="status=1"}">冻结资金日志</a></th>
+				<th {if $data.status eq 2}class="y"{/if}><a  href="{wap_url a="index" r="uc_account_log" p="status=2"}">信用积分日志</a></th>
+				<th {if $data.status eq 3}class="y"{/if}><a  href="{wap_url a="index" r="uc_account_log" p="status=3"}">积分日志</a></th>
+			</tr>
+		</table>
+	</div>
+	<div class="blank15"></div>
+	<div class="uc_account_log">
+			
+		<table>
+		
+		<tr>
+			<th>时间</th>
+			<th>操作类型</th>
+			{if $data.status eq 2 || $data.status eq 3}
+			<th>操作积分</th>
+			{else}
+			<th>操作金额</th>
+			{/if}
+			
+			<th>结余</th>
+		</tr>
+		{foreach from=$data.item item="item"}
+		<tr>
+			<td>{function name="to_date" v=$item.create_time}</td>
+			<td>{$item.title}</td>
+			{if $data.status eq 1}
+				{if $item.lock_money gt 0 }<td class="c_aad421 ">+{$item.lock_money}{elseif $item.lock_money eq 0 }<td>{$item.lock_money}{else}<td class="c_ff4a4a ">{$item.lock_money}{/if}</td>
+				<td>{$item.account_lock_money}</td>
+			{elseif $data.status eq 2}
+				{if $item.point gt 0 }<td class="c_aad421 ">+{$item.point}{elseif $item.point eq 0 }<td>{$item.point}{else}<td class="c_ff4a4a ">{$item.point}{/if}</td>
+				<td>{$item.account_point}</td>
+			{elseif $data.status eq 3}
+				{if $item.score gt 0 }<td class="c_aad421 ">+{$item.score}{elseif $item.score eq 0 }<td>{$item.score}{else}<td class="c_ff4a4a ">{$item.score}{/if}</td>
+				<td>{$item.account_score}</td>
+			{else}
+				{if $item.money gt 0 }<td class="c_aad421 ">+{$item.money}{elseif $item.money eq 0 }<td>{$item.money}{else}<td class="c_ff4a4a ">{$item.money}{/if}</td>
+				<td>{$item.account_money}</td>
+			{/if}
+			
+		</tr>
+		{/foreach}
+		
+	</table>
+	
+	</div>
+	<div class="blank15"></div>
+</div>
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

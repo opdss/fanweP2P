@@ -1,0 +1,8 @@
+Array
+(
+    [service] => alipay.wap.trade.create.direct
+    [sign] => 852fe9e8502ad374c435e834446eb92e
+    [sec_id] => MD5
+    [v] => 1.0
+    [notify_data] => <notify><payment_type>1</payment_type><subject>20140816105634303</subject><trade_no>2014081600001000630031263074</trade_no><buyer_email>18335929337</buyer_email><gmt_create>2014-08-16 11:06:47</gmt_create><notify_type>trade_status_sync</notify_type><quantity>1</quantity><out_trade_no>2014081610563582</out_trade_no><notify_time>2014-08-16 11:06:58</notify_time><seller_id>2088701687941821</seller_id><trade_status>TRADE_FINISHED</trade_status><is_total_fee_adjust>N</is_total_fee_adjust><total_fee>100.00</total_fee><gmt_payment>2014-08-16 11:06:58</gmt_payment><seller_email>cw@fanwe.com</seller_email><gmt_close>2014-08-16 11:06:58</gmt_close><price>100.00</price><buyer_id>2088802595485633</buyer_id><notify_id>84c19459ef95af0b6e056be1e9ce08db5i</notify_id><use_coupon>N</use_coupon></notify>
+)

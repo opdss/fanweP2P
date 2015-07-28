@@ -1,0 +1,100 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+<script type="text/javascript">
+jQuery(function(){
+	$("input#end_time").datepicker({showAnim:'fadeIn'});
+	$("input#start_time").datepicker({showAnim:'fadeIn'});
+	$("form#search-form").submit(function(){
+		var val1 = $("input#end_time").val();
+		$("input[name='end_time']").val(val1);
+		var val2 = $("input#start_time").val();
+		$("input[name='start_time']").val(val2);
+	});
+});
+</script>
+<div class="tabbox">
+	<div class="tab cur"><a href="{url x="index"r="uc_ips#fullscale"}">{$page_title}</a></div>
+</div>
+
+<div class="uc_box bdd bt0 clearfix">
+		
+	<form name="search" id="search-form" action="{url x="shop" r="uc_ips#fullscale"}" method="get">  	
+    		
+		<div class="sub_nav">
+        	<input type="hidden" name="ctl" value="uc_ips"/>
+            <input type="hidden" name="act" value="fullscale"/>
+            
+			商家日期：<input class="f-input ui-textbox w100" id="start_time" type="text" value="{$start_time}">
+			<input type="hidden" name="start_time" type="text" value="" />
+            至
+            <input class="f-input ui-textbox w100" id="end_time" type="text" value="{$end_time}">
+			<input type="hidden" name="end_time" type="text" value="" />
+			<button class="true_btn select_btn" type="submit">搜索</button>
+		</div>
+	</form>
+	<div class="blank0"></div>
+	{if $list}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+		<tbody>
+			<tr border="0">
+				<th style="width:8%">编号</th> 
+				<th class="tl">贷款名称</th>
+                <th style="width:10%">借款金额</th>
+                <th style="width:10%">成交服务费</th>
+                <th style="width:10%">放款金额</th>
+                <th style="width:10%">转账方式</th>
+                <th style="width:12%">第三方处理时间</th>  
+                <th style="width:8%">操作</th> 
+			</tr>
+
+			{foreach from="$list" item="item" key=key}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+				<td >
+					{$item.id}
+				</td>
+                <td class="tl">
+					<a href="{url x="index" r="deal#index" p="id=$item.deal_id"}" target="_blank" title="{$item.name}">{function name="msubstr" v="$item.name" b=0 e=13}</a>
+				</td>
+                <td>
+                	{function name="number_format" v="$item.borrow_amount" f=2}
+                </td>
+                <td>
+                	{function name="number_format" v="$item.deal_fee" f=2}
+                </td>
+                <td>
+                	{function name="number_format" v="$item.loan_amount" f=2}
+                </td>
+				<td>
+					{if $item.pTransferMode==1}逐笔入账{elseif $item.pTransferMode==2}批量入账{/if}
+				</td>
+                <td>
+					{$item.pIpsTime}
+				</td>
+                <td>
+					<a href="{url x="index" r="uc_ips#fullscale_view" p="id=$item.id"}" >明细</a>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	<div class="pages">{$pages}</div>
+	{else}	
+	<div align="center" style="padding:20px 0">暂无记录</div>
+	{/if}
+	<div class="blank"></div>
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	

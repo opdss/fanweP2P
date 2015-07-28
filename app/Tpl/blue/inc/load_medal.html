@@ -1,0 +1,20 @@
+<div class="f_l">
+<img src="{function name="get_spec_image" v=$medal.icon w=100 h=100 g=1}" />
+<div class="blank"></div>
+<div class="tc">{$medal.name}</div>
+</div>
+<div class="f_l" style="padding-left:10px; width:250px;">
+<span class="medal_title">勋章说明</span>
+<div class="blank"></div>
+{function name="nl2br" v=$medal.description}
+<div class="blank"></div>
+<span class="medal_title">点亮条件</span>
+<div class="blank"></div>
+{function name="nl2br" v=$medal.route}
+<div class="blank"></div>
+</div>
+<div class="blank"></div>
+<div class="tc">
+	<input type="button" class="dialog-ok" value="立即领取" onclick="imp_get_medal({$medal.id})" />
+	<input type="button" class="dialog-ok" value="取消" onclick="close_pop();" />	
+</div>

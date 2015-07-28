@@ -1,0 +1,212 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_incharge.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--账户充值-->
+<style>
+	.pay_detail{min-height:65px;}
+	.Menubox ul li {width: 33.3%;}
+	.Menubox ul li.hover {width: 33.3%;}	
+
+</style>
+<div class="Menubox">
+        <ul>
+            <li id="one1" onclick="setTab('one',1,3)" class="hover">线上支付</li>
+            <li id="one2" onclick="setTab('one',2,3)">线下支付</li>
+            <li id="one3" onclick="setTab('one',3,3)">第三方托管</li>
+            <li></li>
+        </ul>
+</div>
+<div id="con_one_1" class="uc_incharge"><!--线上支付-->
+		<div class="figure">
+			<span>输入金额</span>
+			<input id="money1" class="" type="text" placeholder="输入金额">
+		</div>
+		{if $data.payment_list}
+		<div class="bank_list in_line">
+			<ul>
+				{foreach from="$data.payment_list" item="item"}
+				<li>
+					<div class="pay_detail clearfix">
+						<div class="inline_pay_img_show">
+							<!--测试代码
+							  <img src="./images/public/2h8rzBSOLd.png"  height="35px">
+							-->  
+						      <img src="{$item.img}"  height="35px">
+						</div>
+						<div class="inline_pay_name">
+							{$item.class_name}
+						</div>
+					</div>
+					
+					<input class="mt"  type="radio" value="{$item.id}" name="paypath1">
+				</li>
+				{/foreach}
+			</ul>
+		</div>
+		{else}
+		<div class="no_data_block">
+    	暂无数据
+       </div>
+		{/if}
+		<div class="detail_foot">
+            <div class="lookdetail" style=" width:100%;"><button id="on_incharge_done"  class="but_sure">确认</button> </div>
+        </div>
+</div>
+
+<div id="con_one_2" class="uc_incharge"   style=" display:none;"><!--线下支付-->
+	<div class="figure">
+		<span>输入金额</span>
+		<input id="money2" class="" type="text" placeholder="输入金额">
+	</div>
+	<div class="figure">
+		<span>银行流水</span>
+		<input id="memo" class="" type="text" placeholder="流水号">
+	</div>
+	{if $data.below_payment}
+	<div class="bank_list out_line">
+		<ul>
+		{foreach from="$data.below_payment" item="item"}
+			
+			<li>
+				<div class="pay_detail">
+					<h5>{$item.pay_name}</h5>
+					<div class="info">
+						<span class="peoplo">收款人:{$item.pay_account_name}</span>
+						<span>开户行:{$item.pay_bank}</span>
+					</div>
+					<p>账户：{$item.pay_account}</p>
+				</div>
+				<input class="mt" type="radio" value="{$item.bank_id}" name="paypath">
+			</li>
+		{/foreach}
+		</ul>
+	</div>
+	{else}
+		<div class="no_data_block">
+    	暂无数据
+       </div>
+		{/if}
+	<div class="detail_foot">
+		 <input id="payment_id" type="hidden" value="5"  />
+         <div class="lookdetail" style=" width:100%;"><button id="incharge_done"  class="but_sure">确认</button> </div>
+     </div>
+</div>
+
+<form action="{wap_url a="index" r="collocation" p="DoDpTrade"}" method="get" id="search_form" >  
+<input type="hidden" value="collocation" name="ctl">
+<input type="hidden" value="DoDpTrade" name="act">
+<input type="hidden" value="0" name="user_type">
+<input type="hidden" value="wap" name="from">
+<input type="hidden" value="{$data.user_id}" id="user_id" name="user_id">
+
+<div id="con_one_3" class="uc_incharge" style=" display:none;"><!--第三方支付-->
+		<div class="figure">
+			<span>输入金额</span>
+			<input id="money3" name="pTrdAmt" class="" type="text" placeholder="输入金额">
+		</div>
+		{if $data.ips_bank_list}
+		<div class="bank_list in_line">
+			<ul>
+				{foreach from="$data.ips_bank_list" item="item"}
+				<li>
+					<div class="pay_detail clearfix">
+						<div class="inline_pay_img_show">
+						      <img src="{$item.img}"  height="35px">
+						</div>
+						<div class="inline_pay_name">
+							{$item.name}({$item.sub_name})
+						</div>
+					</div>
+					<input class="mt"  type="radio" value="{$item.id}" name="pTrdBnkCode">
+				</li>
+				{/foreach}
+			</ul>
+		</div>
+		
+		{else}
+		<div class="no_data_block">
+    	暂无数据
+       </div>
+		{/if}
+		<div class="detail_foot">
+            <div class="lookdetail" style=" width:100%;"><button id="other_incharge_done" type="submit" class="but_sure">确认</button> </div>
+        </div>
+</div>
+
+</form>
+
+<script>
+	/*线下/线下支付，默认选择第一个*/
+	$(".in_line ul li .mt:eq(0)").attr("checked","checked");
+	$(".out_line ul li .mt:eq(0)").attr("checked","checked");
+	$(".other_line ul li .mt:eq(0)").attr("checked","checked");
+/*第一种形式 第二种形式 更换显示样式*/
+function setTab(name,cursel,n){
+	 for(i=1;i<=n;i++){
+	  var menu=document.getElementById(name+i);
+	  var con=document.getElementById("con_"+name+"_"+i);
+	  menu.className=i==cursel?"hover":"";
+	  con.style.display=i==cursel?"block":"none";
+	 }
+}
+
+
+$(document).ready(function(){
+	$("#incharge_done").click(function(){
+		var ajaxurl = '{wap_url a="index" r="uc_save_incharge"}';
+		var query = new Object();
+		query.payment_id = $.trim($("#payment_id").val());
+		query.money = $.trim($("#money2").val());
+		query.memo = $.trim($("#memo").val());
+		query.bank_id =$("input[name='paypath']:checked").val();// $(".mt[checked=true]").val();// $(".mt[checked=ture]").val()?$(".mt[checked=ture]").val():$(".mt[checked=checked]").val();
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.show_err);
+				if(data.response_code == 1){
+					window.location.href = '{wap_url a="index" r="transfer"}';
+				}
+				
+			}
+		});
+	});
+	
+	$("#on_incharge_done").click(function(){
+		if(  !$.trim($("#money1").val())  )
+		{
+			alert("请输入充值金额");
+		}else{
+		
+		var ajaxurl = '{wap_url a="index" r="uc_save_incharge"}';
+		var query = new Object();
+		query.payment_id = $.trim($("input[name='paypath1']:checked").val());
+		query.money = $.trim($("#money1").val());
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.pay_wap);
+				//window.location.href = '{wap_url a="index" r="transfer"}';
+			}
+		});
+		
+		}
+	});
+	
+});
+</script>
+{include file="./inc/footer.html"}
+
+
+
+
+

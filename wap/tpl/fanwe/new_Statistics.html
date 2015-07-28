@@ -1,0 +1,78 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/Statistics.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--理财统计-->
+
+<div class="blank15"></div>
+    <div class="Statistics_block">
+    	<h5>借款统计</h5>
+		<div class="data clearfix">
+			<div class="left_data">
+				<ul>
+					<li>贷款总额</li>
+					<li>借款笔数</li>
+					<li>已还本息</li>
+					<li>待还本息</li>
+					<li>已付管理费用</li>
+					<li>待付管理费用</li>
+					<li>逾期费用</li>
+				</ul>
+			</div>
+			<div class="right_data">
+				<ul>
+					<li>10000000000.00</li>
+					<li>4454645笔</li>
+					<li>465465465.00</li>
+					<li>4465465465.00</li>
+					<li>21.00</li>
+					<li>121.00</li>
+					<li>1.00</li>
+				</ul>
+			</div>
+		</div>
+    </div>
+<div class="blank15"></div>
+<div class="Statistics_block">
+    	<h5>投资统计</h5>
+		<div class="data clearfix">
+			<div class="left_data">
+				<ul>
+					<li>投资总额</li>
+					<li>投资笔数</li>
+					<li>已挣利息</li>
+					<li>待还本息</li>
+					<li>已挣奖励</li>
+					<li>已付管理费</li>
+					
+				</ul>
+			</div>
+			<div class="right_data">
+				<ul>
+					<li>10000000000.00</li>
+					<li>4454645笔</li>
+					<li>465465465.00</li>
+					<li>4465465465.00</li>
+					<li>21.00</li>
+					<li>121.00</li>
+					
+				</ul>
+			</div>
+		</div>
+    </div>
+<div class="blank15"></div>
+<div class="Statistics_data">
+	<ul>
+		<li>
+			<p class="data">500000.00</p>
+			<p class="name">充值总额</p>
+		</li>
+		<li>
+			<p class="data">500000.00</p>
+			<p class="name">提现总额</p>
+		</li>
+	</ul>
+</div>
+<div class="blank15"></div>
+{include file="./inc/footer.html"}

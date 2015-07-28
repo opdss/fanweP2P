@@ -1,0 +1,77 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<script type="text/javascript">
+
+ function de_bank(id){
+	 if(!id)
+		{
+			idBox = $(".key:checked");
+			if(idBox.length == 0)
+			{
+				alert(LANG['DELETE_EMPTY_WARNING']);
+				return;
+			}
+			idArray = new Array();
+			$.each( idBox, function(i, n){
+				idArray.push($(n).val());
+			});
+			id = idArray.join(",");
+		}
+		if(confirm(LANG['CONFIRM_DELETE']))
+		$.ajax({ 
+				url: ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=de_bank&id="+id, 
+				data: "ajax=1",
+				dataType: "json",
+				success: function(obj){
+					$("#info").html(obj.info);
+					if(obj.status==1)
+					location.href=location.href;
+				}
+		});
+}
+
+</script>
+<php>
+function getarea($id,$bank){
+	$bank1 = M("DeliveryRegion")->where("id=".$bank['region_lv1'])->getField("name");
+	$bank2 = M("DeliveryRegion")->where("id=".$bank['region_lv2'])->getField("name");
+	$bank3 = M("DeliveryRegion")->where("id=".$bank['region_lv3'])->getField("name");
+	$bank4 = M("DeliveryRegion")->where("id=".$bank['region_lv4'])->getField("name");
+	return $bank1.$bank2.$bank3.$bank4;
+}
+</php>
+<div class="main">
+	<div class="main_title">{:strim($_REQUEST['user_name'])}{:L(MODULE_NAME."_".ACTION_NAME)}</div>
+	<div class="blank5"></div>
+	<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:strim($_REQUEST['user_name'])}" style="width:100px;" />
+		
+		<input type="hidden" value="User" name="m" />
+		<input type="hidden" value="<php>echo ACTION_NAME;</php>" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="bank" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,user_id|get_user_name_real:会员名,bankcard:银行卡号|200px,real_name:真实姓名,bank_name:银行名称,region_lv1|getarea=$bank:区域,bankzone:开户网点" 
+	actionlist="de_bank:{%DEL}" 
+	actionwidth="100px"/> 
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

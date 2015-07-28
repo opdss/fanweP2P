@@ -1,0 +1,112 @@
+.iloan-details {
+	border:1px solid #dcdcdc;
+	-moz-border-radius:10px;
+	-khtml-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	margin-top:30px;
+}
+.jTab{width:24.8%;}
+.tab_hd{color:white;}
+
+.ibtn a {
+	width:280px;
+	line-height:40px;
+	height:40px;
+	background:#ccc;
+	border-radius:1px;
+	text-align:center;
+	display:inline-block;
+	font-size:18px;
+	color:#fff;
+	cursor:default
+}
+.ibtn a:hover {
+	text-decoration:none;
+	color:#fff
+}
+.ibtn a.blue {
+	background:#39f;
+	cursor:pointer;
+	text-shadow:0 -1px 0 rgba(0,0,0,0.25)
+}
+.ibtn a.blue:hover{background:#1d7ad9}
+.iloan-sum li.last{padding-bottom:0}
+.iloan-details .tab_hd{overflow:visible}
+.iloan-details .tab_hd span {
+	padding-left:70px;
+	width:294px;
+	margin-right:3px;
+	float:left;
+	display:inline;
+	background:#c2c2c2;
+	font:26px/55px "Microsoft YaHei";
+	color:#fff;
+	font-weight:bold;
+	cursor:pointer;
+	position:relative;
+	letter-spacing:0px;
+}
+.iloan-details .tab_hd i {
+	display:inline-block;
+	width:55px;
+	height:55px;
+	background-position:0px -32px;
+	margin-right:5px;
+}
+.guide_icon {
+	background:url(../images/new_guide_icon.png) no-repeat;
+	vertical-align:middle;
+}
+.iloan-details .tab_hd .item1 i{background-position:7px -81px;}
+.iloan-details .tab_hd .item2 i{background-position:8px -131px;}
+.iloan-details .tab_hd .item0 .hover{background-position:-63px -31px;}
+.iloan-details .tab_hd .item1 .hover{background-position:-56px -83px;}
+.iloan-details .tab_hd .item2 .hover{background-position:-55px -133px;}
+.iloan-details .tab_hd .item0{border-radius:10px 0px 0px 0px;}
+.iloan-details .tab_hd .item2 {
+	border-radius:0px 10px 0px 0px;
+	margin-right:0px;
+}
+.iloan-details .tab_hd .arrow {
+	display:none;
+	position:absolute;
+	top:55px;
+	left:45%;
+	width:41px;
+	height:18px;
+	background:url(../images/new_guide_icon.png) no-repeat;
+	padding:0
+}
+.iloan-details .tab_hd .cur .arrow{display:block;}
+.iloan-details .tab_hd .cur{background:none repeat scroll 0 0 #0BCBF4;}
+.iloan-details .tab_bd {
+	padding:85px 0 20px 0;
+	font-size:14px;
+	border-top:1px solid #eee;
+	margin-top:-1px}
+.iloan-details .tab_bd .jPanel {
+	font-family:"Microsoft YaHei";
+	font-size:14px;
+}
+.jPanel {
+	font-size:15px;
+	padding:0 20px
+}
+.jPanel dl {
+	margin-bottom:15px;
+	line-height:30px;
+	margin-top:20px
+}
+.jPanel dt {
+	width:10%;
+	clear:left;
+	float:left;
+	text-align:right;
+	margin-right:1%;
+	color:#777
+}
+.jPanel dd {
+	margin-left:11%;
+	margin-bottom:15px
+}

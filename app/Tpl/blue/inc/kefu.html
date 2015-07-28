@@ -1,0 +1,73 @@
+<!--kefu
+<div id="floatTools" class="rides-cs">
+  <div class="floatL">
+  	<a style="display:block" id="aFloatTools_Show" class="btnOpen" title="查看在线客服" style="top:20px" href="javascript:void(0);">展开</a>
+  	<a style="display:none" id="aFloatTools_Hide" class="btnCtn" title="关闭在线客服" style="top:20px" href="javascript:void(0);">收缩</a>
+  </div>
+  <div id="divFloatToolsView" class="floatR" style="display: none;width: 140px;">
+    <div class="cn">
+      <h3 class="titZx">{function name="app_conf" value="SITE_TITLE"}在线客服</h3>
+      <ul>
+      	{foreach from="$online_qq" item="qq"}
+        <li><span>{$qq.name}</span> <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$qq.qq}&site=qq&menu=yes"><img border="0" src="{$TMPL}/images/button-custom-qq.gif" alt="点击这里给我发消息" title="点击这里给我发消息"/></a> </li>
+       {/foreach}
+        <li>
+           {function name="app_conf" value="ONLINE_TIME"} 
+            <div class="div_clear"></div>
+        </li>
+        <li style="border:none;"><span>{$LANG.TEL}：{function name="app_conf" value="SHOP_TEL"}</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+kefu-->
+
+<!-- 右侧联系我们 -->
+<div style="right:-230px;" class="contactusdiyou">
+  <div class="hoverbtn">
+     <span>联</span><span>系</span><span>我</span><span>们</span>
+     <img class="hoverimg" src="{$TMPL}/images/hoverbtnbg.png" height="9" width="13">
+  </div>
+  
+  <div class="conter" >
+
+  <div class="con1"> 
+    <dl class="fn_cle">
+         <dt><img src="{$TMPL}/images/tel.png" height="31" width="31"></dt>
+         <dd class="f1">财富热线：</dd>
+         <dd><span class="ph_num">{function name="app_conf" value="SHOP_TEL"}</span></dd>
+     </dl>
+  </div> 
+    
+  <div class="qqcall"> 
+    <dl class="fn_cle">
+         <dt><img src="{$TMPL}/images/zxkfqq.png" height="31" width="31"></dt>
+         <dd class="f1 f_s14">在线客服：</dd>
+         {foreach from="$online_qq" item="qq"}
+        <dd>
+          <span>{$qq.name}</span> <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$qq.qq}&site=qq&menu=yes"><img border="0" src="{$TMPL}/images/button-custom-qq.gif" alt="点击这里给我发消息" title="点击这里给我发消息"/></a> 
+        </dd>
+       {/foreach}
+        
+               </dl>
+  </div> 
+    <div class="weixincall"> 
+    <dl class="fn_cle">
+         <dt><img src="{$TMPL}/images/weixin.png" height="31" width="31"></dt>
+         <dd class="f1">下载客户端：</dd>
+
+           <dd class="f3"><img src="{function name="gen_qrcode" v=$MOBILE_DOWN_PATH s=8}" height="73" width="73"></dd>
+     </dl>
+  </div> 
+
+  <div class="dytimer diyou">
+     <span style="font-weight: bold;">服务时间：</span>
+     <span>{function name="app_conf" v="ONLINE_TIME"}</span>
+  </div>
+  
+  </div>
+
+</div>
+<div class="diyoumask"></div>
+<!-- 右侧联系我们 -->
+

@@ -1,0 +1,255 @@
+{include file="inc/header.html"}
+	<div class="ur_here">
+		<span class="f_l">
+			<a href="{url x="index" r="index"}">首页</a> > <a href="{url x="index" r="deals"}">投资列表</a> > 借款详情
+		</span>
+		<a href="javascript:void(0);" class="f_blue f_r" onclick="openWeeboxFrame('{url x="index" r="tool#contact" p="win=1&id=$deal.id"}','借款协议',1024,400);" >借款协议&nbsp;&nbsp;&nbsp;&nbsp;</a>
+	</div>
+	<div id="deal-default">
+		{if $u_info.user_type eq 1}
+			{include file="inc/deal/deal_info_normal.html"} 
+		{else}
+			{include file="inc/deal/deal_info_normal.html"} 
+		{/if}
+		<div class="blank20"></div>
+		{include file="inc/deal/deal_user_view_infos.html"}
+		<div class="desc_inf ">
+	        <div class="tabbox bddfa bdd clearfix" id="J_deal_tab_select">
+	            <ul>
+	                <li class="tab cur" rel="1">基本信息</li>
+					<li class="tab" rel="2">借入者信息</li>
+					{if $deal.deal_status gte 4}
+					<li class="tab" rel="3">还款详情</li>
+					<li class="tab" rel="4">债权人信息</li>
+					{/if}
+					<li class="tab" rel="5">投标记录（{function name="count" v="$load_list"}人）</li>
+	            </ul>
+	        </div>
+			<div class="cont bdd bt0 bddf clearfix" id="J_deal_tab_box">
+				<div class="box_view box_view_1">
+					{if $u_info.user_type eq 1 && $company}
+					{include file="inc/deal/financing_info.html"}
+					{/if}
+					<div class="box-t f_blue f18"><i class="iconfont">&#xe627;</i>&nbsp;借款描述</div>
+					<div class="box-bd">
+						{$deal.description}
+					</div>
+					<div class="box-t f_blue f18"><i class="iconfont">&#xe627;</i>&nbsp;风险控制</div>
+					<div class="box-bd">
+						{$deal.risk_security}
+					</div>
+					{if $deal.agency_id gt 0}
+						{include file="inc/deal/user_guarantee_info.html"}
+					{/if}
+					{if $ACTION_NAME neq 'preview'}
+						{include file="inc/message_form.html"}
+					{/if}
+				</div>
+				<div class="box_view box_view_2 hide">
+					{include file="inc/deal/user_credit_info.html"}
+					{include file="inc/deal/user_credit_passed_info.html"}
+				</div>
+				{if $deal.deal_status gte 4}
+				<div class="box_view box_view_3 hide">
+					{include file="inc/deal/loan_repay_list.html"}
+				</div>
+				<div class="box_view box_view_4 hide">
+				{include file="inc/deal/load_repay_list.html"}
+				</div>
+				{/if}
+				<div class="box_view box_view_5 hide">
+	               {include file="inc/deal/load_list.html"}
+		        </div>
+			</div>
+		</div>
+	</div>
+<script type='text/javascript'>
+	function fav_result(o)
+	{
+		$(o).parent().html("已关注");
+	}
+	var is_submit_lock =false;
+	var bid_paypassword = "";
+	var bid_calculate = null;
+	jQuery(function(){
+		{if $deal.uloadtype eq 1}
+		$("a.c_number").click(function(){
+			var rel=$(this).attr("rel");
+			var obj = $(this);
+			var number = parseInt($("#J_BIDMONEY").val());
+			switch(rel){
+				case "-":
+					if(number-1 > 1){
+						$("#J_BIDMONEY").val(number-1);
+					}
+					else{
+						$("#J_BIDMONEY").val(1);
+					}
+					break;
+				case "+":
+					 var max_portion = {if $deal.max_portion gt 0}<?php echo $this->_var['deal']['max_portion'] - $this->_var['has_bid_portion'];  ?>{else}{$deal.need_portion}{/if};
+					if(number+1 <= max_portion){
+						$("#J_BIDMONEY").val(number+1);
+					}
+					else{
+						$("#J_BIDMONEY").val(max_portion);
+					}
+					break
+			}
+			loadSy();
+		});
+		{/if}
+		
+		
+		$("#tz_link").click(function(){
+			{if $deal.uloadtype eq 0}
+			if($.trim($("#J_BIDMONEY").val())=="" || !$.checkNumber($("#J_BIDMONEY").val()){if (int)app_conf('DEAL_BID_MULTIPLE') gt 0} || parseFloat($("#J_BIDMONEY").val())%{function name='app_conf' v='DEAL_BID_MULTIPLE'}!=0{/if} || parseFloat($("#J_BIDMONEY").val())<=0 || parseFloat($("#J_BIDMONEY").val())<{$deal.min_loan_money} {if $deal.max_loan_money gt 0}|| parseFloat($("#J_BIDMONEY").val())>{$deal.max_loan_money}{/if}){
+				is_submit_lock = false;
+				$.showErr(LANG.BID_MONEY_NOT_TRUE,function(){
+					$("#J_BIDMONEY").focus();
+				});
+			
+				return false;
+			}
+			{else}
+			
+				if($.trim($("#J_BIDMONEY").val())=="" || !$.checkNumber($("#J_BIDMONEY").val()) || parseInt($.trim($("#J_BIDMONEY").val())) <=0 || parseFloat($.trim($("#J_BIDMONEY").val()))%parseInt($.trim($("#J_BIDMONEY").val()))!=0){
+					is_submit_lock = false;
+					$.showErr("请输入正确的份数",function(){
+						$("#J_BIDMONEY").focus();
+					});
+				
+					return false;
+				}
+				
+				{if $deal.max_portion gt 0}
+					if(parseInt($.trim($("#J_BIDMONEY").val())) > <?php echo $this->_var['deal']['max_portion'] - $this->_var['has_bid_portion'];  ?>){
+						is_submit_lock = false;
+						$.showErr("您已经购买了{$has_bid_portion}份，还能购买<?php echo $this->_var['deal']['max_portion'] - $this->_var['has_bid_portion'];  ?>份",function(){
+							$("#J_BIDMONEY").focus();
+						});
+					
+						return false;
+					}
+				{else}
+					if(parseInt($.trim($("#J_BIDMONEY").val())) > {$deal.need_portion}){
+						is_submit_lock = false;
+						$.showErr("您已经购买了{$has_bid_portion}份，还能购买{$deal.need_portion}份",function(){
+							$("#J_BIDMONEY").focus();
+						});
+					
+						return false;
+					}
+				{/if}
+			{/if}
+			
+			var html='<div class="tc p15">';
+				html +='支付密码：<input type="password" class="f-input ui-textbox" id="J_bid_password" />';
+				html +='<div class="blank5"></div>';
+				html +='{if $user_info.paypassword eq ''}还未设置！{else}忘记了？{/if}<a href="{url x="index" r="uc_account#security"}" target="_blank" class="f_blue">点这里</a>';
+				html +='<div class="blank5"></div>';
+				html +='<input type="button" class="sub_btn" id="J_bindpassword_btn" value="确定">&nbsp;&nbsp;';
+				html +='<input type="button" class="reset_btn"  id="J_bindpassword_rbtn" value="取消">';
+				html +="</div>";
+			$.weeboxs.open(html,{boxid:"paypass-box",contentType:'text',showButton:false,title:"支付密码",width:380,height:140,type:'wee'});
+			init_ui_textbox();
+			
+		});
+		
+		$("#J_bindpassword_btn").live("click",function(){
+			if($.trim($("#J_bid_password").val())!=""){
+				bid_paypassword =$.trim($("#J_bid_password").val());
+				to_load();
+			}
+			else{
+				$.showErr("请输入支付密码",function(){
+					$("#J_bid_password").focus();
+				});
+			}
+		});
+		$("#J_bindpassword_rbtn").live("click",function(){
+			$.weeboxs.close("paypass-box");
+		});
+		
+		$("#J_BIDMONEY").keyup(function(){
+			loadSy();
+		});
+		
+		loadSy();
+		
+		{if $deal.ips_bill_no neq "" && $user_info.id gt 0}
+		checkIpsBalance(0,{$user_info.id},function(result){
+			if(result.pErrCode=="0000"){
+				$(".J_u_money_0").html(result.pBalance+"<span class='f_red '>[绑]</span>");
+			}
+		});
+		{/if}
+		
+	});
+	
+	function loadSy(){
+		var query = new Object();
+		query.uloantype = '{$deal.uloadtype}';
+		query.minmoney = '{$deal.min_loan_money}';
+		query.loantype = '{$deal.loantype}';
+		query.rate = '{$deal.rate}';
+		query.repay_time = '{$deal.repay_time}';
+		query.repay_time_type = '{$deal.repay_time_type}';
+		query.money = $.trim($("#J_BIDMONEY").val());
+		query.user_loan_manage_fee = '{$deal.user_loan_manage_fee}';
+		query.user_loan_interest_manage_fee = '{$deal.user_loan_interest_manage_fee}';
+		if(bid_calculate) bid_calculate.abort(); /*终止之前所有的未结束的ajax请求，然后重新开始新的请求  */
+		bid_calculate = $.ajax({
+			url:'{url x="index" r="ajax#bid_calculate"}',
+			data:query,
+			type:"post",
+			dataType:"text",
+			success:function(result){
+				$(".J_u_money_sy").html(result);
+			}
+		});
+	}
+	
+	function to_load(){
+		if(is_submit_lock)
+		{
+			return false;
+		}
+		is_submit_lock = true;
+		var query = new Object();
+		query.bid_money=$.trim($("#J_BIDMONEY").val())
+		query.id="{$deal.id}";
+		query.bid_paypassword = FW_Password(bid_paypassword);
+		query.ajax=1;
+		
+		$.ajax({
+			url:'{url x="index" r="deal#dobid"}',
+			data:query,
+			type:"POST",
+			dataType:"json",
+			success:function(result){
+				if(result.status==1){
+					is_submit_lock = false;
+					$.showSuccess(result.info,function(){
+						window.location.reload();
+					});
+				}
+				else if(result.status==2){
+					window.location.href=result.jump;
+				}
+				else{
+					is_submit_lock = false;
+					$.showErr(result.info);
+				}
+			},
+			error:function(ajaxobj)
+			{
+			}
+		});
+	}
+</script>
+{include file="inc/footer.html"}
+
+
+
+								

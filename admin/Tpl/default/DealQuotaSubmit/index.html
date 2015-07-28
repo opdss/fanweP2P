@@ -1,0 +1,53 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript">
+	var r_status = '<php>echo $_REQUEST['status'];</php>';
+	function modify_quota(id){
+		window.location.href = ROOT+'?m=DealQuotaSubmit&a=edit&id='+id+"&status="+r_status;
+	}
+
+</script>
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+<php>
+	function get_quota_status($status){
+		return l("QUOTA_STATUS_".$status);
+	}
+</php>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+		{%USER_NAME}：<input type="text" class="textbox" name="user_name" value="{:trim($_REQUEST['user_name'])}" style="width:100px;" />
+		状态：<select name="status">
+			<option value="">{%ALL}</option>
+			<option value="0" <if condition="$_REQUEST['status']!='' && intval($_REQUEST['status']) eq 0">selected="selected"</if>>{%QUOTA_STATUS_0}</option>
+			<option value="1" <if condition="intval($_REQUEST['status']) eq 1">selected="selected"</if>>{%QUOTA_STATUS_1}</option>
+			<option value="2" <if condition="intval($_REQUEST['status']) eq 2">selected="selected"</if>>{%QUOTA_STATUS_2}</option>
+		</select>
+		
+		<input type="hidden" value="DealQuotaSubmit" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	<!-- 	<input type="button" class="button" value="{%EXPORT}" onclick="export_csv();" /> -->
+	</form>
+</div>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="quota" 
+	checkbox="true" 
+	action="true" 
+	datasource="list" 
+	show="id:{%ID}|50px,user_id|get_user_name_real:会员,name:借款名称,borrow_amount|format_price:金额,create_time|to_date:申请时间,status|get_quota_status:申请状态,update_time|to_date:处理时间" 
+	actionlist="modify_quota:查看/处理" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

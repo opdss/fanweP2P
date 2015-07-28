@@ -1,0 +1,509 @@
+<?php exit;?>a:3:{s:8:"template";a:5:{i:0;s:66:"/Library/WebServer/Documents/fanweP2P/app/Tpl/blue/page/index.html";i:1;s:66:"/Library/WebServer/Documents/fanweP2P/app/Tpl/blue/inc/header.html";i:2;s:78:"/Library/WebServer/Documents/fanweP2P/app/Tpl/blue/inc/common/load_css_js.html";i:3;s:75:"/Library/WebServer/Documents/fanweP2P/app/Tpl/blue/inc/common/load_top.html";i:4;s:66:"/Library/WebServer/Documents/fanweP2P/app/Tpl/blue/inc/footer.html";}s:7:"expires";i:1438052523;s:8:"maketime";i:1438051923;}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+<meta name="Generator" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>p2p信贷—最大、最安全的网络借贷平台 - p2p信贷</title>
+<link rel="icon" href="favicon.ico" type="/image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico" type="/image/x-icon" />
+<meta name="keywords" content="p2p信贷—最大、最安全的网络借贷平台" />
+<meta name="description" content="p2p信贷—最大、最安全的网络借贷平台" />
+<link rel="stylesheet" type="text/css" href="http://localhost/fanweP2P/public/runtime/statics/49b4042178799f6f3a377fc92498e4a8.css" />
+<script type="text/javascript">
+var APP_ROOT = '/fanweP2P';;
+var LOADER_IMG = 'http://localhost/fanweP2P/app/Tpl/blue/images/lazy_loading.gif';
+var ERROR_IMG = 'http://localhost/fanweP2P/app/Tpl/blue/images/image_err.gif';
+var TMPL = 'http://localhost/fanweP2P/app/Tpl/blue';
+var send_span = 2000;
+var to_send_msg = false;
+var __LOGIN_KEY = "554fcae493e564ee0dc75bdf2ebf94caget_login_key|YToxOntzOjQ6Im5hbWUiO3M6MTM6ImdldF9sb2dpbl9rZXkiO30=554fcae493e564ee0dc75bdf2ebf94ca";
+var __HASH_KEY__ = "554fcae493e564ee0dc75bdf2ebf94caget_hash_key|YToxOntzOjQ6Im5hbWUiO3M6MTI6ImdldF9oYXNoX2tleSI7fQ==554fcae493e564ee0dc75bdf2ebf94ca";
+</script>
+<script type="text/javascript" src="/fanweP2P/public/runtime/app/lang.js"></script>
+<script type="text/javascript" src="http://localhost/fanweP2P/public/runtime/statics/ed71c5d71673c5bf6aa16d11dc6014b9.js"></script>
+<!--[if lt IE 10]>
+<script type="text/javascript" src="http://localhost/fanweP2P/app/Tpl/blue/js/PIE.js"></script>
+<![endif]-->
+<script language="javascript">
+$(function() {
+    if (window.PIE) {
+        $('.bdr3,.bdr5,.user_info_d a,.main_adv_ctl li,.after_login .user_money A,.listbtn SPAN').each(function() {
+            PIE.attach(this);
+        });
+    }
+});
+</script></head>
+<body>
+<div class="header" id="header">
+   <!---->
+<div class="constr">
+	<div class="wrap">
+				<div class="f_r lh30">
+			<div id="user_head_tip" class="pr f_r">
+				554fcae493e564ee0dc75bdf2ebf94caload_user_tip|YToxOntzOjQ6Im5hbWUiO3M6MTM6ImxvYWRfdXNlcl90aXAiO30=554fcae493e564ee0dc75bdf2ebf94ca				<span class="line"></span>
+				<span class="li"><a href="/fanweP2P/index.php?ctl=helpcenter">帮助中心</a></span>
+			</div>
+		</div>		
+	</div>
+</div>
+<!---->	<div class="main_bars">
+		<div class="main_bar wrap">	
+			<div class="logo mr15">
+				<a class="link f_l" href="/fanweP2P/">
+										<span style='display:inline-block; width:210px; height:72px; background:url(http://localhost/fanweP2P/public/attachment/201011/4cdd501dc023b.png) no-repeat; _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=http://localhost/fanweP2P/public/attachment/201011/4cdd501dc023b.png, sizingMethod=scale);_background-image:none;'></span>				</a>
+			</div>     
+			<!--加载菜单-->
+			<ul class="main_nav">
+									<li class="current jcur ml5 bdr3 pr" rel='1'>
+						<a href="/fanweP2P/index.php" target="" class="pr20">首页 <i class="iconfont">&#xe61c;</i></a>
+						                        <div class="sub_main_nav ps hide">
+													<a href="/fanweP2P/index.php?ctl=aboutp2p"  target="">平台原理</a>
+													<a href="/fanweP2P/index.php?ctl=aboutlaws"  target="">政策法规</a>
+													<a href="/fanweP2P/index.php?ctl=aboutfee"  target="">费用</a>
+													<a href="/fanweP2P/index.php?ctl=help&id=1"  target="">关于我们</a>
+												</div>
+											</li>
+									<li class=" jcur ml5 bdr3 pr" rel='2'>
+						<a href="/fanweP2P/index.php?ctl=deals" target="" class="pr20">我要理财 <i class="iconfont">&#xe61c;</i></a>
+						                        <div class="sub_main_nav ps hide">
+													<a href="/fanweP2P/index.php?ctl=deals"  target="">个人贷款</a>
+													<a href="/fanweP2P/index.php?ctl=transfer"  target="">债权转让</a>
+													<a href="/fanweP2P/index.php?ctl=tool"  target="">工具箱</a>
+													<a href="/fanweP2P/index.php?ctl=deals&act=about"  target="">关于理财</a>
+													<a href="/fanweP2P/index.php?ctl=belender"  target="">成为理财人</a>
+												</div>
+											</li>
+									<li class=" jcur ml5 bdr3 pr" rel='3'>
+						<a href="/fanweP2P/index.php?ctl=borrow" target="" class="pr20">我要贷款 <i class="iconfont">&#xe61c;</i></a>
+						                        <div class="sub_main_nav ps hide">
+													<a href="/fanweP2P/index.php?ctl=borrow&act=aboutborrow"  target="">贷款说明</a>
+													<a href="/fanweP2P/index.php?ctl=borrow&act=creditswitch"  target="">信用认证</a>
+													<a href="/fanweP2P/index.php?ctl=borrow"  target="">申请贷款</a>
+												</div>
+											</li>
+									<li class=" jcur ml5 bdr3 pr" rel='4'>
+						<a href="/fanweP2P/member.php?ctl=uc_center" target="" class="pr20">我的p2p信贷 <i class="iconfont">&#xe61c;</i></a>
+						                        <div class="sub_main_nav ps hide">
+													<a href="/fanweP2P/member.php?ctl=uc_center"  target="">我的主页</a>
+													<a href="/fanweP2P/member.php?ctl=uc_deal&act=refund"  target="">贷款管理</a>
+													<a href="/fanweP2P/member.php?ctl=uc_invest"  target="">投标管理</a>
+													<a href="/fanweP2P/member.php?ctl=uc_account"  target="">个人设置</a>
+												</div>
+											</li>
+									<li class=" jcur ml5 bdr3 pr" rel='5'>
+						<a href="/fanweP2P/index.php?ctl=guarantee" target="" class="pr20">安全保障 <i class="iconfont">&#xe61c;</i></a>
+						                        <div class="sub_main_nav ps hide">
+													<a href="/fanweP2P/index.php?ctl=guarantee&act=detail&id=8"  target="">本金保障</a>
+													<a href="/fanweP2P/index.php?ctl=guarantee&act=detail&id=9"  target="">交易安全保障</a>
+													<a href="/fanweP2P/index.php?ctl=guarantee&act=detail&id=10"  target="">贷款审核与保障</a>
+													<a href="/fanweP2P/index.php?ctl=guarantee&act=detail&id=11"  target="">网上理财安全建议</a>
+												</div>
+											</li>
+									<li class="  ml5 bdr3 pr" rel='6'>
+						<a href="/fanweP2P/index.php?ctl=score" target="" >积分商城 </a>
+											</li>
+							</ul>
+			<!--加载菜单END-->
+		</div>
+	</div>
+</div>
+<!---->
+554fcae493e564ee0dc75bdf2ebf94caload_user_tip_index|YToxOntzOjQ6Im5hbWUiO3M6MTk6ImxvYWRfdXNlcl90aXBfaW5kZXgiO30=554fcae493e564ee0dc75bdf2ebf94ca<div id="main_adv_box" class="main_adv_box f_l">
+	<div id="main_adv_img" class="main_adv_img">
+		<span rel="1"><img src="http://localhost/fanweP2P/public/attachment/201410/10/16/54379e5b77e58.jpg" alt="" /></span>
+		<span rel="2"><img src="http://localhost/fanweP2P/public/attachment/201410/10/16/54379eb932938.jpg" alt="" /></span>
+		<span rel="3"></span>
+		<span rel="4"></span>	
+		<span rel="5"></span>					
+	</div>
+	<div id="main_adv_ctl" class="main_adv_ctl">
+		<ul>
+			<li rel="1">1</li>
+			<li rel="2">2</li>
+			<li rel="3">3</li>
+			<li rel="4">4</li>
+			<li rel="5">5</li>
+		</ul>
+	</div>
+</div>
+<div class="blank0"></div>
+<div class="showcase">
+	<div class="wrap">
+		<div class="caseblok">
+			<span>已撮合融资</span>
+			<em>11102<em>.88</em>元</em>
+		</div>
+		<div class="caseblok">
+			<span>累计成交笔数</span>
+			<em>0笔</em>
+		</div>
+		<div class="caseblok">
+			<span>为客户赚取收益</span>
+			<em>66788<em>.32</em>元</em>
+		</div>
+		<div class="caseblok">
+		<div class="back_img back_img_3"></div>
+    		<span>风险准备金</span>
+			<em>56788<em>.23</em>元</em>
+    	</div>
+	</div>
+</div>
+<!---->
+<div class="wrap">
+ 
+ 
+<script type="text/javascript">
+	$(function() {
+	var $sidebar = $(".index_right"),
+	$window = $(window),
+	leftset=$(".index_left").innerHeight(),
+	offset = $sidebar.offset(),
+	topPadding = 15;
+	$window.scroll(function() {
+	var	top= $window.scrollTop() - offset.top + topPadding;
+	if ($window.scrollTop() > offset.top && leftset>$window.scrollTop()) {
+	$sidebar.stop().css("marginTop", top);
+	} else if (top<61) {
+	$sidebar.stop().css("marginTop", 0);
+	}
+	});
+	});
+</script>
+<div class="index_left f_l">
+	<div class="feature">
+		<a class="fea1">
+			<i></i>
+			<h3>高收益</h3>
+			<span>最高收益可达15%-18%</br>助您轻松获收益</span>
+	
+		</a>
+		<a class="fea2">
+			<i></i>
+			<h3>安全理财</h3>
+			<span>运用技术分散投资</br>帮助投资人进入本金保障计划</span>
+		</a>
+		<a class="fea3">
+			<i></i>
+			<h3>随时赎回</h3>
+			<span>2步赎回您的资金</br>最快当日到账</span>
+		</a>
+	</div>
+	
+		<!--最新投资-->
+	<div class="newinvest" id="deal_list">
+		<div class="newtit">
+			<span class="f_l">最新投资</span>
+			<div class="f_r calt">
+				<a href="/fanweP2P/index.php?ctl=tool" class="f_r">理财计算器</a>
+				<i class="iconfont f_blue" class="f_r">&#xe622;</i>
+			</div>
+			<div class="blank0"></div>
+		</div>
+				<a href="/fanweP2P/index.php?ctl=deals" title="更多" class="more">查看更多投资信息 &gt;</a>
+	</div>
+	<!--最新投资end-->
+	<div class="blank15"></div>
+	<!--债权转让-->
+	<div class="newinvest" id="transfer_list">
+		<div class="newtit">债权转让</div>
+		<div class="bd">
+					</div>
+		<a href="/fanweP2P/index.php?ctl=transfer" title="更多" class="more">查看更多债权列表 &gt;</a>
+	</div>
+	<!--债权转让end-->
+</div>
+<div class="index_right f_r">
+<div class="blank20"></div> 
+<div class="blank10"></div>
+	<div class="right_adv">
+		
+	</div>
+	
+	<div class="r-block">
+		<div class="gray_title clearfix">
+			<div class="f_l pl10 f16">公司动态</div>
+			<div class="f_r pr10">
+                <span style="font-weight: normal;">
+                    <a href="/fanweP2P/index.php?ctl=notice&act=list_notice" class="f12" title="更多">更多></a>
+                </span>
+        	</div>
+		</div>
+		<div class="notice-list bdd bt0 pt5 pb5 pl10 pr10" >
+			<ul>
+				                <li>
+                    <span>
+					<a href="/fanweP2P/index.php?ctl=notice&id=67" title="庆祝上线，免收成交费用">庆祝上线，免收成交费用</a>
+					</span>
+                </li>
+				                <li>
+                    <span>
+					<a href="/fanweP2P/index.php?ctl=notice&id=7" title="p2p信贷即将上线">p2p信贷即将上线</a>
+					</span>
+                </li>
+					        </ul>
+		</div>
+	</div>
+	<div class="blank15"></div>
+	<div id="loadtop" class="r-block">
+		<div class="gray_title clearfix pr">
+			<div class="f_l pl10 f16">投资排行榜</div>
+			<div id="rightTitls">
+				<ul>
+					<li class="current"><a rel="1">月</a></li>
+					<li><a rel="2">周</a></li>
+					<li><a rel="3">天</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div id="J_conbox" class="bdd bt0 pt5 pb5 pl10 pr10" >
+			<ul class="clearfix" rel="1">
+											</ul>
+			<ul class="clearfix hide" rel="2">
+							</ul>
+			<ul class="clearfix hide" rel="3">
+							</ul>
+		</div>
+	</div>
+	<div class="blank15"></div>
+	<div class="r-block selct">
+		<div class="gray_title clearfix">
+			<div rel="1" class="f_l pl10 f16 b foucs"><a>媒体报道</a></div>
+			<div rel="2" class="f_l pl10 f16 b">
+			<a>使用技巧</a>
+			</div>
+			<div class="f_r more-box">
+				<div class="f_r pr10" rel="1">
+	                <span style="font-weight: normal;">
+	                    <a href="/fanweP2P/index.php?ctl=acate" class="f12" title="更多">更多></a>
+	                </span>
+		    	</div>
+				<div class="f_r pr10 hide" rel="2">
+	                <span style="font-weight: normal;">
+	                    <a href="/fanweP2P/index.php?ctl=usagetip" class="f12" title="更多">更多></a>
+	                </span>
+		    	</div>
+			</div>
+		</div>
+		<div class="blank0"></div>
+		<div rel="1" class="clearfix nicai bdd bt0 pl10 pr10">
+				<ul>
+		   		</ul>
+   		<div class="blank0"></div>
+		</div>
+		<div rel="2" class="bdd bt0 pt5 pb5 pl10 pr10 nicai hide">
+			<ul>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=26">信用等级的解读</a>
+				</li>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=25">风险与收益</a>
+				</li>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=24">分散投资降低风险</a>
+				</li>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=23">新手上路</a>
+				</li>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=22">无抵押贷款骗局</a>
+				</li>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=21">投资策略</a>
+				</li>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=20">借入者注意事项</a>
+				</li>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=19">如何判断借款列表</a>
+				</li>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=18">提高借款成功率</a>
+				</li>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=17">其他借出技巧</a>
+				</li>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=16">借款失败原因</a>
+				</li>
+			            	<li class="f_l" style="width: 136px;">
+				 · <a href="/fanweP2P/index.php?ctl=usagetip&id=15">选择借款列表</a>
+				</li>
+			       		</ul>
+			<div class="blank0"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var leftTimeActInv = null;
+	jQuery(function(){
+		$(".selct .gray_title .b a").click(function(){
+				$(".selct .gray_title .b a").parent().removeClass("foucs");
+				$(this).parent().addClass("foucs");
+				var rel=$(this).parent().attr("rel");
+				
+				$(".selct .gray_title .more-box .f_r").addClass("hide");
+				$(".selct .gray_title .more-box .f_r[rel='"+rel+"']").removeClass("hide");
+				
+				$(".selct .nicai").addClass("hide");
+				$(".selct  .nicai[rel='"+rel+"']").removeClass("hide");
+				
+			});
+		
+		$("#loadtop #rightTitls a").click(function(){
+			$("#loadtop #rightTitls a").parent().removeClass("current");
+			$(this).parent().addClass("current");
+			var rel=$(this).attr("rel");
+			$("#loadtop #J_conbox ul").addClass("hide");
+			$("#loadtop #J_conbox ul[rel='"+rel+"']").removeClass("hide");
+		});
+		leftTimeAct();
+	});
+	function leftTimeAct(){
+		clearTimeout(leftTimeActInv);
+		$(".AdvLeftTime").each(function(){
+			var leftTime = parseInt($(this).attr("data"));
+			if(leftTime > 0)
+			{
+				var day  =  parseInt(leftTime / 24 /3600);
+				var hour = parseInt((leftTime % (24 *3600)) / 3600);
+				var min = parseInt((leftTime % 3600) / 60);
+				var sec = parseInt((leftTime % 3600) % 60);
+				$(this).find(".day").html((day<10?"0"+day:day));
+				$(this).find(".hour").html((hour<10?"0"+hour:hour));
+				$(this).find(".min").html((min<10?"0"+min:min));
+				$(this).find(".sec").html((sec<10?"0"+sec:sec));
+				leftTime--;
+				$(this).attr("data",leftTime);
+			}
+			else{
+				$(this).html('时间已结束');
+			}
+		});
+		
+		leftTimeActInv = setTimeout(function(){
+			leftTimeAct();
+		},1000);
+	}
+</script>
+</div>
+<div class="blank20"></div>
+<div id="ftw">
+	
+	<div id="ft">
+				<div class="wrap">
+					</div>
+		        	<div class="wrap">
+        		        		<div class="footer_line"></div>
+        		<div style="padding-bottom:50px;">
+	            <ul class="cf f_l f_box">
+	            											<li class="col hp1">
+	                    <h3 class="f_l">使用帮助</h3>
+						<div class="blank0"></div>
+	                    <ul class="sub-list">
+																					<li><a href="/fanweP2P/index.php?ctl=help&id=8" >常见问题</a></li>
+																												<li><a href="/fanweP2P/index.php?ctl=aboutp2p" target="_blank">平台原理</a></li>
+																												<li><a href="/fanweP2P/index.php?ctl=borrow&act=aboutborrow" target="_blank">如何借款</a></li>
+																												<li><a href="/fanweP2P/index.php?ctl=aboutfee" target="_blank">p2p信贷费率</a></li>
+														  
+							<li class="blank0"></li>           
+						</ul>
+						<div class="blank0"></div>
+	                </li> 
+																				<li class="col hp2">
+	                    <h3 class="f_l">关于我们</h3>
+						<div class="blank0"></div>
+	                    <ul class="sub-list">
+																					<li><a href="/fanweP2P/index.php?ctl=authorized&act=login" target="_blank">授权服务机构登录</a></li>
+																												<li><a href="/fanweP2P/index.php?ctl=manageagency&act=login" target="_blank">担保机构登录</a></li>
+																												<li><a href="/fanweP2P/index.php?ctl=help&id=1" >公司简介</a></li>
+																												<li><a href="/fanweP2P/index.php?ctl=help&id=5" >联系我们</a></li>
+																												  
+							<li class="blank0"></li>           
+						</ul>
+						<div class="blank0"></div>
+	                </li> 
+																				<li class="col hp3">
+	                    <h3 class="f_l">安全保护</h3>
+						<div class="blank0"></div>
+	                    <ul class="sub-list">
+																					<li><a href="/fanweP2P/index.php?ctl=aboutlaws" target="_blank">政策法规</a></li>
+																												<li><a href="/fanweP2P/index.php?ctl=help&id=3" >隐私保护</a></li>
+														  
+							<li class="blank0"></li>           
+						</ul>
+						<div class="blank0"></div>
+	                </li> 
+																				<li class="col hp4 end">
+	                    <h3 class="f_l">了解更多</h3>
+						<div class="blank0"></div>
+	                    <ul class="sub-list">
+																					<li><a href="/fanweP2P/index.php?ctl=help&id=4" >咨询热点</a></li>
+														  
+							<li class="blank0"></li>           
+						</ul>
+						<div class="blank0"></div>
+	                </li> 
+															<li class="col">
+						 <h3 class="f_l">关注我们</h3>
+						 <div class="blank0"></div>
+						 <div class="get_limelight clearfix f_l" style=" height:30px;">
+						 	<a  href="" target="_blank" title="新浪微博" class="share weixin "></a>
+			               <a  href="javascript:void(0);" title="微信" class="share xinlan J_weixin_code"></a>
+						 </div>
+						 <div class="blank0"></div>
+						 <span class="weixin_ss f_l">
+						 	<!--
+						 	       <img src="http://localhost/fanweP2P/app/Tpl/blue/images/weixin_ss.png">
+						    -->		   
+						</span>
+					</li>
+					<li class="col call_me f_r">
+						 <h3 class="f_l">联系我们</h3>
+						 <div class="blank0"></div>
+						 <ul class="sub-list">
+							<li>福州台江区</li>
+							<li>热线电话 : 0591-87119192</li>
+							<li>服务邮箱 : info@fanwe.com</a></li>
+							<li class="blank0"></li>
+						</ul>
+					</li>
+					<li class="blank0"></li>  
+	            </ul>
+				<div class="f_r customer">
+										<div class="telphone f_r">
+						<div class="f_r">
+							<span class="telep b">0591-87119192</span>
+							<span class="time f12">周一至周六 9:00-18:00</span>
+						</div>
+						<i class="iconfont f_r mt1" style="font-size:50px;line-height:50px;">&#xe620;</i>
+					</div>
+					
+				</div>
+				<div class="blank25"></div>
+				
+				<div class="blank0"></div>
+				</div>
+				<div class="footer_line"></div>
+				<div class="copyright">
+					<div style="text-align:center;">
+	联系我们：info@fanwe.com &nbsp; 福州方维信息科技有限公司
+</div>
+<div style="text-align:center;">
+	&copy; 2013 p2p信贷 All rights reserved
+</div> 
+					<div class="blank1"></div>
+					&nbsp;&nbsp;
+									</div>
+				<div class="blank"></div>
+			</div>
+			
+	</div>
+		<div id="gotop"></div>
+	<script type="text/javascript" defer="defer">
+	resetWindowBox();
+</script>
+</div>
+</body>
+</html>

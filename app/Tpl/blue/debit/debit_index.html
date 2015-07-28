@@ -1,0 +1,110 @@
+{include file="debit/debit_header.html"} 
+<div>
+	<!--{if $MODULE_NAME == 'debit'}-->
+    <div style=" text-align:center; overflow:hidden;"><adv adv_id="白条首页广告位1" /></div>
+    <!--{/if}-->
+	<div class="b_Gradual_change">
+		<div class="wrap Process">
+			<ul>
+				<li class="Process_0"></li>
+				<li class="Process_1"></li>
+				<li class="Process_2"></li>
+				<li class="Process_3"></li>
+			</ul>
+		</div>
+	</div>
+	<div class="b_white">
+		<div class="wrap choose_block ">
+			<h3></h3>
+			<div class="clearfix">
+				
+				<div class="f_l" style=" width:600px;">
+				<form id="form1" action="{url r="index" p="debit_deal"}" method="post">
+				<div class="type_name">白条类型</div>
+				<div class="type_choose clearfix">
+                {if $loan_type_list}
+                	{foreach from=$loan_type_list item=type key=key}
+                    	<label for="t{$type.id}" class="label">{$type.name}</label>
+                    	<input type="radio" name="type" id="t{$type.id}" value="{$type.id}" class="hidd"/>
+                    {/foreach}
+                {/if}
+				</div>
+				<div class="type_name">白条金额</div>
+				<div class="type_choose clearfix">
+                 {if $debit}
+                	{foreach from=$debit item=item key=key}
+                    	<label for="m{$item}" class="label">{$item}元</label>
+                    	<input type="radio" name="debit_money" value="{$item}" id="m{$item}" class="hidd"/>
+                    {/foreach}
+                 {/if}
+				</div>
+				<div class="type_name">分期月数</div>
+				<div class="type_choose clearfix">
+					<div class="select">
+						<div class="select_this">1个月</div><!--分期数取此值-->
+						<ul class="select_list">
+                        {foreach from="$replay_list" item="repaytime"}
+                        	{if $repaytime.1 neq 0}
+                        		<li value="{$repaytime.0}">{$repaytime.0}个月</li>
+                            {/if}
+                        {/foreach}
+                        <input type="hidden" id="repaytime" name="repaytime" />
+					 </ul>
+					</div>
+				</div>
+				<div class="clearfix">
+					<button class="type_but"></button>
+				</div>
+				</form>
+			    </div>
+                <div class="f_r video_block">
+					<adv adv_id="白条首页广告位2" />
+			    </div>
+			</div>
+			
+			
+		</div>
+	</div>
+	<div class="b_red ">
+		<div class="wrap clearfix pt50 pb40">
+			   <div class="show_block_0 f_l">
+			   	<ul class="show">
+			   		<li>
+                    	{if $deal_list}
+			   			<img src="{$deal_list.img}"/>
+						<p class=" name">{$deal_list.user_name}({$deal_list.school})</p>
+						<hr  style=" width:345px;"/>
+						<p class="for_what"><b>"</b>{$deal_list.deal_name}<b>"</b></p>
+						<p class="time"><b class="c_f7b652">{$deal_list.l_time}</b>分钟</p>
+                        {/if}
+			   		</li>
+			   	</ul>
+			   </div>
+			   <div class="f_r get_num">
+			   	<h3></h3>
+				<div class="show_info" id="scrollDiv">
+					<ul>
+                    	{foreach from=$deal_list1 item=item name="deal_list1"}
+                            <li>
+                                <img src="{$item.img}"/><div class="Vertical_line"></div>
+                                <p class="name">来自{$item.school}的{$item.user_name}</p>
+                                <p class="num">领取到价值{$item.amount}的{$item.deal_name}</p>
+                            </li>
+                        {/foreach}
+					</ul>
+				</div>
+				<div class="Ellipsis"></div>
+			   </div>
+		</div>
+	</div>
+	<div class="b_white p-tb60">
+		<div class="wrap tc Introduction">
+			<img src="{$TMPL}/images/debit/bg_0.png" />
+			<div class="blank10"></div>
+			<p>用支付宝账户需实名认证(<a href="#" class="article">如何支付宝实名认证</a>),并且与领白条实名认证信息一致,否则无法及时到账</p>
+		    <p>白条可多次领取，但总额不能超过2999元.</p>
+			<p>领白条转账至您支付宝后，账单即生成，请及时还款.</p>
+			<a href="{url r="debit" p="debit_article#help_center"}" class="action"></a>
+		</div>
+	</div>
+{include file="debit/debit_footer.html"}

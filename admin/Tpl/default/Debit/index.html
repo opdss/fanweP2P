@@ -1,0 +1,128 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+	
+	<table class="form conf_tab" cellpadding=0 cellspacing=0 >
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		
+		<tr>
+			<td class="item_title">借款金额:</td>
+			<td class="item_input">
+            	<foreach name="debit.borrow_amount_cfg"  item="item">
+                	<input type="input" value="{$item}" class="textbox" name="borrow_amount_cfg[]"/>
+                    <div class="blank10"></div>
+                </foreach>
+                新增：<input type="input" value="" class="textbox" name="borrow_amount_cfg[]"/>
+            </td>
+        </tr>
+        <tr>
+			<td class="item_title">还款类型:</td>
+			<td class="item_input">
+            	<select name="loantype">
+                	<option value="0" <if condition="$debit.loantype eq 0">selected</if>>等额本息</option>
+                   <!-- <option value="1" <if condition="$debit.loantype eq 1">selected</if>>每月付息，到期还本</option>
+                    <option value="2" <if condition="$debit.loantype eq 2">selected</if>>到期还本息</option>-->
+                </select>
+            </td>
+        </tr>
+        
+        <tr>
+			<td class="item_title">服务费率:</td>
+			<td class="item_input">
+            	<input type="input" value="{$debit.services_fee}" class="textbox" name="services_fee"/>(%)
+            </td>
+        </tr>
+        
+        <tr>
+			<td class="item_title">借款者管理费:</td>
+			<td class="item_input">
+            	<input type="input" value="{$debit.manage_fee}" class="textbox" name="manage_fee"/>
+            </td>
+        </tr>
+        
+        <tr>
+			<td class="item_title">普通逾期管理费:</td>
+			<td class="item_input">
+            	<input type="input" value="{$debit.manage_impose_fee_day1}" class="textbox" name="manage_impose_fee_day1"/>
+            </td>
+        </tr>
+        
+        <tr>
+			<td class="item_title">严重逾期管理费:</td>
+			<td class="item_input">
+            	<input type="input" value="{$debit.manage_impose_fee_day2}" class="textbox" name="manage_impose_fee_day2"/>
+            </td>
+        </tr>
+        
+        <tr>
+			<td class="item_title">普通逾期费率:</td>
+			<td class="item_input">
+            	<input type="input" value="{$debit.impose_fee_day1}" class="textbox" name="impose_fee_day1"/>(%)
+            </td>
+        </tr>
+        
+        <tr>
+			<td class="item_title">严重逾期费率:</td>
+			<td class="item_input">
+            	<input type="input" value="{$debit.impose_fee_day2}" class="textbox" name="impose_fee_day2"/>(%)
+            </td>
+        </tr>
+        
+        <tr>
+			<td class="item_title">利率:</td>
+			<td class="item_input">
+            	<select name="rate_cfg">
+                	<option value="0" <if condition="$debit.rate_cfg eq 0">selected</if>>最低值</option>
+                    <option value="1" <if condition="$debit.rate_cfg eq 1">selected</if>>中间值</option>
+                    <option value="2" <if condition="$debit.rate_cfg eq 2">selected</if>>最高值</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+			<td class="item_title">筹标期限:</td>
+			<td class="item_input">
+            	<input type="input" value="{$debit.enddate}" class="textbox" name="enddate"/>(天)
+            </td>
+        </tr>
+        <tr>
+			<td class="item_title">第一次还款减免:</td>
+			<td class="item_input">
+            	<input type="input" value="{$debit.first_relief}" class="textbox" name="first_relief"/>(元) 
+            </td>
+        </tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table>
+	
+	<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Debit" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update_debit" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%EDIT}" />
+			<input type="reset" class="button" value="{%RESET}" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 
+</form>
+<div class="blank5"></div>
+</div>
+<include file="Public:footer" />

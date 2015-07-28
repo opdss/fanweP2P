@@ -1,0 +1,157 @@
+<div class="tabbox clearfix">
+	<div class="tab cur">
+		<a href="{url x="index" r="uc_credit"}">{$page_title}</a>
+	</div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	<div style="width:97%">
+        <table style="width:100%;margin:10px auto">
+          <tbody>
+          	<tr>
+	            <td>我的信用等级：<img width=40 heigth=40 src="{$TMPL}/images/{$user_point_level}.png" align="absmiddle"> <span>({$user_info.point})</span></td>
+	            <td rowspan="2" align="right">
+	            	<a href="{url x="index" r="borrow#applyamount"}" class="btn_blue f_white  bdr3 f_r pl15 pr15 pt5 pb5 ">资料认证</a>
+	            	<a href="{url x="index" r="borrow"}" class="btn_green f_white  bdr3 f_r  pl15 pr15 pt5 pb5 mr5">申请贷款</a>
+	            </td>
+	          </tr>
+	          <tr>
+	            <td>我的信用额度：{$user_info.quota} (可用额度：{$can_use_quota})</td>
+	          </tr>
+	        </tbody>
+		</table>
+  	</div>
+	<div class="blank20"></div>
+	<table width="97%" border="0" cellspacing="1px" class="credit" style="margin:0px auto">
+        <tbody>
+            <tr class="title f_dgray b">
+                <td colspan="<?php echo count($this->_var['list'])+1; ?>">信用等级及对应信用分数</td>
+            </tr>
+            <tr>
+                <td width="130px">信用等级</td>
+				{foreach from=$list item=item}
+				<td><img alt="{$item.name}" src="{$TMPL}/images/{$item.name}.png"></td>
+				{/foreach}
+            </tr>
+			<tr>
+                <td>信用分数</td>
+				{foreach from=$list item=item key=key name="level"}
+				<td>
+					{if $smarty.foreach.level.first}
+						{$item.point}及以上
+					{else}
+						<?php echo $this->_var['list'][$this->_var['key']-1]['point']-1;?>-{$item.point}
+					{/if}
+				</td>
+				{/foreach}
+            </tr>
+        </tbody>
+	</table>
+	<div class="blank20"></div>
+	<table width="97%" align="center" border="0" cellspacing="1px" class="credit" style="margin:0px auto">
+		<tbody>
+			<tr class="title">
+				<td width="100px">&nbsp;</td>
+				<td width="340px">项目</td>
+				<td width="75px">状态</td>
+				<td width="75px">信用分数</td>
+			</tr>
+			<tr>
+				<td>基本信息</td>
+				<td class="item">
+					<p>个人详细信息，工作信息</p>
+				</td>
+				<td class="f_gray"></td>
+				<td class="white_bg"><span class="f_red">{function name="app_conf" v="USER_REGISTER_POINT"}</span>分</td>
+			</tr>
+			<?php $must_idx =0; ?>
+			{foreach from="$credit_file" item="credit" name="credits"}
+			{if $credit.must eq 1}
+			<?php $must_idx ++ ; ?>
+			<tr>
+				<?php if($must_idx == 1){ ?>
+					<td rowspan="{$must_credit_count}" class="white_bg b">必要信用认证</td>
+				<?php } ?>
+				<td class="<?php if($must_idx % 2 == 1){ echo 'white_bg';} ?> item">
+					<p>{$credit.type_name} ({$credit.point}分)</p>
+				</td>
+				<td class="<?php if($must_idx % 2 == 1){ echo 'white_bg';} ?> f_gray">
+					{if $credit.user_id lt 1}
+					<img src="{$TMPL}/images/credit_warning.png" width="32px" height="32px" alt="待完成" title="待完成">
+					{elseif $credit.passed eq 1}
+						{if $credit.has_expire eq 1}
+						<img src="{$TMPL}/images/credit_overdue.png" width="32px" height="32px" alt="已过期" title="已过期">
+						{else}
+						<img src="{$TMPL}/images/credit_pass.png" width="32px" height="32px" alt="已通过" title="已通过">
+						{/if}
+					{elseif $credit.passed eq 2}
+					<img src="{$TMPL}/images/credit_reject.png" width="32px" height="32px" alt="未通过" title="未通过">
+					{else}
+					<img src="{$TMPL}/images/credit_wait.png" width="32px" height="32px" alt="待审核" title="待审核">
+					{/if}
+				</td>
+				<?php if($must_idx == 1){ ?>
+				<td rowspan="{function name="count" v="$credit_file"}" class="white_bg"><span class="f_red">{$level_point.need_other_point}</span>分</td>
+				<?php } ?>
+			</tr>
+			{/if}
+			{/foreach}
+			
+			<?php $other_idx =0; ?>
+			{foreach from="$credit_file" item="credit" name="credits"}
+			{if $credit.must eq 0}
+			<?php $other_idx ++ ; ?>
+			<tr>
+				<?php if($other_idx == 1){ ?>
+					<td rowspan="{$other_credit_count}" class=" b">可选信用认证</td>
+				<?php } ?>
+				<td class="<?php if($other_idx % 2 == 1){ echo 'white_bg';} ?> item">
+					<p>{$credit.type_name} ({$credit.point}分)</p>
+				</td>
+				<td class="<?php if($other_idx % 2 == 1){ echo 'white_bg';} ?> f_gray">
+					{if $credit.user_id eq 0}
+					<img src="{$TMPL}/images/credit_warning.png" width="32px" height="32px" alt="待完成" title="待完成">
+					{elseif $credit.passed eq 1}
+						{if $credit.has_expire eq 1}
+						<img src="{$TMPL}/images/credit_overdue.png" width="32px" height="32px" alt="已过期" title="已过期">
+						{else}
+						<img src="{$TMPL}/images/credit_pass.png" width="32px" height="32px" alt="已通过" title="已通过">
+						{/if}
+					{elseif $credit.passed eq 2}
+					<img src="{$TMPL}/images/credit_reject.png" width="32px" height="32px" alt="未通过" title="未通过">
+					{else}
+					<img src="{$TMPL}/images/credit_wait.png" width="32px" height="32px" alt="待审核" title="待审核">
+					{/if}
+				</td>
+				<?php if($other_idx == 1 && $must_idx== 0){ ?>
+				<td rowspan="{function name="count" v="$credit_file"}" class="white_bg"><span class="f_red">{$level_point.need_other_point}</span>分</td>
+				<?php } ?>
+			</tr>
+			{/if}
+			{/foreach}
+			
+			
+			<tr>
+				<td rowspan="3" class="b white_bg">{function name='app_conf' v="SHOP_TITLE"}记录</td>
+				<td class="item">
+					还清笔数（+{function name="app_conf" v="REPAY_SUCCESS_POINT"}分/笔，加分间隔{function name="app_conf" v="REPAY_SUCCESS_DAY"}天，上限{function name="app_conf" v="REPAY_SUCCESS_LIMIT"}分）</td>
+				<td class="f_gray">
+					{$level_point.repay_success.total_count} 笔
+				</td>
+				<td class="f_gray"><span class="f_red">{if $level_point.repay_success.total_point}{$level_point.repay_success.total_point}{else}0{/if}</span> 分</td>
+			</tr>
+			<tr class="">
+				<td class="white_bg item">逾期次数（{function name="app_conf" v="IMPOSE_POINT"}分/次）</td>
+				<td class="white_bg f_gray">{$level_point.impose_repay.total_count} 次</td>
+				<td class="white_bg"><span class="f_red"> {if $level_point.impose_repay.total_point}{$level_point.impose_repay.total_point}{else}0{/if} </span> 分</td>
+			</tr>
+			<tr class="">
+				<td class="item">严重逾期次数（{function name="app_conf" v="YZ_IMPOSE_POINT"}分/次）</td>
+				<td class="f_gray">{$level_point.yz_impose_repay.total_count} 次</td>
+				<td><span class="f_red"> {if $level_point.yz_impose_repay.total_point}{$level_point.yz_impose_repay.total_point}{else}0{/if} </span> 分</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="blank10"></div>
+</div>
+
+

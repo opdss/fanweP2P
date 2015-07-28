@@ -1,0 +1,164 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#dp-filter-select").bind("change",function(){
+			var sort = $(this).val();
+			load_store_dp({$supplier_location_id},{$is_best},'{$filter}',sort);
+		});
+		
+		$("#review_pages").find("a").bind("click",function(){
+			var ajax_url = $(this).attr("href");		
+			$.ajax({ 
+				url: ajax_url,
+				type: "POST",
+				dataType: "json",		
+				cache:false,		
+				success:function(result){
+					$("#store_dp").html(result.html);
+				},
+				error:function(o){
+					//alert(o.responseText);
+				}
+			});
+			return false;
+		});
+	});
+	
+	
+</script>
+<div class="k2-fix-float" id="dp-tab">
+        <ul>
+        	<li {if $is_best  eq  1}class="current"{/if}><a href="javascript:void(0);" onclick="load_store_dp({$supplier_location_id},1,'','');">精华点评<em>({$is_best_count})</em></a></li>
+          	<li {if $is_best neq 1}class="current"{/if}><a href="javascript:void(0);" onclick="load_store_dp({$supplier_location_id},0,'','');">全部点评<em>({$total_count})</em></a></li>
+        </ul>       
+</div>
+<div class="k2-fix-float" id="dp-filter">
+        <label>筛选：</label>
+	        <a {if $filter eq 'good'}class="current"{/if} href="javascript:void(0);" onclick="load_store_dp({$supplier_location_id},{$is_best},'good','{$sort}');">[好评]</a>	        
+	        <a {if $filter eq 'bad'}class="current"{/if} href="javascript:void(0);" onclick="load_store_dp({$supplier_location_id},{$is_best},'bad','{$sort}');">[差评]</a>	        
+	        <a {if $filter eq 'is_buy'}class="current"{/if} href="javascript:void(0);" onclick="load_store_dp({$supplier_location_id},{$is_best},'is_buy','{$sort}');">[消费者点评]</a>	
+			<a {if $filter eq 'tuan'}class="current"{/if} href="javascript:void(0);" onclick="load_store_dp({$supplier_location_id},{$is_best},'tuan','{$sort}');">[团购点评]</a>	        
+	        <a {if $filter eq 'daijin'}class="current"{/if} href="javascript:void(0);" onclick="load_store_dp({$supplier_location_id},{$is_best},'daijin','{$sort}');">[抵用优惠券点评]</a>
+			<a {if $filter eq 'youhui'}class="current"{/if} href="javascript:void(0);" onclick="load_store_dp({$supplier_location_id},{$is_best},'youhui','{$sort}');">[优惠券点评]</a>	  	        	        
+	        <a {if $filter eq 'event'}class="current"{/if} href="javascript:void(0);" onclick="load_store_dp({$supplier_location_id},{$is_best},'event','{$sort}');">[活动点评]</a>	        
+	        <a {if $filter eq 'shop'}class="current"{/if} href="javascript:void(0);" onclick="load_store_dp({$supplier_location_id},{$is_best},'shop','{$sort}');">[商城购物点评]</a>	        
+	                
+	        <!--<a {if $filter eq 'img'}class="current"{/if} href="javascript:void(0);" onclick="load_store_dp({$supplier_location_id},{$is_best},'img','{$sort}');">图文</a>-->
+        <p class="filter-select">
+         	 排序：
+			<select id="dp-filter-select">
+	     		<option value="create_time" {if $sort eq 'create_time'}selected="selected"{/if} >发布时间</option>
+	            <option value="good_count" {if $sort eq 'good_count'}selected="selected"{/if}>鲜花总数</option>
+	            <option value="reply_count" {if $sort eq 'reply_count'}selected="selected"{/if}>回应总数</option>
+			</select>
+        </p>
+
+</div>
+<div class="clearfix wb">
+<div class="blank"></div>
+{if $review_list}
+{foreach from=$review_list item=review_item}
+<div class="review_item" style="margin-left:15px;margin-right:15px;">
+	
+		<div class="hd">
+			{function name="show_avatar" uid=$review_item.user_id  type="small" }
+			<div class="user_name">
+			{function name="get_user_name" value=$review_item.user_id} 
+			</div>
+		</div>
+		<div class="review_content" style="width:820px;">
+			<div class="review_point">
+				<span class="point_title">总评：</span> <span class="point_result">{$review_item.point_lang}</span>
+				{foreach from=$review_item.group_point item=group}
+				<span class="point_title">{$group.name}：</span> <span class="point_result">{$group.point}</span>
+				{/foreach}
+				{if $review_item.avg_price>0}
+				<span class="point_title">人均：</span> <span class="point_result">￥{function name="round" val=$review_item.avg_price p=2}</span>
+				{/if}
+				
+				
+				
+				{if $review_item.is_best}
+				<span class="is_best_ico"></span>
+				{/if}
+				{if $review_item.reply_count>50}
+				<span class="is_hot_ico"></span>
+				{/if}
+				{if $review_item.is_top}
+				<span class="is_top_ico"></span>
+				{/if}
+			</div>
+			
+			<div class="review_title">
+				{if $review_item.title neq ""}
+				<a href="{url x="store" x="review#detail" p="id=$review_item.id"}" title="{$review_item.title}">{$review_item.title}</a>
+				{/if}
+				{if $review_item.from_data neq ''}
+					<a href="{$review_item.rel_url}" target="_blank" style="font-size:12px; font-weight:normal; font-family:arial;">[查看{$review_item.rel_name}]</a>
+				{/if}
+			</div>
+			
+			
+			{if count($review_item.imgs)>0}
+			<div class="imgbox" style="overflow:hidden;">
+				<img src="{$review_item.imgs.0.image}"  />
+				<div class="blank"></div>
+				{$review_item.imgs.0.brief}
+			</div>			
+			<div class="blank"></div>
+			{/if}
+			<?php echo nl2br(msubstr($this->_var['review_item']['content'],0,500)); ?> <a class="viewall" href="{url x="store" x="review#detail" p="id=$review_item.id"}" title="查看全文">[查看全文 {if $review_item.img_count>0}(图{$review_item.img_count}){/if}]</a>
+			<div class="blank"></div>
+			<div class="store_tag_info">
+			{foreach from=$review_item.group_tag item="group"}
+				<div class="tag_info_item">
+				{$group.name}：
+				{foreach from=$group.tags_arr item=tag_item}
+				<a href="{$tag_item.url}" target="_blank">{$tag_item.name}</a>&nbsp;&nbsp;
+				{/foreach}
+				</div>
+			{/foreach}
+			</div>
+			
+			
+			<div class="blank"></div>
+			<div class="review_date">
+				{$review_item.user_name} 在 {$review_item.create_time_format} 发表了点评
+			</div>
+			<div class="blank0"></div>
+			<div class="response">
+				<span>这篇点评怎么样？</span>
+				<p class="response-good"><a onclick="$.Vote_Flower(this,'good_count',{$review_item.id},'有用','dp',DpVoteUpdate);" href="javascript:void(0);">有用</a><b>({$review_item.good_count})</b></p>
+				<p class="response-bad"><a onclick="$.Vote_Flower(this,'bad_count',{$review_item.id},'没用','dp',DpVoteUpdate);" href="javascript:void(0);">没用</a><b>({$review_item.bad_count})</b></p>
+			
+				<div class="funcbox">
+					{if $user_auth[dp][setbest]}<a href="javascript:void(0);" onclick="op_dp_setbest({$review_item.id});">推荐</a> | {/if}
+					{if $user_auth[dp][del]}<a href="javascript:void(0);" onclick="op_dp_del({$review_item.id});">删除</a> | {/if}
+					<a href="{url x="store" x="review#detail" p="id=$review_item.id"}">详情</a> | 
+					<a href="{url x="store" x="review#detail" p="id=$review_item.id"}#reply">回应</a>
+					<!--<a href="javascript:void(0);" onclick="$.User_Report('dp',{$review_item.id});">举报</a>-->
+				</div>
+			</div>
+		</div>
+		
+		<div class="blank"></div>
+
+</div>
+{/foreach}
+{else}
+<div style=" padding:10px;">还没有任何人发表点评。 我要第一个 [<a href="#review_form" style="color:#416AC2;">发表点评</a>]</div>
+{/if}
+<div class="blank"></div>
+<div class="pages" id="review_pages">
+	{$pages}
+</div>
+<div class="blank"></div>
+</div>
+<script type="text/javascript">
+function DpVoteUpdate(obj,result)
+{
+	if(result.status)
+	$(obj).parent().find("b").html("("+result.message+")");
+	else
+	$.showErr(result.message);
+}
+</script>

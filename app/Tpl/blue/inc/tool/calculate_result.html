@@ -1,0 +1,176 @@
+<div class="blank20"></div>
+<div class="tabbox clearfix">
+	<div class="tab cur">贷款描述</div>
+</div>
+<div class="bdd  bddf bt0" >
+	<div class="clearfix pt5 pb5 pl5 pr5">
+		<div class="clearfix p5"   style="line-height:50px">
+			<div class="clearfix">
+				{if $borrowpay eq 1}
+				<p class="f_l" style="width: 250px; padding-left:100px">
+					每月需还利息： <span class="f_red">￥{function name="number_format" v=$repayamount f=2}</span>
+				</p>
+				{/if}
+				<p class="f_l" style="width: 250px; padding-left:100px">
+					{if $borrowpay eq 2 || $repaytimetype eq 0}
+					到期需还本金：  <span class="f_red">￥{function name="number_format" v=$borrowamount f=2}</span>
+					{/if}
+					{if $borrowpay neq 2}
+						每月需还{if $borrowpay eq 0}本{else}利{/if}息： <span class="f_red">￥{function name="number_format" v=$repayamount f=2}</span>
+					{/if}
+				</p>
+				<p class="f_l" style="width: 250px; padding-left:100px">
+					您将在<span class="f_red"> {$repaytime} </span> {if $repaytimetype eq 1}个月{else}天{/if}后还清贷款
+				</p>
+			
+				<p class="f_l" style="width: 250px ; padding-left:100px">
+					<span style="margin-left: 35px">{if $repaytimetype eq 1}月{else}天{/if}利率：</span> 
+					<span class="f_red">
+					{function name="number_format" v=$rate f=2}%</span>
+				</p>
+				<p class="f_l" style="width: 250px; padding-left:100px">
+					您需还本息共 <span class="f_red">
+					￥{function name="number_format" v=$repayallamount f=2}</span>
+				</p>
+				
+				<p class="f_l" style="width: 250px; padding-left:100px">
+					借款服务费 <span class="f_red">
+					￥{function name="number_format" v=$services_fee f=2}</span>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+{if $list}
+<div class="blank20"></div>
+
+<div class="tabbox clearfix">
+	<div class="tab cur">本息偿还时间表</div>
+</div>
+<div class="bdd bddf bt0">
+	<div class="blank20"></div>
+	<div class="blank20"></div>
+	<div class="blank20"></div>
+	<div class="pt10 pb10 bdd"  style="width:1000px">
+		<div class="clearfix">
+			<div class="clearfix tc  pb5"  style="line-height:50px">
+				<div class="f_l f_dgray b" style="width: 100px">第几期</div>
+				<div class="f_l f_dgray b" style="width: 150px">月还本息</div>
+				<div class="f_l f_dgray b" style="width: 150px">月还本金</div>
+				<div class="f_l f_dgray b" style="width: 120px">月还利息</div>
+				<div class="f_l f_dgray b" style="width: 120px">借款管理费</div>
+				<div class="f_l f_dgray b" style="width: 115px">本息余额</div>
+				<div class="f_l f_dgray b" style="width: 100px">逾期金额</div>
+				<div class="f_l f_dgray b" style="width: 100px">逾期管理费</div>
+			</div>
+			<div class="dot"></div>
+		</div>
+		<div class="clearfix">
+			<div class="clearfix tc odd" style="line-height:50px">
+				<div class="f_l f_dgray b" style="width: 100px">&nbsp;</div>
+				<div class="f_l f_dgray b" style="width: 150px">&nbsp;</div>
+				<div class="f_l f_dgray b" style="width: 150px">&nbsp;</div>
+				<div class="f_l f_dgray b" style="width: 120px">&nbsp;</div>
+				<div class="f_l f_dgray b" style="width: 120px">&nbsp;</div>
+				<div class="f_l f_dgray" style="width: 115px">
+					￥ {function name="number_format" v=$repayallamount f=2}
+				</div>
+				
+			</div>
+			<div class="dot"></div>
+		</div>
+		{foreach from=$list item=item name=lists}
+		<div class="clearfix">
+			<div class="clearfix tc wb" style="line-height:50px">
+				<div class="f_l f_dgray" style="width: 100px; ">
+					第 {$smarty.foreach.lists.iteration} 期
+				</div>
+				<div class="f_l f_dgray" style="width: 150px; ">
+					￥ {function name="number_format" v=$item.repay_money f=2}
+				</div>
+				<div class="f_l f_dgray" style="width: 150px; ">
+					￥ {function name="number_format" v=$item.self_money f=2}
+				</div>
+				<div class="f_l f_dgray" style="width: 120px; ">
+					￥{function name="number_format" v=$item.interest_money f=2}
+				</div>
+				<div class="f_l f_dgray" style="width: 120px; ">
+					 ￥ {function name="number_format" v=$item.manage_money f=2}
+				</div>
+				<div class="f_l f_dgray" style="width: 115px; ">
+					￥{function name="number_format" v=$item.left_repay_money f=2}
+				</div>
+				<div class="f_l f_dgray" style="width: 100px; ">
+					￥{function name="number_format" v=$item.impose_money f=2}
+				</div>
+				<div class="f_l f_dgray" style="width: 100px; ">
+					￥{function name="number_format" v=$item.manage_impose_money f=2}
+				</div>
+			</div>
+			<div class="dot"></div>
+		</div>
+		{/foreach}
+	</div>
+	<div class="blank20"></div>
+	<div class="blank20"></div>
+	<div class="blank20"></div>
+</div>
+{/if}
+{if $tq_list}
+<div class="blank20"></div>
+<div class="tabbox clearfix">
+	<div class="tab cur">提前偿还罚息表</div>
+</div>
+<div class="bdd bddf bt0">
+	
+	<div class="blank20"></div>
+	<div class="blank20"></div>
+	<div class="blank20"></div>
+	<div class="pt10 pb10 bdd"  style="width:1000px">
+		<div class="clearfix">
+			<div class="clearfix tc  pb5"  style="line-height:50px">
+				<div class="f_l f_dgray b" style="width: 150px">在第几期提前</div>
+				<div class="f_l f_dgray b" style="width: 150px">当月本息</div>
+				<div class="f_l f_dgray b" style="width: 150px">当月管理费</div>
+				<div class="f_l f_dgray b" style="width: 150px">提前本金</div>
+				<div class="f_l f_dgray b" style="width: 150px">提前本息</div>
+				<div class="f_l f_dgray b" style="width: 120px">提前管理费</div>
+				<div class="f_l f_dgray b" style="width: 100px">提前罚息</div>
+			</div>
+			<div class="dot"></div>
+		</div>
+		
+		{foreach from=$tq_list item=item name=tqlists}
+		<div class="clearfix">
+			<div class="clearfix tc wb" style="line-height:50px">
+				<div class="f_l f_dgray" style="width: 150px; ">
+					第 {$smarty.foreach.tqlists.iteration} 期
+				</div>
+				<div class="f_l f_dgray" style="width: 150px; ">
+					￥ {function name="number_format" v=$item.month_repay_money f=2}
+				</div>
+				<div class="f_l f_dgray" style="width: 150px; ">
+					￥ {function name="number_format" v=$item.manage_money f=2}
+				</div>
+				<div class="f_l f_dgray" style="width: 150px; ">
+					￥ {function name="number_format" v=$item.true_self_money f=2}
+				</div>
+				<div class="f_l f_dgray" style="width: 150px; ">
+					￥ {function name="number_format" v=$item.true_repay_money f=2}
+				</div>
+				<div class="f_l f_dgray" style="width: 120px; ">
+					 ￥ {function name="number_format" v=$item.true_manage_money f=2}
+				</div>
+				<div class="f_l f_dgray" style="width: 100px; ">
+					￥{function name="number_format" v=$item.impose_money f=2}
+				</div>
+			</div>
+			<div class="dot"></div>
+		</div>
+		{/foreach}
+	</div>
+	<div class="blank20"></div>
+	<div class="blank20"></div>
+	<div class="blank20"></div>
+</div>
+{/if}

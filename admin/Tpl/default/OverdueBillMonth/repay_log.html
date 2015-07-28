@@ -1,0 +1,103 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<script type="text/javascript">
+	function preview(id)
+	{
+		window.open("__ROOT__/index.php?ctl=deal&id="+id+"&preview=1");
+	}
+	
+	
+	function repay_plan(id,l_key)
+	{
+		var query=new Object();
+		query.deal_id = id;
+		query.l_key = l_key;
+		query.obj = "#J_view_repay_plan";
+		query.p = 1;
+		$.ajax({
+			url:ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=repay_plan_a", 
+			data:query,
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				if(result.status==1){
+					$.weeboxs.open('<div id="J_view_repay_plan">'+result.info+'</div>',{contentType:'text',showButton:false,title:"还款详情",width:600});
+				}
+				else{
+					alert(result.info);
+				}
+			},
+			error:function(){
+				alert("请求数据失败");
+			}
+		});
+	}
+	
+	function getLoanItem(obj,deal_id,l_key,p){
+		var query=new Object();
+		query.deal_id = deal_id;
+		query.l_key = l_key;
+		query.obj = obj;
+		query.p = p;
+		$.ajax({
+			url:ROOT+"?"+VAR_MODULE+"="+MODULE_NAME+"&"+VAR_ACTION+"=repay_plan_a", 
+			data:query,
+			type:"post",
+			dataType:"json",
+			success:function(result){
+				if(result.status==1){
+					$(obj).html(result.info);
+				}
+				else{
+					alert(result.info);
+				}
+			},
+			error:function(){
+				alert("请求数据失败");
+			}
+		});
+	}
+</script>
+<php>
+	function repay_plan($key,$deal){
+		return '<a href="javascript:repay_plan('.$deal['deal_id'].','.$deal['l_key'].');">第 '.($key+1).' 期</a>';
+	}
+	function preview($id,$deal){
+		return '<a href="javascript:preview('.$deal['deal_id'].');">'.msubstr($deal['name']).'</a>';
+	}	
+	
+</php>
+<style type="text/css">
+#J_view_repay_plan th{ color:#fff; padding:5px 0}
+.main_title a {
+    color: #fff;
+}
+</style>
+<div class="main">
+<div class="main_title">{$deal_repay.user_id|get_user_name} 的《{$deal_repay.name|preview=$deal_repay}》 《{$deal_repay.l_key|repay_plan=$deal_repay}》 操作日志   <a href="{:u("OverdueBillMonth/index")}" class="back_list">{%BACK_LIST}</a></div>
+
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="deal" 
+	datasource="list" 
+	show="id:{%ID}|50px
+		,log:操作日志
+		,user_id|get_user_name:相关会员
+		,adm_id|get_admin_name:{%LOG_ADMIN}
+		,create_time|to_date:操作时间"
+	actionlist=""
+	actionwidth="200px" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

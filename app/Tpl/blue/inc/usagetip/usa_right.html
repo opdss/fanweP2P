@@ -1,0 +1,8 @@
+<div class="tree-box clearfix">
+	<div class="tree clearfix">
+		<div class="hd hd_cur">使用技巧</div>
+		{foreach from="$use_tech_list.list" item="use"}
+		<div class="item{if $article.id eq $use.id} act{/if}"><a href="{url x="index" r="usagetip" p="id=$use.id"}">{$use.title}</a></div>
+		{/foreach}
+	</div>
+</div>

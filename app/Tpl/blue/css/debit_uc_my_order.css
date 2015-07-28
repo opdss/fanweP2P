@@ -1,0 +1,21 @@
+.order_Process{ background:url(../images/debit/order_Process.png) no-repeat; width:670px;margin-bottom:37px;height:98px;}
+
+.order_Process ul{ position:relative;}
+.order_Process li{ float:left; width:61px; height:73px; position:absolute; background:url(../images/debit/order_Process_0.png) no-repeat;}
+.order_Process .Process_0{ left:0px; background-position:0px 0px;;}
+.order_Process .Process_1{ left:155px; background-position:-155px 0;}
+.order_Process .Process_2{ left:306px; background-position:-306px 0;}
+.order_Process .Process_3{ left:458px; background-position:-458px 0;}
+.order_Process .Process_4{ left:610px; background-position:-610px 0;}
+
+
+.In_advance_block{ background:#fefbf0; border:1px solid #f2eac6; padding:12px; color:#555; line-height:24px;}
+
+.but0{ width:49px; height:20px; background:#4f9ac9; border-radius:3px; display:block; line-height:20px; color:#fff; text-align:center;}
+.but1{ width:81px; height:24px; background:#ff3f44; border-radius:3px; display:block; line-height:24px; color:#fff; text-align:center;}
+.but1:hover{ color:#fff;}
+
+.bill_list{ width:100%; color:#555; margin-bottom:-1px;}
+.bill_list th{ background:#f7f7f7; line-height:30px;}
+.bill_list td{ line-height:40px; border-bottom:1px solid #eeeeee;}
+.bill_list tr{ padding-left:10px;}

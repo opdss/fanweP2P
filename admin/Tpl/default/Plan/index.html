@@ -1,0 +1,43 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+<div class="button_row">
+	<input type="button" class="button" value="{%ADD}" onclick="add();" />
+	<input type="button" class="button" value="{%DEL}" onclick="del();" />
+</div>
+<div class="blank5"></div>
+<PHP>
+</PHP>
+<script type="text/javascript">
+	function show_plan(id)
+	{
+		window.location.href=ROOT+'?m=Plan&a=show_plan&id='+id;
+	}
+</script>
+<html:list 
+	id="dataTable"
+	style="dataTable"
+	name="plancate"
+	checkbox="true"
+	action="true"
+	datasource="list"
+	show="id:{%ID}|50px
+		,plan_sn:计划编号
+		,name:计划名称
+		,plan_cate:计划分类
+		,plan_money:计划金额
+		,rate:预期收益
+		,warrant:保障方式
+		,start_time:开始时间
+		,end_time:结束时间
+		,status:状态"
+	actionlist="edit:{%EDIT},show_plan:计划详情和操作,del:{%DEL}"
+	actionwidth="100px"/>
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

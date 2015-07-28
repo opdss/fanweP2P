@@ -1,0 +1,139 @@
+<div class="tabbox clearfix">
+	<div class="tab {if $ACTION_NAME eq 'index'}cur"{/if}"><a href="{url x="index" r="authorized#cash"}">{$LANG.UC_LOGS}</a></div>
+	<div class="tab {if $ACTION_NAME eq 'carry'}cur{/if}"><a href="{url x="index" value="authorized#carry"}">{$LANG.UC_CARRY}</a></div>
+	<div class="tab {if $ACTION_NAME eq 'carry_log'}cur{/if}"><a href="{url x="index" value="authorized#carry_log"}">提现日志</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix pt10">
+	<div  class="uc-table i_deal_list">
+		<table width="100%;" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+			<tr border="0">
+				<th style="width:10%">提现金额</th>
+				<th style="width:10%">手续费</th>
+				<th style="width:10%">提现银行</th>
+				<th style="width:10%">银行资料</th>
+				<th style="width:12%">处理结果</th>
+				<th style="width:8%">操作</th>
+				<th>失败原因</th>
+			</tr>
+			{foreach from=$list item=order key=key}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+			
+				<td style="font-size:12px;">
+					{function name="format_price" value=$order.money}
+				</td>
+				<td style="font-size:12px;">
+					{function name="format_price" value=$order.fee}
+				</td>
+				
+				<td>{$order.bank_name}</td>
+				<td class="tl">
+					网点：{$order.bankzone}<br>
+					卡号：*** {function name="msubstr" v=$order.bankcard s="-4" l="4" charset="utf-8" su=false}<br>
+					账户：{function name="utf_substr" v=$order.real_name}
+				</td>
+				<td style="font-size:12px;">
+					{if $order.status eq 4}
+					已撤销
+					{else}
+					{$order.status_format}
+					{/if}
+				</td>
+				<td style="font-size:12px;">
+					{if $order.status eq 0}
+					<a href="javascript:void(0);"  class="J_do_reback btn_del" style="background-color:orange;"  dataid="{$order.id}" status="4">撤销申请</a>
+					{elseif $order.status eq 4}
+					<a href="javascript:void(0);"  class="J_do_apply btn_del"  style="background-color:green;"  dataid="{$order.id}" status="0">申请提现</a>
+					{else}
+					<a href="#"  class="btn_del" >无操作</a>
+					{/if}
+					
+				</td>
+				
+				<td style="width:12%">{$order.msg}</td>
+			</tr>
+			{/foreach}
+		</table>
+		<div class="pages">{$pages}</div>
+	</div>				
+</div>
+	
+<script type="text/javascript">
+	{if $below_payment}
+	function SelectPayType(i){
+		switch(i){
+			case 0:
+				$("#J_online_pay").show();
+				$("#J_below_pay").hide();
+				break;
+			case 1:
+				$("#J_online_pay").hide();
+				$("#J_below_pay").show();
+				break;
+		}
+	}
+	{/if}
+	$(document).ready(function(){
+		$("#incharge_done").click(function(){
+			if(!($("input[name='money']").val()!=''&&!isNaN($("input[name='money']").val())&&$("input[name='money']").val()>0))			
+			{
+				$.showErr("{$LANG.PLEASE_INPUT_CORRECT_INCHARGE}");
+				return false;
+			}
+			else if(!$("input[name='payment']:checked").val())
+			{
+				$.showErr("{$LANG.PLEASE_SELECT_PAYMENT}");
+				return false;
+			}
+		});
+	});
+	jQuery(function(){
+			$(".J_do_reback").click(function(){
+			var dltid = $(this).attr("dataid");
+			$.showCfm("确认撤销吗？",function(){
+				$.ajax({
+					url:'{url r="index" x="authorized#do_reback"}',
+					data:"&dltid="+dltid,
+					type:"post",
+					dataType:'json',
+					success:function(result){
+						if(result.status==1){
+							$.showSuccess("撤销成功");
+							window.location.reload();
+						}
+						else{
+							$.showErr(result.info);
+						}
+					},
+					error:function(){
+						$.showErr("请求数据失败");
+					}
+				});
+			});
+		});
+		$(".J_do_apply").click(function(){
+			var dltid = $(this).attr("dataid");
+			$.showCfm("继续申请吗？",function(){
+				$.ajax({
+					url:'{url r="index" x="authorized#do_Apply"}',
+					data:"&dltid="+dltid,
+					type:"post",
+					dataType:'json',
+					success:function(result){
+						if(result.status==1){
+							$.showSuccess("申请成功");
+							window.location.reload();
+						}
+						else{
+							$.showErr(result.info);
+						}
+					},
+					error:function(){
+						$.showErr("请求数据失败");
+					}
+				});
+			});
+		});
+
+	});
+
+</script>

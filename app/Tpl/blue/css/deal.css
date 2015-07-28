@@ -1,0 +1,154 @@
+.tab:hover{color:#28A7E1; } 
+.cur:hover{color: #444; }
+a:hover{color:#28A7E1 }
+.box-bd a{font-weight: bold;padding: 0 6px;}
+ #deal-intro .deal-lf{ border-right:1px solid #E0E9F0; float:left; width:915px; height:320px;}
+ #deal-intro .hd{ padding:10px; }
+ #deal-intro .hd h3{color:#303030;padding:10px 10px; font-weight:500; border-bottom:1px dotted #ccc; overflow:hidden; font-size:22px; line-height:28px }
+ #deal-intro .hd h3 img{ vertical-align:middle;}
+ #deal-intro .hd h3 span{ color:#222; font-size:24px; }
+ #deal-intro .hd h3 a{ color:#303030;  }
+ #deal-intro .hd .lt{ width:630px}
+ #deal-intro .hd .lt .cate{ font-size:16px; height:24px; line-height:24px}
+ #deal-intro .hd .rt{ font-size:14px }
+
+ #deal-intro .deal-lf .listbox{ text-align:left; width:100%; }
+ #deal-intro .deal-lf .listbox .listcon {
+	padding: 0 50px 0 0px;
+	height: 50px;
+	border-right: 1px solid #e9e9e9;
+	font-size: 14px;
+	float: left;
+	color: #333;
+	margin-right:20px
+}
+ #deal-intro .deal-lf .listbox .last{ margin-right:0; border-right:none}
+
+ #deal-intro .deal-lf .listbox .listcon h6 {
+	font-size: 14px;
+	font-weight: 300;
+	color: #a3a3a3;
+}
+ #deal-intro .deal-lf .listbox .listcon em{font-size: 20px;}
+
+ #deal-intro .deal-lf .bd_lf{text-align:left; float:left;width:720px}
+ #deal-intro .deal-lf .bd_lf .itembox{padding-top:20px}
+ #deal-intro .deal-lf .bd_lf .itembox li{ width:33%; float:left; color:#333; height:26px; line-height:26px}
+ #deal-intro .deal-lf .bd_lf .itembox li span.t{ display:block; float:left; width:95px; color:#999}
+ #deal-intro .deal-lf .bd_lf .rt{ float:right; line-height:120px; overflow:hidden;  width:230px; }
+ #deal-intro .deal-lf .bd_lf .rt span{ color:#f5634d; font-size:20px; font-weight:bold; padding:0; }
+ #deal-intro .deal-lf .bd_lf .rt i{ background-repeat:no-repeat; display:block; height:134px; overflow:hidden; width:128px; }
+ #deal-intro .deal-lf .bd_lf .rt .i3{ background-image:url(../images/status_1.gif); display:block; height:134px; overflow:hidden; width:128px; }
+ #deal-intro .deal-lf .dsj {font-size:14px;}
+ #deal-intro .deal-lf .dsj span.s {  display:block; float:left; font-family:"Arial";  }
+ #deal-intro .deal-lf .dsj span.l{display:block; float:left;}
+ 
+ 
+#deal-intro .deal-rf{  float:right; padding:20px;  width:240px; height:280px; background:#F4FAFF }
+
+.progressB {
+	background: #e4e4e4;
+	width: 100%;
+	height: 10px;
+	position: relative;
+	float: left;
+	display: inline-block;
+}
+
+.progressB span {
+	display: block;
+	height: 10px;
+	float: left;
+	border-radius: 3px;
+	background: url(../images/progress.png);
+	overflow:visible;
+}
+
+.progressB span img{
+	right:-8px;
+	top:-3px
+}
+
+
+#deal-intro .deal-rf .moneybox li{color:#888; height:30px; line-height:30px; text-align:right; border-bottom:1px solid #EEEEEE}
+#deal-intro .deal-rf .moneybox li span.t{ display:block; float:left; width:90px; color:#999; text-align:left;}
+
+ #deal-intro .deal-rf .touzbox .unit { color:#666; right:10px;top:5px;color:#999 }
+ #deal-intro .deal-rf .touzbox input.f-input {  border:1px solid #B7D7F3;  }
+ #deal-intro .deal-rf .c_number-box{line-height:36px; }
+ #deal-intro .deal-rf .c_number-box .tz_link {  margin-top:0px;}
+ #deal-intro .deal-rf .touzbox  .c_number{float:left; font-size:16px; display:inline-block;*display:inline; *zoom:1; font-weight:bolder; border:1px solid #e0e0e0;   background:#fff; line-height:34px;height:34px; width:34px; text-align:center;}
+
+
+ #deal-intro .deal-rf .touz-login{ font-size:20px; text-align:center; padding-top:20px;}
+
+.view-infos .h_2{ color:#464646; line-height:38px; height:38px; border-bottom:1px solid #ebebeb; font-size:16px; padding-left:14px;}
+.view-infos .h_2 h2{ font-weight:500; font-size:16px;} 
+
+.tabbox{height:42px;}
+.tabbox .tab{ margin-top:-1px; margin-left:-1px; margin-right:0}
+.tabbox .cur{ margin-top:-4px;}
+
+.show_block { padding:0 60px;}
+.view-infos .show_block  .ul_0 li{ float:left;}
+.view-infos .show_block  .ul_0 li .show_img{ display:block;}
+.view-infos .show_block  .ul_0 li .show_img img{ height:96px;border:1px solid #dfdfdf; margin:0 40px;}
+.view-infos .show_block  .ul_0 li .show_h{ font-size:14px; color:#6f6f6f; line-height:28px; text-align:center;}
+.view-infos .care{ text-align:center; color:#F30000; line-height:36px; background:#F7F7F6;}
+.view-infos .but{ width:65px; background:red; height:126px; position:absolute;}
+.view-infos .prev {background:url(../images/pre_0_t.png) 16px 35px no-repeat #fff;  left:0px; top:0}
+.view-infos .next {background:url(../images/next_0_t.png) 16px 35px no-repeat #fff;  right:0px; top:0}
+.view-infos .show_block .show_position{ width:100%; overflow:hidden;height:126px; position:relative;}
+.view-infos .show_block .show_position .ul_0 { width:auto;position:absolute; height:126px;}
+
+.view-infos .view-item{
+	padding: 0px; overflow: hidden; float: left; width: 150PX; height: 125px; text-align:center;
+}
+
+.view-infos .view-item div {
+    display: table;
+    margin: 0 auto;
+}
+
+
+.box_view { padding:20px}
+
+.box_view .box-t{ height:50px; line-height:50px}
+.box_view .box-t i.iconfont{ font-size:20px; line-height:normal;}
+.box_view .box-bd{ padding:10px}
+.financing{ color:#3a3a3a}
+.financing .item_l {
+	width: 420px;
+}
+
+.financing .item_m {
+	width: 260px;
+}
+
+.financing .item {
+	float: left;
+	margin-right: 10px;
+	overflow: hidden;
+}
+
+.financing .last {
+	margin-right: 0;
+	width:340px
+}
+
+.financing .lb {
+	color: #9d9d9d;
+	float:left;
+	width:80px
+}
+
+.attr_rows {}
+.attr_rows .attr_item{ float:left; width:25%; line-height:36px; height:36px}
+
+
+.data_table{ background:#e3e3e3; color:#222; overflow:hidden; text-align:center; width:100%; -moz-border-radius:8px; -khtml-border-radius:8px; -webkit-border-radius:8px; border-radius:8px; } 
+.data_table th{ background:#4cb7ea; color:#fff; font-weight:normal; font-size:16px; height:40px; line-height:40px}
+.data_table tr td{ background:#fff; color:#222; font-weight:normal; height:36px; line-height:36px}
+.data_table tr td.f_green{ color:#61c01a; }
+.data_table tr.highlight td{background:#FFEEC8;}
+.data_table tr.cur td{background:#F1F0F0;}

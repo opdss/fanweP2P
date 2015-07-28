@@ -1,0 +1,141 @@
+<div class="smssubscribe-dialog-box">
+<dl>
+		<dd>
+			<div class="ss-form" id="smssubscribe-1">
+				<form method="post" id="ss-from1" name="ss-from1">
+				<div class="ss-item">
+					<span>{$LANG.MOBILE_NUMBER}</span><input type="text" class="txt" name="mobile_phone" id="sms-subscribe-mobile">
+				</div>
+				<div class="ss-hit">{$LANG.MOBILE_EMPTY_TIP}</div>
+				<div class="ss-item">
+					<span>{$LANG.VERIFY_CODE}</span><input type="text" class="txt code" name="verify" id="sms-subscribe-verify"><img onclick="this.src='{$APP_ROOT}/verify.php?rand='+ Math.random();" title="看不清楚？换一张" id="sms-subscribe-verify-img" src="">
+				</div>
+				<div class="ss-btns">
+					<input type="submit" class="formbutton" value="{$LANG.SMS_SUBSCRIBE}" id="ss1-submit">					
+				</div>
+				</form>
+			</div>
+			<div class="ss-form" id="smssubscribe-2" style="display: none;">
+				<form method="post" id="ss-from2" name="ss-from2">
+				<div class="ss-item">
+					{$LANG.QULIFY_CODE_HAS_SEND}：<strong class="mobile"></strong>
+				</div>
+				<div class="ss-item">
+					<span>{$LANG.QULIFY_CODE}</span><input type="text" class="txt" name="code" id="sms-subscribe-code">
+				</div>
+				<div class="ss-hit">{$LANG.PLEASE_ENTER_QULIFY_CODE}</div>
+				<div class="ss-btns">
+					<input type="submit" class="formbutton" value="{$LANG.SMS_SUBSCRIBE}" id="ss2-submit">	
+				</div>
+				</form>
+			</div>
+			<div class="ss-form hidd" id="smssubscribe-3" style="display: none;">
+				<div class="ss-succ">
+					<strong>{$LANG.SMS_SUBSCRIBE_SUCCESS}</strong>
+					<p>{$deal_city.name}{$LANG.SMS_SUBSCRIBE_SUCCESS_TIP}</p>
+				</div>
+			</div>
+		</dd>
+	</dl>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#sms-subscribe-verify-img").attr("src","{$APP_ROOT}/verify.php?rand="+ Math.random());
+	});
+	$("#ss1-submit").click(function(){
+		var mobile = $.trim($("#sms-subscribe-mobile").val());
+		var verify = $.trim($("#sms-subscribe-verify").val());
+		if(mobile=='')
+		{
+			$.showErr(LANG['FILL_MOBILE_PHONE']);
+			return false;
+		}		
+		if(!$.checkMobilePhone(mobile))
+		{
+			$.showErr(LANG['FILL_CORRECT_MOBILE_PHONE']);
+			return false;
+		}
+		
+		if(!$.minLength(verify,4))
+		{
+			$.showErr(LANG['VERIFY_CODE_ERROR']);
+			return false;
+		}
+		
+		var query = new Object();
+		query.act = "do_subscribe";
+		query.mobile = mobile;
+		query.verify = verify;
+		
+		var url = APP_ROOT+"/index.php?ctl=sms";
+
+		$.ajax({
+			url: url,
+			data:query,
+			cache:false,
+			dataType:"json",
+			success:function(data)
+			{			
+				if(data.type == 0) //验证码错误
+				{
+					$.showErr(data.message);
+					$("#sms-subscribe-verify-img").attr("src","{$APP_ROOT}/verify.php?rand="+ Math.random());
+				}
+				else if(data.type == 1) //提交成功
+				{
+					$("#smssubscribe-1").hide();
+					$("#smssubscribe-2").show();
+					$("#smssubscribe-2 .mobile").html(mobile);
+				}
+				else if(data.type == 2) //已经订阅
+				{
+					$("#smssubscribe-1").hide();
+					$("#smssubscribe-3").show();
+				}
+			}
+		});
+		
+		return false;
+	});
+	
+	$("#ss2-submit").click(function(){
+		var mobile = $.trim($("#sms-subscribe-mobile").val());
+		var code = $.trim($("#sms-subscribe-code").val());
+		
+		if(!$.minLength(code,4))
+		{
+			$.showErr(LANG['VERIFY_CODE_ERROR']);
+			return false;
+		}
+		
+		var query = new Object();
+		query.act = "do_subscribe_verify";
+		query.mobile = mobile;
+		query.code = code;
+		
+		var url = APP_ROOT+"/index.php?ctl=sms";
+	
+		$.ajax({
+			url: url,
+			data:query,
+			cache:false,
+			dataType:"json",
+			success:function(data)
+			{
+				if(data.type == 0) //验证失败
+				{
+					$.showErr(data.message);
+				}
+				else if(data.type == 1)
+				{
+					$("#smssubscribe-2").hide();
+					$("#smssubscribe-3").show();
+				}
+			}
+		});
+		
+		return false;
+	});
+
+
+</script>

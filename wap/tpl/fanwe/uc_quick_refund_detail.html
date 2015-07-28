@@ -1,0 +1,36 @@
+{include file="./inc/header.html"}
+  <?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_quick_refund.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+ 
+ <div class="float_block">
+	<div class="float_background"></div>
+	<div class="float_content">
+		<div class="Detail_block">
+			  <h5>
+			  	查看详细
+			    <a onclick="window.history.go(-1);" class="close"><i class="fa fa-close"></i></a>
+			  </h5>
+			  <table>
+			  	<tr>
+			  		<th>借款单号</th>
+					<th>会员</th>
+					<th>还款本息</th>
+					<th>逾期/违约金</th>
+			  	</tr>
+				{foreach from=$data.load_user item="lu"}
+				<tr>
+					<td>{$lu.id}</td>
+					<td>{if $lu.t_user_id > 0}{$lu.t_user_name}{else}{$lu.user_name}{/if}</td>
+					<td>{$lu.month_repay_money_format}</td>
+					<td>{$lu.impose_money_format}</td>
+				</tr>
+				{/foreach}
+				</table>
+			  
+		</div>
+	</div>
+</div>
+{include file="./inc/footer.html"}

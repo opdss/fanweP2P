@@ -1,0 +1,50 @@
+{include file="inc/header.html"} 
+<style type="text/css">
+	.agency-box{border:1px solid #ddd;padding:50px 70px;font: 12px/2em Arial, Tahoma, Helvetica, 宋体;color: #444;}
+	.agency-box h3 {
+		color: #F26939;
+		margin: 20px 0;
+		font-size: 22px;
+		font-weight: bold;
+		font-family: 微软雅黑,黑体;
+	}
+	.agency-box p{font: 12px/2em Arial, Tahoma, Helvetica, 宋体;color: #444;}
+	#fazhan span {
+		font-weight: bold;
+	}
+	#xiaoyi {
+		background: #FFF0E9;
+		padding: 20px 30px;
+		width: 764px;
+		margin-bottom:20px;
+	}
+	#xiaoyi ul li {
+		list-style: inside;
+	}
+</style>
+<div class="blank"></div>
+<div class="wrap wb">
+	<div class="agency-box">
+		<div>{$agency.header}</div>
+		<div>
+			<img src="{$TMPL}/images/boldline.jpg">
+			{if $agency.company_brief neq '' || $agency.history neq ''}
+			<div class="clearfix" style="margin-bottom:20px;">
+				<div {if $agency.history neq ''}class="f_l" style="width:100%"{/if}><h3>公司概况</h3>
+					<p style="text-indent:20px;">
+					&nbsp;&nbsp;&nbsp;&nbsp;{$agency.company_brief}
+					</p>
+				</div>
+				<div {if $agency.company_brief neq ''}class="f_l" style="width:100%;"{/if} id="fazhan"><h3>发展历史</h3>
+					{$agency.history}
+				</div>
+			</div>
+			<img src="{$TMPL}/images/boldline.jpg">
+			{/if}
+			{$agency.content}
+		</div>
+	</div>
+</div>
+<div class="blank"></div>
+
+{include file="inc/footer.html"}

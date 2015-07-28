@@ -1,0 +1,81 @@
+.rides-cs {  font-size: 12px; background:#28a7e1; position: fixed; top: 250px; right: 0px; _position: absolute; z-index: 1500; border-radius:6px 0px 0 6px;}
+.rides-cs a { color: #00A0E9;}
+.rides-cs a:hover { color: #ff8100; text-decoration: none;}
+.rides-cs .floatL { width: 36px; float:left; position: relative; z-index:1;margin-top: 21px;height: 181px;}
+.rides-cs .floatL a { font-size:0; text-indent: -999em; display:block; }
+#ftw .rides-cs .btnOpen{ _background: url(../images/qq_t_bo.png)  no-repeat #29a7e2 8px 0px;}
+#ftw .rides-cs .btnCtn{_background: url(../images/qq_t_bo_0.png)  no-repeat #29a7e2 8px 0px;}
+.rides-cs .floatR { width: 130px; float: left; padding: 5px; overflow:hidden;}
+.rides-cs .floatR .cn {background:#F7F7F7; border-radius:6px;margin-top:4px;}
+.rides-cs .cn .titZx{ font-size: 14px; color: #333;font-weight:600; line-height:24px;padding:5px;text-align:center;}
+.rides-cs .cn ul {padding:0px;}
+.rides-cs .cn ul li { line-height: 38px; height:38px;border-bottom: solid 1px #E6E4E4;overflow: hidden;text-align:center;}
+.rides-cs .cn ul li span { color: #777;}
+.rides-cs .cn ul li a{color: #777;}
+.rides-cs .cn ul li img { vertical-align: middle;}
+.rides-cs .btnOpen, .rides-cs .btnCtn {  position: relative; z-index:9; top:25px; left: 0;  background-image: url(../images/shopnc.png); background-repeat: no-repeat; display:block;  height: 146px; padding: 8px;}
+.rides-cs .btnOpen { background-position: -410px 0;}
+.rides-cs .btnCtn { background-position: -450px 0;}
+.rides-cs ul li.top { border-bottom: solid #ACE5F9 1px;}
+.rides-cs ul li.bot { border-bottom: none;}
+
+/*联系我们*/
+.contactusdiyou {
+position: fixed;
+right: -230px;
+bottom: 0px;
+_position: absolute;
+width: 230px;
+height: 100%;
+background: #2fa8d7;
+z-index: 99999999999;
+font-family: 'Microsoft yahei';
+}
+.contactusdiyou{_position: absolute; _bottom: auto;_margin-bottom:0px; z-index:99999999999;
+_top: expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0))); 
+ }
+.contactusdiyou{position:fixed; right:-230px; bottom:0px;_position:absolute; width:230px;height:100%; background:#535353; z-index:99999999999; font-family:'Microsoft yahei';}
+.contactusdiyou .hoverbtn{width:30px; height:109px; padding-top:20px; cursor: pointer; position:absolute; top:50%; margin-top:-66px; left:-30px; font-size:14px; color:#fff; background:#0085b8;
+ -webkit-border-radius: 4px 0px  0px 4px; -moz-border-radius: 4px 0px  0px 4px; -o-border-radius: 4px 0px  0px 4px;      border-radius: 4px 0px  0px 4px;
+ -moz-box-shadow: -1px -1px 6px -2px #000; -webkit-box-shadow: -1px -1px 6px -2px #000; box-shadow: -1px -1px 6px -2px #000;}
+.contactusdiyou .hoverbtn span{width:30px; height:19px; text-align: center; overflow:hidden; float:left;}
+.contactusdiyou .hoverbtn .hoverimg{width:13px; height:9px; margin:10px 0px 0px 10px; float:left; display:inline;background-repeat: no-repeat;}
+
+.hoverimg2{
+	background:url(../images/hoverbtnbg1.png) no-repeat;
+}
+.contactusdiyou .conter{width:186px; height:560px; margin-left:22px;   position:absolute; top:50%; margin-top:-240px;}
+.contactusdiyou .conter .con1{ border-bottom:1px solid #6a6a6a; padding-bottom:22px;}
+.contactusdiyou .conter .con1 dl dt{width:31px; height:31px; float:left;}
+.contactusdiyou .conter .con1 dl dd{width:142px; float:right; font-size:18px; color:#fff;}
+.contactusdiyou .conter .con1 dl dd .ph_num{ font:18px/25px 'Microsoft yahei'; color:#fff; height:25px;}
+.contactusdiyou .conter .con1 dl .f1{height:19px; line-height:16px; font-size:14px; vertical-align: top; font-weight: bold; }
+.contactusdiyou .conter .con2{ border-bottom:1px solid #2c9ac5; padding:13px 0;}
+.contactusdiyou .conter .con2 .a1{margin-right:10px;}
+.contactusdiyou .conter .con2 a{float:left; height:31px; line-height:31px; color:#f3e7b2; }
+.contactusdiyou .conter .con2 span{float:left;height:31px; line-height:31px; font-size:14px; color:#fff;}
+.contactusdiyou .qqcall{padding:22px 0px; border-bottom:1px solid #6a6a6a;}
+.contactusdiyou .qqcall dl dt{width:31px; height:31px; float:left;}
+.contactusdiyou .qqcall dl dd {width:142px; float:right; font-size:12px; color:#fff; height:30px; float:right;}
+.contactusdiyou .qqcall dl dd .full{color:#ccc; cursor: text; text-decoration: none; font-size:12px;}
+.contactusdiyou .qqcall dl dd a{color:#fcebaf; text-decoration: underline;}
+.contactusdiyou .weixincall{padding:22px 0; border-bottom:1px solid #6a6a6a;}
+.contactusdiyou .weixincall dl dt{width:31px; height:31px; float:left;}
+.contactusdiyou .weixincall dl dd {width:142px; float:right; font-size:12px; color:#fff; height:22px; float:right;}
+.contactusdiyou  dl dd.f1{height:36px; font-size:14px; vertical-align: top; color:#fff; font-weight: bold; }
+.contactusdiyou .weixincall .f3{width:73px; height:73px; margin-right:69px; display:inline;}
+.contactusdiyou .weixincall .f3 img{width: 73px;height: 73px;}
+.contactusdiyou .dytimer{width:177px; height:40px; padding:16px 0px 15px 26px; background:#2F2F2F; margin:20px 0px 0px -8px;}
+.contactusdiyou .dytimer span{display:block; height:20px; line-height:20px; font-size:14px; color:#fff;}
+.diyou{_position: absolute; _bottom: auto;_margin-bottom:0px; z-index:99999999999;
+_top: expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));}
+.diyoumask { position:fixed; left: 0; top: 0; z-index: 100000; width:100%; height:100%; opacity:0.3;filter:alpha(Opacity=30); background:#000; display:none;}
+.fn_cle:after {
+visibility: hidden;
+display: block;
+font-size: 0;
+content: " ";
+clear: both;
+height: 0;
+}
+/***联系我们***/

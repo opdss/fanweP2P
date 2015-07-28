@@ -1,0 +1,59 @@
+{include file="inc/header.html"}
+<div class="blank"></div>
+<div class="regstep w820">
+	{if $deal_quota.is_effect eq 0}
+    <ol class="ui-step ui-step-3">
+        <li class="ui-step-start {if $ACTION_NAME eq 'stepone'}ui-step-active{/if} {if $ACTION_NAME eq 'steptwo'}ui-step-done{/if}">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont"></i>
+                <i class="ui-step-number">1</i>
+                <span class="ui-step-text">填写借款信息</span>
+            </div>
+        </li>
+        <li class="{if $ACTION_NAME eq 'steptwo'}ui-step-wait{/if}">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont"><span></span></i>
+                <i class="ui-step-number">2</i>
+                <span class="ui-step-text">{if $deal_quota}等待确认{else}等待审核{/if}</span>
+            </div>
+        </li>
+        <li class="ui-step-end">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont"></i>
+                <i class="ui-step-number">3</i>
+                <span class="ui-step-text">{if $deal_quota}确认成功{else}审核成功{/if}</span>
+            </div>
+        </li>
+    </ol>
+	{else}
+	 <ol class="ui-step ui-step-2">
+        <li class="ui-step-start {if $ACTION_NAME eq 'quota_submit'}ui-step-active{/if} {if $ACTION_NAME eq 'steptwo'}ui-step-done{/if}">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont"></i>
+                <i class="ui-step-number">1</i>
+                <span class="ui-step-text">填写借款信息</span>
+            </div>
+        </li>
+        <li class="ui-step-end {if $ACTION_NAME eq 'steptwo'}ui-step-done{/if}">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont"></i>
+                <i class="ui-step-number">2</i>
+                <span class="ui-step-text">审核成功</span>
+            </div>
+        </li>
+    </ol>
+	{/if}
+</div>
+<div class="blank20"></div>
+<div class="bdd  bddf  clearfix">
+	<div class="clearfix p20">
+		{include file="$inc_file"}
+    </div>
+</div>
+<div class="blank"></div>
+{include file="inc/footer.html"}

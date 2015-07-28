@@ -1,0 +1,93 @@
+<?php
+$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/debit_uc_my_order.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<h3 class="Total_h3">订单信息</h3>
+<p class="l24">订单编号:{$deal.id}</p>
+<p class="l24">下单时间:{function name="to_date" v="$deal.create_time"}</p>
+<div class="blank45"></div>
+<div class="Total_border_0"></div>
+<h3 class="Total_h3">订单流程</h3>
+<div class="order_Process ">
+    <ul>
+        <li class="Process_0"></li><!--是否选中状态，区别在于Process_类-->
+        <li class="Process_{if $deal.deal_status>=0}1{/if}"></li>
+        <li class="Process_{if $deal.deal_status>=1}2{/if}"></li>
+        <li class="Process_{if $deal.deal_status>=4}3{/if}"></li>
+        <li class="Process_{if $deal.deal_status>=4}4{/if}"></li>
+    </ul>
+</div>
+<div class="Total_border_0"></div>
+{if $deal.deal_status>=4 && $deal.loans_pic}
+	<div class="In_advance_block clearfix" style="margin:5px 0 5px 0;">
+    	<a onclick='return showImg();' class='f_l but1' href="javascript:void(0);" style="padding:5px;">查看放款凭证</a>
+    </div>
+	<div class="Total_border_0"></div>
+{/if}
+{if $deal.deal_status>=4}
+<h3 class="Total_h3">还款账单</h3>
+<table class="bill_list" id="refundTab">
+    <tr>
+        <th class="p-l10">管理费</th>
+        <th>应还本息</th>
+        <th>提前罚息</th>
+        <th>总计还款</th>
+    </tr>
+    <tr>
+        <td class="p-l10">{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$true_all_manage_money f=2}</td>
+        <td>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$total_repay_money f=2}</td>
+        <td>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$impose_money f=2}</td>
+        <td>{function name="app_conf" v="CURRENCY_UNIT"}{function name="number_format" v=$true_total_repay_money f=2}</td>
+</table>
+{if $deal.deal_status neq 5}
+<div class="In_advance_block clearfix">
+    <input type="hidden" name="loanId" value="46420" id="loanId">
+    <a class="f_r but1" id="J_repay_borrow_money" type="button">确认还款</a>
+</div>
+<span style="color: red;font-size: 14px;padding-left: 10px; display: none" id="payTip">还款中...</span>
+{/if}
+{/if}
+</div>
+<script type="text/javascript">
+	var is_repay_lock = false;
+	jQuery(function(){
+		$("#J_repay_borrow_money").click(function(){
+			if(confirm("您确定要还款吗？")){
+				if(is_repay_lock){
+					$.showErr("正在处理中，请稍后!");
+					return false;
+				}
+				$("#payTip").show();
+				is_repay_lock = true;
+				
+				var query = new Object();
+					query.id = {$deal.id};
+					query.paypassword = FW_Password($("#J_PAYPASSWORD").val());
+					
+				$.ajax({
+					url:APP_ROOT + "/debit.php?ctl=debit_deal&act=inrepay_repay_borrow_money",
+					data:query,
+					type:"post",
+					dataType:"json",
+					success:function(result){
+						is_repay_lock = false;
+						$("#payTip").hide();
+						if(result.status==1){
+							$.showSuccess("还款成功！",function(){
+								window.location.href = '{url x="index" r="debit_uc_center#refund" p="status=1"}';
+							});
+						}
+						else if(result.status==2)
+						{
+							window.location.href = result.jump;
+						}
+						else{
+							$.showErr(result.info);
+						}
+					}
+				});
+			}
+		});
+	});
+	
+</script>

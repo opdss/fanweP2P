@@ -1,0 +1,30 @@
+{if $relate_list.list}
+<div class="inc">
+	<div class="inc_top">{$relate_list.title}<span class="f_r more"><a href="{$relate_list.url}" title="{$LANG.MORE}">{$LANG.MORE}</a></span></div>
+	<div class="inc_main sale_list_main">
+		{foreach from=$relate_list.list item=item key=key}
+		{if $key lt 3}
+		<div class="sale_goods_item">
+			<div class="sale_goods_img f_l">
+			<div class="sale_list_tag"><?php echo ($this->_var['key']+1);?></div>
+			<a href="{$item.url}" title="{$item.name}"><img src="{function name="get_spec_image" v=$item.icon w="75" h="75"}"  alt="{$item.name}"/></a>
+			</div>
+			<div class="sale_goods_info f_l">
+			<a href="{$item.url}" class="goods_item_title" title="{$item.name}">{function name="msubstr" v=$item.name b=0 e=12}</a>
+			<div class="m_price">{$LANG.ORIGIN_PRICE}{function name="format_price" v=$item.origin_price}</div>
+			<div class="s_price">{$LANG.CURRENT_PRICE}{function name="format_price" v=$item.current_price}</div>
+			</div>
+		</div>
+		{else}
+		<div class="sale_goods_item">
+		<span class="sale_list_count sale_count_<?php echo ($this->_var['key']+1);?>"><?php echo ($this->_var['key']+1);?></span>
+		<a href="{$item.url}" class="goods_item_title_row" title="{$item.name}">{function name="msubstr" v=$item.name b=0 e=12}</a>
+		</div>
+		{/if}
+		<div class="split_dash"></div>		
+		{/foreach}
+		
+	</div>
+	<div class="inc_foot"></div>
+</div>
+{/if}

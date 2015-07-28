@@ -1,0 +1,50 @@
+<div class="list">
+	<div class="list_title clearfix">
+		<div class="cur"><a href="###">{$LANG.T_CHECK_IP}</a></div>
+	</div>
+	<div class="list_cont clearfix">
+		<div class="bdd p10" >
+	        <div class="f16 b pt5 pb5 f_blue" >
+			{$LANG.T_CHECK_IP}
+	        </div>
+	        <div class="f_dgray">
+	        	在在下面的输入框输入你要查询的IP地址，点查询就会显示该IP所在地区。 
+	        </div>
+	    </div>
+		<div class="blank10"></div>
+		<div class="bdd">
+			<div class="gray_title clearfix">
+				<div class="f_l f_dgray b">查询</div>
+			</div>
+			<div class="clearfix pt5 pb5 pl10 pr10">
+				<form action="http://tool.114la.com/ip/" method="post" name="J_check_ip_form" id="J_check_ip_form" target="_blank">
+				<div class="p10">
+	                <div class="clearfix">
+	                    <div class="f_l">
+	                    	IP地址：<input type="text" id="ip" name="ip" class="f-input" style="width:145px">
+	                    </div>
+	                </div>
+	                <div class="clearfix">
+	                    <div style="padding:10px 0 0 120px">
+	                        <button class="sub_btn" id="J_saveSettingBnt" type="button">
+	                        	查询
+	                        </button>
+	                    </div>
+	                </div>
+	            </div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	jQuery(function(){
+		$("#J_saveSettingBnt").click(function(){
+			var ip = $.trim($("#J_check_ip_form #ip").val());
+			$("#J_check_ip_form").attr("action","http://tool.114la.com/ip/" + ip);
+			$("#J_check_ip_form").submit();
+			
+		});
+	});
+</script>

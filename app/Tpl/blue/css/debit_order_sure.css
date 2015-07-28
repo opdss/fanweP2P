@@ -1,0 +1,24 @@
+
+.order_sure h3{ font-size:15px; color:#555;  line-height:33px; border-bottom:1px solid #ddd; font-weight:600;} 
+.Prompt_block{ border:1px solid #eed97c; font-size:13px; color:#ff3f00; line-height:20px; background: #fffceb; padding:10px 15px; margin:10px 0;}
+
+.zhifubao_info{ padding:5px 0; position:relative;}
+.zhifubao_info li{ overflow:hidden; padding-left:80px;  line-height:43px;}
+.zhifubao_info li .name{ float:left; margin-left:-80px;_margin-left:-40px; display:block; width:80px; color:#999;}
+.zhifubao_info .Prompt{ position:absolute; color:#008000;  text-align:center; line-height:43px; font-size:13px; display:block; top:5px;  right:0px;  width:700px;}
+.zhifubao_info li .text{ color:#000;}
+
+.table_th{ background:#f2f2f2; line-height:36px; font-size:12px; color:#555;}
+.table_th th{ text-align:center;}
+.table_bor{ border-bottom:1px dashed #ccc;}
+.table_td{ line-height:60px; }
+
+.Submit_block{ background:#f8f7f7; padding:14px 0; padding-right:20px;}
+.Submit_block button{ background:#ff5357; width:149px; height:49px; line-height:49px; font-size:18px; color:#fff; font-weight:900; border:none; border-radius:3px;}
+.Submit_block .Total{ line-height:49px; color:#555;}
+.Submit_block .price{ color:#ec2000; font-size:21px; padding:0 24px; font-weight:900;font-family: arial,sans-serif;}
+
+.Total_price{ text-align:right; line-height:30px; padding:12px 0;}
+.Total_price .price{ color:#ec2000; font-size:12px; padding-left:20px; font-weight:800;font-family: arial,sans-serif;}
+.Total_price .name{ color:#555;}
+.Total_price .Explanation{ color:#999;}

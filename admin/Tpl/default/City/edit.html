@@ -1,0 +1,131 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/conf.js' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<load href='__TMPL__Common/js/deal.js' />
+<load href='__TMPL__Common/js/colorpicker.js' />
+<load href='__TMPL__Common/style/colorpicker.css' />
+<script type="text/javascript">
+	window.onload = function()
+	{
+		init_dealform();
+	}
+</script>
+<link rel="stylesheet" type="text/css" href="__TMPL__Common/style/jquery.lightbox-0.5.css" media="screen" />
+
+
+<div class="main">
+<div class="main_title">{%EDIT} <a href="{:u("City/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<div class="button_row">
+	<input type="button" class="button conf_btn" rel="1" value="{%DEAL_BASE_INFO}" />&nbsp;
+	<input type="button" class="button conf_btn" rel="2" value="{%SEO_CONFIG}" />&nbsp;	
+</div>
+
+
+<div class="blank5"></div>
+
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">名称:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="name"  value="{$vo.name}" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">别名:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="uname"  value="{$vo.uname}" />
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td class="item_title">上级城市:</td>
+		<td class="item_input">
+			
+			<select name="pid" >
+			<option value="0" >==上级城市==</option>
+			<foreach name="list" item="city"   >
+				<option value="{$city.id}" <if condition="$city.id eq $vo['pid']">selected="selected"</if> >{$city.name}</option>
+			</foreach>
+			</select>
+
+		</td>
+	</tr>
+	<!-- 
+	<tr>
+		<td class="item_title">is_default:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="uname"  value="{$vo.is_default}" />
+		</td>
+	</tr>
+	 -->
+	<tr>
+		<td class="item_title">{%SORT}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="sort"  value="{$vo.sort}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+
+
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="2">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%CITY_SEO_TITLE}:</td>
+		<td class="item_input"><textarea class="textarea" name="seo_title" >{$vo.seo_title}</textarea></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%CITY_SEO_KEYWORD}:</td>
+		<td class="item_input"><textarea class="textarea" name="seo_keyword" >{$vo.seo_keyword}</textarea></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%CITY_SEO_DESCRIPTION}:</td>
+		<td class="item_input"><textarea class="textarea" name="seo_description" >{$vo.seo_description}</textarea></td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+<div class="blank5"></div>
+
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="City" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%EDIT}" />
+			<input type="reset" class="button" value="{%RESET}" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 	 
+</form>
+
+
+</div>
+<include file="Public:footer" />

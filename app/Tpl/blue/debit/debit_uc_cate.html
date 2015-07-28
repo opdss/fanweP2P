@@ -1,0 +1,20 @@
+<div class="f_l l_nav" style=" height:795px;">
+    <div class="user_info clearfix">
+    	<img src='{function name="get_user_avatar" uid=$user_info.id type="middle"}' />
+        <span>{$user_info.user_name}</span>
+    </div>
+    <ul class="nav_list">
+        <li {if ($MODULE_NAME eq 'debit_uc_center' && ($ACTION_NAME == "order" || $ACTION_NAME == "order_detail")) || $ACTION_NAME == "inrepay_refund"}class="y"{/if}>
+            <div><a href="{url x="debit" r="debit_uc_center#order"}" class="nav_list_0">我的订单</a></div>
+        </li>
+        <li {if $MODULE_NAME eq 'debit_uc_center' && $ACTION_NAME == "index"}class="y"{/if}><!--是否当前选中，区别在y-->
+            <div><a href="{url x="debit" r="debit_uc_center"}" class="nav_list_1">账户信息</a></div>
+        </li>
+        <li {if $MODULE_NAME eq 'debit_uc_center' && $ACTION_NAME == "security"}class="y"{/if}>
+            <div><a href="{url x="debit" r="debit_uc_center#security"}" class="nav_list_2">安全中心</a></div>
+        </li>
+        <li {if $MODULE_NAME eq 'debit_uc_center' && $ACTION_NAME == "uinfo"}class="y"{/if}>
+            <div><a href="{url x="debit" r="debit_uc_center#uinfo"}" class="nav_list_3">用户资料</a></div>
+        </li>
+    </ul>
+</div>

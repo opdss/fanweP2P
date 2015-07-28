@@ -1,0 +1,76 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/deal.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--已发布贷款简单详情-->
+<div class="detail">
+<div class="mainblok mainborder">
+            <div class="detail_tit">
+                <h3>{$data.deal.sub_name}</h3>
+                <span>借款编号:{$data.deal.id}</span>
+            </div>
+            <div class="detail_list">
+                <ul>
+                    <li>
+                        <label>借款金额</label>
+                        <div class="list_con">{$data.deal.borrow_amount_format}</div>
+                    </li>
+                    <li>
+                        <label>可投金额</label>
+                        <div class="list_con detail_Orange">{$data.deal.need_money}</div>
+                    </li>
+                    <li>
+                        <label>最低金额</label>
+                        <div class="list_con">{$data.deal.min_loan_money_format}</div>
+                    </li>
+                </ul>
+            </div>
+        </div><!--mainblok——end--> 
+
+        <div class="mainblok mainborder">
+            <div class=""></div>
+            <div class="detail_list">
+                <ul>
+                    <li>
+                        <label>年利率</label>
+                        <div class="list_con detail_Orange">{$data.deal.rate_foramt}%</div>
+                    </li>
+                    <li>
+                        <label>期限</label>
+                        <div class="list_con">{$data.deal.repay_time}{if $data.deal.repay_time_type eq 0}天{else}月{/if}</div>
+                    </li>
+                    <li>
+                        <label>还款方式</label>
+                        <div class="list_con">
+                        {if $deal.loantype eq 0}等额本息{elseif $deal.loantype eq 1}付息还本{elseif $deal.loantype eq 2}到期还本息{/if}
+						</div>
+                    </li>
+                    <li>
+                        <label>风险等级</label>
+                        <div class="list_con">
+                        	{if $data.deal.rish_rank eq 0}低{elseif $data.deal.rish_rank eq 1}中{elseif $data.deal.rish_rank eq 2}高{/if}
+						</div>
+                    </li>
+                    <li>
+                        <label>剩余时间</label>
+                        <div class="list_con">{$data.deal.remain_time_format}</div>
+                    </li>
+                </ul>
+            </div>
+        </div><!--mainblok——end--> 
+
+ </div>
+<div class="detail_foot">
+    <div class="lookdetail"><a href="{wap_url a="index" r="uc_borrowed_mobile" p="id=$data.deal.id"}">查看详情</a></div>
+    <div class="I_Investment disabled"><a>我要投资</a></div>
+</div>
+
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

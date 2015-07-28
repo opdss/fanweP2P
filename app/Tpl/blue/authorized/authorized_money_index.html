@@ -1,0 +1,191 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+<script type="text/javascript">
+jQuery(function(){
+	$("#time_normal").datepicker({showAnim:'fadeIn'});
+	
+	$("#qiehuan").click(function(){
+		if ($("#J_snav .cc").hasClass('hide')) {
+			$("#J_snav .cc").removeClass("hide")
+			$("#J_snav .bb").addClass("hide");
+     	 }else{
+     		$("#J_snav .cc").addClass("hide");
+     		
+     		$("#J_snav .bb").removeClass("hide")
+     	 };
+     	 
+     	 if($.trim($(this).html()) == "切换简单查询" )
+   		 {
+		 	$("#time_status").val(0);
+   			$(this).html("切换高级查询");
+   		 }
+     	 else
+  		 {
+		 	$("#time_status").val(1);
+  			$(this).html("切换简单查询");
+  		 }
+     	
+	});
+	
+	$("#search-form").submit(function(){
+		var val= $("#time_normal").val();
+		$("#time_format").val(val.replace(/-/g,""));
+	});
+	
+	
+});
+</script>
+
+	<div class="tabbox clearfix">
+		<div class="tab  {if $ACTION_NAME eq 'cash'}cur{/if}">
+			<a href="{url x="index" r="authorized#cash"}">{$LANG.UC_LOGS}</a>
+		</div>
+		<div class="tab  {if $ACTION_NAME eq 'carry'}cur{/if}">
+			<a href="{url x="index" value="authorized#carry"}">{$LANG.UC_CARRY}</a>
+		</div>
+		<div class="tab  {if $ACTION_NAME eq 'carry_log'}cur{/if}">
+			<a href="{url x="index" value="authorized#carry_log"}">提现日志</a>
+		</div>
+	</div>
+	<div class="uc_box bdd bt0 clearfix">
+		<div class="balance p20 m10 bdd bdr3 clearfix">
+			<div class="balance_l">
+				<p class="f20">账户余额</p>
+				<span class="J_u_money_1">
+				<span class="f_red f16"><?php echo format_price($this->_var['user_info']['money'] + $this->_var['user_info']['lock_money']); ?><em class="f14">元</em></span>
+				</span>
+			</div>	
+			<div class="balance_r pl10">
+				<ul>
+					<li class="first">
+						<div>
+							<p class="f16">可用资金</p>
+							<span class="J_u_money_0"><span class="f_red">{function name="format_price" v=$user_info.money}</span></span>
+						</div>
+						<div class="tl">
+							<p calss="f16">&nbsp;</p>
+							<span>&nbsp;</span>
+						</div>
+						<div class="inchange_box tr">
+						&nbsp;
+						</div>
+					</li>
+					<li>
+						<div>
+							<p class="f16">冻结资金</p>
+							<span class="J_u_money_2"><span>{function name="format_price" v=$user_info.lock_money}</span></span>
+						</div>
+						<div class="tl">
+							<p calss="f16">已提现总额</p>
+							<span>{if $carry_money}{function name="format_price" v=$carry_money}{else}0.00{/if}></span>
+						</div>
+						<div class="inchange_box tr">
+							<a href="{url x="index" r="authorized#bank"}" class="true_btn" style="display:inline-block">提现</a>
+						</div>
+					</li>
+				</ul>
+			</div>	
+		</div>
+		<div class="blank0"></div>
+
+		<div class="sub_nav pl10">
+			<span {if $t eq ''}class="act"{/if}><a href="{url x="index" r="authorized#cash"}">资金日志</a></span>
+			<span {if $t eq 'lock_money'}class="act"{/if}><a href="{url x="index" r="authorized#cash" p="t=lock_money"}">冻结金额日志</a></span>
+		</div>
+	
+		<div class="nav" id="J_snav">
+			<form method="get" action="{$APP_ROOT}" id="search-form" name="search">  		
+				<div class="pl10 clearfix">
+					<div class="aa f_l">
+						<span class="f_l">查询类型：</span>
+						<select name="type_title" class="ui-select select-type_title f_l w100" height="300">
+						{foreach from=$title_array item="item" key=key }
+							<option {if $type_title eq $key}selected="selected"{/if} value="{$key}">
+								{$item}
+							</option>
+						{/foreach}			
+						</select>
+					</div>
+					<div class="cc pl10 {if $time_status eq 1}hide {/if} f_l">
+						<span class="f_l">查询时间：</span>
+		                <select  name="times" class="ui-select select-times f_l">
+		                {foreach from=$times_array item="item" key=key }
+		                  <option  {if $times eq $key}selected="selected"{/if} value="{$key}">{$item}</option>
+		               	{/foreach}	
+		                </select>
+			         </div>
+					<div class="bb pl10 {if $time_status eq 0}hide {/if} f_l">
+						<span class="f_l">查询时间：</span><input class="f-input ui-textbox w100" id="time_normal" type="text" value="{$time_normal}">
+						<input type="hidden" name="time" id="time_format" value="{$time}">
+					</div>
+					<input type="hidden" name="ctl" value="{$MODULE_NAME}" />
+					<input type="hidden" name="act" value="{$ACTION_NAME}" />
+					<input type="hidden" name="t" value="{$t}" />
+					<input type="hidden" name="time_status" id="time_status" value="{$time_status}" />
+					<input type="submit" class="ml10 true_btn select_btn" value="搜索" />
+          
+					<div class="dd  f_r">
+		              <a id="qiehuan" href="javascript:void(0);" color: #2ea7e0; text-decoration: none;">切换{if $time_status eq 0}高级{else}简单{/if}查询</a>
+		            </div>
+				</div>
+				
+			</form>
+		</div>
+		
+		
+		
+		<div class="blank1"></div>
+		<div class="clearfix pl10 pr10 pt5 pb5">
+		
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="uc-table bdr3">
+		        <tbody>
+		            <tr>
+						<th style="width:16%">时间</th>
+						<th class="pl15 tl" style="width:16%">操作类型</th>
+						{if $t=="point"}
+						<th style="width:12%">操作积分</th>
+						{else}
+						<th style="width:12%">操作金额</th>
+						{/if}
+						<th style="width:14%">{if $t == 'lock_money'}冻结金额{else}结余{/if}</th>
+						<th>备注</th>
+					</tr>
+					{foreach from=$list item=log key=key name="log"}
+					 <tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.log.last}style="border-bottom:0"{/if}>
+						<td>{$log.create_time_ymd}</td>
+						<td>{$log.title}</td>
+						{if $t eq 'lock_money'}
+                        <td><span class="f_red">{$log.lock_money}</span></td>
+						<td> {$log.account_lock_money}</td>
+                        {else}
+						<td>{if $log.money gt 0}<span class="f_gr">+{$log.money}</span>{elseif $log.money eq 0}{$log.money}{else}<span class="f_red">{$log.money}</span>{/if}</td>
+						<td> {$log.account_money}</td>
+						{/if}
+						<td>{$log.memo}</td>
+					</tr>
+					{/foreach}
+				</tbody>
+			</table>
+		
+			<div class="pages">{$pages}</div>
+		</div>				
+	</div>
+<script type="text/javascript">
+	jQuery(function(){
+		{if $user_info.ips_acct_no neq ''}
+		checkIpsBalance(0,{$user_info.id},function(result){
+			if(result.pErrCode=="0000"){
+				$(".J_u_money_0").html($(".J_u_money_0").html() + "+<span class='f_red '>" + result.pBalance +"</span>[绑]");
+				$(".J_u_money_1").html($(".J_u_money_1").html() + "+<span class='f_red '>" + (parseFloat(result.pBalance) + parseFloat(result.pLock) + parseFloat(result.pNeedstl)) +"</span>[绑]");
+				$(".J_u_money_2").html($(".J_u_money_2").html() + "+" + result.pLock +"[绑]");
+			}
+		});
+		{/if}
+	});
+</script>

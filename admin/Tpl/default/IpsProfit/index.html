@@ -1,0 +1,94 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<PHP>
+	function get_handle($id)
+	{
+		
+        $str = l("IPS_VIEW");
+        
+		$str = "<a href='".u("IpsProfit/view",array("id"=>$id))."'>".$str."</a>";
+		return $str;
+	}
+    function get_t_type($id)
+    {
+    	return l("P_TRANSFER_TYPE_".$id);
+    }
+    function get_t_mode($id)
+    {
+    	return l("P_TRANSFER_MODE_".$id);
+    }
+    function get_is_callback($id)
+    {
+    	return l("IPS_IS_CALLBACK_".$id);
+    }
+	
+</php>
+<load href='__TMPL__Common/js/jquery.bgiframe.js' />
+<load href='__TMPL__Common/js/jquery.weebox.js' />
+<load href='__TMPL__Common/style/weebox.css' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">{%P_PROFIT_TITLE}</div>
+<div class="blank5"></div>
+<form name="search" action="__APP__" method="get">	
+<div class="button_row">
+
+	<if condition="!$_REQUEST['referer']">
+	<input type="button" class="button" value="{%EXPORT}" onclick="m_export_csv('');" />
+	</if>
+</div>
+<div class="blank5"></div>
+<div class="search_row">
+
+		{%P_ARG_MER_CODE}：<input type="text" class="textbox" name="pMerCode" value="{:trim($_REQUEST['pMerCode'])}" style="width:100px;" />
+		{%P_MER_BILL_NO}：<input type="text" class="textbox" name="pMerBillNo" value="{:trim($_REQUEST['pMerBillNo'])}" style="width:100px;" />
+        {%P_BID_NO}：<input type="text" class="textbox" name="pBidNo" value="{:trim($_REQUEST['pBidNo'])}" style="width:100px;" />
+		
+        {%P_IPS_BILL_NO}：<input type="text" class="textbox" name="pIpsBillNo" value="{:trim($_REQUEST['pIpsBillNo'])}" style="width:100px;" />
+        
+        {%P_TRANSFER_MODE}：<select name="pTransferMode">
+				<option value="-1" <if condition="intval($_REQUEST['pTransferMode']) eq -1 || $_REQUEST['pTransferMode'] eq ''">selected="selected"</if>>{%ALL}</option>
+				<option value="1" <if condition="$_REQUEST['pTransferMode'] neq '' && intval($_REQUEST['pTransferMode']) eq 1">selected="selected"</if>>{%P_TRANSFER_MODE_1}</option>
+				<option value="2" <if condition="intval($_REQUEST['pTransferMode']) eq 2">selected="selected"</if>>{%P_TRANSFER_MODE_2}</option>
+		</select>
+		<div class="blank5"></div>
+        {%P_REPAYMENT_DATE}：
+		<input type="text" class="textbox" name="start_time" id="start_time" value="{:trim($_REQUEST['start_time'])}" onfocus="return showCalendar('start_time', '%Y-%m-%d', false, false, 'start_time');" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" />
+	
+		<input type="hidden" value="IpsProfit" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+
+</div>
+</form>
+<div class="blank5"></div>
+<html:list 
+	id="dataTable" 
+	style="dataTable" 
+	name="repayment" 
+	action="true" 
+	datasource="list" 
+     pk = "mid"
+	show="mid:{%ID}
+    	 ,pBidNo:{%P_BID_NO}
+    	 ,name:{%DEAL_NAME}
+         ,ref_data:{%REF_DATA}
+         ,pMerBillNo:{%P_MER_BILL_NO}
+         ,pDate:{%P_MER_DATE}
+         ,pTransferMode|get_t_mode:{%P_TRANSFER_MODE}
+         ,pIpsBillNo:{%P_IPS_BILL_NO}
+         ,pIpsTime:{%P_IPS_TIME}
+         ,pIpsBillNo:{%P_IPS_BILL_NO}
+         ,user_name:{%P_PROFIT_USER_NAME}
+         "         
+	actionlist="mid|get_handle" /> 
+
+<div class="blank5"></div>
+<div class="page">{$page}</div>
+</div>
+<include file="Public:footer" />

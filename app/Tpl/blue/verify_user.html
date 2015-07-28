@@ -1,0 +1,14 @@
+{include file="inc/header.html"} 
+<div class="blank"></div>
+<div class="inc wb">
+	<div class="user_inc_top">{$page_title}</div>
+	<div class="inc_main">
+		<div class="msg_box pd20">
+		{function name="sprintf" value=$LANG.NOT_VERIFY_EMAIL p=$user_info.email}<br/>
+		<a href="{url x="shop" r="user#send" p="id=$user_info.id"}">{$LANG.RESEND_VERIFY_MAIL} </a>			
+		</div>				
+	</div>
+	<div class="inc_foot"></div>
+</div>	
+<div class="blank"></div>					
+{include file="inc/footer.html"}

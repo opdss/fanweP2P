@@ -1,0 +1,121 @@
+<div class="tabbox">
+	<div class="tab cur"><a href="">授信额度申请列表</a></div> 
+	<a class="sub_btn f_r mt5 mr15 lh34" id="J_quota_add">申请</a>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	<div class="sub_nav">
+		<span {if $status==0}class="act"{/if}><a href="{url x="index" r="uc_deal_quota#index"}">全部</a></span>
+		<span {if $status==3}class="act"{/if}><a href="{url x="index" r="uc_deal_quota#index" p="status=3"}">未审核</a></span>
+		<span {if $status==1}class="act"{/if}><a href="{url x="index" r="uc_deal_quota#index" p="status=1"}">已通过</a></span>
+		<span {if $status==2}class="act"{/if}><a href="{url x="index" r="uc_deal_quota#index" p="status=2"}">未通过</a></span>
+	</div>
+	
+		{if $list}
+	    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+	        <tbody>
+	            <tr border="0">
+	                <th style="width:10%">编号</th>
+	                <th class="tl pl5">借款标题</th>
+	                <th style="width:15%">申请金额</th>
+	                <th style="width:15%">申请时间</th>
+	                <th style="width:10%">状态</th>
+	                <th style="width:15%">审核时间</th>
+	                <th style="width:10%">操作</th>
+	            </tr>
+	           
+	           {foreach from=$list item="item" key=key name="quota"}
+	            <tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.quota.last}style="border-bottom:0"{/if}">
+	                <td >
+	                  {$item.id}
+	                </td>
+	                <td class="tl pl5">
+	                  {$item.name}
+	                </td>
+	                <td >
+	                  {$item.borrow_amount_format}
+	                </td>
+	                <td >
+	                  {$item.create_time_format}
+	                </td>
+	                <td >
+	                  {$item.status_format}
+	                </td>
+	                <td >
+	                {if $item.update_time }
+	                  {$item.update_time_format}
+	                  {else}
+	                  -
+	                  {/if}
+	                </td>
+	                <td >
+	                {if $item.status eq 0}
+	             		<a href="javascript:void(0);" class="J_delete_quota" dataid="{$item.id}">删除</a>
+	             	{else}	     
+	             		 -
+	             	{/if}
+	                </td>
+	            </tr>
+	            {/foreach}
+	            
+	        </tbody>
+	    </table>
+	    <div class="pages">{$pages}</div>
+	{else}
+	<div class="tc p15">暂无记录</div>
+   {/if}
+   <div class="blank"></div>
+</div>
+<link rel="stylesheet" href="{$APP_ROOT}/admin/public/kindeditor/themes/default/default.css" />
+<script type='text/javascript'  src='{$APP_ROOT}/admin/public/kindeditor/kindeditor.js'></script>
+<script type="text/javascript" src="{$APP_ROOT}/admin/public/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+	var VAR_MODULE = "m";
+	var VAR_ACTION = "a";
+	var ROOT = '{$APP_ROOT}/file.php';
+	var ROOT_PATH = '{$APP_ROOT}';
+	var can_use_quota = "{$can_use_quota}";
+	var MAX_FILE_SIZE = "<?php echo (app_conf("MAX_IMAGE_SIZE")/1000000)."MB"; ?>";
+</script>
+<script type="text/javascript">
+jQuery(function(){
+	$("#J_quota_add").click(function(){
+		var ajaxurl = '{url x="index" r="uc_deal_quota#add_quota"}';
+		$.weeboxs.open(
+				ajaxurl,{
+					contentType:'ajax',
+					showButton:false,
+					title:"授信额度申请",
+					width:720,
+					height:500,
+					type:'wee'
+				});
+	});
+	
+	$(".J_delete_quota").click(function(){
+		$.showCfm("是否删除",function(){
+			var query = new Object();
+			query.quota_id = $(this).attr("dataid");
+			$.ajax({
+				url:'{url x="index" r="uc_deal_quota#do_delete_quota"}',
+				data:query,
+				type:"post",
+				dataType:"json",
+				success:function(ajaxobj){
+					if(ajaxobj.status==1){
+						$.showSuccess(ajaxobj.info,function(){
+							window.location.reload();
+						});
+					}
+					else{
+						$.showErr(ajaxobj.info);
+					}
+				}
+				,error:function(){
+					$.showErr("请求数据失败!");
+				}
+			});
+		});
+	});
+	
+})
+</script>

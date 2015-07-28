@@ -1,0 +1,12 @@
+<div class="inc wb">
+	<div class="relate_help clearfix">
+		<dl class="bdd" style="border-top:none">
+			<dt class="inc_top">{$LANG.TOOLS}</dt>
+			<dd {if $ACTION_NAME eq 'index'}class="act"{/if}><a href="{url x="index" r="tool"}">{$LANG.CALCULATE}</a></dd>
+			<dd {if $ACTION_NAME eq 'contact'}class="act"{/if}><a href="{url x="index" r="tool#contact"}">{$LANG.T_CONTACT}</a></dd>
+			<dd {if $ACTION_NAME eq 'tcontact'}class="act"{/if}><a href="{url x="index" r="tool#tcontact"}">{$LANG.TT_CONTACT}</a></dd>
+			<dd {if $ACTION_NAME eq 'mobile'}class="act"{/if}><a href="{url x="index" r="tool#mobile"}">{$LANG.T_CHECK_MOBILE}</a></dd>
+			<dd {if $ACTION_NAME eq 'ip'}class="act"{/if}><a href="{url x="index" r="tool#ip"}">{$LANG.T_CHECK_IP}</a></dd>
+		</dl>
+	</div>
+</div>

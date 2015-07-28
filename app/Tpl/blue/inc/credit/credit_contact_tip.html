@@ -1,0 +1,244 @@
+<p class="lh24">
+    <a href="#jobDiv" id="jobGuy" class="f_blue">在职证明参考模板</a>
+</p>
+<div class="blank5"></div>	
+<div class="dot"></div>
+<div class="blank5"></div>	
+<div class="credit_upload">
+    <div class="field office">
+		<label for="settings-office"><span class="red">*</span>{$LANG.OFFICE}</label>
+		<input type="text" value="{$work.office}" class="f-input ui-textbox" id="settings-office" name="office" size="30">
+	</div>
+	 <div class="blank"></div>		
+	<div class="field jobtype">
+		<label for="settings-jobtype"><span class="red">*</span>{$LANG.JOBTYPE}</label>
+		<select name="jobtype" id="settings-jobtype" class="f_l ui-select w120 select-w120">
+			<option value="">请选择</option>
+			<option value="工薪阶层" {if $work.jobtype eq '工薪阶层'}selected="selected"{/if}>工薪阶层</option>
+			<option value="私营企业主" {if $work.jobtype eq '私营企业主'}selected="selected"{/if}>私营企业主</option>
+			<option value="网络商家" {if $work.jobtype eq '网络商家'}selected="selected"{/if}>网络商家</option>
+			<option value="其他" {if $work.jobtype eq '其他'}selected="selected"{/if}>其他</option>
+		</select>
+	</div>	
+	 <div class="blank"></div>									
+	<script type="text/javascript" src="{$APP_ROOT}/system/region.js"></script>
+	<div class="field">								
+		<label for="settings-region"><span class="red">*</span>{$LANG.WORK_REGION}</label>
+		<select name="province_id" class="f_l ui-select w90 select-w90 mr5" height="300">
+			<option value="0">={$LANG.SELECT_PLEASE}=</option>
+			{foreach from=$region_lv2 item=lv2}
+			<option {if $lv2.selected eq 1}selected="selected"{/if} value="{$lv2.id}">{$lv2.name}</option>
+			{/foreach}
+		</select>
+								
+		<select name="city_id" class="f_l ui-select w120 select-w120" height="300">
+			<option value="0">={$LANG.SELECT_PLEASE}=</option>		
+			{foreach from=$region_lv3 item=lv3}
+			<option {if $lv3.selected eq 1}selected="selected"{/if} value="{$lv3.id}">{$lv3.name}</option>
+			{/foreach}
+		</select>
+		
+	</div>
+	 <div class="blank"></div>		
+	<div class="field officetype">
+		<label for="settings-officetype"><span class="red">*</span>{$LANG.OFFICETYPE}</label>
+		<select name="officetype" id="settings-officetype" class="f_l ui-select w280 select-w280" height="300">
+			<option value="">请选择</option>
+			<option value="国家机关" {if $work.officetype eq '国家机关'}selected="selected"{/if}>国家机关</option>
+			<option value="事业单位" {if $work.officetype eq '事业单位'}selected="selected"{/if}>事业单位</option>
+			<option value="央企（包括下级单位）" {if $work.officetype eq '央企（包括下级单位）'}selected="selected"{/if}>央企（包括下级单位）</option>
+			<option value="地方国资委直属企业" {if $work.officetype eq '地方国资委直属企业'}selected="selected"{/if}>地方国资委直属企业</option>
+			<option value="世界500强（包括合资企业及下级单位）" {if $work.officetype eq '世界500强（包括合资企业及下级单位）'}selected="selected"{/if}>世界500强（包括合资企业及下级单位）</option>
+			<option value="外资企业（包括合资企业）" {if $work.officetype eq '外资企业（包括合资企业）'}selected="selected"{/if}>外资企业（包括合资企业）</option>
+			<option value="一般上市公司（包括国外上市）" {if $work.officetype eq '一般上市公司（包括国外上市）'}selected="selected"{/if}>一般上市公司（包括国外上市）</option>
+			<option value="一般民营企业" {if $work.officetype eq '一般民营企业'}selected="selected"{/if}>一般民营企业</option>
+		</select>
+	</div>
+	 <div class="blank"></div>		
+	<div class="field officedomain">
+		<label for="settings-officedomain"><span class="red">*</span>{$LANG.OFFICEDOMAIN}</label>
+		<select name="officedomain" id="settings-officedomain" class="f_l ui-select w220 select-w220" height="300">
+			<option value="">请选择</option>
+			<option value="制造业" {if $work.officedomain eq '制造业'}selected="selected"{/if}>制造业</option>
+			<option value="IT" {if $work.officedomain eq 'IT'}selected="selected"{/if}>IT</option>
+			<option value="政府机关" {if $work.officedomain eq '政府机关'}selected="selected"{/if}>政府机关</option>
+			<option value="媒体/广告" {if $work.officedomain eq '媒体/广告'}selected="selected"{/if}>媒体/广告</option>
+			<option value="零售/批发" {if $work.officedomain eq '零售/批发'}selected="selected"{/if}>零售/批发</option>
+			<option value="教育/培训" {if $work.officedomain eq '教育/培训'}selected="selected"{/if}>教育/培训</option>
+			<option value="公共事业" {if $work.officedomain eq '公共事业'}selected="selected"{/if}>公共事业</option>
+			<option value="交通运输业" {if $work.officedomain eq '交通运输业'}selected="selected"{/if}>交通运输业</option>
+			<option value="房地产业" {if $work.officedomain eq '房地产业'}selected="selected"{/if}>房地产业</option>
+			<option value="能源业" {if $work.officedomain eq '能源业'}selected="selected"{/if}>能源业</option>
+			<option value="金融/法律" {if $work.officedomain eq '金融/法律'}selected="selected"{/if}>金融/法律</option>
+			<option value="餐饮/旅馆业" {if $work.officedomain eq '餐饮/旅馆业'}selected="selected"{/if}>餐饮/旅馆业</option>
+			<option value="医疗/卫生/保健" {if $work.officedomain eq '医疗/卫生/保健'}selected="selected"{/if}>医疗/卫生/保健</option>
+			<option value="建筑工程" {if $work.officedomain eq '建筑工程'}selected="selected"{/if}>建筑工程</option>
+			<option value="农业" {if $work.officedomain eq '农业'}selected="selected"{/if}>农业</option>
+			<option value="娱乐服务业" {if $work.officedomain eq '娱乐服务业'}selected="selected"{/if}>娱乐服务业</option>
+			<option value="体育/艺术" {if $work.officedomain eq '体育/艺术'}selected="selected"{/if}>体育/艺术</option>
+			<option value="公益组织" {if $work.officedomain eq '公益组织'}selected="selected"{/if}>公益组织</option>
+			<option value="其它" {if $work.officedomain eq '其它'}selected="selected"{/if}>其它</option>
+		</select>
+	</div>
+	 <div class="blank"></div>		
+	<div class="field officecale">
+		<label for="settings-officecale"><span class="red">*</span>{$LANG.OFFICECALE}</label>
+		<select name="officecale" id="settings-officecale" class="f_l ui-select w120 select-w120">
+			<option value="">请选择</option>
+			<option value="10人以下" {if $work.officecale eq '10人以下'}selected="selected"{/if}>10人以下</option>
+			<option value="10-100人" {if $work.officecale eq '10-100人'}selected="selected"{/if}>10-100人</option>
+			<option value="100-500人" {if $work.officecale eq '100-500人'}selected="selected"{/if}>100-500人</option>
+			<option value="500人以上" {if $work.officecale eq '500人以上'}selected="selected"{/if}>500人以上</option>
+		</select>
+	</div>
+	 <div class="blank"></div>		
+	<div class="field position">
+		<label for="settings-position"><span class="red">*</span>{$LANG.POSITION}</label>
+		<input value="{$work.position}" class="f-input ui-textbox" name="position" id="settings-position">
+	</div>
+	 <div class="blank"></div>		
+	<div class="field salary">
+		<label for="settings-salary"><span class="red">*</span>{$LANG.SALARY}</label>
+		<select name="salary" id="settings-salary" class="f_l ui-select w140 select-w140">
+			<option value="">请选择</option>
+			<option value="1000元以下" {if $work.salary eq '1000元以下'}selected="selected"{/if}>1000元以下</option>
+			<option value="1001-2000元" {if $work.salary eq '1001-2000元'}selected="selected"{/if}>1001-2000元</option>
+			<option value="2000-5000元" {if $work.salary eq '2000-5000元'}selected="selected"{/if}>2000-5000元</option>
+			<option value="5000-10000元" {if $work.salary eq '5000-10000元'}selected="selected"{/if}>5000-10000元</option>
+			<option value="10000-20000元" {if $work.salary eq '10000-20000元'}selected="selected"{/if}>10000-20000元</option>
+			<option value="20000-50000元" {if $work.salary eq '20000-50000元'}selected="selected"{/if}>20000-50000元</option>
+			<option value="50000元以上" {if $work.salary eq '50000元以上'}selected="selected"{/if}>50000元以上</option>
+		</select>
+	</div>
+	 <div class="blank"></div>		
+	<div class="field workyears">
+		<label for="settings-workyears"><span class="red">*</span>{$LANG.WORKYEARS}</label>
+		<select name="workyears" id="settings-workyears" class="f_l ui-select w150 select-w150">
+			<option value="">请选择</option>
+			<option value="1年（含）以下" {if $work.workyears eq '1年（含）以下'}selected="selected"{/if}>1年（含）以下</option>
+			<option value="1-3年（含）" {if $work.workyears eq '1-3年（含）'}selected="selected"{/if}>1-3年（含）</option>
+			<option value="3-5年（含）" {if $work.workyears eq '3-5年（含）'}selected="selected"{/if}>3-5年（含）</option>
+			<option value="5年以上" {if $work.workyears eq '5年以上'}selected="selected"{/if}>5年以上</option>
+		</select>
+	</div>
+	 <div class="blank"></div>		
+	<div class="field workphone">
+		<?php $phone_s = explode("-",$this->_var['work']['workphone']);?>
+		<label for="settings-workphone"><span class="red">*</span>{$LANG.WORKPHONE}</label>
+		<input type="text" value="<?php echo $phone_s[0];?>" class="f-input f_l w60 ui-textbox" id="frphone" onkeyup="setPhone();" onblur="setPhone();" >
+		<span class="f_l">&nbsp;-&nbsp;</span>
+		<input type="text" value="<?php echo $phone_s[1];?>" class="f-input f_l ui-textbox" id="numphone" onkeyup="setPhone();" onblur="setPhone();" />
+		<input type="hidden" value="{$work.workphone}" name="workphone" id="settings-workphone">
+	</div>
+	 <div class="blank"></div>		
+	<div class="field workemail">
+		<label for="settings-workemail"><span class="red">*</span>{$LANG.WORKEMAIL}</label>
+		<input type="text" class="f-input ui-textbox" value="{$work.workemail}" name="workemail" id="settings-workemail">
+	</div>
+	 <div class="blank"></div>		
+	<div class="field officeaddress">
+		<label for="settings-officeaddress"><span class="red">*</span>{$LANG.OFFICEADDRESS}</label>
+		<input type="text" class="f-input ui-textbox" value="{$work.officeaddress}" name="officeaddress" id="settings-officeaddress">
+	</div>
+	<div class="blank"></div>
+	<div class="b ">直系亲属联系人<br><span style="font-weight:normal">（在您贷款成功后，我们会通过电话核实您的紧急联系人信息）</span></div>
+	<div class="blank"></div>		
+	<div class="field urgentcontact">
+		<label for="settings-urgentcontact">{$LANG.URGENTCONTACT}</label>
+		<input type="text" class="f-input ui-textbox" value="{$work.urgentcontact}" name="urgentcontact" id="settings-urgentcontact">
+	</div>
+	<div class="blank"></div>
+	<div class="field urgentrelation">
+		<label for="settings-urgentrelation">{$LANG.URGENTRELATION}</label>
+		<input type="text" class="f-input ui-textbox" value="{$work.urgentrelation}" name="urgentrelation" id="settings-urgentrelation">
+	</div>
+	<div class="blank"></div>
+	<div class="field urgentmobile">
+		<label for="settings-urgentmobile">{$LANG.URGENTMOBILE}</label>
+		<input type="text" class="f-input ui-textbox" value="{$work.urgentmobile}" name="urgentmobile" id="settings-urgentmobile">
+	</div>
+			
+	<div class="blank"></div>
+	<div class="b ">其他联系人</div>
+	
+	<div class="field urgentcontact2">
+		<label for="settings-urgentcontact2">{$LANG.URGENTCONTACT}</label>
+		<input type="text" class="f-input ui-textbox" value="{$work.urgentcontact2}" name="urgentcontact2" id="settings-urgentcontact2">
+	</div>
+	<div class="blank"></div>
+	<div class="field urgentrelation2">
+		<label for="settings-urgentrelation2">{$LANG.URGENTRELATION}</label>
+		<input type="text" class="f-input ui-textbox" value="{$work.urgentrelation2}" name="urgentrelation2" id="settings-urgentrelation2">
+	</div>
+	<div class="blank"></div>
+	<div class="field urgentmobile2">
+		<label for="settings-urgentmobile2">{$LANG.URGENTMOBILE}</label>
+		<input type="text" class="f-input ui-textbox" value="{$work.urgentmobile2}" name="urgentmobile2" id="settings-urgentmobile2">
+	</div>
+	
+	<div class="blank"></div>
+</div>
+	       
+<div class="hide" id="CTtempBox">
+    <div class="clearfix bddf">
+        <div class="gray_title f14 pl10">
+        	在职证明参考模板
+        </div>
+        <div class="f_dgray" style="padding: 5px 12px;">
+            <div style="padding:5px 0" class="f14">
+                <div>
+                	兹证明 ___姓名____（身份证号：_________________），为_____公司名称_____在职人员,
+                </div>
+                <div>
+                	从______年____月____日在我单位入职至今。目前在___________部们，任__________一职，
+                </div>
+                <div>
+                	 薪酬为________元/月。
+                </div>
+                <div>
+                	 公司电话：_________________
+                </div>
+                <div>
+                	公司地址：_________________
+                </div>
+                <div>
+                	联系人：_________________
+                </div>
+                <div>
+                    <div class="f_dgray" style="width: 35%;padding-left:280px">
+					 单位名称：_________________
+                    </div>
+                    <div class="f_dgray" style="width: 35%;padding-left:303px">
+					日期：_________________
+                    </div>
+                </div>                  
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	$("#jobGuy").click(function(){
+		var html = $("#CTtempBox").html();
+		$.weeboxs.open(html, {boxid:'ctemp_box',contentType:'text',showButton:true, showCancel:false, showOk:false,title:"",width:588,height:216,type:'wee'});
+	});
+
+	//切换地区
+	$("#uploadCreditForm_credit_contact select[name='province_id']").bind("change",function(){
+		load_city($("#uploadCreditForm_credit_contact select[name='province_id']"),$("#uploadCreditForm_credit_contact select[name='city_id']"));
+	});
+});
+
+
+function setPhone(){
+	var frphone = $.trim($("#frphone").val());
+	var numphone = $.trim($("#numphone").val());
+	if(frphone!=""&&numphone!=""){
+		$("#settings-workphone").val(frphone+"-"+numphone);
+	}
+	else{
+		$("#settings-workphone").val("");
+	}
+}
+</script>

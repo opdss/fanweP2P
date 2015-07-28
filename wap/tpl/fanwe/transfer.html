@@ -1,0 +1,87 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/transfers.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--债权转让列表-->
+<div class="transfer">
+	<ul>
+	
+	{foreach from=$data.item item="item"}
+		<li class="trans_li">
+			<a href="{wap_url a="index" r="transfer_show" p="id=$item.id&deal_id=$item.deal_id"}">
+				<div class="detail clearfix">
+					<div class="h clearfix">
+						<div class="name">
+							<div class="user_name">
+								{$item.user.user_name}
+							</div>
+							<div class="user_name_footer"></div>
+						</div>
+						<h3>{$item.name}</h3>
+					</div>
+					<div class="text clearfix">
+						<dl>
+							<dd>
+								<font class="specialfont">{$item.left_benjin_format}</font>
+								<p>剩余本金</p>
+							</dd>
+							<dd>
+								<font>{$item.left_lixi_format}</font>
+								<p>剩余利息</p>
+							</dd>
+							<dd>
+								<font>{$item.transfer_amount_format}</font>
+								<p>转让价</p>
+							</dd>
+							<dd>
+								<font>{$item.rate}%</font>
+								<p>利率</p>
+							</dd>
+						</dl>
+						<div class="time_p clearfix">
+						<div class="f_l">
+							<span>{if $item.t_user_id gt 0}
+								已转让
+							{else}
+								{if $item.status eq 0}
+									已撤销
+								{else}
+								{$item.remain_time_format}
+								{if $item.remain_time lt 0}
+								  	逾期还款
+								{/if}
+								{/if}
+							{/if}</span>
+						</div>
+						
+						
+						
+							
+						
+						
+						
+						
+						<div class="f_r">
+                            <span>承接人</span>
+							<font>{$item.tuser.user_name}</font>
+						</div>
+					</div>
+					</div>
+					
+				</div>
+			</a>
+		</li>
+	 {/foreach}   
+	</ul>
+</div>
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+
+
+

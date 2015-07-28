@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" /> 
+<meta http-equiv="Cache-control" content="no-cache" />
+<title>{if $page_title}{$page_title} - {/if}{if $show_site_titile eq 1}{function name='app_conf' value='SHOP_SEO_TITLE'} - {/if}{$site_info.SHOP_TITLE}</title>
+<meta name="keywords" content="{if $page_keyword}{$page_keyword}{/if}{$site_info.SHOP_KEYWORD}" />
+<meta name="description" content="{if $page_description}{$page_description}{/if}{$site_info.SHOP_DESCRIPTION}" />
+<?php
+$this->_var['uc_deal_mobile'][] = $this->_var['TMPL_REAL']."/css/uc_deal_mobile.css";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$uc_deal_mobile"}" />
+</head>
+<body>
+
+<div class="main">
+	
+		
+		
+	<div class="content">
+		<div class="mtitle">
+		  &nbsp;<b>还款详情</b>
+		</div>
+		<div style="height:15px; overflow:hidden; clear:both;"></div>
+			<!-- 
+		<div class="box-hd">
+			<span>gggg 还款记录</span>
+		</div>
+		<div class="jklb">
+		<ul>
+			<li>
+				<span class="label">借款金额</span>
+				<span class="dbox">ggggggggg</span>
+			</li>
+			<li>
+				<span class="label">年利率</span>
+				<span class="dbox">gggggggg%</span>
+			</li>
+			<li>
+			 <span class="label">期限</span>
+		     <span class="dbox">ggggg</span>
+        	</li>
+			<li>
+				<span class="label">已还本息</span>
+				<span class="dbox">ggnamg</span>
+			</li>
+			<li>
+				<span class="label">管理费</span>
+				<span class="dbox">￥ffff</span>
+			</li>
+			<li>
+				<span class="label">逾期/违约</span>
+				<span class="dbox">
+					￥ff
+				</span>
+			</li>
+			<li><span class="label">还款方式</span>
+				<span class="dbox">
+					ffffff
+				</span>
+			</li>
+		</ul>
+		</div>
+		-->
+				
+		<div style="clear: both;"></div>
+		
+		
+		<div class="box-hd">
+			<span >还款统计</span>
+		</div>
+	
+		<div class="jkjl">
+		<ul>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					总借款额
+				</span>
+				<span class="dbox">{function name="format_price" v="$user_statics.borrow_amount"}</span>
+			</li>
+			
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					发布借款笔数
+				</span>
+				<span class="dbox">{$user_statics.deal_count}</span>
+			</li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					已还本息
+				</span>
+				<span class="dbox">{function name="format_price" v="$user_statics.repay_amount"}</span>
+			</li>
+			
+		    <li>
+		    	<span class=" label f_gray">
+		    		<i class="dot"></i>
+		    		成功借款笔数
+		    	</span>
+		    	<span class="f_red dbox"> {$user_statics.success_deal_count}</span>
+		    </li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					待还本息
+				</span>
+				<span class="f_green dbox">
+				{function name="format_price" v="$user_statics.need_repay_amount"}
+				</span>
+			</li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					正常还清笔数
+				</span>
+				<span class="f_green dbox">
+				{$user_statics.zc_repay_deal_count}
+				</span>
+			</li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					已还管理费
+				</span>
+				<span class="f_green dbox">
+				{function name="format_price" v="$user_statics.repay_manage_amount"}
+				</span>
+			</li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					待还管理费
+				</span>
+				<span class="f_green dbox">
+				{function name="format_price" v="$user_statics.need_manage_amount"}
+				</span>
+			</li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					提前还清笔数
+				</span>
+				<span class="f_green dbox">
+				 {$user_statics.tq_repay_deal_count}
+				</span>
+			</li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					未还清笔数
+				</span>
+				<span class="f_green dbox">
+				{$user_statics.wh_repay_deal_count}
+				</span>
+			</li>
+		</ul>
+		
+		</div>
+		
+		
+		<div style="height:15px; overflow:hidden; clear:both;"></div>
+		
+		
+		<div class="box-hd">
+			<span >逾期统计</span>
+		</div>
+	
+		<div class="jkjl">
+		<ul>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					逾期本息
+				</span>
+				<span class="dbox"> {function name="format_price" v="$user_statics.yuqi_amount"}</span>
+			</li>
+			
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					逾期次数
+				</span>
+				<span class="dbox"> {$user_statics.yuqi_count}</span>
+			</li>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					逾期费用
+				</span>
+				<span class="dbox">{function name="format_price" v="$user_statics.yuqi_impose"}</span>
+			</li>
+			
+		    <li>
+		    	<span class=" label f_gray">
+		    		<i class="dot"></i>
+		    			严重逾期次数
+		    	</span>
+		    	<span class="f_red dbox">  {$user_statics.yz_yuqi_count}</span>
+		    </li>
+		</ul>
+		</div>
+		
+		
+		<div style="height:15px; overflow:hidden; clear:both;"></div>
+		
+		
+		<div class="box-hd">
+			<span >投资数据分析 </span>
+		</div>
+	
+		<div class="jkjl">
+		<ul>
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					加权平均借款利率
+				</span>
+				<span class="dbox">{function name="number_format" v="$user_statics.avg_rate" f=2}%</span>
+			</li>
+			
+			<li>
+				<span class="label f_gray">
+					<i class="dot"></i>
+					平均每笔借款金额
+				</span>
+				<span class="dbox"> {function name="format_price" v="$user_statics.avg_borrow_amount"}</span>
+			</li>
+			
+		</ul>
+		</div>
+		<div style="height:15px; overflow:hidden; clear:both;"></div>
+	</div>
+	
+	
+	
+	
+</div>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+.goods_item{ float:left; display:inline-block; width:25%; text-align:center; overflow:hidden; margin:10px 0px; }
+.goods_item .goods_img_box{ width:160px; height:160px; overflow:hidden; display:block; margin:0px auto;}
+.goods_item img{ width:160px; height:160px; }
+.goods_item .starico img{ width:auto; height:auto; border:none;}
+.goods_item .goods_item_title{ text-align:center; line-height:25px;}
+.text{ word-break:break-all; width:840px; overflow:hidden;}
+.alt{ background-color:#f2f2f2;}
+
+.sort_desc{
+  background: url("../images/arrow.gif") no-repeat scroll right 10px transparent;
+  padding-right: 15px;
+}
+
+.sort_asc {
+  background: url("../images/arrow.gif") no-repeat scroll right -10px transparent;
+  padding-right: 15px;
+}
+
+.sort_gray{
+  background: url("../images/arrow.gif") no-repeat scroll right -30px transparent;
+  padding-right: 15px;
+}
+.sort_icon {
+  display: inline-block;
+  font-size: 12px;
+  height: 28px;
+  line-height: 28px;
+  margin: 0px;
+}
+
+span.list_type{display:inline-block; width:18px; height:15px; margin:0px 3px; cursor:pointer;}
+span.grid_enable{ background:url("../images/list_type.gif") no-repeat 0px 0px;}
+span.grid_disable{ background:url("../images/list_type.gif") no-repeat -18px 0px;}
+span.line_enable{ background:url("../images/list_type.gif") no-repeat 0px -15px;}
+span.line_disable{ background:url("../images/list_type.gif") no-repeat -18px -15px;}
+
+
+/*视图*/
+.flex-container{
+    position: relative;
+    max-width: 100%;
+}
+.jCarouselLite{
+    visibility: visible;
+overflow: hidden;
+position: relative;
+z-index: 2;
+left: 0px;
+width: 900px;
+}
+.jCarouselLite .prev {
+width: 22px;
+height: 22px;
+position: absolute;
+cursor: pointer;
+z-index: 100;
+top: 35px;
+text-indent: 999999;
+left: 10px;
+background: url(../images/button-previous.png) no-repeat;
+}
+.jCarouselLite .next {
+top: 35px;
+width: 22px;
+height: 22px;
+position: absolute;
+cursor: pointer;
+z-index: 100;
+	right: 10px;
+        _right: 20px;
+	background: url(../images/button-next.png) no-repeat;
+}

@@ -1,0 +1,74 @@
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index" r="authorized#account"}">账户资料</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+
+	<form method="post" action="{url x="shop" r="authorized#accountsave"}" name="modify">
+	
+		<table width="800px" class="user_info_table">
+			<tr>
+				
+				<td class="pt10" >
+					
+					<div class="field username">
+						<label for="settings-username"><span class="red">*</span>机构名称</label>
+						<span class="f_l">{$authorized_info.user_name}</span>
+					</div>
+					<div class="blank10"></div>
+					<div class="field email">
+						<label for="settings-email-address"><span class="red">*</span>Email</label>
+						<span class="f_l">{function name="hideEmail" v=$authorized_info.email}</span>
+						
+						{if $authorized_info.email neq '' }
+							<span class="passed yes">已设置</span>
+						{else}
+							<span class="passed"><a href="{url x="index" r="authorized#security"}">去设置</a></span>
+						{/if}
+						
+					</div>
+					<div class="blank10"></div>
+												
+					<div class="field real_name">
+						<label for="settings-real_name"><span class="red">*</span>{$LANG.REAL_NAME}</label>
+						<span class="f_l">{if $authorized_info.real_name}{function name="utf_substr" v="$authorized_info.real_name"}{/if}</span>
+						{if $authorized_info.real_name neq ''}
+							<span class="passed yes">已设置</span>
+						{else}
+							<span class="passed"><a href="{url x="index" r="authorized#security"}">去设置</a></span>
+						{/if}
+					</div>
+					<div class="blank10"></div>
+					<div class="field idno">
+						<label for="settings-idno"><span class="red">*</span>{$LANG.IDNO}</label>
+						<span class="f_l">{function name="hideIdCard" v=$authorized_info.idno}</span>
+						{if $authorized_info.idno neq ''}
+							<span class="passed yes">已设置</span>
+						{else}
+							<span class="passed"><a href="{url x="index" r="authorized#security"}">去设置</a></span>
+						{/if}
+					</div>
+					<div class="blank10"></div>
+					<div class="field mobile">
+						<label for="settings-mobile"><span class="red">*</span>{$LANG.USER_TITLE_MOBILE}</label>
+						<span class="f_l">{function name="hideMobile" v=$authorized_info.mobile}</span>
+						{if $authorized_info.mobile neq ''}
+							<span class="passed yes">已设置</span>
+						{else}
+							<span class="passed"><a href="{url x="index" r="authorized#security"}">去设置</a></span>
+						{/if}
+					</div>
+				</td>
+				
+			</tr>
+			
+		</table>
+		<div class="blank20"></div>
+		<div style="text-align:center">
+			<div class="hide account-edit-box">
+				<input type="submit" class="sub_btn" id="settings-submit" name="commit" value="保存更改">
+			</div>
+		</div>
+		<div class="blank"></div>
+	
+	</form>
+</div>

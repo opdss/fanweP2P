@@ -1,0 +1,63 @@
+{include file="inc/header.html"} 
+<div class="blank"></div>
+<div class="inc wb">
+	{include file="inc/step_nav.html"}
+	<div class="step-inc-main clearfix">
+		<div class="step-user-follow-tip">
+			{$LANG.STEP_USER_FOLLOW_TIP}
+		</div>
+		<form method="post" action="{url x="shop" r="user#stepsave"}">
+		<div class="step-follow-list clearfix">
+			<ul>
+				{foreach from="$user_list" item="ulist"}
+					<li class="selected" dataid="{$ulist.id}">
+						<div class="avatar">
+							<img src="{function name="get_user_avatar" uid=$ulist.id type="small"}" />
+							<div class="select"></div>
+						</div>
+						<div class="name">
+							{$ulist.user_name}
+						</div>
+						<div class="region">
+							{if $ulist.province}
+							{$ulist.province}
+							{/if}
+							{if $ulist.city}
+							<br />{$ulist.city}
+							{/if}
+						</div>
+					</li>
+				{/foreach}
+			</ul>
+		</div>
+		<div class="blank10"></div>
+		<div class="blank10"></div>
+		<div class="act" style="margin-left:0;padding-left:0">
+			<input type="hidden" name="user_ids" id="user_ids" value="0{foreach from="$user_list" item="ulist"},{$ulist.id}{/foreach}" />
+			<input type="submit" class="ok-over-btn f_l" id="settings-submit" name="commit" value="{$LANG.MODIFY}">
+		</div>
+		<div class="clear"></div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	
+	$(".step-follow-list li").click(function(){
+		if($(this).hasClass("selected"))
+			$(this).removeClass("selected");
+		else{
+			$(this).addClass("selected");
+		}
+		user_ids();
+	});
+	function user_ids(){
+		var ids = 0;
+		$(".step-follow-list li").each(function(){
+			if($(this).hasClass("selected")){
+				ids += ","+$(this).attr("dataid"); 
+			}
+		});
+		$("#user_ids").val(ids);
+	}
+</script>
+{include file="inc/footer.html"}

@@ -1,0 +1,121 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_bank.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--提现银行列表-->
+<div class="Menubox">
+        <ul>
+            <li id="one1" onclick="setTab('one',1,3)" class="hover">普通提现</li>
+            <li id="one2" onclick="setTab('one',2,3)">第三方提现</li>
+          </ul>
+</div>
+<div id="con_one_1" class="uc_incharge"><!--普通提现-->	
+<div class="bank_bg">
+		<ul>
+		{foreach from="$data.item" item="item"}
+			<li class="checkin">
+				<img src="{$item.img}" title="建设银行">
+					<a href="{wap_url a="index" r="uc_carry_money" p="bid=$item.id"}">
+						<div class="detail">
+							<h6>{$item.bank_name}</h6>
+							<span>{$item.bankcard}</span>
+							<span>{$item.real_name}</span>
+						</div>
+					</a>
+				<div>
+					<input id="de_id" type="hidden" value="{$item.id}"  />
+					<a class="delete"><i class="fa fa-times"></i></a>
+				</div>
+			</li>
+		{/foreach}
+			
+		</ul>
+	</div>
+<div class="bank_bg">
+		<a href="{wap_url a="index" r="uc_add_bank"}">
+			<div class="add_bank_card">
+				<span>添加银行卡</span>
+				<i class="fa fa-chevron-right"></i>
+			</div>
+		</a>
+	</div>
+</div>
+
+<form action="{wap_url a="index" r="collocation" p="DoDpTrade"}" method="get" id="search_form" >  
+<input type="hidden" value="collocation" name="ctl">
+<input type="hidden" value="DoDpTrade" name="act">
+<input type="hidden" value="0" name="user_type">
+<input type="hidden" value="wap" name="from">
+<input type="hidden" value="{$data.user_id}" id="user_id" name="user_id">
+
+
+<div id="con_one_2" class="uc_incharge"   style=" display:none;"><!--第三方提现-->
+<div class="figure">
+			<span>输入金额</span>
+			<input id="pTrdAmt" class="" type="text" placeholder="输入金额">
+</div>
+<div class="balance_detail">
+
+	<ul>
+		<li>
+			<span>可用资金</span>
+			<font>
+				{if $data.ips_money}{$data.ips_money}{else}0{/if}元
+			</font>
+		</li>
+		<li>
+			<span>提现费用</span>
+			<font>
+				{if $data.ips_money_fee}{$data.ips_money_fee}{else}0{/if}元
+			</font>
+		</li>
+	
+	</ul>
+</div>
+<div class="detail_foot">
+            <div class="lookdetail" style=" width:100%;"><button type="submit" class="but_sure">确认</button> </div>
+</div>
+
+
+</div>
+</form>
+{include file="./inc/footer.html"}
+ 
+<script>
+ $(document).ready(function(){
+ 	$(".delete").click(function(){
+ 		var ajaxurl = '{wap_url a="index" r="uc_del_bank"}';
+ 		var query = new Object();
+ 		query.id = $.trim($("#de_id").val());
+ 		query.post_type = "json";
+ 		$.ajax({
+ 			url:ajaxurl,
+ 			data:query,
+ 			type:"Post",
+ 			dataType:"json",
+ 			success:function(data){
+ 				alert(data.show_err);
+ 				window.location.Reload();
+ 			}
+ 		});
+ 	});
+ 	
+ });
+</script>
+
+<script>
+	/*线下/线下支付，默认选择第一个*/
+	$(".in_line ul li .mt:eq(0)").attr("checked","checked");
+	$(".out_line ul li .mt:eq(0)").attr("checked","checked");
+	$(".other_line ul li .mt:eq(0)").attr("checked","checked");
+/*第一种形式 第二种形式 更换显示样式*/
+function setTab(name,cursel,n){
+	 for(i=1;i<=n;i++){
+	  var menu=document.getElementById(name+i);
+	  var con=document.getElementById("con_"+name+"_"+i);
+	  menu.className=i==cursel?"hover":"";
+	  con.style.display=i==cursel?"block":"none";
+	 }
+}
+</script>

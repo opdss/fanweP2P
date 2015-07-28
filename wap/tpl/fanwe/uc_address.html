@@ -1,0 +1,149 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/doexchange.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--编辑地址-->
+<!--确认保存按钮在头部文件，设置一个$data.act eq 'uc_address'，才能显示-->
+<div class="blank15"></div>
+<h5 class="editor_h">请填写收货地址</h5>
+<div class="blank15"></div>
+
+<div class="editor_p">
+	<label for="0">
+		<span>姓名：</span>
+        <input type="text" id="name" name="name" value="{$data.user_address.name}" />
+	</label>
+	<label for="1">
+		<span>电话号码：</span>
+        <input type="text" id="phone" name="phone" value="{$data.user_address.phone}" />
+	</label>
+	<label for="2">
+		<span>省市：</span>
+        <input type="text" id="provinces_cities" name="provinces_cities" value="{$data.user_address.provinces_cities}" />
+	</label>
+	<label for="3">
+		<span>详细地址：</span>
+        <input type="text" id="address" name="address" value="{$data.user_address.address}" />
+	</label>
+	<label for="4">
+		<span>邮编：</span>
+        <input type="text" id="zip_code" name="zip_code" value="{$data.user_address.zip_code}" />
+	</label>
+</div>
+<div class="blank15"></div>
+<div class="Agreement_block clearfix">
+	<label for="5" class="y">
+		<span class="ico"><i class="fa fa-check"></i></span>
+		<input type="hidden" id="id" name="id" value="{$data.user_address.id}" />
+		<input type="checkbox" id="is_default" name="is_default" value="1" style=" display:none;"/>
+		设置成默认收货地址
+		
+	</label>
+	{if $data.user_address.id }
+	<a href="#" class="but_c bor_3b95d3 c_3b95d3 f_r" f_r id="del_submitt">&nbsp;删除收货地址&nbsp;</a>
+	{/if}
+</div>
+
+<script>
+	$(document).ready(function(){
+		
+		$(".Agreement_block label").toggle(
+		  function () {
+		    $(this).removeClass("y");
+		    
+		  },
+		  function () {
+		    $(this).addClass("y");
+		  }
+		);
+			
+		});
+
+</script>
+
+<script type="text/javascript">
+
+$("#submitt").click(function(){
+		var ajaxurl = '{wap_url a="index" r="uc_do_address"}';
+		var id =  $.trim($("#id").val());
+		var user_name = $.trim($("#name").val());
+		var user_phone = $.trim($("#phone").val());
+		var user_provinces_cities = $.trim($("#provinces_cities").val());
+		var user_address = $.trim($("#address").val());
+		var user_zip_code = $.trim($("#zip_code").val());
+		if(!user_name)
+		{
+			alert("请填写姓名");
+			return false;
+		}
+		if(!user_phone)
+		{
+			alert("请填写手机号");
+			return false;
+		}
+		if(!user_address)
+		{
+			alert("请填写详细地址");
+			return false;
+		}
+		if(!user_zip_code)
+		{
+			alert("请填写邮编");
+			return false;
+		}
+		var query = new Object();
+		query.user_name = $.trim($("#name").val());
+		query.user_phone = $.trim($("#phone").val());
+		query.user_provinces_cities = $.trim($("#provinces_cities").val());
+		query.user_address = $.trim($("#address").val());
+		query.id = $.trim($("#id").val());
+		query.user_zip_code = $.trim($("#zip_code").val());
+		query.is_default = $.trim($("#is_default").val());
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.show_err);
+					window.location.href = '{wap_url a="index" r="goods_address"}&id='+id;
+			}
+		
+		});
+		  
+	});
+</script>
+<script type="text/javascript">
+
+$("#del_submitt").click(function(){
+		var ajaxurl = '{wap_url a="index" r="uc_del_address"}';
+		var id =  $.trim($("#id").val());
+		var query = new Object();
+		query.id = $.trim($("#id").val());
+		query.post_type = "json";
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.show_err);
+					window.location.href = '{wap_url a="index" r="goods_address"}&id='+id;
+			}
+		
+		});
+		  
+	});
+</script>
+
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

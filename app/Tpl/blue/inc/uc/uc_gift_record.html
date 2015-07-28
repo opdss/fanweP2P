@@ -1,0 +1,121 @@
+<?php
+$this->_var['repaycss'][] = $this->_var['TMPL_REAL']."/css/datepicker.css";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.core.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.widget.js";
+$this->_var['repayjs'][] = $this->_var['TMPL_REAL']."/js/utils/jquery.ui.datepicker.js";
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$repaycss"}" />
+<script type="text/javascript" src="{function name="parse_script" v="$repayjs" c="$repayjs"}"></script>
+
+<script type="text/javascript">
+jQuery(function(){
+	$("input#end_time").datepicker({showAnim:'fadeIn'});
+	$("input#start_time").datepicker({showAnim:'fadeIn'});
+	$("form#search-form").submit(function(){
+		var val1 = $("input#end_time").val();
+		$("input[name='end_time']").val(val1);
+		var val2 = $("input#start_time").val();
+		$("input[name='start_time']").val(val2);
+	});
+});
+</script>
+
+<div class="tabbox">
+	<div class="tab cur"><a href="{url x="index"r="uc_gift_record#index"}">投资奖励</a></div>
+</div>
+
+<div class="uc_box bdd bt0 clearfix">
+	<form name="search" id="search-form" action="{url x="index" r="uc_given_record#index"}" method="get"> 
+		<div class="sub_nav f_l">
+        	<input type="hidden" name="ctl" value="uc_gift_record"/>
+            <input type="hidden" name="act" value="index"/>
+            
+			发放日期：<input class="f-input ui-textbox w100" id="start_time" type="text" value="{$start_time}">
+			<input type="hidden" name="start_time" type="text" value="" />
+			至
+            <input class="f-input ui-textbox w100" id="end_time" type="text" value="{$end_time}">
+			<input type="hidden" name="end_time" type="text" value="" />
+			<button class="true_btn select_btn" type="submit">搜索</button>
+		</div>
+		<div class="sub_nav f_r">
+			<span {if $gift_type eq 5 || $gift_type eq 0 } class="act"{/if}><a href="{url x="index" r="uc_gift_record" p="gift_type=5"}">全部</a></span>
+			<span {if $gift_type eq 1} class="act"{/if}><a href="{url x="index" r="uc_gift_record" p="gift_type=1"}">红包</a></span>
+			<span {if $gift_type eq 2} class="act"{/if}><a href="{url x="index" r="uc_gift_record" p="gift_type=2"}">收益率</a></span>
+			<span {if $gift_type eq 3} class="act"{/if}><a href="{url x="index" r="uc_gift_record" p="gift_type=3"}">积分</a></span>
+			<span {if $gift_type eq 4} class="act"{/if}><a href="{url x="index" r="uc_gift_record" p="gift_type=4"}">礼品</a></span>
+		</div>
+	</form>
+	
+	<div class="blank0"></div>
+	{if $list}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+		<tbody>
+			<tr border="0">
+				<th>借款</th>
+				<th style="width:10%">收益类型</th>
+				<th style="width:25%">收益值</th>
+                <th style="width:15%">发放日期</th> 
+                <th style="width:10%">发放状态</th>
+			</tr>
+			{foreach from="$list" item="item" key=key}
+			<tr class="item {if $key mod 2 eq 1}item_1{/if}" >
+				<td>
+					<a href="{$item.url}">{$item.name}</a>
+				</td>
+               
+				<td>
+					{if $item.gift_type eq 1}
+					红包
+					{elseif $item.gift_type eq 2}
+					收益率
+					{elseif $item.gift_type eq 3}
+					积分
+					{elseif $item.gift_type eq 4}
+					礼品
+					{/if}
+				</td>
+				<td>
+					{if $item.gift_type eq 1}
+					{$item.gift_value}元
+					{elseif $item.gift_type eq 2}
+						{$item.gift_value}% 
+						{if $item.reward_money gt 0}
+						 	（金额{$item.reward_money} 元）
+						{/if}
+					{elseif $item.gift_type eq 3}
+						{$item.gift_value}
+					{elseif $item.gift_type eq 4}
+						{$item.gift_name}
+					{/if}
+				</td>
+                <td>
+					{$item.release_date}
+				</td>
+                <td>
+					{if $item.status eq 1}
+						已发放
+					{else}
+						未发放
+					{/if}
+				</td>
+                
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	{$list_count}
+	<div class="pages">{$pages}</div>
+	{else}	
+	<div align="center" style="padding:20px 0">暂无记录</div>
+	{/if}
+	<div class="blank"></div>
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	

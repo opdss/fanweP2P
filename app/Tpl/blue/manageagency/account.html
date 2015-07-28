@@ -1,0 +1,158 @@
+<link rel="stylesheet" href="{$APP_ROOT}/admin/public/kindeditor/themes/default/default.css" />
+<script type='text/javascript'  src='{$APP_ROOT}/admin/public/kindeditor/kindeditor.js'></script>
+<script type="text/javascript" src="{$APP_ROOT}/admin/public/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+	var VAR_MODULE = "m";
+	var VAR_ACTION = "a";
+	var ROOT = '{$APP_ROOT}/file.php';
+	var ROOT_PATH = '{$APP_ROOT}';
+	var can_use_quota = "{$can_use_quota}";
+	var MAX_FILE_SIZE = "<?php echo (app_conf("MAX_IMAGE_SIZE")/1000000)."MB"; ?>";
+</script>
+
+<div class="tabbox clearfix">
+	<div class="tab cur"><a href="{url x="index" r="manageagency#account"}">账户资料</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	<form method="post" action="{url x="shop" r="manageagency#accountsave"}" name="modify">
+		<table width="900px" class="user_info_table">
+			<tr>
+				<td colspan=2 class="tr">
+					<button type="button" class="true_btn" id="edit-account">编辑资料</button>
+				</td>
+			</tr>
+			<tr>
+				
+				<td class="pt10" >
+					
+					<div class="field username">
+						<label for="settings-username"><span class="red">*</span>机构名称</label>
+						<span class="f_l">{$manageagency_info.user_name}</span>
+					</div>
+					<div class="blank10"></div>
+					<div class="field email">
+						<label for="settings-email-address"><span class="red">*</span>Email</label>
+						<span class="f_l">{function name="hideEmail" v=$manageagency_info.email}</span>
+						
+						{if $manageagency_info.email neq '' }
+							<span class="passed yes">已设置</span>
+						{else}
+							<span class="passed"><a href="{url x="index" r="manageagency#security"}">去设置</a></span>
+						{/if}
+						
+					</div>
+					<div class="blank10"></div>
+												
+					<div class="field real_name">
+						<label for="settings-real_name"><span class="red">*</span>{$LANG.REAL_NAME}</label>
+						<span class="f_l">{function name="utf_substr" v="$manageagency_info.real_name"}</span>
+						{if $manageagency_info.real_name neq ''}
+							<span class="passed yes">已设置</span>
+						{else}
+							<span class="passed"><a href="{url x="index" r="manageagency#security"}">去设置</a></span>
+						{/if}
+					</div>
+					<div class="blank10"></div>
+					<div class="field idno">
+						<label for="settings-idno"><span class="red">*</span>{$LANG.IDNO}</label>
+						<span class="f_l">{function name="hideIdCard" v=$manageagency_info.idno}</span>
+						{if $manageagency_info.idno neq ''}
+							<span class="passed yes">已设置</span>
+						{else}
+							<span class="passed"><a href="{url x="index" r="manageagency#security"}">去设置</a></span>
+						{/if}
+					</div>
+					<div class="blank10"></div>
+					<div class="field mobile">
+						<label for="settings-mobile"><span class="red">*</span>{$LANG.USER_TITLE_MOBILE}</label>
+						<span class="f_l">{function name="hideMobile" v=$manageagency_info.mobile}</span>
+						{if $manageagency_info.mobile neq ''}
+							<span class="passed yes">已设置</span>
+						{else}
+							<span class="passed"><a href="{url x="index" r="manageagency#security"}">去设置</a></span>
+						{/if}
+					</div>
+					
+					<!--显示框开始-->
+					<div class="account-view-box">
+						<div class="blank10"></div>
+						<div class="field brief">
+							<label for="settings-brief"><span class="red">*</span>担保方介绍</label>
+							<div class="itemc f_l">{$manageagency_info.brief}</div>
+						</div>
+						<div class="blank10"></div>
+						<div class="field address">
+							<label for="settings-address"><span class="red">*</span>机构地址</label>
+							<div class="itemc f_l">{$manageagency_info.address}</div>
+						</div>
+						<div class="blank10"></div>
+						<div class="field ">
+							<label for="settings-header"><span class="red">*</span>头部</label>
+							<div class="itemc f_l">{$manageagency_info.header}</div>
+						</div>
+						<div class="blank10"></div>
+						<div class="field company_brief">
+							<label for="settings-company_brief" ><span class="red">*</span>公司概况</label>
+							<div class="itemc f_l">{$manageagency_info.company_brief}</div>
+						</div>
+						<div class="blank10"></div>
+						<div class="field history">
+							<label for="settings-history" ><span class="red">*</span>发展史</label>
+							<div class="itemc f_l">{$manageagency_info.history}</div>
+						</div>
+						<div class="blank10"></div>
+						<div class="field content">
+							<label for="settings-content" ><span class="red">*</span>内容</label>
+							<div class="itemc f_l">{$manageagency_info.content}</div>
+						</div>
+					</div>
+					<!--显示框结束-->
+					<!--编辑框开始-->
+					<div class="hide account-edit-box">
+						<div class="blank10"></div>
+						<div class="field brief">
+							<label for="settings-brief"><span class="red">*</span>担保方介绍</label>
+							<div class="itemc f_l"><textarea name="brief" class="f-text ui-textarea" style="width:650px;height:120px">{$manageagency_info.brief}</textarea></div>
+						</div>
+						<div class="blank10"></div>
+						<div class="field address">
+							<label for="settings-address"><span class="red">*</span>机构地址</label>
+							<div class="itemc f_l"><input type="text" value="{$manageagency_info.address}" class="f-input ui-textbox" name="address" id="settings-address"></div>
+						</div>
+						<div class="blank10"></div>
+						<div class="field ">
+							<label for="settings-header"><span class="red">*</span>头部</label>
+							<div class="itemc f_l">{function name="show_ke_textarea" id="header" w="650" height="200" cnt="$manageagency_info.header"}</div>
+						</div>
+						<div class="blank10"></div>
+						<div class="field company_brief">
+							<label for="settings-company_brief" ><span class="red">*</span>公司概况</label>
+							<div class="itemc f_l"><textarea name="company_brief" class="f-text ui-textarea" style="width:650px;height:120px">{$manageagency_info.company_brief}</textarea></div>
+						</div>
+						<div class="blank10"></div>
+						<div class="field history">
+							<label for="settings-history" ><span class="red">*</span>发展史</label>
+							<div class="itemc f_l">{function name="show_ke_textarea" id="history" w="650" height="400" cnt="$manageagency_info.history"}</div>
+						</div>
+						<div class="blank10"></div>
+						<div class="field content">
+							<label for="settings-content" ><span class="red">*</span>内容</label>
+							<div class="itemc f_l">{function name="show_ke_textarea" id="content" w="650" height="400" cnt="$manageagency_info.content"}</div>
+						</div>
+						
+					</div>
+					<!--编辑框结束-->
+				</td>
+				
+			</tr>
+			
+		</table>
+		<div class="blank20"></div>
+		<div style="text-align:center">
+			<div class="hide account-edit-box">
+				<input type="submit" class="sub_btn" id="settings-submit" name="commit" value="保存更改">
+			</div>
+		</div>
+		<div class="blank"></div>
+	</form>
+</div>

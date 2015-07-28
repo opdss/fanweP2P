@@ -1,0 +1,104 @@
+
+	<div class="tabbox ">
+		<div class="tab cur"><a href="{url x="index" r="uc_collect#index"}">{$LANG.UC_COLLECT}</a></div>
+	</div>
+	<div class="uc_box bdd bt0 clearfix">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="uc-table">
+			<tbody>
+				<tr border="0">
+					<th  class="tl pl10">标题</th>
+					<th style="width:10%">借款人</th>
+					<th style="width:15%">借款用途</th>
+					<th style="width:15%">金额/期限/利率</th>
+					<th style="width:10%">信用等级</th>
+					<th style="width:14%">进度</th>
+					<th style="width:10%">操作</th>
+				</tr>
+				{foreach from=$list item="item" key=key name="item"}
+				<tr class="item {if $key mod 2 eq 1}item_1{/if}" {if $smarty.foreach.deal.last}style="border-bottom:0"{/if}>
+				
+					<td class="tl pl10">
+						<a href="{url x="index" r="deal" p="id=$item.id"}">{$item.name}</a>
+					</td>
+					<td>
+						<a href="{url x="index" r="space" p="id=$item.user_id"}">{$item.user_name}</a> 
+					</td>
+					<td>
+						{$item.type_match_row}
+					</td>
+					<td class="lh28">
+						<div>
+                        {$item.borrow_amount_format}
+	                    </div>
+	                    <div>
+	                        {$item.repay_time}{if $item.repay_time_type eq 0}天{else}个月{/if} / 
+	                        {function name="number_format" v="$item.rate" f="2"}%
+	                    </div>
+					</td>
+					<td>
+						<img src="{$TMPL}/images/{$item.point_level}.png" width="24" align="absmiddle" alt="{$item.point_level}" title="{$item.point_level}">
+					</td>
+					<td class="lh28">
+                    	<div class="progressvar">
+							{if  $item.deal_status gte 4}
+							<div class="progress w100 mt10">
+								<span class="pr bdr3" style="width:100%;">
+									<img class="ps" title="100%" src="{$TMPL}/images/progressqiu.png" />
+								</span>
+							</div>
+							<div class="progresscon f_blue">100%</div>
+							{else}
+							<div class="progress w100 mt10">
+								<span class="pr bdr3" title="{function name="round" v=$item.progress_point f=3}%" style="width:{function name="round" v=$item.progress_point f=2}%;">
+									<img class="ps" src="{$TMPL}/images/progressqiu.png" />
+								</span>
+							</div>
+							<div class="progresscon f_blue">{function name="round" v=$item.progress_point f=2}%</div>
+							{/if}
+						</div>
+						<div>
+							{if $item.is_delete eq 2}
+							<span class="f_gray">待发布</span>
+							{elseif $item.is_wait eq 1}
+								<span class="f_gray">未开始</span>
+							{elseif $item.deal_status eq 5}
+								<span class="f_green">还款完毕</span>
+							{elseif $item.deal_status eq 4}
+								<span class="f_green">还款中</span>
+							{elseif $item.deal_status eq 0}
+								<span class="f_green">{if $item.need_credit eq 0}等待审核{else}等待材料{/if}</span>
+							{elseif $item.deal_status eq 1 && $item.remain_time gt 0}
+								<span class="f_blue ">马上投标</span>
+							{elseif $item.deal_status eq 2}
+								<span class="f_yellow ">已满标</span>
+							{elseif $item.deal_status eq 3}
+								<span class="f_gray ">已流标</span>
+							{elseif $item.deal_status eq 1 && $item.remain_time lte 0}
+								<span class="f_gray ">已过期</span>
+							{/if}
+						</div>
+					</td>
+					<td>
+						<a href="{url x="index" r="uc_collect#del" p="id=$item.cid"}" class="btn_del">{$LANG.DELETE}</a>
+					</td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+		<div class="pages">{$pages}</div>
+		<div class="blank"></div>
+	</div>
+<script type="text/javascript">
+$(function(){
+	var p_width=$(".i_deal_list p").width();
+   	var box_width=$(".i_deal_list .graph-box").width();
+   	var left_w=(box_width/2)-(p_width/2);
+
+   	$(".i_deal_list p").css("left",left_w+"px");
+	$("#my_favoriteLoan_list .item").hover(function(){
+		$(this).css({"background":"#f7f7f7"});
+	},function(){
+		$(this).css({"background":"#fff"});
+	});
+})
+</script>

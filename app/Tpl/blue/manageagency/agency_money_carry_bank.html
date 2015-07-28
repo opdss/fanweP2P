@@ -1,0 +1,104 @@
+<?php
+$this->_var['ujs'][] = $this->_var['TMPL_REAL']."/js/page_js/u.js";
+$this->_var['cujs'][] = $this->_var['TMPL_REAL']."/js/page_js/u.js";
+?>
+<script type="text/javascript" src="{function name="parse_script" v="$ujs" c="$cujs"}"></script>
+<div class="tabbox clearfix">
+	<div class="tab  {if $ACTION_NAME eq 'index'}cur{/if}">
+		<a href="{url x="index" r="agency_money#index"}">{$LANG.UC_LOGS}</a>
+	</div>
+	<div class="tab  {if $ACTION_NAME eq 'incharge'}cur{/if}">
+		<a href="{url x="index" r="agency_money#incharge"}">{$LANG.UC_MONEY_INCHARGE}</a>
+	</div>
+	<div class="tab  {if $ACTION_NAME eq 'incharge_log'}cur{/if}">
+		<a href="{url x="index" r="agency_money#incharge_log"}">{$LANG.UC_MONEY_INCHARGE_LOG}</a>
+	</div>
+	<div class="tab  {if $ACTION_NAME eq 'bank'}cur{/if}">
+		<a href="{url x="index" value="agency_money#bank"}">{$LANG.UC_CARRY}</a>
+	</div>
+	<div class="tab  {if $ACTION_NAME eq 'carry_log'}cur{/if}">
+		<a href="{url x="index" value="agency_money#carry_log"}">提现日志</a>
+	</div>
+</div>
+<div class="uc_box  bdd bt0">
+	<div class="cf p15">
+		<label class="ui-radiobox" rel="common_carry_type"><input type="radio" name="carry_type"  value="1" checked="checked"/> 第三方资金提现</label>
+	</div>
+	<div class="clearfix p15 pr" id="IPS_CARRY">
+		<form id="IPS_CARRY_FORM" name="IPS_CARRY_FORM">
+			<div class="field">
+                <label>可用资金：</label>
+                <span class="J_u_money_0 f_red"></span>
+				<input id="Jcarry_totalAmount" type="hidden" value="0" />
+            </div>
+			<div class="blank10"></div>
+			<div class="field">
+                <label><span class="f_red b">*</span> 提取金额：</label>
+                <span><input type="text" autocomplete="off" name="amount" class="f-input ui-textbox w100 " id="Jcarry_amount">&nbsp;&nbsp;元</span>
+                &nbsp;
+				<span id="Jcarry_balance" class="f_red lh28"></span>
+            </div>
+			<div class="blank10"></div>
+            <div class="field">
+                <label>提现费用：</label>
+                <span id="Jcarry_fee">0.00 元</span>
+				{if $fee_config}
+				<img src="{$TMPL}/images/tips_wh.jpg" id="imgtips" class="pr" style="top:3px;left:15px;z-index:999; cursor:pointer;" onmouseover="tips(this,'第三方收取提现手续费:&lt;/br&gt;&lt;table width=\'100%\' class=\'tiptable\' cellspacing=\'1\' border=\'0\' &gt;&lt;tr style=\'background:#eff5fe;text-align:center\'&gt;{foreach from="$fee_config" item="fee"}&lt;td height=\'22\'&gt;{$fee.name}&lt;/td&gt;{/foreach}&lt;/tr&gt;&lt;tr class=\'bg\'&gt;{foreach from="$fee_config" item="fee"}&lt;td&gt;{$fee.fee_format}&lt;/td&gt;{/foreach}&lt;/tr&gt;&lt;/table&gt;',80,290)"><br>
+            	{/if}
+			</div>
+			<div class="blank10"></div>
+            <div class="field">
+                <label>实付金额：</label>
+                <span id="Jcarry_realAmount">0.00 元</span><br>
+            </div>
+			<div class="blank10"></div>
+            <div class="field">
+                <label>提现后账户可用余额：</label>
+                <span id="Jcarry_acount_balance">0.00 元</span>
+                <br>
+            </div>
+			<div class="f_red tc" style="font-size:14px;">警告：禁止信用卡套现、虚假交易等行为，一经确认，将终止该账户的使用。</div>
+			<div class="blank20"></div>
+			<div class="tc">
+				<input type="hidden" name="acount_balance" id="Jcarry_acount_balance_res" style="width:70px">
+	            <input type="submit" value="申请提现" class="sub_btn">
+	        </div>
+		</form>
+	</div>
+</div>
+<div class="blank"></div>	
+<script type="text/javascript">
+	var json_fee = {$json_fee};
+	
+	jQuery(function(){
+			
+		checkIpsBalance(1,{$manageagency_info.id},function(result){
+			if(result.pErrCode=="0000"){
+				$(".J_u_money_0").html(result.pBalance);
+				$("#Jcarry_totalAmount").val(result.pBalance);
+			}
+		});
+		
+		
+		
+		$("#IPS_CARRY_FORM").submit(function(){
+			if($.trim($("#Jcarry_amount").val())=="" || !$.checkNumber($("#Jcarry_amount").val()) || parseFloat($("#Jcarry_amount").val())<=0){
+				$.showErr(LANG.CARRY_MONEY_NOT_TRUE,function(){
+					$("#Jcarry_amount").focus();
+				});
+				return false;
+			}
+			if(parseFloat($("#Jcarry_acount_balance_res").val())<0){
+				$.showErr(LANG.CARRY_MONEY_NOT_ENOUGHT,function(){
+					$("#Jcarry_acount_balance_res").focus();
+				});
+				return false;
+			}
+			
+			window.location.href= APP_ROOT + "/index.php?ctl=collocation&act=DoDwTrade&user_type=1&user_id={$manageagency_info.id}&pTrdAmt="+$.trim($("#Jcarry_amount").val());
+			return false;
+		});
+	});	
+	
+
+</script>

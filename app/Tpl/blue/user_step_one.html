@@ -1,0 +1,168 @@
+{include file="inc/header.html"} 
+<div class="blank"></div>
+<div class="inc wb">
+	{include file="inc/step_nav.html"}
+	<div class="step-inc-main clearfix">
+		<form name="step-one-form" id="step-one-form" method="post" action="{url x="shop" r="uc_account#save"}" >
+		<table width="100%">
+		<tr>
+			<td>
+				<script type="text/javascript" src="{$APP_ROOT}/system/region.js"></script>		
+				<div class="field">
+																
+					<label for="settings-region">{$LANG.USER_REGION}</label>
+					
+					{$LANG.USER_PROVINCE}：<select name="province_id">
+							<option value="0">={$LANG.SELECT_PLEASE}=</option>
+							{foreach from=$region_lv2 item=lv2}
+							<option {if $lv2.selected eq 1}selected="selected"{/if} value="{$lv2.id}">{$lv2.name}</option>
+							{/foreach}
+						  </select>
+											
+					{$LANG.USER_CITY}：<select name="city_id">
+							<option value="0">={$LANG.SELECT_PLEASE}=</option>		
+							{foreach from=$region_lv3 item=lv3}
+							<option {if $lv3.selected eq 1}selected="selected"{/if} value="{$lv3.id}">{$lv3.name}</option>
+							{/foreach}
+						 </select>
+					
+				</div>
+				<div class="clear"></div>
+				<div class="field clearfix">
+					<label for="settings-birthday">{$LANG.USER_BIRTHDAY}</label>
+					<div class="f_l">
+						<select name="byear">
+							<option value="0">{$LANG.PLEASE_SELECT}</option>
+							<?php for($i = date("Y") - 100 ;$i<=date("Y"); $i++){ ?>
+							<option value="<?php echo $i; ?>" <?php if($i==$GLOBALS['user_info']['byear']){echo 'selected="selected"';} ?>><?php echo $i; ?></option>
+							<?php
+							}
+							?>
+						</select>
+						{$LANG.SUPPLIER_YEAR}
+						<select name="bmonth">
+							<option value="0">{$LANG.PLEASE_SELECT}</option>
+							<?php for($i = 1 ;$i<=12; $i++){ ?>
+							<option value="<?php echo $i; ?>"  <?php if($i==$GLOBALS['user_info']['bmonth']){echo 'selected="selected"';} ?>><?php echo $i; ?></option>
+							<?php
+							}
+							?>
+						</select>
+						{$LANG.SUPPLIER_MON}
+						<select name="bday">
+							<option value="0">{$LANG.PLEASE_SELECT}</option>
+							<?php for($i = 1 ;$i<=31; $i++){ ?>
+							<option value="<?php echo $i; ?>" <?php if($i==$GLOBALS['user_info']['bday']){echo 'selected="selected"';} ?>><?php echo $i; ?></option>
+							<?php
+							}
+							?>
+						</select>
+						{$LANG.SUPPLIER_DAY}
+					</div>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="field">
+					<label>{$LANG.USER_SEX}</label>
+					<select name="sex">
+						<option value="-1" {if $user_info.sex eq -1}selected="selected"{/if}>{$LANG.USER_SEX_NULL}</option>
+						<option value="0" {if $user_info.sex eq 0}selected="selected"{/if}>{$LANG.USER_SEX_0}</option>
+						<option value="1" {if $user_info.sex eq 1}selected="selected"{/if}>{$LANG.USER_SEX_1}</option>
+					</select>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="field">
+					<label>{$LANG.USER_MY_INTRO}</label>
+					<textarea name="my_intro" cols="10" style="width:250px; height:100px; border:#ccc solid 1px;">{$user_info.my_intro}</textarea>
+				</div>
+				<div class="clear"></div>
+
+				{foreach from=$field_list item=field_item}
+				<div class="field {$field_item.field_name}">
+						<label for="{$field_item.field_name}">{$field_item.field_show_name}</label>
+						{if $field_item.input_type eq 0}
+						<input type="text" value="{$field_item.value}" class="f-input" id="settings-{$field_item.field_name}" name="{$field_item.field_name}" size="30">
+						{else}
+						<select name ="{$field_item.field_name}" id="settings-{$field_item.field_name}">
+							{foreach from=$field_item.value_scope item=value_item}
+							<option value="{$value_item}" {if $value_item eq $field_item.value}selected="selected"{/if}>{$value_item}</option>
+							{/foreach}
+						</select>
+						{/if}
+				</div>
+				<div class="clear"></div>
+				{/foreach}
+				<div class="clear"></div>
+				<div class="act">
+					<input type="hidden" value="{$user_info.email}" name="email"/>
+					<input type="hidden" value="{$user_info.user_name}" name="user_name"/>
+					<input type="hidden" value="{$user_info.mobile}" name="mobile"/>
+					<input type="hidden" value="{$user_info.id}" name="id" />
+					<input type="submit" class="ok-next-btn f_l" id="settings-submit" name="commit" value="{$LANG.MODIFY}">
+					<span class="next-href f_l"><a href="javascript:void(0);" onclick="skip_user_profile();">{$LANG.STEP_NEXT}</a></span>
+				</div>
+				
+			</td>
+		</tr>
+	</table>
+	</form>
+	</div>
+</div>
+<script type="text/javascript">
+	//切换地区
+$(document).ready(function(){
+		$("#settings-submit").click(function(){
+			{foreach from=$field_list item=field_item}
+				{if $field_item.is_must eq 1}
+				if($("#settings-{$field_item.field_name}").val()=='')
+				{
+					$.showErr("{function name="sprintf" format=$LANG.EMPTY_ERROR_TIP value=$field_item.field_show_name}");	
+					$("#settings-{$field_item.field_name}").focus();
+					return false;
+				}
+				{/if}
+			{/foreach}
+			var query  = $("form#step-one-form").serialize();
+			$.ajax({
+				url:APP_ROOT+"/index.php?ctl=uc_account&act=save&s_ajax=1",
+				data:query,
+				dataType:"post",
+				success:function(result){
+					window.location.href= "{url x="shop" r="user#steptwo"}";
+				}
+			});
+			return false;
+		});
+		
+		$("select[name='province_id']").bind("change",function(){
+			load_city();
+		});
+	});
+	
+	function load_city()
+	{
+		var id = $("select[name='province_id']").val();
+		
+		var evalStr="regionConf.r"+id+".c";
+
+		if(id==0)
+		{
+			var html = "<option value='0'>="+LANG['SELECT_PLEASE']+"=</option>";
+		}
+		else
+		{
+			var regionConfs=eval(evalStr);
+			evalStr+=".";
+			var html = "<option value='0'>="+LANG['SELECT_PLEASE']+"=</option>";
+			for(var key in regionConfs)
+			{
+				html+="<option value='"+eval(evalStr+key+".i")+"'>"+eval(evalStr+key+".n")+"</option>";
+			}
+		}
+		$("select[name='city_id']").html(html);
+
+		
+	}
+</script>
+{include file="inc/footer.html"}

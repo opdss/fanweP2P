@@ -1,0 +1,132 @@
+<div class="box-t f_blue f18"><i class="iconfont">&#xe627;</i>&nbsp;用户信息</div>
+    {if !$user_info}
+    <div class="tc">
+    	只有<a href="{url x="index" r="user#register"}" class="f_blue">注册</a>用户才可以查看借入者信用信息！现在<a href="javascript:void(0);" onclick="ajax_login();" class="f_blue">登录</a>
+	</div>
+    {else}
+	
+	<div class="box-bd">
+	    <div class="attr_rows">
+	       <div class="attr_item">
+	        信用等级：<span><img src="{$TMPL}/images/{$u_info.point_level}.png" align="absmiddle" alt="{$u_info.point_level}" title="{$u_info.point_level}" width="16" height="16">
+	        （{$u_info.point}分）</span>
+	        </div>
+	        <div class="attr_item" style="width:60%">信用额度：<span>
+	        {function name="format_price" v=$u_info.quota}
+	        ( 借款后的可用额度：{$can_use_quota} )
+			</span>
+	        </div>
+	   
+	    	{if $u_info.sex gte 0}
+	        <div class="attr_item">
+			性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：<span>{if $u_info.idcardpassed eq 1}<font class="f_red">{/if}{if $u_info.sex eq 1}男{else}女{/if}{if $u_info.idcardpassed eq 1}</font>{/if}</span>
+	        </div>
+			{/if}
+	        <div class="attr_item">
+			 年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：<span>{if $u_info.idcardpassed eq 1}<font class="f_red"><?php echo to_date(get_gmtime(),"Y")-$this->_var['u_info']['byear'];?></font>{else}<?php echo to_date(get_gmtime(),"Y")-$this->_var['u_info']['byear'];?>{/if}</span>
+	        </div>
+	        <div class="attr_item">
+			 是否结婚：<span>{if $u_info.marrypassed eq 1}<font class="f_red">{$u_info.marriage}</font>{else}{$u_info.marriage}{/if}</span>
+	        </div>
+	        <div class="attr_item">
+			工作城市：<span>{if $u_info.residencepassed eq 1}<font class="f_red">{$u_info.region_province}&nbsp;{$u_info.region_city}</font>{else}{$u_info.region_province}&nbsp;{$u_info.region_city}{/if} {if $expire.residencepassed_expire}（过期）{/if}</span>
+	        </div>
+	   
+			<div class="attr_item">
+			公司行业：<span>{if $u_info.workpassed eq 1}<font class="f_red">{$u_info.workinfo.officetype}</font>{else}{$u_info.workinfo.officetype}{/if}{if $expire.workpassed_expire}（过期）{/if}</span>
+	     	</div>
+			<div class="attr_item">
+			公司名称：<span>{if $u_info.workpassed eq 1}<font class="f_red">{$u_info.workinfo.office}</font>{else}{$u_info.workinfo.office}{/if}</span>
+	     	</div>
+	     	<div class="attr_item">
+			公司规模：<span>{if $u_info.workpassed eq 1}<font class="f_red">{$u_info.workinfo.officecale}人</font>{else}{$u_info.workinfo.officecale}{/if}</span>
+	      	</div>
+	        <div class="attr_item">
+			 职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：<span>{if $u_info.workpassed eq 1}<font class="f_red">{$u_info.workinfo.position}</font>{else}{$u_info.workinfo.position}{/if}</span>
+	        </div>
+	         <div class="attr_item">
+	         	职业状态：<span>{if $u_info.workpassed eq 1}<font class="f_red">{$u_info.workinfo.jobtype}</font>{else}{$u_info.workinfo.jobtype}{/if}</span>
+	        </div>
+	        <div class="attr_item">
+			工作收入：<span>{if $u_info.incomepassed eq 1}<font class="f_red">{$u_info.workinfo.salary}</font>{else}{$u_info.workinfo.salary}{/if}{if $expire.incomepassed_expire}（过期）{/if}</span>
+	        </div>
+	    
+	        <div class="attr_item">
+	         学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：<span>{if $u_info.edupassed eq 1}<font class="f_red">{$u_info.graduation}</font>{else}{$u_info.graduation}{/if}</span>
+	        </div>
+	         <div class="attr_item">
+	        入学年份：<span>{if $u_info.edupassed eq 1}<font class="f_red">{$u_info.graduatedyear}</font>{else}{$u_info.graduatedyear}{/if}</span>
+	        </div>
+	        <div class="attr_item">
+	        工作时间：<span>{$u_info.workinfo.workyears}</span>
+	        </div>
+	    
+	        <div class="attr_item">
+			 有无购房：<span>{if $u_info.housepassed eq 1}<font class="f_red">{if $u_info.hashouse eq 1}有{else}无{/if}</font>{else}{if $u_info.hascar eq 1}有{else}无{/if}{/if}</span>
+			</div>
+	        <div class="attr_item">
+			有无购车：<span>{if $u_info.carpassed eq 1}<font class="f_red">{if $u_info.hascar eq 1}有{else}无{/if}</font>{else}{if $u_info.hascar eq 1}有{else}无{/if}{/if}</span>
+	        </div>
+			{if $u_info.car_brand}
+	        <div class="attr_item">
+			汽车品牌：<span>{$u_info.car_brand}</span>
+	        </div>
+			{/if}
+			{if $u_info.car_year}
+	        <div class="attr_item">
+			购车年份：<span>{$u_info.car_year}</span>
+	        </div>
+			{/if}
+    	
+	        <div class="attr_item">
+			有无房贷：<span>{if $u_info.housepassed eq 1}<font class="f_red">{if $u_info.houseloan eq 1}有{else}无{/if}</font>{else}{if $u_info.houseloan eq 1}有{else}无{/if}{/if}</span>
+	        </div>
+	        <div class="attr_item">
+			有无车贷：<span>{if $u_info.carpassed eq 1}<font class="f_red">{if $u_info.carloan eq 1}有{else}无{/if}</font>{else}{if $u_info.carloan eq 1}有{else}无{/if}{/if}</span>
+	         </div>
+	    </div>
+		<div class="blank0"></div>
+</div>
+<div class="box-t f_blue f18"><i class="iconfont">&#xe627;</i>&nbsp;借款记录</div>
+<div class="box-bd">
+    <div class="attr_rows">
+        <div class="attr_item">
+       借款笔数：<span>{$user_statics.deal_count}</span>
+        </div>
+        <div class="attr_item">
+        成功笔数：<span>{$user_statics.success_deal_count}</span>
+        </div>
+        <div class="attr_item">
+        还清笔数：<span>{$user_statics.repay_deal_count}</span>
+        </div>
+        <div class="attr_item">
+        共计借入：<span>{function name="format_price" v="$user_statics.borrow_amount"}</span>
+        </div>
+    
+        <div class="attr_item">
+        逾期次数：<span>{$user_statics.yuqi_count}</span>
+        </div>
+        <div class="attr_item">
+        严重逾期：<span>{$user_statics.yz_yuqi_count}</span>
+        </div>
+        <div class="attr_item">
+        逾期金额：<span>{function name="format_price" v="$user_statics.yuqi_amount"}</span>
+        </div>
+        <div class="attr_item">
+        待还本息：<span>{function name="format_price" v="$user_statics.need_repay_amount"}</span>
+        </div>
+    
+        <div class="attr_item">
+        共计借出：<span>{function name="format_price" v="$user_statics.load_money"}</span>
+        </div>
+        <div class="attr_item">
+        待收本息：<span>{function name="format_price" v="$user_statics.load_wait_repay_money"}</span>
+        </div>
+    </div> 
+	<div class="blank0"></div>
+    <div class="prompt tc pt30 pb30">
+         <i></i>以下基本信息资料，经用户同意披露。其中<font class="f_red">红色字体</font>的信息，为通过{function name="app_conf" v="SHOP_TITLE"}审核之项目。
+    </div>
+	<div class="blank0"></div>
+</div>
+{/if}

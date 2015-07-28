@@ -1,0 +1,85 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/deals.css";
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_collect.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--我关注的标列表-->
+<div class="invest">
+	{foreach from=$data.item item="deal"}
+	<div class="blok_10 mainborder">
+		
+		<div class="clearfix invest_tit {if $deal.deal_status eq 5}Headerbackground{else}gray{/if}">
+            <span class="State">
+                    {if $deal.deal_status eq 0}等待材料{/if}
+					{if $deal.deal_status eq 1}进行中{/if}
+					{if $deal.deal_status eq 2}满标{/if}
+					{if $deal.deal_status eq 3}流标{/if}
+					{if $deal.deal_status eq 4}还款中{/if}
+					{if $deal.deal_status eq 5}已还款{/if}
+			</span>
+			<span class="verticalline"></span>
+            <span class="sub_name">{$deal.name}</span>
+            <input value="{$deal.id}" id="deal_id" type="hidden">
+			<a class="delete">删除</a>
+        </div>
+		<a href="{wap_url a="index" r="deal_mobile" p="id=$deal.id"}">
+		<div class="index_content">
+            <div class="content_list">
+                <span>{$deal.borrow_amount_format}</span>
+                <span>金额</span>
+            </div>
+            <div class="content_list">
+                <span class="specialfont">{$deal.rate}%</span>
+                <span>年利率</span>
+            </div>
+            <div class="content_list">
+                <span>{$deal.repay_time}{if $deal.repay_time_type eq 0}天{else}月{/if}</span>
+                <span>期限</span>
+            </div>
+            <div class="content_list">
+            <div class="content_pic route">
+                <h1>{$deal.progress_point}</h1>
+	            <div class="content_pic_1" style="height:{$deal.progress_point}%;">
+	               <span></span>
+	            </div>
+            </div>
+            </div>
+        <div class="blank"></div>    
+        </div>
+		</a>
+	</div>
+	 {/foreach}       
+</div>
+{include file="./inc/footer.html"}
+
+
+
+<script>
+
+$(document).ready(function(){
+
+ 	$(".delete").click(function(){
+ 		var ajaxurl = '{wap_url a="index" r="uc_del_collect"}';
+ 		var query = new Object();
+ 		query.id = $.trim($("#deal_id").val());
+ 		query.post_type = "json";
+ 		$.ajax({
+ 			url:ajaxurl,
+ 			data:query,
+ 			type:"Post",
+ 			dataType:"json",
+ 			success:function(data){
+ 				alert(data.show_err);
+ 				window.location.href = '{wap_url a="index" r="uc_collect"}';
+ 			}
+ 		});
+ 	});
+ 	
+ });
+</script>
+
+
+
+
+

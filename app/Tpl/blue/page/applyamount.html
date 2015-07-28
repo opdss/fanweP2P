@@ -1,0 +1,198 @@
+{if $is_ajax eq 0}
+{include file="inc/header.html"}
+
+<div class="blank"></div>
+<div class="bdd bddf clearfix">
+	<div class="toptitle pt15">注册认证</div>
+	<div class="line950"></div>
+	<div class="credit_list">
+	  	<div class="tit">必要信用认证</div>
+		<div class="blank"></div>
+	    <p>以下几项为必要信用认证，上传齐全后将开始审核。必要认证缺失的用户，无法得到贷款。</p>
+	    <div class="items ">
+	    	<ul>
+	    	
+	        	{foreach from="$credit_file" item="credit"}
+				{if $credit.must eq 1}
+	        	<li>
+	        		<div class="tt">
+	        			{if $credit.icon}
+			        	<div class="icon"><img src="{$credit.icon}" height=30 /></div>
+						{/if}
+						<h3 class="">{$credit.type_name}</h3>
+						{if $credit.user_id gt 0}
+							{if $credit.passed eq 1}
+								{if $credit.has_expire eq 1}
+								<div class="status guoqi">审核过期</div>
+								{else}
+								<div class="status tongguo">审核通过</div>
+								{/if}
+							{elseif $credit.passed eq 2}
+							<div class="status shibai">审核失败</div>
+							{else}
+							<div class="status shehezhong">待审核</div>
+							{/if}
+						{else}
+							<div class="status weishangchuan">未上传</div>
+						{/if}
+						<div class="update">
+						{if $credit.passed eq 1}
+							已认证
+						{else}
+							<a href="javascript:void(0);" onclick="openupload(this,'{$credit.type}');" rel="{if $credit.user_id gt 0}补充{else}立即{/if}上传">
+							{if $credit.user_id gt 0}补充{else}立即{/if}上传
+							</a>
+						{/if}
+						</div>
+					</div>
+					<div class="J_tb" rel="{$credit.type}" style="display:none"></div>
+	    		</li>
+	    		{/if}
+				{/foreach}
+	   		</ul>
+		</div>
+		<div class="blank20"></div>
+		<div class="tit">可选信用认证</div>
+		<div class="blank"></div>
+	    <p>您可以选择上传的认证项目，只要通过了这些可选信用认证，将会提高您的“信用等级”和“信用额度” 。</p>
+	    <div class="items ">
+	    	<ul>
+	        	{foreach from="$credit_file" item="credit"}
+				{if $credit.must eq 0}
+	        	<li>
+	        		<div class="tt">
+			        	{if $credit.icon}
+			        	<div class="icon"><img src="{$credit.icon}" height=30 /></div>
+						{/if}
+						<h3 class="">{$credit.type_name}</h3>
+						{if $credit.user_id gt 0}
+							{if $credit.passed eq 1}
+								{if $credit.has_expire eq 1}
+								<div class="status guoqi">审核过期</div>
+								{else}
+								<div class="status tongguo">审核通过</div>
+								{/if}
+							{elseif $credit.passed eq 2}
+							<div class="status shibai">审核失败</div>
+							{else}
+								<div class="status shehezhong">待审核</div>
+							{/if}
+						{else}
+							<div class="status weishangchuan">未上传</div>
+						{/if}
+						<div class="update">
+						{if $credit.passed eq 1}
+							已认证
+						{else}
+							<a href="javascript:void(0);" onclick="openupload(this,'{$credit.type}');" rel="{if $credit.user_id gt 0}补充{else}立即{/if}上传">
+							{if $credit.user_id gt 0}补充{else}立即{/if}上传
+							</a>
+						{/if}
+						</div>
+					</div>
+					<div class="J_tb" rel="{$credit.type}" style="display:none"></div>
+	    		</li>
+	    		{/if}
+				{/foreach}
+	   		</ul>
+		</div>
+		
+		<div class="clearfix f_red" style="margin: 20px 0;">注意：如果上传中遇到问题，请联系客服。</div>
+			
+    </div>
+</div>
+<div class="blank"></div>
+<link rel="stylesheet" href="{$APP_ROOT}/admin/public/kindeditor/themes/default/default.css" />
+<script type='text/javascript'  src='{$APP_ROOT}/admin/public/kindeditor/kindeditor.js'></script>
+<script type="text/javascript" src="{$APP_ROOT}/admin/public/kindeditor/lang/zh_CN.js"></script>
+{else}
+<!--ajax-->
+<div class="credit_list" style="padding:0;">
+	    <div class="items ">
+	    	<ul>
+	        	{foreach from="$credit_file" item="credit"}
+	        	<li>
+	        		<div class="tt">
+	        			{if $credit.icon}
+			        	<div class="icon"><img src="{$credit.icon}" height=30 /></div>
+						{/if}
+						<h3 class="">{$credit.type_name}</h3>
+						{if $credit.user_id gt 0}
+							{if $credit.passed eq 1}
+								{if $credit.has_expire eq 1}
+								<div class="status guoqi">审核过期</div>
+								{else}
+								<div class="status tongguo">审核通过</div>
+								{/if}
+							{elseif $credit.passed eq 2}
+							<div class="status shibai">审核失败</div>
+							{else}
+							<div class="status shehezhong">待审核</div>
+							{/if}
+						{else}
+							<div class="status weishangchuan">未上传</div>
+						{/if}
+						<div class="update">
+						{if $credit.passed eq 1}
+							已认证
+						{else}
+							<a href="javascript:void(0);" onclick="openupload(this,'{$credit.type}');" rel="{if $credit.user_id gt 0}补充{else}立即{/if}上传">
+							{if $credit.user_id gt 0}补充{else}立即{/if}上传
+							</a>
+						{/if}
+						</div>
+					</div>
+					<div class="J_tb" rel="{$credit.type}" style="display:none"></div>
+	    		</li>
+				{/foreach}
+	   		</ul>
+		</div>
+		
+		<div class="clearfix" style="color: #C94140;margin: 20px 0;">注意：如果上传中遇到问题，请联系客服。</div>
+			
+    </div>
+{/if}
+<script type="text/javascript">
+	var VAR_MODULE = "m";
+	var VAR_ACTION = "a";
+	var ROOT = '{$APP_ROOT}/file.php';
+	var ROOT_PATH = '{$APP_ROOT}';
+	var MAX_FILE_SIZE = "<?php echo (app_conf("MAX_IMAGE_SIZE")/1000000)."MB"; ?>";
+	function openupload(ob,type){
+		if($(ob).hasClass("v")){
+			$(ob).html($(ob).attr("rel"));
+			$(ob).removeClass("v");
+			$(".J_tb[rel='"+type+"']").slideUp();
+		}
+		else{
+			$(ob).html("取消"+$(ob).attr("rel"));
+			$(ob).addClass("v");
+			if($.trim($(".J_tb[rel='"+type+"']").html())==""){
+				var ajaxurl = APP_ROOT+"/index.php?ctl=credit&type="+type+"&is_ajax=1";
+				$.ajax({
+					url:ajaxurl,
+					dataType:"json",
+					success:function(ajaxobj){
+						if(ajaxobj.status==1){
+							$(".J_tb[rel='"+type+"']").html(ajaxobj.info);
+							$(".J_tb[rel='"+type+"']").slideDown();
+							bindKindeditor();
+							init_ui_checkbox();
+							init_ui_textbox();
+							init_ui_select();
+						}
+						else
+							$.showErr(ajaxobj.info);
+					}
+				});
+			}
+			else{
+				$(".J_tb[rel='"+type+"']").slideDown();
+			}
+		}
+		
+	}
+</script>
+{if $is_ajax eq 0}
+{include file="inc/footer.html"}
+{/if}

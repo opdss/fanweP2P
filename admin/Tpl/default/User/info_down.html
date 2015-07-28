@@ -1,0 +1,59 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<div class="main">
+<div class="main_title">{$user_info.user_name}</div>
+<div class="blank5"></div>
+<script type="text/javascript">
+	function check_submit_info(){
+		if($("#J_is_delete").attr("checked")=="checked"){
+			var val = $("#J_info_file").val();
+			val = val.toLowerCase();
+			if(val==""){
+				alert("请选择要上传的文件");
+				return false;
+			}
+			if(val.indexOf(".php")!=-1||val.indexOf(".asp")!=-1||val.indexOf(".aspx")!=-1||val.indexOf(".jsp")!=-1){
+				alert("非法的文件");
+				return false;
+			}
+		}
+		return true;
+	}
+</script>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data" onsubmit="return check_submit_info();">
+<table class="form" cellpadding=0 cellspacing=0>
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">上传资料:</td>
+		<td class="item_input">
+			<input type="file" name="file" id="J_info_file"/>
+			<if condition="$user_info['info_down'] neq ''">
+			<br><br>
+			<a href="{$user_info.info_down}">下载查看</a>
+			<label> <input type="checkbox" name="is_delete" id="J_is_delete" value="1" />删除</label>
+			<input type="hidden" name="old_info_down" value="{$user_info.info_down}" />
+			</if>
+			<br><br>
+			<span class='tip_span'>[你可以上传压缩包或者文档，重新上传将覆盖原有的资料,上传的大小跟服务器配置有关系,上传的资料将会提供给前台投标者下载]</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">&nbsp;</td>
+		<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$user_info.id}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="User" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="modify_info_down" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%OK}" />
+			<input type="reset" class="button" value="{%RESET}" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>	 
+</form>
+</div>

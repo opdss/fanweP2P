@@ -1,0 +1,59 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+
+<div class="main">
+<div class="main_title">银行日帐单</div>
+<div class="blank5"></div>
+<div class="search_row">
+	<form name="search" action="__APP__" method="get">	
+				日期：
+		<input type="text" class="textbox" name="start_time" id="start_time" value="{:trim($_REQUEST['start_time'])}" onfocus="return showCalendar('start_time', '%Y-%m-%d', false, false, 'start_time');" />
+		-
+		<input type="text" class="textbox" name="end_time" id="end_time" value="{:trim($_REQUEST['end_time'])}" onfocus="return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" />
+		
+		<input type="hidden" value="BankReconciliation" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+	</form>
+</div>
+<div class="blank5"></div>
+
+<!-- Think 系统列表组件开始 -->
+<table id="dataTable" class="dataTable" cellpadding=0 cellspacing=0 >
+
+<tr class="row" >
+	<th width="50px">日期</th>
+	<foreach name="list" item="item" key="key"  >
+		<if condition="$key eq 0">
+			<foreach name="item.pay_money" item="item2" key="key2"  >
+				<th width="50px">{$item2.pay_name}</th>
+			</foreach>
+		</if>
+	</foreach>
+</tr>
+
+
+	
+	<foreach name="list" item="item" key="key"  >
+		<tr class="row" >
+			<td width="50px">{$item.pay_date}</td>
+			
+			<foreach name="item.pay_money" item="item2" key="key2"  >
+				<td width="50px"><a href={$item2.url} target = '_blank'>{$item2.money}</a></td>
+			</foreach>
+		</tr>
+	</foreach>
+
+
+</table>
+<!-- Think 系统列表组件结束 -->
+ 
+
+
+<div class="blank5"></div>
+</div>
+<include file="Public:footer" />

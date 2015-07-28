@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=0,minimum-scale=0.5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title>{$data.program_title}</title>
+	<link rel="stylesheet" type="text/css" href="./css/font-awesome-4.2.0/css/font-awesome.min.css"><!--特殊字体处理包-->
+    <script type="text/javascript" src="./js/jquery.js"></script><!--jquery文档-->
+	<script type="text/javascript" src="./js/public.js"></script><!--共有jquery文档-->
+	<script type="text/javascript" src="./js/touchScroll.js"></script><!--滑屏轮播插件包-->
+	<script type="text/javascript" src="./js/touchslider.dev.js"></script><!--滑屏轮播插件包-->	
+    <?php
+			$this->_var['parent_pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";
+	?>
+	<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$parent_pagecss"}" />
+    <script type="text/javascript">
+		var APP_ROOT = '{$APP_ROOT}';
+		var WAP_PATH = '{$WAP_ROOT}';
+	</script> 	
+</head>
+<body id="top">
+<div class="navbar Headerbackground_dark">
+    <div class="nav-wrap-left">
+    	<!--如果当前是首页就显示logo，else就显示箭号-->
+		 {if $data.act eq 'init'}
+        <a class="logo"><!--左边文字logo-->
+           <img src="./images/logo.png">
+        </a>
+		{else}
+		<a onclick="window.history.go(-1);" class="back"><!--箭号，返回上一页-->
+        <i class="fa fa-chevron-left"></i>
+        </a>
+		{/if}
+    </div>
+    <span>{if $data.act neq 'init'}{$data.program_title}{/if}</span><!--此处用于输出页面的位置信息，如注册，登录等-->
+	    {if $data.act eq 'deal'}<!--关注功能-->
+		    {if $is_login eq 1}
+			    <a href="javascript:location.reload()" class="collect-but" {if $data.is_faved}id="J-del-deal-collect-but" {else}id="J-deal-collect-but"{/if}  dataid="{$data.deal.id}">{if $data.is_faved}已{/if}关注</a>
+			{/if}
+		{/if}
+		 {if $data.act eq 'deals'}<!--我要投资的列表的搜索功能-->
+		   <a href="{wap_url a="index" r="search"}" class="search_but"><i class="fa fa-search"></i></a>
+		{/if}
+		 {if $data.act eq 'uc_collect'}
+		<div class="collect-but" id="uc_collect_editor">编辑</div>
+		{/if}
+        
+        {if $data.act eq 'uc_address'}
+		<button class="editor-address-but" id="submitt">保存地址</button>
+		{/if}
+         
+
+	<div class="nav-wrap-right">
+		<a class="screen hide" id="screen" href="javascript:void(0);">
+        <div class="lead_top"><i class="fa fa-list-ul"></i></div>
+        <div class="lead_bottom">导航</div>
+        </a>
+
+    </div>
+
+
+    
+   
+	<div class="public_menu hide_cont"><!--导航隐藏部分-->
+        <div class="Angle"></div><!--小三角-->
+	    <ul>
+	        <li><a href="{wap_url a="index" r="init"}"><i class="fa fa-home"></i>首页</a></li>
+			<li>
+	        	{if $is_login eq 1}
+	        	<a href="{wap_url a="index" r="uc_center"}">
+	        	{else}
+				<a href="{wap_url a="index" r="login"}">
+				{/if}	
+	        	<i class="fa fa-user"></i>会员中心</a>
+			</li>
+			<li>
+				{if $is_login eq 1}
+	        	<a href="{wap_url a="index" r="uc_invest"}">
+	        	{else}
+				<a href="{wap_url a="index" r="login"}">
+				{/if}	
+				<i class="fa fa-database"></i>我的投资</a>
+			</li>
+			<!--
+			<li>
+				
+	        	<a href="{wap_url a="index" r="integral_mall"}">
+	        	
+				<i class="fa fa-database"></i>积分商城</a>
+			</li>
+			-->
+		    </ul>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+	$("#J-deal-collect-but").click(function(){
+		var ajaxurl = '{wap_url a="index" r="uc_do_collect"}';
+		var query = new Object();
+		query.id =  $.trim($(this).attr("dataid"));
+		var obj = $(this);
+		$.ajax({ 
+			url: ajaxurl,
+			data:query,
+			type: "POST",
+			dataType: "json",
+			success: function(result){
+				if(result.status==1)
+				{
+					$(obj).html("已关注");
+				}
+				else
+				{	
+				}
+			}
+		});	
+	});
+		
+				
+	$("#J-del-deal-collect-but").click(function(){
+		var ajaxurl = '{wap_url a="index" r="uc_del_collect"}';
+		var query = new Object();
+		query.id =  $.trim($(this).attr("dataid"));
+		var obj = $(this);
+		$.ajax({ 
+			url: ajaxurl,
+			data:query,
+			type: "POST",
+			dataType: "json",
+			success: function(result){
+				if(result.status==1)
+				{
+					$(obj).html("关注");
+				}
+				else
+				{	
+				}
+			}
+		});	
+	});
+});
+</script>
+ {if $data.act eq 'register' || $data.act eq 'register_idno'}
+<div class="register_top clearfix">
+	<ul class="info">
+		<li class="{if $data.act eq 'register'}current{/if}">
+			<span>1&nbsp;输入信息&nbsp;</span>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li class="{if $data.act eq 'register_idno'}current{/if}">
+			<span>2&nbsp;身份验证&nbsp;</span>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<span>3&nbsp;注册成功&nbsp;</span>
+			<i class="fa fa-angle-right"></i>
+		</li>		
+	</ul>
+</div>
+{/if}
+ <div class="page_total">{$data.page.page_total}</div>
+<!--分页总数-->

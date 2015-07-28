@@ -1,0 +1,101 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<div class="main">
+<div class="main_title">{$main_title}</div>
+<div class="blank5"></div>
+
+<form name="search" action="__APP__" method="get">	
+
+<div class="search_row">
+	开始时间：
+	<input type="text" class="textbox" name="start_time" value="{$start_time}" id="start_time"  onfocus="this.blur(); return showCalendar('start_time', '%Y-%m-%d', false, false, 'start_time');" />
+	-
+	结束时间：
+	<input type="text" class="textbox" name="end_time" value="{$end_time}" id="end_time"  onfocus="this.blur(); return showCalendar('end_time', '%Y-%m-%d', false, false, 'end_time');" />
+	
+		<input type="hidden" value="Statistics" name="m" />
+		<input type="hidden" value="index" name="a" />
+		<input type="hidden" value="do" name="search" />
+		<input type="submit" class="button" value="{%SEARCH}" />
+		
+		<span class="span_tip">&nbsp;结果仅供参考</span>
+
+</div>
+</form>
+<div class="blank5"></div>
+
+<table cellspacing="0" cellpadding="0" class="dataTable" id="dataTable">
+	<tbody>
+		<tr>
+			<td class="topTd" colspan="<php>echo 17+count($deal_cate);</php>">&nbsp; </td>
+			</tr>
+			<tr class="row">
+				<th>时间</th>
+				<th>线上充值</th>		
+				<th>线下充值</th>
+				
+				<foreach name="deal_cate" item="cate">
+				<th>{$cate.name}</th>
+				</foreach>
+				
+				<th>投资总额</th>
+				<th>已获利息</th>
+				
+				<th>应付本金</th>
+				<th>应付利息</th>
+				<th>应付罚息</th>
+				
+				<th>已付本金</th>
+				<th>已付利息</th>
+				<th>已付罚息</th>
+				
+				<th>待收本金</th>
+				<th>待收利息</th>
+				<th>待收罚息</th>
+				
+				<th>待投资金</th>
+				<th>申请提现</th>
+				<th>成功提现</th>
+				</tr>
+				<foreach name="list" item="item">
+				<tr class="row <if condition="$key % 2 eq 1">row1</if>">
+					<td>{$item.day|to_date="Y-m-d"}</td>
+					<td>{:conf("CURRENCY_UNIT")}{$item.online_pay|number_format=2}</td>			
+					<td>{:conf("CURRENCY_UNIT")}{$item.below_pay|number_format=2}</td>
+					
+					<foreach name="deal_cate" item="cate">
+					<td>{:conf("CURRENCY_UNIT")}<php>echo number_format($item[$cate['id']]['borrow_amount'],2);</php></td>
+					</foreach>
+					
+					<td>{:conf("CURRENCY_UNIT")}{$item.load_amount|number_format=2}</td>
+					<td>{:conf("CURRENCY_UNIT")}{$item.load_lixi_amount|number_format=2}</td>
+					
+					<td>{:conf("CURRENCY_UNIT")}{$item.benjin_amount|number_format=2}</td>
+					<td>{:conf("CURRENCY_UNIT")}{$item.pay_lxi_amount|number_format=2}</td>
+					<td>{:conf("CURRENCY_UNIT")}{$item.impose_amount|number_format=2}</td>
+					
+					<td>{:conf("CURRENCY_UNIT")}{$item.has_repay_benjin_amount|number_format=2}</td>
+					<td>{:conf("CURRENCY_UNIT")}{$item.has_repay_lxi_amount|number_format=2}</td>
+					<td>{:conf("CURRENCY_UNIT")}{$item.has_repay_impose_amount|number_format=2}</td>
+					
+					<td>{:conf("CURRENCY_UNIT")}{$item.wait_repay_benjin_amount|number_format=2}</td>
+					<td>{:conf("CURRENCY_UNIT")}{$item.wait_repay_lxi_amount|number_format=2}</td>
+					<td>{:conf("CURRENCY_UNIT")}{$item.wait_repay_impose_amount|number_format=2}</td>
+					
+					<td>{:conf("CURRENCY_UNIT")}{$item.user_amount|number_format=2}</td>
+					<td>{:conf("CURRENCY_UNIT")}{$item.carry|number_format=2}</td>
+					<td>{:conf("CURRENCY_UNIT")}{$item.suc_carry|number_format=2}</td>
+				</tr>
+				</foreach>
+				<tr><td class="bottomTd" colspan="<php>echo 17+count($deal_cate);</php>"> &nbsp;</td></tr>
+			</tbody>
+		</table>
+
+
+</div>
+<include file="Public:footer" />

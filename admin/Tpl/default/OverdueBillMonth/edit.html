@@ -1,0 +1,525 @@
+{// 引入标签库 }
+<tagLib name="html" />
+<include file="Public:header" />
+<load href='__TMPL__Common/js/conf.js' />
+<script type="text/javascript" src="__TMPL__Common/js/calendar/calendar.php?lang=zh-cn" ></script>
+<load href='__TMPL__Common/js/calendar/calendar.css' />
+<load href='__TMPL__Common/js/calendar/calendar.js' />
+<load href='__TMPL__Common/js/deal.js' />
+<load href='__TMPL__Common/js/colorpicker.js' />
+<load href='__TMPL__Common/style/colorpicker.css' />
+<script type="text/javascript">
+	window.onload = function()
+	{
+		init_dealform();
+	}
+	
+</script>
+
+
+<div class="main">
+<div class="main_title">{$vo.name}{%EDIT} <a href="{:u("Deal/index")}" class="back_list">{%BACK_LIST}</a></div>
+<div class="blank5"></div>
+<form name="edit" action="__APP__" method="post" enctype="multipart/form-data">
+<div class="button_row">
+	<input type="button" class="button conf_btn" rel="1" value="{%DEAL_BASE_INFO}" />&nbsp;
+	<input type="button" class="button conf_btn" rel="2" value="{%SEO_CONFIG}" />&nbsp;	
+</div>
+<div class="blank5"></div>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="1">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">颜色:</td>
+		<td class="item_input">
+			<input type="text" <if condition="$vo['titlecolor'] neq ''">style="background:#{$vo.titlecolor}"</if> name="titlecolor" class="textbox" maxlength="6" size="6" id="colorpickerField" value="{$vo.titlecolor}" />
+			<span class="tip_span">不填即为默认颜色</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">借款编号:</td>
+		<td class="item_input">
+			<input type="text" name="deal_sn" class="textbox <if condition="$deal_sn eq ''"><if condition="$vo['deal_status'] egt 1">readonly</if></if>" value="<if condition="$deal_sn neq ''">{$deal_sn}<else />{$vo.deal_sn}</if>" <if condition="$deal_sn neq ''">style="color:red"<else /><if condition="$vo['deal_status'] egt 1">readonly="readonly"</if></if> />
+			<span class="tip_span">此处编号用于合同处，不得重复，<if condition="$deal_sn neq ''">红色表示未失效编号</if></span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_NAME}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="name" style="width:500px;" value="{$vo.name}" />
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_SUB_NAME}:</td>
+		<td class="item_input"><input type="text" class="textbox require" name="sub_name" value="{$vo.sub_name}" /> <span class='tip_span'>[{%DEAL_SUB_NAME_TIP}]</span></td>
+	</tr>
+	<tr>
+		<td class="item_title">会员:</td>
+		<td class="item_input">
+			{:get_user_name($vo['user_id'])} <a href="__APP__?m=User&a=passed&id={$vo.user_id}" target="_blank">资料认证</a>
+			<input type="hidden" name="user_id" value="{$vo.user_id}"/>            
+		</td>
+		
+	</tr>
+	<!-- xsz -->
+	<tr>
+		<td class="item_title">认证资料显示:</td>
+		<td>
+			<if condition="$old_imgdata_str">
+	            <foreach name="old_imgdata_str" item="img_item">
+					<p style="float:left">
+					<input style=" margin-top: 12px;"  type="checkbox" name="key[]" <if condition="isset($vo['view_info'][$img_item['key']])">checked="checked"</if> value="{$img_item.key}">
+					<a href='{$img_item.img}' target="_blank" title="{$img_item.name}"><img width="35" height="35" style="float:left; border:#ccc solid 1px; margin-left:5px;" id="{$img_item.name}" src="{$img_item.img}"></a>
+					</p>
+				</foreach>
+            </if>
+		</td>
+	</tr>
+
+	<tr>
+		<td class="item_title">所在城市:</td>
+		<td class="item_input" id="citys_box">
+			<foreach name="citys" item="city"   >
+				<if condition="$city['pid'] eq 0">
+					<div class="item">
+						<div class="bcity f_l">
+							<input name="city_id[]"  type="checkbox" value="{$city.id}" <if condition="$city['is_selected'] eq 1">checked="checked"</if>>
+							{$city.name}
+						 	：
+					 	</div>
+					 	<div class="scity f_l">
+					 	<foreach name="citys" item="citya">
+						 	<if condition="$city['id'] eq $citya['pid']">
+								 <input  type="checkbox" name="city_id[]" value="{$citya.id}" <if condition="$citya['is_selected'] eq 1">checked="checked"</if> >
+								 {$citya.name} 
+							</if>
+						</foreach>
+						</div>
+					</div>
+					<div class="blank5"></div>
+				</if>
+			</foreach>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%CATE_TREE}:</td>
+		<td class="item_input">
+		<select name="cate_id" class="require">
+			<option value="0">=={%NO_SELECT_CATE}==</option>
+			<foreach name="deal_cate_tree" item="cate_item">
+				<option value="{$cate_item.id}" <if condition="$vo['cate_id'] eq $cate_item['id']">selected="selected"</if>>{$cate_item.title_show}</option>
+			</foreach>
+		</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">担保机构:</td>
+		<td class="item_input">
+			<if condition="$vo['ips_guarantor_bill_no'] neq ''">
+				<select name="agency_id">
+					<php>
+						if($vo['agency_id'] >0){
+					</php>
+					<foreach name="deal_agency" item="agency_item">
+						<if condition="$vo['agency_id'] eq $agency_item['id']"><option value="{$agency_item.id}"><if condition="$agency_item['short_name'] neq ''">{$agency_item.short_name}<else/>{$agency_item.name}</if></option></if>
+					</foreach>
+					<php>
+						}
+						else
+						{
+					</php>
+						<option value="0">=={%NO_SELECT_AGENCY}==</option>
+					<php>
+						}
+					</php>
+				</select>
+			<else />
+				<select name="agency_id">
+					<option value="0">=={%NO_SELECT_AGENCY}==</option>
+					<foreach name="deal_agency" item="agency_item">
+						<option value="{$agency_item.id}" <if condition="$vo['agency_id'] eq $agency_item['id']">selected="selected"</if>><if condition="$agency_item['short_name'] neq ''">{$agency_item.short_name}<else/>{$agency_item.name}</if></option>
+					</foreach>
+				</select>
+			</if>
+			<if condition="$vo['agency_id'] gt 0">
+				<if condition="$vo['agency_status'] eq 0">
+					<span class="tip_span">已应邀</span>
+				<elseif condition="$vo['agency_status'] eq 1"/>
+					<span class="tip_span">邀约中</span>
+				<elseif condition="$vo['agency_status'] eq 2"/>
+					<span class="tip_span">拒绝应邀</span>
+				</if>
+			</if>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">担保范围:</td>
+		<td class="item_input">
+			<if condition="$vo['ips_guarantor_bill_no'] neq ''">
+				<select name="warrant">
+					<if condition="$vo['warrant'] eq 0"><option value="0" >无</option></if>
+					<if condition="$vo['warrant'] eq 1"><option value="1">本金</option></if>
+					<if condition="$vo['warrant'] eq 2"><option value="2">本金及利息</option></if>
+				</select>
+			<else />
+				<select name="warrant">
+					<option value="0" <if condition="$vo['warrant'] eq 0">selected="selected"</if>>无</option>
+					<option value="1" <if condition="$vo['warrant'] eq 1">selected="selected"</if>>本金</option>
+					<option value="2" <if condition="$vo['warrant'] eq 2">selected="selected"</if>>本金及利息</option>
+				</select>
+			</if>
+		</td>
+	</tr>
+	<tr id="guarantor_margin_amt_box" <if condition="$vo['warrant'] eq 0">style="display:none"</if>>
+		<td class="item_title">担保保证金[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['ips_guarantor_bill_no'] neq ''">readonly</if>"  <if condition="$vo['ips_guarantor_bill_no'] neq ''">readonly="readonly"</if> name="guarantor_margin_amt" value="{$vo.guarantor_margin_amt}" />
+			<if condition="$vo['mer_guarantor_bill_no'] neq ''">已解冻：{$vo.un_guarantor_real_freezen_amt|format_price}&nbsp;</if><span class="tip_span">冻结担保人的金额，需要提前存钱</span>
+		</td>
+	</tr>
+	<tr id="guarantor_amt_box" <if condition="$vo['warrant'] eq 0">style="display:none"</if>>
+		<td class="item_title">担保金额[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['ips_guarantor_bill_no'] neq ''">readonly</if>"  <if condition="$vo['ips_guarantor_bill_no'] neq ''">readonly="readonly"</if> name="guarantor_amt" value="{$vo.guarantor_amt}" />
+			<a href="__ROOT__/index.php?ctl=tool" target="_blank">理财计算器</a>
+		</td>
+	</tr>
+	<tr id="guarantor_pro_fit_amt_box" <if condition="$vo['warrant'] eq 0">style="display:none"</if>>
+		<td class="item_title">担保收益[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['ips_guarantor_bill_no'] neq ''">readonly</if>"  <if condition="$vo['ips_guarantor_bill_no'] neq ''">readonly="readonly"</if> name="guarantor_pro_fit_amt" value="{$vo.guarantor_pro_fit_amt}" />
+			<if condition="$vo['mer_guarantor_bill_no'] neq ''">实际担保收益：{$vo.guarantor_real_fit_amt|format_price}</if>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_ICON}:</td>
+		<td class="item_input">
+			<html:imgUpload name = 'icon' id='icon' value='$vo.icon' />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%TYPE_TREE}:</td>
+		<td class="item_input">
+		<select name="type_id">
+			<foreach name="deal_type_tree" item="type_item">
+				<option value="{$type_item.id}" <if condition="$type_item['id'] eq $vo['type_id']">selected="selected"</if>>{$type_item.name}</option>
+			</foreach>
+		</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">还款方式:</td>
+		<td class="item_input">
+		 	<if condition="$vo['deal_status'] egt 1">
+				<select name="loantype">
+				<foreach name="loantype_list" item="loantype">
+				<if condition="$vo['loantype'] eq $loantype['key']"><option value="{$loantype.key}"  rel="{$loantype.repay_time_type_str}">{$loantype.sub_name}</option></if>
+				</foreach>
+				</select>
+			<else />
+			<select name="loantype">
+				<foreach name="loantype_list" item="loantype">
+				<option value="{$loantype.key}"  rel="{$loantype.repay_time_type_str}" <if condition="$vo['loantype'] eq $loantype['key']">selected="selected"</if>>{$loantype.sub_name}</option>
+				</foreach>
+			</select>
+			</if>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%BORROW_AMOUNT}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require <if condition="$vo['deal_status'] egt 1">readonly</if>"  <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> name="borrow_amount"  value="{$vo.borrow_amount}"  />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">借款保证金[第三方]:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require <if condition="$vo['deal_status'] egt 1">readonly</if>"  <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> name="guarantees_amt"  value="{$vo.guarantees_amt}"  />
+			<if condition="$vo['mer_bill_no'] neq ''">已解冻：{$vo.un_real_freezen_amt|format_price}&nbsp;</if><span class="tip_span">冻结借款人的金额，需要提前存钱</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">投标类型:</td>
+		<td class="item_input">
+			<select name="uloadtype">
+				<option value=0 <if condition="$vo['uloadtype'] eq 0">selected="selected"</if>>按金额</option>
+				<option value=1 <if condition="$vo['uloadtype'] eq 1">selected="selected"</if>>按份额</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr class="uloadtype_0" <if condition="$vo['uloadtype'] eq 1">style="display:none"</if>>
+		<td class="item_title">{%MIN_LOAN_MONEY}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" name="min_loan_money"  value="{$vo.min_loan_money}" />
+		</td>
+	</tr>
+	
+	<tr class="uloadtype_0" <if condition="$vo['uloadtype'] eq 1">style="display:none"</if>>
+		<td class="item_title">{%MAX_LOAN_MONEY}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="max_loan_money"  value="{$vo.max_loan_money}" />
+			<span class="tip_span">0为不限制</span>
+		</td>
+	</tr>
+	
+	<tr class="uloadtype_1" <if condition="$vo['uloadtype'] eq 0">style="display:none"</if>>
+		<td class="item_title">分成多少份:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="portion" value="{$vo.portion}"/>
+		</td>
+	</tr>
+	
+	<tr class="uloadtype_1" <if condition="$vo['uloadtype'] eq 0">style="display:none"</if>>
+		<td class="item_title">最高买多少份:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" name="max_portion"  value="{$vo.max_portion}" />
+			<span class="tip_span">0为不限制</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%REPAY_TIME}:</td>
+		<td class="item_input">
+			<input type="text" id="repay_time" class="textbox require <if condition="$vo['deal_status'] egt 1">readonly</if>"  <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> SIZE="5"  name="repay_time" value="{$vo.repay_time}" />
+			<if condition="$vo['deal_status'] egt 1">
+				<select id="repay_time_type" name="repay_time_type">
+					<if condition="$vo['repay_time_type'] eq 0"><option value="0" >天</option></if>
+					<if condition="$vo['repay_time_type'] eq 1"><option value="1">月</option></if>
+				</select>
+			<else />
+				<select id="repay_time_type" name="repay_time_type">
+					<option value="0" <if condition="$vo['repay_time_type'] eq 0">selected="selected"</if>>天</option>
+					<option value="1" <if condition="$vo['repay_time_type'] eq 1">selected="selected"</if>>月</option>
+				</select>
+			</if>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%RATE}:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require <if condition="$vo['deal_status'] egt 1">readonly</if>" <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if>  SIZE="5" name="rate" value="{$vo.rate}"  />%
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">筹标期限:</td>
+		<td class="item_input">
+			<input type="text" class="textbox require" SIZE="5" name="enddate" value="{$vo.enddate}"  /> 天
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">成交服务费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['deal_status'] egt 1">readonly</if>" <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if>  SIZE="5" name="services_fee" value="{$vo.services_fee}"  />%
+			<span class="tip_span">按发布时的会员等级</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">借款者管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['deal_status'] egt 1">readonly</if>" <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> SIZE="5" name="manage_fee" value="{$vo.manage_fee}"  />%
+			<span class="tip_span">管理费 = 本金总额×管理费率 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">投资者管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['deal_status'] egt 1">readonly</if>" <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> SIZE="5" name="user_loan_manage_fee" value="{$vo.user_loan_manage_fee}"  />%
+			<span class="tip_span">管理费 = 投资总额×管理费率 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">普通逾期管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['deal_status'] egt 1">readonly</if>" <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> SIZE="5" name="manage_impose_fee_day1" value="{$vo.manage_impose_fee_day1}"  />%
+			<span class="tip_span">逾期管理费总额 = 逾期本息总额×对应逾期管理费率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">严重逾期管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['deal_status'] egt 1">readonly</if>" <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> SIZE="5" name="manage_impose_fee_day2" value="{$vo.manage_impose_fee_day2}"  />%
+			<span class="tip_span">逾期管理费总额 = 逾期本息总额×对应逾期管理费率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">普通逾期罚息:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['deal_status'] egt 1">readonly</if>" <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> SIZE="5" name="impose_fee_day1" value="{$vo.impose_fee_day1}"  />%
+			<span class="tip_span">逾期管理费总额 = 逾期本息总额×对应逾期管理费率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">严重逾期罚息:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['deal_status'] egt 1">readonly</if>" <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> SIZE="5" name="impose_fee_day2" value="{$vo.impose_fee_day2}"  />%
+			<span class="tip_span">逾期管理费总额 = 逾期本息总额×对应逾期管理费率×逾期天数 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">债权转让管理费:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['deal_status'] egt 1">readonly</if>" <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> SIZE="5" name="user_load_transfer_fee" value="{$vo.user_load_transfer_fee}"  />%
+			<span class="tip_span">管理费 = 转让金额×管理费率 0即不收取</span>
+		</td>
+	</tr>
+	<tr>
+		<td class="item_title">提前还款补偿:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['deal_status'] egt 1">readonly</if>" <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> SIZE="5" name="compensate_fee" value="{$vo.compensate_fee}"  />%
+			<span class="tip_span">补偿金额 = 剩余本金×补偿利率 0即不收取</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">投资人返利:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['deal_status'] egt 1">readonly</if>" <if condition="$vo['deal_status'] egt 1">readonly="readonly"</if> SIZE="5" name="user_bid_rebate" value="{$vo.user_bid_rebate}"  />%
+			<span class="tip_span">返利金额=投标金额×返利百分比【需满标】</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">申请延期:</td>
+		<td class="item_input">
+			<input type="text" class="textbox" SIZE="5" name="generation_position" value="{$vo.generation_position}"  />%
+			<span class="tip_span">当还款金额大于或等于设置的额度，借款人如果资金不够，可申请延期还款，延期还款就是平台代其还此借款。借款人未还部分由平台跟借款人协商。</span>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">{%DEAL_DESCRIPTION}:</td>
+		<td class="item_input">
+			 <html:editor id="description" name="description" style="width:500px;height:200px" type="KINDEDITOR" content="{$vo.description}" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">风险等级:</td>
+		<td class="item_input">
+			<select name="risk_rank">
+				<option value="0" <if condition="$vo['risk_rank'] eq 0">selected="selected"</if>>低</option>
+				<option value="1" <if condition="$vo['risk_rank'] eq 1">selected="selected"</if>>中</option>
+				<option value="2" <if condition="$vo['risk_rank'] eq 2">selected="selected"</if>>高</option>
+			</select>
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">风险控制:</td>
+		<td class="item_input">
+			 <html:editor id="risk_security" name="risk_security" style="width:500px;height:200px" type="KINDEDITOR" content="{$vo.risk_security}" />
+		</td>
+	</tr>
+	
+	<tr>
+		<td class="item_title">借款状态:</td>
+		<td class="item_input">
+			<if condition="$vo['publish_wait'] eq 1">
+				<label>审核失败<input type="radio" name="is_delete" value="3" /></label>
+			</if>
+			<if condition="$vo['deal_status'] eq 1">
+				进行中	<a href="{:u("Deal/show_detail",array("id"=>$vo['id']))}">投标详情和操作</a>
+			<elseif condition="$vo['deal_status'] eq 2"/>
+				已满标	<a href="{:u("Deal/show_detail",array("id"=>$vo['id']))}">投标详情和操作</a>
+			<elseif condition="$vo['deal_status'] eq 3"/>
+				已流标	<a href="{:u("Deal/show_detail",array("id"=>$vo['id']))}">投标详情和操作</a>
+				<div class="blank10"></div>
+				流标原因 :
+				<div class="blank10"></div>
+				{$vo.bad_msg}
+			<elseif condition="$vo['deal_status'] eq 4"/>
+				还款中	<a href="{:u("Deal/show_detail",array("id"=>$vo['id']))}">投标详情和操作</a>
+				<div class="blank10"></div>
+				确定日期 :{$vo.repay_start_time|to_date="Y-m-d"}
+			<elseif condition="$vo['deal_status'] eq 5" />
+				已还清	<a href="{:u("Deal/show_detail",array("id"=>$vo['id']))}">投标详情和操作</a>
+			<else/>
+				<label>{%DEAL_STATUS_0}<input type="radio" name="deal_status" value="0" <if condition="$vo['deal_status'] eq 0">checked="checked"</if> /></label>
+				<label>{%DEAL_STATUS_1}<input type="radio" name="deal_status" value="1" <if condition="$vo['deal_status'] eq 1">checked="checked"</if> /></label>
+			</if>
+		</td>
+	</tr>
+	<if condition="$vo['publish_wait'] eq 1">
+		<tr id="delele_msg_box" style="display:none">
+			<td class="item_title">失败原因:</td>
+			<td class="item_input">
+				<textarea name="delete_msg" rows="5" cols="80">{$vo.delete_msg}</textarea>
+			</td>
+		</tr>
+	</if>
+	<tr id="start_time_box" <if condition="$vo['deal_status'] neq 1">style="display:none"</if>>
+		<td class="item_title">开始时间:</td>
+		<td class="item_input">
+			<input type="text" class="textbox <if condition="$vo['deal_status'] eq 1">require</if>" name="start_time" value="{$vo.start_time}" id="start_time"  onfocus="this.blur(); return showCalendar('start_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_start_time');" />
+			<input type="button" class="button" id="btn_start_time" value="{%SELECT_TIME}" onclick="return showCalendar('start_time', '%Y-%m-%d %H:%M:%S', false, false, 'btn_start_time');" />
+			<input type="button" class="button" value="{%CLEAR_TIME}" onclick="$('#start_time').val('');" />		
+			如有同步：时间只能是当天或者前一天 
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td class="item_title">{%SORT}:</td>
+		<td class="item_input"><input type="text" class="textbox" name="sort" value="{$vo.sort}" /></td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+<table class="form conf_tab" cellpadding=0 cellspacing=0 rel="2">
+	<tr>
+		<td colspan=2 class="topTd"></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_SEO_TITLE}:</td>
+		<td class="item_input"><textarea class="textarea" name="seo_title" >{$vo.seo_title}</textarea></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_SEO_KEYWORD}:</td>
+		<td class="item_input"><textarea class="textarea" name="seo_keyword" >{$vo.seo_keyword}</textarea></td>
+	</tr>
+	<tr>
+		<td class="item_title">{%DEAL_SEO_DESCRIPTION}:</td>
+		<td class="item_input"><textarea class="textarea" name="seo_description" >{$vo.seo_description}</textarea></td>
+	</tr>
+	<tr>
+		<td colspan=2 class="bottomTd"></td>
+	</tr>
+</table>
+<div class="blank5"></div>
+	<table class="form" cellpadding=0 cellspacing=0>
+		<tr>
+			<td colspan=2 class="topTd"></td>
+		</tr>
+		<tr>
+			<td class="item_title"></td>
+			<td class="item_input">
+			<!--隐藏元素-->
+			<input type="hidden" name="id" value="{$vo.id}" />
+			<input type="hidden" name="old_next_repay_time" value="{$vo.next_repay_time}" />
+			<input type="hidden" name="{:conf("VAR_MODULE")}" value="Deal" />
+			<input type="hidden" name="{:conf("VAR_ACTION")}" value="update" />
+			<!--隐藏元素-->
+			<input type="submit" class="button" value="{%EDIT}" />
+			<input type="reset" class="button" value="{%RESET}" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2 class="bottomTd"></td>
+		</tr>
+	</table> 	 
+</form>
+</div>
+<include file="Public:footer" />

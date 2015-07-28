@@ -1,0 +1,136 @@
+<div class="tabbox clearfix">
+	<div class="tab {if $status eq 1}cur{/if}"><a href="{url x="index"r="uc_score_exchange#record" p="status=1"}">积分详情</a></div>
+	<div class="tab {if $status eq 0}cur{/if}"><a href="{url x="index"r="uc_score_exchange#index" p="status=0"}">积分兑换</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+    <table style="width:98%;margin:10px auto">
+      <tbody>
+      	<tr>
+            <td>我的VIP等级： 
+			<span class="f_red b f16">
+			{if $userinfo.vip_id neq 0}
+			{$gradeinfo.vip_grade}
+			{else}
+		  		您还不是VIP会员
+		  	{/if}
+			</span>
+			</td>
+			<td>我的积分：
+				<span class="f_red b">
+				 {if $userinfo.score neq 0}
+					{$userinfo.score} 
+				 {else}
+				  	0	
+				 {/if}
+				
+				</span> 
+			</td>
+            <td rowspan="2" align="right">
+            </td>
+          </tr>
+		   {if $customerinfo.name}
+          <tr>
+            <td>VIP客服专员：{$customerinfo.name} </td>
+			<td>电话：{$customerinfo.telphone} </td>
+          </tr>
+		   <tr>
+            <td>QQ：{$customerinfo.qq} </td>
+          </tr>
+		  
+		  {else}
+		  
+		  {/if}
+		 
+		   <tr>
+            <td colspan="2">您目前的借款与投资总额为
+			<span class="f_red b">
+			{$bl_total}元 
+			</span>
+			，
+			其中有效金额为
+			<span class="f_red b">
+			{$yx_total}元
+			</span>
+			<br />
+			{if $overdue_total}
+			逾期金额为
+			<span class="f_red b">
+			{$overdue_total}元
+			</span>
+			，
+			{/if}
+			再有
+			<span class="f_red b">
+			{$chazhi}元
+			</span>
+			，
+			即可升级为
+			<span class="b">
+			{$nextgrade}
+			</span>
+			</td>
+          </tr>
+		 
+		  
+		  
+        </tbody>
+	</table>
+	<div class="blank10"></div>
+	<table width="97%" border="0" cellspacing="1px" class="credit" style="margin:0px auto">
+        <tbody>
+            <tr class="title f_dgray b">
+                <td colspan="<?php echo count($this->_var['vip_setting'])+1; ?>">积分兑现比例</td>
+            </tr>
+           <tr>
+				<td class="white_bg">VIP等级</td>
+				{foreach from="$vip_setting" item="grade" name="grade"}
+				<td class="white_bg" class="f_red b">{$grade.vip_grade}</td>
+				{/foreach}
+			</tr>
+			<tr>
+				<td class="white_bg">积分折现系数</td>
+				{foreach from="$vip_setting" item="info" name="info"}
+				<td class="white_bg">{$info.coefficient}%</td>
+				{/foreach}
+			</tr>
+        </tbody>
+	</table>
+	<div class="blank10"></div>
+	<form name="Jcash_From" id="Jcash_From" action="{url x="index" r="uc_score_exchange#cash_save" }" method="post">
+		<div class="bdd p10" style="width:94.5%">
+			<div class="field">
+	            <label>可用积分：</label>
+	            <span class="f_l">
+	            	 {if $userinfo.score neq 0}
+						{$userinfo.score} 
+					 {else}
+					  	0	
+					 {/if} 
+					积分
+					<input id="Jcash_totalScore" type="hidden" value="{$userinfo.score}">
+					<input id="Jcash_coefficient" type="hidden" value="{$json_vipinfo.coefficient}">
+				</span>
+	        </div>
+			<div class="blank5"></div>
+	        <div class="field">
+	            <label><span class="f_red b">*</span> 兑现积分：</label>
+	            <span class="f_l"><input type="text" autocomplete="off" name="integral" class="f-input ui-textbox w100" id="Jcash_score">&nbsp;&nbsp;积分</span>
+	            &nbsp;
+				<span id="Jcash_balance" class="f_red lh28"></span>
+	        </div>
+			<div class="blank5"></div>
+			<div class="field">
+	            <label>兑现金额：</label>
+	            <span id="Jcash_realAmount" class="f_l">0.00 元</span><br>
+	        </div>
+			<div class="blank5"></div>
+	        <div class="f_red tc">警告：积分兑现值必须为 1000  的倍数，否则兑换将失败。</div>
+	
+			<div class="tc">
+		        <input type="submit" value="兑现" class="sub_btn">
+				<div class="blank5"> </div>
+		    </div>
+		</div>
+	</form>
+	<div class="blank5"> </div>
+</div>

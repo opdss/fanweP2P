@@ -1,0 +1,35 @@
+<div class="uc_right">
+<div class="inc">
+	<div class="gray_title clearfix">
+		<div class="f_l f_dgray b">{$LANG.MY_FOCUS}</div>
+		<div class="f_r">
+			<div style="vertical-align: middle;_padding: 8px 0;">
+				<span style="font-weight: normal;">
+					<a title="{$LANG.MORE}" href="{url x="index" r="space#focus" p="id=$user_info.id"}">{$LANG.MORE}</a>
+				</span>
+				<span>
+					<img src="{$TMPL}/images/more.gif" align="absmiddle" alt="{$LANG.MORE}" style="" title="{$LANG.MORE}">
+				</span>
+			</div>
+		</div>			
+	</div>
+	<div class="inc_main user_list clearfix">
+		<div class="blank"></div>
+		{if $r_focus_list}
+		{foreach from=$r_focus_list item=user_item}
+		<div class="item f_l">
+			<div class="u_avatar tc">
+			{function name="show_avatar" uid=$user_item.id  type="middle"}
+			</div>
+			<div class="u_name tc clearfix">
+				{function name="get_user_name" value=$user_item.id}
+			</div>
+		</div>								
+		{/foreach}
+		{else}
+		<div class="p10 tc">暂无关注的人</div>
+		<div class="blank"></div>
+		{/if}
+	</div>
+</div>
+</div>

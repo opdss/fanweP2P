@@ -1,0 +1,20 @@
+{include file="inc/header.html"}
+
+<div class="blank"></div>
+<div class="wrap wb clearfix">
+	<div class="toptitle pt15">注册认证</div>
+	<div class="line950"></div>
+	<div class="clearfix p20">
+			{if $step eq 1}
+			<div class="list_title clearfix">
+				<div {if $status eq 1}class="cur"{/if}><a href="{url x="index" r="borrow#applyamount" p="status=1"}">个人详细信息</a></div>
+				{if $user_info.real_name neq ""&&$user_info.idno neq ""&&$user_info.mobile neq ""&&$user_info.marriage neq ""&&$user_info.address neq ""}
+				<div {if $status eq 2}class="cur"{/if}><a href="{url x="index" r="borrow#applyamount" p="status=2"}">工作认证信息</a></div>
+				{/if}
+			</div>
+			{/if}
+			{include file="$inc_file"}
+    </div>
+</div>
+<div class="blank"></div>
+{include file="inc/footer.html"}

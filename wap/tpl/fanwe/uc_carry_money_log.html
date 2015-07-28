@@ -1,0 +1,105 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_carry_money_log.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--提现日志-->
+<ul class="log_list">
+	{foreach from=$data.item item="item"}
+	<li>
+		<dl class="clearfix">
+			<dd><span class="name">提现金额</span>{function name="format_price" value=$item.money}</dd>
+			<dd><span class="name">手续费</span>{function name="format_price" value=$item.fee}</dd>
+			<dd><span class="name">提现银行</span>{$item.bank_name}</dd>
+			<dd><span class="name">失败原因</span>{$item.msg}</dd><!--不知各种失败原因是何种方式输出-->
+			<dd class="y"><span class="name">银行资料</span><span class="c_ff4a4a">网点:{$item.bankzone}&nbsp;卡号:***{function name="msubstr" v=$item.bankcard s="-4" l="4" charset="utf-8" su=false} &nbsp; 账户:{function name="utf_substr" v=$item.real_name}</span></dd>
+		</dl>
+		<div class="clearfix results_block">
+			<p class="f_l"><span class="name">处理结果</span>
+			{if $item.status eq 0}
+			<span class="c_3b95d3">
+			{elseif $item.status eq 1}
+			<span class="c_aad421">
+			{elseif $item.status eq 4}
+			<span class="c_ff8800">
+			{elseif $item.status eq 2}
+			<span class="c_878787">	
+			{/if}	
+				{$item.status_format}</span>
+			</p>
+			<p class="f_r">
+				<input id="dltid_{$item.id}" type="hidden" value="{$item.id}" />
+				{if $item.status eq 0}
+					<span class="Revocation_but c_3b95d3 bor_3b95d3">
+						<a href="#" id="submita_{$item.id}" class="c_3b95d3">
+						撤销申请
+						</a>
+					</span>
+				{elseif $item.status eq 4}
+					<span class="Revocation_but c_ff8800 bor_ff8800">
+						<a href="#" id="submitb_{$item.id}" class="c_ff8800">
+						申请提现
+						</a>
+					</span>
+				{else}
+					<span class="Revocation_but bor_878787 bor_878787">无操作</span>
+				{/if}
+				<script type="text/javascript">
+				$("#submita_{$item.id}").click(function(){
+					var ajaxurl = '{wap_url a="index" r="uc_carry_revoke_apply"}';
+					var dltid =  $.trim($("#dltid_{$item.id}").val());
+					var query = new Object();
+					query.dltid = $.trim($("#dltid_{$item.id}").val());
+					query.status = 0;
+					query.post_type = "json";
+					$.ajax({
+						url:ajaxurl,
+						data:query,
+						type:"Post",
+						dataType:"json",
+						success:function(data){
+							alert(data.show_err);
+								window.location.href = '{wap_url a="index" r="uc_carry_money_log"}';
+						}
+					
+					});
+					  
+					$(this).parents(".float_block").hide();
+				});
+				
+				$("#submitb_{$item.id}").click(function(){
+					var ajaxurl = '{wap_url a="index" r="uc_carry_revoke_apply"}';
+					var dltid =  $.trim($("#dltid_{$item.id}").val());
+					var query = new Object();
+					query.dltid = $.trim($("#dltid_{$item.id}").val());
+					query.status = 4;
+					query.post_type = "json";
+					$.ajax({
+						url:ajaxurl,
+						data:query,
+						type:"Post",
+						dataType:"json",
+						success:function(data){
+							alert(data.show_err);
+								window.location.href = '{wap_url a="index" r="uc_carry_money_log"}';
+						}
+					
+					});
+					  
+					$(this).parents(".float_block").hide();
+				});
+				</script>
+			</p>
+		</div>
+	</li>
+	{/foreach}
+	
+</ul>
+<div class="new-but-block ">
+	<div class="but-block">
+	<button class="but_sure"><a href="{wap_url a="index" r="uc_bank"}">提现</a></button> 
+	</div>
+</div>
+{include file="./inc/footer.html"}
+

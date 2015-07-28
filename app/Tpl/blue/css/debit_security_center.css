@@ -1,0 +1,100 @@
+
+
+.uc_r_bl_box .field .passed{ float:right; display:block; padding-left:18px; height:18px; line-height:18px; background:url(../images/debit/noauth.png) no-repeat 0 center}
+.uc_r_bl_box .field .passed a{color:#00bef0}
+.uc_r_bl_box .field .passed.yes{ background:url(../images/debit/pass.png) no-repeat 0 center; color:#ccc; padding-left:20px;}
+
+
+
+.security-ul li{ clear:both; border-bottom:1px solid #eee;  margin:0px;}
+.security-ul li .it{ height:70px; line-height:70px;}
+.security-ul li .it .icon{ background:url(../images/debit/uc_icon.png) no-repeat 0 0;_background:url(../images/debit/uc_icon0.png) no-repeat 0 0; float:left; margin-right:12px; height:41px; width:50px; margin-top:13px;}
+.security-ul li .it .icon0{ background:url(../images/debit/uc_icon1.png) no-repeat 0 0;_background:url(../images/debit/uc_icon2.png) no-repeat 0 0; float:left; margin-right:12px; height:41px; width:50px; margin-top:13px;}
+
+.security-ul li .it .nicheng{background-position:0px 0px}
+.security-ul li .it .reaname{ background-position:0 -90px}
+.security-ul li .it .pwd{ background-position:0 -176px}
+.security-ul li .it .email{ background-position:0px -264px}
+.security-ul li .it .mobile{ background-position:0px -354px}
+.security-ul li .it .paypwd{ background-position:0px -182px}
+.security-ul li .it h3{ font-weight:bolder;float: left;width: 150px;font-size: 18px;font-weight: 500;}
+.security-ul li .it p {float: left;width: 250px; }
+.security-ul li .it .update {float: right;color: #ccc;}
+.security-ul li .it .update a{ color:#00bef0}
+
+
+
+.sub_btn {
+margin: 0;
+padding: 0;
+background: none;
+border: none;
+background-color: #ff3f44;
+color: #fff;
+cursor: pointer;
+font-size: 14px;
+font-weight: bold;
+height: 40px;
+line-height: 40px;
+padding: 0 20px;
+overflow: visible;
+-moz-border-radius: 3px;
+-khtml-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+}
+
+.uc_r_bl_box .field {
+color: #666;
+font-size: 14px;
+line-height: 26px;
+margin: 0;
+overflow: hidden;
+}
+
+.uc_r_bl_box .field {
+color: #666;
+font-size: 14px;
+line-height: 26px;
+margin: 0;
+overflow: hidden;
+}
+.f-input {
+border: 1px solid #ccc;
+font-size: 14px;
+height: 20px;
+line-height: 20px;
+padding: 3px 9px;
+width: 145px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+}
+.field .hint {
+width: 300px;
+float: left;
+color: #989898;
+margin-left: 124px;
+clear: left;
+font-size: 12px;
+}
+
+
+.field label {
+text-align: right;
+line-height: 30px;
+width: 70px;
+padding-right: 21px;
+float: left;
+height: 30px;
+color: #333;
+font-size: 12x;
+}
+.uc_r_bl_box .field label {
+width: 103px;
+}
+.field .red {
+display: inline-block;
+padding-left: 5px;
+color: #f30;
+}

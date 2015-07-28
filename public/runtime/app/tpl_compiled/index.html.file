@@ -1,0 +1,689 @@
+<?php echo $this->fetch('inc/header.html'); ?> 
+ 
+
+<script type="text/javascript">
+	$(function() {
+	var $sidebar = $(".index_right"),
+	$window = $(window),
+	leftset=$(".index_left").innerHeight(),
+	offset = $sidebar.offset(),
+	topPadding = 15;
+	$window.scroll(function() {
+	var	top= $window.scrollTop() - offset.top + topPadding;
+	if ($window.scrollTop() > offset.top && leftset>$window.scrollTop()) {
+	$sidebar.stop().css("marginTop", top);
+	} else if (top<61) {
+	$sidebar.stop().css("marginTop", 0);
+	}
+	});
+	});
+</script>
+
+<div class="index_left f_l">
+	<div class="feature">
+		<a class="fea1">
+			<i></i>
+			<h3>高收益</h3>
+			<span>最高收益可达15%-18%</br>助您轻松获收益</span>
+	
+		</a>
+		<a class="fea2">
+			<i></i>
+			<h3>安全理财</h3>
+			<span>运用技术分散投资</br>帮助投资人进入本金保障计划</span>
+		</a>
+		<a class="fea3">
+			<i></i>
+			<h3>随时赎回</h3>
+			<span>2步赎回您的资金</br>最快当日到账</span>
+		</a>
+	</div>
+	
+	<?php if ($this->_var['advance_deal_list']): ?>
+	<div class="bdd">
+		<div class="newnotice slideTxtBox">
+			<div class="noticetit hd">
+				<div class="f_l">
+					<a href="<?php
+echo parse_url_tag("u:index|deals#index|"."deal_status=19".""); 
+?>" class="f_red"><span>新标预告</span></a>
+				</div>
+				<?php if (count ( $this->_var['advance_deal_list'] ) > 1): ?>
+				<span class="f_r arrow">
+					<a class="prev noticentn">&lt;</a>
+					<a class="next noticentn">&gt;</a>
+				</span>
+				<?php endif; ?>
+			</div>
+			<div class="blank0"></div>
+			<div class="noticecon">
+				<div class="bestart"></div>
+				<div class="infoList bd  pr">
+					<ul class="ovhide cf">
+						<?php $_from = $this->_var['advance_deal_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'deal');$this->_foreach['deal'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['deal']['total'] > 0):
+    foreach ($_from AS $this->_var['key'] => $this->_var['deal']):
+        $this->_foreach['deal']['iteration']++;
+?>
+						<li>
+							<div class="noticecona">
+								<div class="listtit">
+									<img class="grade f_l mr5" src="<?php echo $this->_var['TMPL']; ?>/images/<?php echo $this->_var['deal']['user']['point_level']; ?>.png" align="absmiddle" title="<?php echo $this->_var['deal']['user']['point_level']; ?>" alt="<?php echo $this->_var['deal']['user']['point_level']; ?>" height="30" />
+									<h3 class="f_l f_red"><a href="<?php echo $this->_var['deal']['url']; ?>"><?php echo $this->_var['deal']['color_name']; ?></a></h3> 
+								</div>
+						
+								<div class="notmoney f_l">
+									<?php echo $this->_var['deal']['borrow_amount_format']; ?>
+								</div>
+								<div class="notlist_r f_r">
+									<div>开放时间</div>
+									<div class="opentime"><em><?php 
+$k = array (
+  'name' => 'to_date',
+  'v' => $this->_var['deal']['start_time'],
+  'f' => 'm',
+);
+echo $k['name']($k['v'],$k['f']);
+?></em> 月<em><?php 
+$k = array (
+  'name' => 'to_date',
+  'v' => $this->_var['deal']['start_time'],
+  'f' => 'd',
+);
+echo $k['name']($k['v'],$k['f']);
+?></em> 日<em> <?php 
+$k = array (
+  'name' => 'to_date',
+  'v' => $this->_var['deal']['start_time'],
+  'f' => 'H:i',
+);
+echo $k['name']($k['v'],$k['f']);
+?></em> </div>
+								</div>
+							</div>
+							<div class="notlist f_r w120 tr b"><?php echo $this->_var['deal']['repay_time']; ?><em><?php if ($this->_var['deal']['repay_time_type'] == 0): ?>天<?php else: ?>个月<?php endif; ?></em></div>
+					
+							<div class="notlist f_r f_red b"><?php echo $this->_var['deal']['rate']; ?>% <span>年化利率</span></div>
+					
+						</li>
+						<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+					</ul>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+	<div class="blank15"></div>
+		<?php if (count ( $this->_var['advance_deal_list'] ) > 1): ?>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				jQuery(".slideTxtBox").slide({mainCell:".bd ul",autoPage:true,effect:"leftLoop",autoPlay:true});
+			});
+		</script>
+		<?php endif; ?>
+	<?php endif; ?>
+	<!--最新投资-->
+	<div class="newinvest" id="deal_list">
+		<div class="newtit">
+			<span class="f_l">最新投资</span>
+			<div class="f_r calt">
+				<a href="<?php
+echo parse_url_tag("u:index|tool|"."".""); 
+?>" class="f_r">理财计算器</a>
+				<i class="iconfont f_blue" class="f_r">&#xe622;</i>
+			</div>
+			<div class="blank0"></div>
+		</div>
+		<?php $_from = $this->_var['deal_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'deal');$this->_foreach['deal'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['deal']['total'] > 0):
+    foreach ($_from AS $this->_var['key'] => $this->_var['deal']):
+        $this->_foreach['deal']['iteration']++;
+?>
+		<?php if (($this->_foreach['deal']['iteration'] - 1) < 5): ?>
+		<div class="listblok">
+			<div class="listtit ovhide">
+				<div class="f_l">
+					<img class="grade f_l mr5" src="<?php echo $this->_var['TMPL']; ?>/images/<?php echo $this->_var['deal']['user']['point_level']; ?>.png" align="absmiddle" title="<?php echo $this->_var['deal']['user']['point_level']; ?>" alt="<?php echo $this->_var['deal']['user']['point_level']; ?>" height="30" />
+					<h3 class="f_l">
+						<a href="<?php echo $this->_var['deal']['url']; ?>"><?php echo $this->_var['deal']['color_name']; ?></a>
+						<?php if ($this->_var['deal']['warrant'] == 1): ?><span class="warrant ml10">本金保障</span><?php elseif ($this->_var['deal']['warrant'] == 2): ?><span class="warrant ml10">本息保障</span><?php endif; ?>
+					</h3> 
+				</div>
+				<?php if ($this->_var['deal']['is_wait'] == 1 || ( $this->_var['deal']['deal_status'] == 1 && $this->_var['deal']['remain_time'] > 0 )): ?>
+				<div class="f_r" >
+					<div class="left_time AdvLeftTime f_r" data="<?php echo $this->_var['deal']['remain_time']; ?>">
+						<span class="s day">--</span>
+						<span class="l">天</span>
+						<span class="s hour">--</span>
+						<span class="l">时</span>
+						<span class="s min">--</span>
+						<span class="l">分</span>
+						<span class="s sec">--</span>
+						<span class="l">秒</span>
+					</div>
+					<div class="f_r maingary"> 剩余时间：</div>
+					<div class="blank0"></div>
+				</div>
+				<?php endif; ?>
+			</div>
+			<div class="blank0"></div>
+			<div class="listcon w135">
+				<h6>借款金额</h6>
+				<span><em><?php echo $this->_var['deal']['borrow_amount_format']; ?></em></span>
+			</div>
+			<div class="listcon w120">
+				<h6>年化利率</h6>
+				<span><em  class="f_red"><?php echo $this->_var['deal']['rate']; ?>%<?php if ($this->_var['deal']['user_bid_rebate'] > 0): ?><span class="f14" title="投资返利:<?php echo $this->_var['deal']['user_bid_rebate']; ?>%">+<?php echo $this->_var['deal']['user_bid_rebate']; ?>%</span><?php endif; ?></em></span>
+			</div>
+			<div class="listcon w70">
+				<h6>项目期限</h6>
+				<span><em><?php echo $this->_var['deal']['repay_time']; ?></em><?php if ($this->_var['deal']['repay_time_type'] == 0): ?>天<?php else: ?>个月<?php endif; ?></span>
+			</div>
+			<div class="listcon" style="border-right:none;">
+				<h6>还款方式</h6>
+				<span><?php 
+$k = array (
+  'name' => 'loantypename',
+  'v' => $this->_var['deal']['loantype'],
+  'type' => '0',
+);
+echo $k['name']($k['v'],$k['type']);
+?></span>
+			</div>
+			<div class="listcona f_r">
+				<div class="progressvar">
+						<?php if ($this->_var['deal']['deal_status'] >= 4): ?>
+						<div class="progress w130 mt9">
+							<span class="pr bdr3" style="width:100%;">
+								<img class="ps" title="100%" src="<?php echo $this->_var['TMPL']; ?>/images/progressqiu.png" />
+							</span>
+						</div>
+						<div class="progresscon f_blue">100%</div>
+						<?php else: ?>
+						<div class="progress w130 mt9">
+							<span class="pr bdr3" title="<?php 
+$k = array (
+  'name' => 'round',
+  'v' => $this->_var['deal']['progress_point'],
+  'f' => '3',
+);
+echo $k['name']($k['v'],$k['f']);
+?>%" style="width:<?php 
+$k = array (
+  'name' => 'round',
+  'v' => $this->_var['deal']['progress_point'],
+  'f' => '2',
+);
+echo $k['name']($k['v'],$k['f']);
+?>%;">
+								<img class="ps" src="<?php echo $this->_var['TMPL']; ?>/images/progressqiu.png" />
+							</span>
+						</div>
+						<div class="progresscon f_blue"><?php 
+$k = array (
+  'name' => 'round',
+  'v' => $this->_var['deal']['progress_point'],
+  'f' => '2',
+);
+echo $k['name']($k['v'],$k['f']);
+?>%</div>
+						<?php endif; ?>
+				</div>
+				<a class="listbtn" href="<?php echo $this->_var['deal']['url']; ?>">
+					<?php if ($this->_var['deal']['is_delete'] == 2): ?>
+						<span class="btn_gray f_white">待发布</span>
+					<?php elseif ($this->_var['deal']['is_wait'] == 1): ?>
+						<span class="btn_gray f_white">未开始</span>
+					<?php elseif ($this->_var['deal']['deal_status'] == 5): ?>
+						<span class="btn_green f_white">还款完毕</span>
+					<?php elseif ($this->_var['deal']['deal_status'] == 4): ?>
+						<span class="btn_green f_white">还款中</span>
+					<?php elseif ($this->_var['deal']['deal_status'] == 0): ?>
+						<span class="btn_gray f_white"><?php if ($this->_var['deal']['need_credit'] == 0): ?>等待审核<?php else: ?>等待材料<?php endif; ?></span>
+					<?php elseif ($this->_var['deal']['deal_status'] == 1 && $this->_var['deal']['remain_time'] > 0): ?>
+						<span class="btn_blue f_white">马上投标</span>
+					<?php elseif ($this->_var['deal']['deal_status'] == 2): ?>
+						<span class="btn_yellow f_white">已满标</span>
+					<?php elseif ($this->_var['deal']['deal_status'] == 3): ?>
+						<span class="btn_gray f_white">已流标</span>
+					<?php elseif ($this->_var['deal']['deal_status'] == 1 && $this->_var['deal']['remain_time'] <= 0): ?>
+						<span class="btn_gray f_white">已过期</span>
+					<?php endif; ?>
+				</a>
+			</div>
+			<div class="blank0"></div>
+		
+		</div>
+		<div class="blank15"></div>
+		<?php endif; ?>
+		<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+		<a href="<?php
+echo parse_url_tag("u:index|deals|"."".""); 
+?>" title="<?php echo $this->_var['LANG']['MORE']; ?>" class="more">查看更多投资信息 &gt;</a>
+	</div>
+	<!--最新投资end-->
+	<div class="blank15"></div>
+	<!--债权转让-->
+	<div class="newinvest" id="transfer_list">
+		<div class="newtit">债权转让</div>
+		<div class="bd">
+			<?php $_from = $this->_var['transfer_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'transfer');$this->_foreach['transfer'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['transfer']['total'] > 0):
+    foreach ($_from AS $this->_var['key'] => $this->_var['transfer']):
+        $this->_foreach['transfer']['iteration']++;
+?>
+			<?php if (($this->_foreach['transfer']['iteration'] - 1) < 5): ?>
+				<div class="border listblok">
+					<div class="listtit">
+						<div class="f_l">
+							<img class="grade f_l mr5" src="<?php echo $this->_var['TMPL']; ?>/images/<?php echo $this->_var['transfer']['user']['point_level']; ?>.png" align="absmiddle" title="<?php echo $this->_var['transfer']['user']['point_level']; ?>" alt="<?php echo $this->_var['deal']['user']['point_level']; ?>" height="30" />
+							<h3 class="f_l"><a href="<?php echo $this->_var['transfer']['url']; ?>"><?php echo $this->_var['transfer']['name']; ?></a></h3> 
+						</div>
+						<?php if ($this->_var['transfer']['t_user_id'] == 0 && $this->_var['transfer']['status'] == 1 && $this->_var['transfer']['remain_time'] > 0): ?>
+						<div class="f_r" >
+							<div class="left_time AdvLeftTime f_r" data="<?php echo $this->_var['deal']['remain_time']; ?>">
+								<span class="s day">--</span>
+								<span class="l">天</span>
+								<span class="s hour">--</span>
+								<span class="l">时</span>
+								<span class="s min">--</span>
+								<span class="l">分</span>
+								<span class="s sec">--</span>
+								<span class="l">秒</span>
+							</div>
+							<div class="f_r maingary"> 剩余时间：</div>
+							<div class="blank0"></div>
+						</div>
+						<?php endif; ?>
+					</div>
+					<div class="blank0"></div>
+					<div class="listcon w120">
+						<h6>转让金额</h6>
+						<span>&yen;<em><?php 
+$k = array (
+  'name' => 'number_format',
+  'v' => $this->_var['transfer']['transfer_amount'],
+  'f' => '2',
+);
+echo $k['name']($k['v'],$k['f']);
+?></em></span>
+					</div>
+					<div class="listcon w95">
+						<h6>年化利率</h6>
+						<span><em class="f_red"><?php echo $this->_var['transfer']['rate']; ?> %</em></span>
+					</div>
+					<div class="listcon w120">
+						<h6>剩余本金</h6>
+						<span>&yen;<em><?php 
+$k = array (
+  'name' => 'number_format',
+  'v' => $this->_var['transfer']['left_benjin'],
+  'f' => '2',
+);
+echo $k['name']($k['v'],$k['f']);
+?></em></span>
+					</div>
+					<div class="listcon w90">
+						<h6>剩余利息</h6>
+						<span>&yen;<em><?php 
+$k = array (
+  'name' => 'number_format',
+  'v' => $this->_var['transfer']['left_lixi'],
+  'f' => '2',
+);
+echo $k['name']($k['v'],$k['f']);
+?></em></span>
+					</div>
+					<div class="listcon" style="border-right:none;">
+						<h6>转让人</h6>
+						<span><?php echo $this->_var['transfer']['user']['user_name']; ?></span>
+					</div>
+					<div class="listcona f_r">
+						<a class="listbtn" href="<?php echo $this->_var['transfer']['url']; ?>">
+					        <?php if ($this->_var['transfer']['t_user_id'] > 0): ?>
+								<span class="btn_gray f_white" style="">已转让</span>
+							<?php else: ?>
+								<?php if ($this->_var['transfer']['status'] == 0): ?>
+									<span class="btn_gray f_white">已撤销</span>
+								<?php else: ?>
+									<?php if ($this->_var['transfer']['remain_time'] < 0): ?>
+									  	<span class="btn_gray f_white">逾期还款</span>
+									<?php else: ?>
+										<span class="btn_blue f_white">我要承接</span>
+									<?php endif; ?>
+								<?php endif; ?>
+							<?php endif; ?>
+						</a>
+					</div>
+					<div class="blank0"></div>
+				
+				</div>
+				<div class="blank15"></div>
+			<?php endif; ?>
+			<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+		</div>
+		<a href="<?php
+echo parse_url_tag("u:index|transfer|"."".""); 
+?>" title="<?php echo $this->_var['LANG']['MORE']; ?>" class="more">查看更多债权列表 &gt;</a>
+	</div>
+	<!--债权转让end-->
+</div>
+
+<div class="index_right f_r">
+<div class="blank20"></div> 
+<div class="blank10"></div>
+	<div class="right_adv">
+		<adv adv_id="首页右侧顶部广告" />
+	</div>
+	
+	<div class="r-block">
+		<div class="gray_title clearfix">
+			<div class="f_l pl10 f16">公司动态</div>
+			<div class="f_r pr10">
+                <span style="font-weight: normal;">
+                    <a href="<?php
+echo parse_url_tag("u:index|notice#list_notice|"."".""); 
+?>" class="f12" title="<?php echo $this->_var['LANG']['MORE']; ?>">更多></a>
+                </span>
+        	</div>
+		</div>
+		<div class="notice-list bdd bt0 pt5 pb5 pl10 pr10" >
+			<ul>
+				<?php $_from = $this->_var['notice_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'notice');if (count($_from)):
+    foreach ($_from AS $this->_var['notice']):
+?>
+                <li>
+                    <span>
+					<a href="<?php echo $this->_var['notice']['url']; ?>" title="<?php echo $this->_var['notice']['title']; ?>"><?php 
+$k = array (
+  'name' => 'msubstr',
+  'v' => $this->_var['notice']['title'],
+  's' => '0',
+  'e' => '18',
+);
+echo $k['name']($k['v'],$k['s'],$k['e']);
+?></a>
+					</span>
+                </li>
+				<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+	        </ul>
+		</div>
+	</div>
+	<div class="blank15"></div>
+	<div id="loadtop" class="r-block">
+		<div class="gray_title clearfix pr">
+			<div class="f_l pl10 f16">投资排行榜</div>
+			<div id="rightTitls">
+				<ul>
+					<li class="current"><a rel="1">月</a></li>
+					<li><a rel="2">周</a></li>
+					<li><a rel="3">天</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div id="J_conbox" class="bdd bt0 pt5 pb5 pl10 pr10" >
+			<ul class="clearfix" rel="1">
+				<?php $i=1; ?>
+				<?php $_from = $this->_var['month_load_top_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'load');$this->_foreach['loads'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['loads']['total'] > 0):
+    foreach ($_from AS $this->_var['load']):
+        $this->_foreach['loads']['iteration']++;
+?>
+				<?php if ($this->_foreach['loads']['iteration'] < 9): ?>
+				<li <?php if (! ($this->_foreach['loads']['iteration'] == $this->_foreach['loads']['total'])): ?>class="dot"<?php endif; ?>>
+					<span class="nums nums_<?php echo $this->_foreach['loads']['iteration']; ?> tc f_l">
+					<?php echo str_pad($i,2,0,STR_PAD_LEFT); ?>
+					</span>
+					<span class="uname f_l"><?php 
+$k = array (
+  'name' => 'utf_substr',
+  'v' => $this->_var['load']['user_name'],
+);
+echo $k['name']($k['v']);
+?></span>
+					<span class="f_r"><?php 
+$k = array (
+  'name' => 'format_price',
+  'v' => $this->_var['load']['total_money'],
+  'f' => '2',
+);
+echo $k['name']($k['v'],$k['f']);
+?></span>
+				</li>
+				<?php $i++; ?>
+				<?php endif; ?>
+				<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+			</ul>
+			<ul class="clearfix hide" rel="2">
+				<?php $_from = $this->_var['week_load_top_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'load');$this->_foreach['loads'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['loads']['total'] > 0):
+    foreach ($_from AS $this->_var['load']):
+        $this->_foreach['loads']['iteration']++;
+?>
+				<?php if ($this->_foreach['loads']['iteration'] < 9): ?>
+				<li <?php if (! ($this->_foreach['loads']['iteration'] == $this->_foreach['loads']['total'])): ?>class="dot"<?php endif; ?>>
+					<span class="nums nums_<?php echo $this->_foreach['loads']['iteration']; ?> tc f_l">
+						<?php echo str_pad($i,2,0,STR_PAD_LEFT); ?>
+					</span>
+					<span class="uname f_l"><?php 
+$k = array (
+  'name' => 'utf_substr',
+  'v' => $this->_var['load']['user_name'],
+);
+echo $k['name']($k['v']);
+?></span>
+					<span class="f_r"><?php 
+$k = array (
+  'name' => 'format_price',
+  'v' => $this->_var['load']['total_money'],
+  'f' => '2',
+);
+echo $k['name']($k['v'],$k['f']);
+?></span>
+				</li>
+				<?php $i++; ?>
+				<?php endif; ?>
+				<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+			</ul>
+			<ul class="clearfix hide" rel="3">
+				<?php $_from = $this->_var['day_load_top_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'load');$this->_foreach['loads'] = array('total' => count($_from), 'iteration' => 0);
+if ($this->_foreach['loads']['total'] > 0):
+    foreach ($_from AS $this->_var['load']):
+        $this->_foreach['loads']['iteration']++;
+?>
+				<?php if ($this->_foreach['loads']['iteration'] < 9): ?>
+				<li <?php if (! ($this->_foreach['loads']['iteration'] == $this->_foreach['loads']['total'])): ?>class="dot"<?php endif; ?>>
+					<span class="nums nums_<?php echo $this->_foreach['loads']['iteration']; ?> tc f_l">
+						<?php echo str_pad($i,2,0,STR_PAD_LEFT); ?>
+					</span>
+					<span class="uname f_l"><?php 
+$k = array (
+  'name' => 'utf_substr',
+  'v' => $this->_var['load']['user_name'],
+);
+echo $k['name']($k['v']);
+?></span>
+					<span class="f_r"><?php 
+$k = array (
+  'name' => 'format_price',
+  'v' => $this->_var['load']['total_money'],
+  'f' => '2',
+);
+echo $k['name']($k['v'],$k['f']);
+?></span>
+				</li>
+				<?php $i++; ?>
+				<?php endif; ?>
+				<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+			</ul>
+		</div>
+	</div>
+	<div class="blank15"></div>
+	<div class="r-block selct">
+		<div class="gray_title clearfix">
+			<div rel="1" class="f_l pl10 f16 b foucs"><a>媒体报道</a></div>
+			<div rel="2" class="f_l pl10 f16 b">
+			<a>使用技巧</a>
+			</div>
+			<div class="f_r more-box">
+				<div class="f_r pr10" rel="1">
+	                <span style="font-weight: normal;">
+	                    <a href="<?php
+echo parse_url_tag("u:index|acate|"."id=".$this->_var['mtbd_id']."".""); 
+?>" class="f12" title="<?php echo $this->_var['LANG']['MORE']; ?>"><?php echo $this->_var['LANG']['MORE']; ?>></a>
+	                </span>
+		    	</div>
+				<div class="f_r pr10 hide" rel="2">
+	                <span style="font-weight: normal;">
+	                    <a href="<?php
+echo parse_url_tag("u:index|usagetip|"."".""); 
+?>" class="f12" title="<?php echo $this->_var['LANG']['MORE']; ?>"><?php echo $this->_var['LANG']['MORE']; ?>></a>
+	                </span>
+		    	</div>
+			</div>
+		</div>
+		<div class="blank0"></div>
+		<div rel="1" class="clearfix nicai bdd bt0 pl10 pr10">
+		<?php $_from = $this->_var['mtbd_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'mtbd');if (count($_from)):
+    foreach ($_from AS $this->_var['key'] => $this->_var['mtbd']):
+?>
+			<?php if ($this->_var['key'] < 1): ?>
+				<?php if ($this->_var['mtbd']['icon']): ?>
+					<a href="<?php echo $this->_var['mtbd']['url']; ?>" title="<?php echo $this->_var['mtbd']['title']; ?>">
+					<div class="mtbd">
+						<div class="mtbdimg f_l">
+							<img src="<?php echo $this->_var['mtbd']['icon']; ?>"/>
+						</div>
+						<div class="mtbdcon f_r">
+							<h3><?php 
+$k = array (
+  'name' => 'msubstr',
+  'v' => $this->_var['mtbd']['title'],
+  's' => '0',
+  'e' => '12',
+);
+echo $k['name']($k['v'],$k['s'],$k['e']);
+?></h3>
+							<p class="f_dgray "><?php 
+$k = array (
+  'name' => 'msubstr',
+  'v' => $this->_var['mtbd']['brief'],
+  's' => '0',
+  'e' => '40',
+);
+echo $k['name']($k['v'],$k['s'],$k['e']);
+?></p>
+						</div>
+						<div class="blank0"></div>
+					</div>
+					</a>
+				<?php else: ?>
+					<ul>
+						<li>
+						 · <a href="<?php echo $this->_var['mtbd']['url']; ?>" title="<?php echo $this->_var['mtbd']['title']; ?>"><?php 
+$k = array (
+  'name' => 'msubstr',
+  'v' => $this->_var['mtbd']['title'],
+  's' => '0',
+  'e' => '18',
+);
+echo $k['name']($k['v'],$k['s'],$k['e']);
+?></a>
+						</li>
+						<div class="blank0"></div>
+					</ul>
+				<?php endif; ?>
+			<?php endif; ?>
+		<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+		<ul>
+		<?php $_from = $this->_var['mtbd_list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'mtbd');if (count($_from)):
+    foreach ($_from AS $this->_var['mtbd']):
+?>
+			<?php if ($this->_var['key'] > 0): ?>
+        	<li>
+			 · <a href="<?php echo $this->_var['mtbd']['url']; ?>" title="<?php echo $this->_var['mtbd']['title']; ?>"><?php 
+$k = array (
+  'name' => 'msubstr',
+  'v' => $this->_var['mtbd']['title'],
+  's' => '0',
+  'e' => '18',
+);
+echo $k['name']($k['v'],$k['s'],$k['e']);
+?></a>
+			</li>
+			<div class="blank0"></div>
+			<?php endif; ?>
+		<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+   		</ul>
+   		<div class="blank0"></div>
+		</div>
+		<div rel="2" class="bdd bt0 pt5 pb5 pl10 pr10 nicai hide">
+			<ul>
+			<?php $_from = $this->_var['use_tech_list']['list']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('', 'use');if (count($_from)):
+    foreach ($_from AS $this->_var['use']):
+?>
+            	<li class="f_l" style="width: 136px;">
+				 · <a href="<?php
+echo parse_url_tag("u:index|usagetip|"."id=".$this->_var['use']['id']."".""); 
+?>"><?php echo $this->_var['use']['title']; ?></a>
+				</li>
+			<?php endforeach; endif; unset($_from); ?><?php $this->pop_vars();; ?>
+       		</ul>
+			<div class="blank0"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var leftTimeActInv = null;
+	jQuery(function(){
+		$(".selct .gray_title .b a").click(function(){
+				$(".selct .gray_title .b a").parent().removeClass("foucs");
+				$(this).parent().addClass("foucs");
+				var rel=$(this).parent().attr("rel");
+				
+				$(".selct .gray_title .more-box .f_r").addClass("hide");
+				$(".selct .gray_title .more-box .f_r[rel='"+rel+"']").removeClass("hide");
+				
+				$(".selct .nicai").addClass("hide");
+				$(".selct  .nicai[rel='"+rel+"']").removeClass("hide");
+				
+			});
+		
+		$("#loadtop #rightTitls a").click(function(){
+			$("#loadtop #rightTitls a").parent().removeClass("current");
+			$(this).parent().addClass("current");
+			var rel=$(this).attr("rel");
+			$("#loadtop #J_conbox ul").addClass("hide");
+			$("#loadtop #J_conbox ul[rel='"+rel+"']").removeClass("hide");
+		});
+		leftTimeAct();
+	});
+	function leftTimeAct(){
+		clearTimeout(leftTimeActInv);
+		$(".AdvLeftTime").each(function(){
+			var leftTime = parseInt($(this).attr("data"));
+			if(leftTime > 0)
+			{
+				var day  =  parseInt(leftTime / 24 /3600);
+				var hour = parseInt((leftTime % (24 *3600)) / 3600);
+				var min = parseInt((leftTime % 3600) / 60);
+				var sec = parseInt((leftTime % 3600) % 60);
+				$(this).find(".day").html((day<10?"0"+day:day));
+				$(this).find(".hour").html((hour<10?"0"+hour:hour));
+				$(this).find(".min").html((min<10?"0"+min:min));
+				$(this).find(".sec").html((sec<10?"0"+sec:sec));
+				leftTime--;
+				$(this).attr("data",leftTime);
+			}
+			else{
+				$(this).html('时间已结束');
+			}
+		});
+		
+		leftTimeActInv = setTimeout(function(){
+			leftTimeAct();
+		},1000);
+	}
+</script>
+<?php echo $this->fetch('inc/footer.html'); ?>

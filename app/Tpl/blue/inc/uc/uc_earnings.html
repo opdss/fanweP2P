@@ -1,0 +1,157 @@
+<div class="tabbox">
+	<div class="tab cur"><a href="{url x="index" r="uc_earnings"}">{$page_title}</a></div>
+</div>
+<div class="uc_box bdd bt0 clearfix">
+	<table width="100%" align="center" border="0" cellspacing="1px" class="funds">
+		<tbody>
+			<tr class="title">
+				<td colspan="2"><span class="f_dgray b">回报统计 </span></td>
+			</tr>
+			<tr>
+				<td width="50%">
+					<p>已赚利息[利息-投资管理费-利息管理费]</p>
+				</td>
+				<td width="50%">
+					<p>
+						<span style="padding-right: 50px">{function name="format_price" v="$user_statics.load_earnings"}</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="50%">
+					<p>已赚奖励利息</p>
+				</td>
+				<td width="50%">
+					<p>
+						<span style="padding-right: 50px">{function name="format_price" v="$user_statics.reward_money"}</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="50%">
+					<p>已赚提前还款违约金</p>
+				</td>
+				<td width="50%">
+					<p>
+						<span style="padding-right: 50px">{function name="format_price" v="$user_statics.load_tq_impose"}</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="50%">
+					<p>已赚逾期罚息</p>
+				</td>
+				<td width="50%">
+					<p>
+						<span style="padding-right: 50px">{function name="format_price" v="$user_statics.load_yq_impose"}</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="50%">
+					<p>已赚投标返利</p>
+				</td>
+				<td width="50%">
+					<p>
+						<span style="padding-right: 50px">{function name="format_price" v="$user_statics.rebate_money"}</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="50%">
+					<p>已赚邀请返利</p>
+				</td>
+				<td width="50%">
+					<p>
+						<span style="padding-right: 50px">{function name="format_price" v="$user_statics.referrals_money"}</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="50%">
+					<p>减提现手续费</p>
+				</td>
+				<td width="50%">
+					<p>
+						<span style="padding-right: 50px">{function name="format_price" v="$user_statics.carry_fee_money"}</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="50%">
+					<p>减充值手续费</p>
+				</td>
+				<td width="50%">
+					<p>
+						<span style="padding-right: 50px">{function name="format_price" v="$user_statics.incharge_fee_money"}</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="50%">
+					<p>已赚总收入</p>
+				</td>
+				<td width="50%">
+					<p>
+						<span style="padding-right: 50px">{function name="format_price" v="$user_statics.all_load_money" f=2}</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width="50%">
+					<p>加权平均收益率</p>
+				</td>
+				<td width="50%">
+					<p>
+						<span style="padding-right: 50px">{function name="number_format" v="$user_statics.load_avg_rate" f=2}%</span>
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="blank20"></div>
+	<table width="100%" align="center" border="0" cellspacing="1px" class="funds">
+		<tbody>
+			<tr class="title">
+				<td colspan="4"><span class="f_dgray b">个人理财统计 </span></td>
+			</tr>
+			<tr>
+				<td width="25%">
+					<p>总借出金额</p>
+				</td>
+				<td width="25%" align="right"><span style="padding-right: 50px">{function name="format_price" v="$user_statics.load_money"}</span>
+				</td>
+				<td width="25%">
+					<p>总借出笔数*</p>
+				</td>
+				<td width="25%">{$user_statics.load_count}</td>
+			</tr>
+			<tr>
+				<td width="25%">
+					<p>已回收本息</p>
+				</td>
+				<td width="25%" align="right"><span style="padding-right: 50px">{function name="format_price" v="$user_statics.load_repay_money"}</span>
+				</td>
+				<td width="25%">
+					<p>已回收笔数</p>
+				</td>
+				<td width="25%">{$user_statics.reback_load_count}</td>
+			</tr>
+			<tr>
+				<td width="25%">
+					<p>待回收本息</p>
+				</td>
+				<td width="25%" align="right"><span style="padding-right: 50px">
+						 
+                  {function name="format_price" v="$user_statics.load_wait_repay_money"}
+                        
+				</span></td>
+				<td width="25%">
+					<p>待回收笔数</p>
+				</td>
+				<td width="25%">{$user_statics.wait_reback_load_count}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div style="padding-top:3px; fontsize:11px;color:#666;">* 总借出笔数 = 已回收笔数(含坏账已垫付) + 待回收笔数 + 历史遗留无垫付坏账笔数</div>	
+</div>

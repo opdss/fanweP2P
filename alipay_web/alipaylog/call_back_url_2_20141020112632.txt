@@ -1,0 +1,22 @@
+Array
+(
+    [out_trade_no] => 2014102011244524
+    [request_token] => requestToken
+    [result] => success
+    [trade_no] => 2014102000001000570036139806
+    [sign] => 414cd300dbb9153158ce9a5de840d30c
+    [sign_type] => MD5
+    [city] => t2fanwenet
+)
+Array
+(
+    [partner] => 2088701687941821
+    [account] => cw@fanwe.com
+    [key] => 1tzqx98hvgcfxu59h54h3mye89hg03et
+    [private_key_path] => 
+    [ali_public_key_path] => 
+    [sign_type] => MD5
+    [input_charset] => utf-8
+    [cacert] => 
+    [transport] => http
+)

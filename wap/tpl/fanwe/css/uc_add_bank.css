@@ -1,0 +1,101 @@
+.bank_bg{
+	background:@box_color;
+	border:1px solid @border_color;
+	border-radius:5px;
+	margin:10px;
+	padding-left:10px;
+}
+.dl{
+	border-bottom:1px solid @border_color;
+	height:40px;
+	padding:10px 10px 10px 90px ;
+	
+	position:relative;
+}
+.dl:last-child{
+	border:none;
+	
+}
+.dl .name{
+	position:absolute;
+	left:10px;
+	top:0px;
+	line-height:60px;
+	font-size:18px;
+	color:@font_black;
+	
+}
+
+.dl .info input{
+	width:100%;
+	height:40px;
+	line-height:40px;
+	font-size:16px;
+	color:@font_main;
+}
+
+.info .card_type{
+	color:@font_black;
+	line-height:40px;
+	font-size:16px;
+}
+
+.info .no_type{
+	color:@contrast_color;
+	line-height:40px;
+	font-size:16px;
+}
+
+
+.bank_list{
+	position:relative;
+	width:100%;
+	height:40px;
+	z-index:5;
+}
+
+.bank_list .this_bank{
+	position:absolute ;
+	left:0px;
+	top:0px;
+	line-height:40px;
+	font-size:16px;
+	color:@font_main;
+}
+
+
+.bank_list .seclet_but{
+	position:absolute ;
+	right:0px;
+	top:0px;
+	line-height:40px;
+	font-size:25px;
+	color:@font_main;
+}
+.bank_seclet{
+	position:absolute ;
+	right:0px;
+	top:30px;
+	line-height:40px;
+	font-size:16px;
+	color:@font_main;
+	background:@box_color;
+	overflow-y:auto;
+	max-height:140px;
+	padding-left:10px;
+	
+}
+
+.bank_seclet li{
+	line-height:30px;
+	font-size:13px;
+	padding:0 10px;
+	width:160px;
+	border-bottom:1px dotted @border_color;
+	color:@font_black;
+}
+.bank_seclet .active{
+	background:#44d8ff;
+	color:#fff;
+}
+

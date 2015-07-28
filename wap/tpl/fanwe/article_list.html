@@ -1,0 +1,26 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/article_list.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--文章列表-->
+<div class="article_list">
+	<ul>
+		{foreach from=$data.list item="item"}
+		<li class="article_li">
+			<a href="{wap_url a="index" r="show_article" p="id=$item.id"}">
+				<div class="backg">
+					<span>{$item.title}</span>
+				<i class="fa fa-chevron-right"></i>
+				</div>
+			</a>
+		</li>
+		{/foreach} 
+	</ul>
+</div>
+{include file="./inc/footer.html"}
+
+
+
+
+

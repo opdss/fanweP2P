@@ -1,0 +1,184 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/uc_center.css";		
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<div class="user_center">
+        <div class="u_top">
+            <img src="./images/uc_center/mybackground.png" width="100%" height="100%" style=" position:absolute; top:0px;">
+            <div class="this_details">               
+                <div class="user_info">
+                    <h3>{$data.user_name}</h3>
+                    <span class="crjh">{$data.vip_grade}</span>
+                    <p>
+                        <i class="fa fa-map-marker"></i>
+                        <span>{$data.user_location}</span>
+                        {if $data.idno}
+                       		{if $data.open_ips} 
+                       			{if  $data.ips_acct_no eq 1}
+                       			 <span><a href="{$data.app_url}" style="color:#f6621e">登陆资金托管账户</a></span>
+                       			{else}
+                        	 	<span><a href="{$data.app_url}" style="color:#f6621e">申请资金托管账户</a></span>
+                        	 	{/if}
+                        	{else} 
+                        		<span>未开启资金托管账户</span>
+                        	{/if}
+                       	{else}
+                       		<span><a href="{wap_url a="index" r="register_idno"}" style="color:#f6621e">申请资金托管账户</a></span>
+                        {/if}
+                    </p>
+                </div>
+            </div>
+            <div class="my_detail">
+                <div class="">
+                    <div class="Statistics mainborder" style="border:none;">
+                        <span>{$data.total_money_format}</span>
+                        <span class="num_size blue">资金余额</span>
+                    </div>
+                    <div class="Statistics mainborder">
+                        <span>{$data.money_format}</span>
+                        <span class="num_size yellow">可用资金</span>         
+                    </div>
+                    <div class="Statistics mainborder">
+                        <span>{$data.lock_money_format}</span>
+                        <span class="num_size green">冻结资金</span>
+                    </div>
+                    <div class="blank"></div>  
+                </div>
+            </div>
+        </div>
+        <div class="u_details">
+            <!--遍历ul列表就可以了-->
+			
+            <ul>
+                <li>
+                	<a href="{wap_url a="index" r="uc_incharge_log"}">
+	                    <div class="project_ico" style=" color:#ff6600;"><i class="fa fa-credit-card"></i></div>
+	                    <div class="specific_items">
+	                        <h5>充值</h5>
+	                    </div>
+	                    <span href="#" class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>
+            </ul>
+			<ul>
+                <li>
+                	<a href="{wap_url a="index" r="uc_carry_money_log"}">
+	                    <div class="project_ico" style=" color:#ff6600;"><i class="fa fa-credit-card"></i></div>
+	                    <div class="specific_items">
+	                        <h5>提现</h5>
+	                    </div>
+	                    <span href="#" class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>
+            </ul>
+            <!---------------->
+            <ul>
+            	 <li>
+                	<a href="{wap_url a="index" r="uc_account_log"}">
+	                    <div class="project_ico" style=" color:#ff6600;"><i class="fa fa-credit-card"></i></div>
+	                    <div class="specific_items">
+	                        <h5>帐户日志</h5>
+	                    </div>
+	                    <span href="#" class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>
+                <li>
+                	<a href="{wap_url a="index" r="uc_invest"}">
+	                    <div class="project_ico" style=" color:#47a8ef;"><i class="fa fa-paper-plane"></i></div>
+	                    <div class="specific_items">
+	                        <h5>我的投资</h5>
+	                    </div>
+	                    <span href="#" class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>
+                <li>
+                	<a href="{wap_url a="index" r="uc_transfer"}" >
+	                    <div class="project_ico" style="color:#ffb400;"><i class="fa fa-gavel"></i></div>
+	                    <div class="specific_items">
+	                        <h5>债权转让</h5>
+	                    </div>
+	                    <span class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>
+                <li>
+                	<a href="{wap_url a="index" r="uc_collect"}">
+	                    <div class="project_ico" style=" color:#ff6600;"><i class="fa fa-star"></i></div>
+	                    <div class="specific_items">
+	                        <h5>我关注的标</h5>
+	                    </div>
+	                    <span href="#" class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>
+                <li>
+                	<a href="{wap_url a="index" r="uc_borrowed"}">
+	                    <div class="project_ico" style=" color:#ff6600;"><i class="fa fa-database"></i></div>
+	                    <div class="specific_items">
+	                        <h5>我的借款</h5>
+	                    </div>
+	                    <span href="#" class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>                
+            </ul>
+            <!-------------->
+            <ul>
+                <li>
+                	<a href="{wap_url a="index" r="uc_goods_order" }">
+	                    <div class="project_ico" style=" color:#47a8ef;"><i class="fa fa-check-square-o"></i></div>
+	                    <div class="specific_items">
+	                        <h5>我的兑换</h5>
+	                    </div>
+	                    <span href="#" class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>
+				 <li>
+                	<a href="{wap_url a="index" r="goods_address" }">
+	                    <div class="project_ico" style=" color:#47a8ef;"><i class="fa fa-check-square-o"></i></div>
+	                    <div class="specific_items">
+	                        <h5>设置收货地址</h5>
+	                    </div>
+	                    <span href="#" class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>
+                <li>
+                	<a href="{wap_url a="index" r="uc_financial_statistics"}">
+	                    <div class="project_ico" style=" color:#47a8ef;"><i class="fa fa-list-alt"></i></div>
+	                    <div class="specific_items">
+	                        <h5>理财统计</h5>
+	                    </div>
+	                    <span href="#" class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>
+            </ul>
+            <!-------------->
+            <ul>
+                <li>
+                	<a href="{wap_url a="index" r="save_reset_pwd"}">
+	                    <div class="project_ico" style=" color:#ffb400;"><i class="fa fa-unlock-alt"></i></div>
+	                    <div class="specific_items">
+	                        <h5>修改密码</h5>
+	                    </div>
+	                    <span href="#" class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>
+				<li>
+                	<a href="{wap_url a="index" r="reset_pay_pwd"}">
+	                    <div class="project_ico" style=" color:#fc8600;"><i class="fa fa-unlock"></i></div>
+	                    <div class="specific_items">
+	                        <h5>设置支付密码</h5>
+	                    </div>
+	                    <span href="#" class="go_see"><i class="fa fa-chevron-right"></i></span>
+					</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+		
+{include file="./inc/footer.html"}
+
+
+
+
+
+
+

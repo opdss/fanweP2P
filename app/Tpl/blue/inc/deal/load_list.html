@@ -1,0 +1,35 @@
+<div class="box-bd">
+	  <table class="data_table bdr5" border="0" cellspacing="1" style="width:100%; ">
+	    <tbody>
+	        <tr>
+	       		<th width="10%">序号</th>
+	            <th width="20%">投标人</th>
+	            <th width="20%">投标金额</th>
+				<th width="10%">状态</th>
+	            <th width="20%">投标时间</th>
+	        </tr>
+			{foreach from="$load_list" item="load" name="name"}
+			<tr>
+				<td>
+				{$smarty.foreach.name.iteration}
+				</td>
+				<td class="f_blue">
+					{function name="utf_substr" v="$load.user_name"}
+				</td>
+				<td class=" f_red">
+					{function name="format_price" v="$load.money"}
+				</td>
+				<td>
+					{if $load.is_auto eq 1}自动{else}手动{/if}
+				</td>
+				<td>
+					{function name="to_date" v="$load.create_time" f="Y-m-d"}
+					{function name="to_date" v="$load.create_time" f="H:i"}
+				</td>
+			</tr>
+			{/foreach}
+	    </tbody>
+	</table>
+</div>
+
+

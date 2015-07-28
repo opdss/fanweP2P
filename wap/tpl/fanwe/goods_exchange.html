@@ -1,0 +1,122 @@
+{include file="./inc/header.html"}
+<?php
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/goods_exchange.css";	
+	$this->_var['pagecss'][] = $this->_var['TMPL_REAL']."/css/public.css";	
+?>
+<link rel="stylesheet" type="text/css" href="{function name="parse_css" v="$pagecss"}" />
+<!--我的兑换-->
+<ul class="goods_exchange">
+	
+	<li>
+		<h5 class="clearfix y">
+			<span class="order_nun f_l">收货地址</span>
+			<span class="order_nun f_r">
+			<a href="{wap_url a="index" r="goods_address" }" style="color: #FFFFFF;">	
+			变更地址
+			</a>
+			</span>
+		</h5>
+		<div class="order_content clearfix">
+			
+			<div>
+			{if $data.is_address eq 1}
+				<h6>姓名：{$data.user_address.name}</h6>
+				<dl>
+					<dd>
+						<h6>手机号码：{$data.user_address.phone}</h6>
+					</dd>
+					<dd>
+						<h6>省市：{$data.user_address.provinces_cities}</h6>
+					</dd>
+					<dd>
+						<h6>详细地址：{$data.user_address.address}</h6>
+					</dd>
+					<dd>
+						<h6>邮编：{$data.user_address.zip_code}</h6>
+					</dd>
+					
+			</dl>
+			{else}
+			
+				<dl>
+					<dd>
+						<a href="{wap_url a="index" r="goods_address" }"> <h6>+ 添加收货人信息</h6></a>
+					</dd>
+			</dl>
+			{/if}
+			</div>
+		</div>
+	</li>
+	
+	<li>
+		<h5 class="clearfix y">
+			<span class="order_nun f_l">兑换信息</span>
+			
+		</h5>
+		<div class="order_content clearfix">
+			<div>
+				
+				<dl>
+					<dd>
+						<span class="name">商品：&nbsp;</span>{$data.goods.name}
+						<span class="name">&nbsp;</span>
+					</dd>
+					<dd>
+						<span class="name">所需积分：&nbsp;</span>{$data.needscore}
+						<span class="name">&nbsp;</span>
+					</dd>
+					<dd>
+						<span class="name">兑换数量：&nbsp; </span>{$data.number}
+						<span class="name">&nbsp;</span>
+						
+					</dd>
+			</dl>
+			</div>
+		</div>
+	</li>
+</ul>
+<div class="new-but-block ">
+		<div class="but-block">
+		<input id="address_id" name="address_id" type="hidden" value="{$data.user_address.id}" />	
+		<input id="goods_id" name="goods_id" type="hidden" value="{$data.goods_id}" />	
+		<input id="number" name="number" type="hidden" value="{$data.number}" />	
+		<button id="submitt" class="but_sure">确认兑换</button> 
+		
+		</div>
+</div>
+
+<script type="text/javascript">
+
+$("#submitt").click(function(){
+		var ajaxurl = '{wap_url a="index" r="doexchange" }';
+		var id =  $.trim($("#goods_id").val());
+		var number =  $.trim($("#number").val());
+		var address_id =  $.trim($("#address_id").val());
+		if(!address_id)
+		{
+			alert("请填写收货信息");
+			return false;
+		}
+		
+		var query = new Object();
+		query.number = $.trim($("#number").val());
+		query.id = $.trim($("#goods_id").val());
+		query.address_id = $.trim($("#address_id").val());
+		query.post_type = "json";
+		
+		$.ajax({
+			url:ajaxurl,
+			data:query,
+			type:"Post",
+			dataType:"json",
+			success:function(data){
+				alert(data.show_err);
+				window.location.href = '{wap_url a="index" r="uc_goods_order" }';
+			}
+		
+		});
+		
+	});
+
+</script>
+{include file="./inc/footer.html"}

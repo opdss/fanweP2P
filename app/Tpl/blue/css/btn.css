@@ -1,0 +1,176 @@
+/* 通用按钮 */
+.sub_btn{cursor:pointer; margin:0; padding:0; background:none; border:none; background-color:#39A1EA; color:#fff; cursor:pointer; font-size:14px; font-weight:bold; height:38px; line-height:38px; padding:0 20px; overflow:visible; -moz-border-radius:3px; -khtml-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; }
+.sub_btn:hover{background-color:#0087E5;}
+.reset_btn{cursor:pointer; background:none; border:none; background-color:#ddd; color:#666; cursor:pointer; font-size:14px; font-weight:bold; height:38px; line-height:38px; padding:0 20px; -moz-border-radius:3px; -khtml-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; }
+.true_btn{cursor:pointer; background:none; border:none; background-color:#39A1EA; color:#fff; cursor:pointer; font-size:14px; font-weight:bold; height:38px; line-height:38px; padding:0 20px; -moz-border-radius:3px; -khtml-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; }
+.sendsms_button{cursor:pointer;  height:44px; padding:0 15px;cursor:pointer; line-height:44px; border:none; background:#39A1EA; color:#fff}
+
+
+.listbtn span {
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	display: inline-block;
+	border-radius: 3px;
+	position: relative;
+	moz-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+
+/* 操作按钮 */
+.btn_del{cursor:pointer; background-color:#dfdcdc; color:#fff; display:block; height:38px; line-height:38px; margin:0 auto; width:70px; -moz-border-radius:3px; -khtml-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; }
+.btn_del:hover{ color:#fff; background-color:#d2d0d0; }
+.btn_green{position: relative;cursor:pointer; background-color:#4CC3A5; display:inline-block;*display:inline;*zoom:1 }
+.btn_green:hover{background-color:#45B296;}
+.btn_orange{position: relative;cursor:pointer; background-color:#FF4E00; display:inline-block;*display:inline;*zoom:1 }
+
+.btn_gray{position: relative;cursor:pointer; background-color:#A1ACB4; display:inline-block;*display:inline;*zoom:1 }
+.btn_gray:hover{ background-color:#7F94A3;}
+.btn_blue{position: relative;cursor:pointer;background-color:#39A1EA; display:inline-block;*display:inline;*zoom:1 }
+.btn_blue:hover{background-color:#1A8AD8;}
+.btn_yellow{position: relative;cursor:pointer;background-color:#FFB226; display:inline-block;*display:inline;*zoom:1 }
+.btn_yellow:hover{background-color:#FFA500;}
+.btn_disable{cursor:default; background:#ccc; color:#f1f1f1}
+
+.formbutton{
+	border: none;
+	cursor: pointer;
+	color: #fff;
+	font: 16px "Microsoft YaHei";
+	height: 40px;
+	line-height: 40px;
+	padding:0 15px;
+	background-color: #39A1EA;
+}
+
+.formgraybutton{
+	border: none;
+	cursor: pointer;
+	color: #333;
+	font: 16px "Microsoft YaHei";
+	height: 40px;
+	line-height: 40px;
+	padding:0 15px;
+	background-color: #ddd;
+}
+
+.ui-radiobox {
+	height: 16px!important;
+	background: url(../images/fanwe_ui/ui_rdobg.gif) no-repeat 0 0px;
+	padding:0 0 0 20px!important;
+	line-height: 16px!important;
+	text-align:left!important;
+	width:auto!important;
+	float:none!important;
+}
+
+.common_address_id_hover,
+.common_user_type_hover,
+.common_check_ol_bl_pay_hover,
+.common_marriage_hover,
+.common_carry_type_hover
+ {
+	background: url(../images/fanwe_ui/ui_rdobg.gif) no-repeat 0 -37px;
+}
+
+.common_address_id_checked,
+.common_user_type_checked,
+.common_marriage_checked,
+.common_check_ol_bl_pay_checked,
+.common_carry_type_checked
+ {
+	background: url(../images/fanwe_ui/ui_rdobg.gif) no-repeat 0 -76px;
+}
+
+.common_payment{cursor:pointer; text-align:center!important; width:150px!important;height:16px!important; padding:15px 0px!important; border:1px solid #ccc; margin-right:5px; margin-bottom:5px}
+.common_payment_hover{ border:1px solid #39A1EA}
+.common_payment_checked{ text-align:center!important;border:2px solid #39A1EA;width:148px!important;padding:14px 0px!important;margin-right:5px; margin-bottom:5px}
+.payment_lbl{
+	background:none;
+	width:650px!important;
+	text-align:left!important;
+	padding-left:15px!important;
+}
+.payment_ips{
+	background:none;
+	width:400px!important;
+	text-align:left!important;
+	padding-left:15px!important;
+}
+
+.ui-checkbox {
+	height: 16px!important;
+	background: url(../images/fanwe_ui/ui_cbobg.gif) no-repeat 0 0px;
+	padding:0 0 0 20px!important;
+	line-height: 16px!important;
+	text-align:left!important;
+	width:auto!important;
+	float:none!important;
+}
+.agreement_hover,.auto_login_hover {
+	height: 14px;
+	background: url(../images/fanwe_ui/ui_cbobg.gif) no-repeat 0 -38px;
+	padding-left: 20px;
+	line-height: 14px;
+}
+.agreement_checked,.auto_login_checked {
+	height: 14px;
+	background: url(../images/fanwe_ui/ui_cbobg.gif) no-repeat 0 -76px;
+	padding-left: 20px;
+	line-height: 14px;
+}
+
+.ui-select dt {
+	background: #fafafa;
+	position: relative;
+	cursor: pointer;
+	/*text-align: center;*/
+	letter-spacing: 1px;
+	border:1px solid #d3d3d3;
+	height: 34px;
+  	line-height: 34px;
+	 padding: 0px 25px 0 15px;
+	
+}
+.ui-select dt i {
+	height: 0;
+	width: 0;
+	position: absolute;
+	overflow: hidden;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+	border-top: 5px solid transparent;
+	border-top-color: #666;
+	_border-left-color: tomato;
+	_border-right-color: tomato;
+	_filter: chroma(color=tomato);
+	right: 8px;
+  	top: 13px;
+}
+.ui-select dd {
+	background: #fafafa;
+	border:1px solid #d3d3d3;
+	letter-spacing: 1px;
+	font-size: 14px;
+	overflow-y:auto;
+}
+.ui-select dd a {
+	cursor: pointer;
+	padding-left:10px;
+}
+.select-w50 dd a{ width:40px}
+.select-w80 dd a{ width:70px}
+.select-w90 dd a{ width:80px}
+.select-w100 dd a{ width:90px}
+.select-w110 dd a{ width:100px!important}
+.select-w120 dd a{ width:110px!important}
+.select-w140 dd a{ width:130px!important}
+.select-w150 dd a{ width:140px!important}
+.select-w180 dd a{ width:170px!important}
+.select-w200 dd a{ width:190px}
+.select-w220 dd a{ width:210px}
+.select-w250 dd a{ width:240px}
+.select-w280 dd a{ width:270px}
